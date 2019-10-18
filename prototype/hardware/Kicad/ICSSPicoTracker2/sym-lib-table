@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name ICSSPicoTracker)(type Legacy)(uri ${KIPRJMOD}/ICSSPicoTracker.lib)(options "")(descr ""))
+  (lib (name ICSSPicoTracker2-rescue)(type Legacy)(uri ${KIPRJMOD}/ICSSPicoTracker2-rescue.lib)(options "")(descr ""))
+)
