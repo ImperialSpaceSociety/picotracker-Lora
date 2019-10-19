@@ -1,0 +1,65 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ATSAMD21J18A-AU
+D SAM D21 Microchip SMART ARM-based Flash MCU, 48Mhz, 64K Flash, 8K SRAM, TQFP64
+K 32-bit ARM Cortex-M0+ MCU Microcontroller
+F http://ww1.microchip.com/downloads/en/devicedoc/40001884a.pdf
+$ENDCMP
+#
+$CMP ATSAML21J17B-AUT
+D SAM L21 Microchip SMART ARM-based Flash MCU, 48Mhz, 128K Flash, 16K SRAM, TQFP64
+K 32-bit ARM Cortex-M0+ MCU Microcontroller
+F http://ww1.microchip.com/downloads/en/DeviceDoc/60001477A.pdf
+$ENDCMP
+#
+$CMP ATSAML21J18B-AUT
+D SAM L21 Microchip SMART ARM-based Flash MCU, 48Mhz, 256K Flash, 32K SRAM, TQFP64
+K 32-bit ARM Cortex-M0+ MCU Microcontroller
+F http://ww1.microchip.com/downloads/en/DeviceDoc/60001477A.pdf
+$ENDCMP
+#
+$CMP DFLS130L
+D Schottky diode
+K diode Schottky
+F https://www.diodes.com/assets/Datasheets/ds30492.pdf
+$ENDCMP
+#
+$CMP ICSS_logo
+D Open Hardware logo, large
+K Logo
+F ~
+$ENDCMP
+#
+$CMP IIS2MDC
+D High-accuracy, ultra-low-power, 3-axis digital output magnetometer
+F https://www.mouser.co.uk/datasheet/2/389/iis2mdc-1309412.pdf
+$ENDCMP
+#
+$CMP STF202-22T1G
+D USB Filter with ESDProtection
+F https://www.onsemi.com/pub/Collateral/STF202-22T1-D.PDF
+$ENDCMP
+#
+$CMP Si7232DN
+F https://www.vishay.com/docs/68986/si7232dn.pdf
+$ENDCMP
+#
+$CMP TM-32.000-AF3-33-S-Oscillator
+D 32 Mhz RS Pro TCXO
+F https://docs-emea.rs-online.com/webdocs/15dc/0900766b815dc7d9.pdf
+$ENDCMP
+#
+$CMP W25Q64JVSSIM
+D SPI flash 64Mbit memory
+F https://docs-emea.rs-online.com/webdocs/1703/0900766b81703f87.pdf
+$ENDCMP
+#
+$CMP W74M64FV
+F https://docs-emea.rs-online.com/webdocs/1623/0900766b81623058.pdf
+$ENDCMP
+#
+$CMP Yageo434_ANT1204F002R0433A
+F https://www.mouser.co.uk/datasheet/2/447/An_SMD_UHF_433_1204_0-595178.pdf
+$ENDCMP
+#
+#End Doc Library
