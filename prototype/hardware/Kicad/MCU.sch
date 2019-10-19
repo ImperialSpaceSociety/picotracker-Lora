@@ -214,8 +214,8 @@ F 3 "~" H 1750 3550 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	4350 3700 3950 3700
-Text Label 3950 3700 0    50   ~ 0
+	4350 3700 3900 3700
+Text Label 3900 3700 0    50   ~ 0
 SWDIO
 Wire Wire Line
 	1950 3450 2250 3450
@@ -226,10 +226,10 @@ Wire Wire Line
 Wire Wire Line
 	1950 3650 2250 3650
 NoConn ~ 1950 3850
-Text Label 3950 3800 0    50   ~ 0
+Text Label 3900 3800 0    50   ~ 0
 SWCLK
 Wire Wire Line
-	3950 3800 4350 3800
+	3900 3800 4350 3800
 Text Label 2250 3450 2    50   ~ 0
 SWCLK
 Text Label 2250 3650 2    50   ~ 0
@@ -292,4 +292,176 @@ F 3 "~" H 3550 4350 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	3550 4450 3550 4600
+Wire Wire Line
+	5150 1050 5150 1950
+Wire Wire Line
+	5250 2100 5250 1950
+Wire Wire Line
+	5250 1950 5150 1950
+Connection ~ 5150 1950
+Wire Wire Line
+	5150 1950 5150 2100
+Wire Wire Line
+	5150 1050 5450 1050
+Wire Wire Line
+	5450 1050 5450 1150
+Wire Wire Line
+	5450 1400 6200 1400
+Connection ~ 5450 1050
+Wire Wire Line
+	5450 1050 6200 1050
+Wire Wire Line
+	6200 1050 6200 1150
+$Comp
+L Device:C_Small C?
+U 1 1 5DB8BFB9
+P 5450 1250
+F 0 "C?" H 5542 1296 50  0000 L CNN
+F 1 "0.1uF 0402" H 5542 1205 50  0000 L CNN
+F 2 "" H 5450 1250 50  0001 C CNN
+F 3 "~" H 5450 1250 50  0001 C CNN
+	1    5450 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5450 1350 5450 1400
+Connection ~ 6200 1050
+Connection ~ 6200 1400
+Wire Wire Line
+	6200 1400 6900 1400
+Wire Wire Line
+	6200 1050 6900 1050
+Connection ~ 6900 1050
+Wire Wire Line
+	6900 1050 6900 1150
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5DB859BD
+P 6900 750
+F 0 "#PWR?" H 6900 600 50  0001 C CNN
+F 1 "+3.3V" H 6915 923 50  0000 C CNN
+F 2 "" H 6900 750 50  0001 C CNN
+F 3 "" H 6900 750 50  0001 C CNN
+	1    6900 750 
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 1050 6900 750 
+$Comp
+L Device:C_Small C?
+U 1 1 5DB9BD21
+P 6200 1250
+F 0 "C?" H 6292 1296 50  0000 L CNN
+F 1 "1uF 0603" H 6292 1205 50  0000 L CNN
+F 2 "" H 6200 1250 50  0001 C CNN
+F 3 "~" H 6200 1250 50  0001 C CNN
+	1    6200 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6200 1350 6200 1400
+$Comp
+L Device:C_Small C?
+U 1 1 5DB9C1FF
+P 6900 1250
+F 0 "C?" H 6992 1296 50  0000 L CNN
+F 1 "10uF 0603" H 6992 1205 50  0000 L CNN
+F 2 "" H 6900 1250 50  0001 C CNN
+F 3 "~" H 6900 1250 50  0001 C CNN
+	1    6900 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 1350 6900 1400
+$Comp
+L power:GND #PWR?
+U 1 1 5DB9DE92
+P 6900 1550
+F 0 "#PWR?" H 6900 1300 50  0001 C CNN
+F 1 "GND" H 6905 1377 50  0000 C CNN
+F 2 "" H 6900 1550 50  0001 C CNN
+F 3 "" H 6900 1550 50  0001 C CNN
+	1    6900 1550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 1550 6900 1400
+Connection ~ 6900 1400
+Wire Wire Line
+	4450 1050 4450 1150
+Connection ~ 4450 1050
+Wire Wire Line
+	4450 1400 3750 1400
+Wire Wire Line
+	4450 1050 3750 1050
+Connection ~ 3750 1050
+Wire Wire Line
+	3750 1050 3750 1150
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5DBA9BB5
+P 3750 750
+F 0 "#PWR?" H 3750 600 50  0001 C CNN
+F 1 "+3.3V" H 3765 923 50  0000 C CNN
+F 2 "" H 3750 750 50  0001 C CNN
+F 3 "" H 3750 750 50  0001 C CNN
+	1    3750 750 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 1050 3750 750 
+$Comp
+L Device:C_Small C?
+U 1 1 5DBA9BC0
+P 4450 1250
+F 0 "C?" H 4358 1296 50  0000 R CNN
+F 1 "0.1uF 0402" H 4358 1205 50  0000 R CNN
+F 2 "" H 4450 1250 50  0001 C CNN
+F 3 "~" H 4450 1250 50  0001 C CNN
+	1    4450 1250
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 1350 4450 1400
+$Comp
+L Device:C_Small C?
+U 1 1 5DBA9BCB
+P 3750 1250
+F 0 "C?" H 3842 1296 50  0000 L CNN
+F 1 "10uF 0603" H 3842 1205 50  0000 L CNN
+F 2 "" H 3750 1250 50  0001 C CNN
+F 3 "~" H 3750 1250 50  0001 C CNN
+	1    3750 1250
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 1350 3750 1400
+$Comp
+L power:GND #PWR?
+U 1 1 5DBA9BD6
+P 3750 1550
+F 0 "#PWR?" H 3750 1300 50  0001 C CNN
+F 1 "GND" H 3755 1377 50  0000 C CNN
+F 2 "" H 3750 1550 50  0001 C CNN
+F 3 "" H 3750 1550 50  0001 C CNN
+	1    3750 1550
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 1550 3750 1400
+Connection ~ 3750 1400
+Wire Wire Line
+	5050 1050 5050 2100
+Wire Wire Line
+	4450 1050 5050 1050
+Wire Wire Line
+	5450 2100 5450 1950
+Wire Wire Line
+	5450 1950 5900 1950
+Text Label 5900 1950 2    50   ~ 0
+VDD_TCXO
+Text Label 3900 3600 0    50   ~ 0
+VDD_TCXO
+Wire Wire Line
+	4350 3600 3900 3600
 $EndSCHEMATC
