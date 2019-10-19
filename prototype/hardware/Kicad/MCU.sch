@@ -113,22 +113,11 @@ $Comp
 L RF_Module:CMWX1ZZABZ-078 U?
 U 1 1 5DB27A2E
 P 5250 3600
-F 0 "U?" H 4700 1750 50  0000 C CNN
-F 1 "CMWX1ZZABZ-078" H 4750 2000 50  0000 C CNN
+F 0 "U?" H 4550 5200 50  0000 C CNN
+F 1 "CMWX1ZZABZ-078" H 4550 5050 50  0000 C CNN
 F 2 "RF_Module:CMWX1ZZABZ" H 5250 3600 50  0001 C CNN
 F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 7700 2100 50  0001 C CNN
 	1    5250 3600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector_Generic:Conn_01x06 J?
-U 1 1 5DB45FE9
-P 7250 1300
-F 0 "J?" H 7330 1292 50  0000 L CNN
-F 1 "Conn_01x06" H 7330 1201 50  0000 L CNN
-F 2 "" H 7250 1300 50  0001 C CNN
-F 3 "~" H 7250 1300 50  0001 C CNN
-	1    7250 1300
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -144,4 +133,163 @@ F 3 "" H 5250 5450 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	5250 5450 5250 5100
+Wire Wire Line
+	6150 4900 7550 4900
+$Comp
+L Connector:Conn_Coaxial J?
+U 1 1 5DB4CA28
+P 7750 4900
+F 0 "J?" H 7850 4875 50  0000 L CNN
+F 1 "Conn_Coaxial" H 7850 4784 50  0000 L CNN
+F 2 "" H 7750 4900 50  0001 C CNN
+F 3 " ~" H 7750 4900 50  0001 C CNN
+	1    7750 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DB4D709
+P 7750 5400
+F 0 "#PWR?" H 7750 5150 50  0001 C CNN
+F 1 "GND" H 7755 5227 50  0000 C CNN
+F 2 "" H 7750 5400 50  0001 C CNN
+F 3 "" H 7750 5400 50  0001 C CNN
+	1    7750 5400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7750 5400 7750 5100
+Wire Wire Line
+	4350 4900 4000 4900
+Wire Wire Line
+	4000 4900 4000 5000
+$Comp
+L power:GND #PWR?
+U 1 1 5DB50FAC
+P 4000 5450
+F 0 "#PWR?" H 4000 5200 50  0001 C CNN
+F 1 "GND" H 4005 5277 50  0000 C CNN
+F 2 "" H 4000 5450 50  0001 C CNN
+F 3 "" H 4000 5450 50  0001 C CNN
+	1    4000 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DB51493
+P 4000 5150
+F 0 "R?" H 4070 5196 50  0000 L CNN
+F 1 "10K 0402" H 4070 5105 50  0000 L CNN
+F 2 "" V 3930 5150 50  0001 C CNN
+F 3 "~" H 4000 5150 50  0001 C CNN
+	1    4000 5150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4000 5300 4000 5450
+Wire Wire Line
+	1950 3350 2350 3350
+Wire Wire Line
+	2350 3350 2350 3050
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5DB55728
+P 2350 3050
+F 0 "#PWR?" H 2350 2900 50  0001 C CNN
+F 1 "+3.3V" H 2365 3223 50  0000 C CNN
+F 2 "" H 2350 3050 50  0001 C CNN
+F 3 "" H 2350 3050 50  0001 C CNN
+	1    2350 3050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x06 J?
+U 1 1 5DB45FE9
+P 1750 3550
+F 0 "J?" H 1668 3967 50  0000 C CNN
+F 1 "Conn_01x06" H 1668 3876 50  0000 C CNN
+F 2 "" H 1750 3550 50  0001 C CNN
+F 3 "~" H 1750 3550 50  0001 C CNN
+	1    1750 3550
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4350 3700 3950 3700
+Text Label 3950 3700 0    50   ~ 0
+SWDIO
+Wire Wire Line
+	1950 3450 2250 3450
+Wire Wire Line
+	1950 3550 2350 3550
+Wire Wire Line
+	2350 3550 2350 4050
+Wire Wire Line
+	1950 3650 2250 3650
+NoConn ~ 1950 3850
+Text Label 3950 3800 0    50   ~ 0
+SWCLK
+Wire Wire Line
+	3950 3800 4350 3800
+Text Label 2250 3450 2    50   ~ 0
+SWCLK
+Text Label 2250 3650 2    50   ~ 0
+SWDIO
+$Comp
+L power:GND #PWR?
+U 1 1 5DB70B69
+P 2350 4050
+F 0 "#PWR?" H 2350 3800 50  0001 C CNN
+F 1 "GND" H 2355 3877 50  0000 C CNN
+F 2 "" H 2350 4050 50  0001 C CNN
+F 3 "" H 2350 4050 50  0001 C CNN
+	1    2350 4050
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	750  2400 750  4750
+Wire Notes Line
+	750  4750 2700 4750
+Wire Notes Line
+	2700 4750 2700 2350
+Wire Notes Line
+	2700 2350 750  2350
+Text Notes 900  4600 0    50   ~ 0
+Debugging and programming\ninterface
+Wire Wire Line
+	1950 3750 2250 3750
+Text Label 2250 3750 2    50   ~ 0
+RESET
+Wire Wire Line
+	4350 4000 3550 4000
+Text Label 3250 4000 0    50   ~ 0
+RESET
+Wire Wire Line
+	3550 4000 3550 4250
+Connection ~ 3550 4000
+Wire Wire Line
+	3550 4000 3250 4000
+$Comp
+L power:GND #PWR?
+U 1 1 5DB7C91C
+P 3550 4600
+F 0 "#PWR?" H 3550 4350 50  0001 C CNN
+F 1 "GND" H 3555 4427 50  0000 C CNN
+F 2 "" H 3550 4600 50  0001 C CNN
+F 3 "" H 3550 4600 50  0001 C CNN
+	1    3550 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DB7CD5A
+P 3550 4350
+F 0 "C?" H 3642 4396 50  0000 L CNN
+F 1 "0.1uF 0402" H 3642 4305 50  0000 L CNN
+F 2 "" H 3550 4350 50  0001 C CNN
+F 3 "~" H 3550 4350 50  0001 C CNN
+	1    3550 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 4450 3550 4600
 $EndSCHEMATC
