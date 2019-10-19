@@ -4,12 +4,12 @@ EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 7
-Title "flight computer for rocket"
-Date "2019-09-09"
+Sheet 1 5
+Title "Pico lora tracker"
+Date "2019-10-19"
 Rev "1.0"
 Comp "Imperial College Space Society"
-Comment1 "Based on the Picotracker MK II"
+Comment1 "Based on the Picotracker MK II and Project mach one flight computer"
 Comment2 ""
 Comment3 ""
 Comment4 ""
@@ -55,85 +55,11 @@ Connection ~ 7150 1900
 Wire Wire Line
 	7150 1900 7900 1900
 Wire Wire Line
-	2700 5700 1650 5700
-Wire Wire Line
-	2700 5550 1850 5550
-Wire Wire Line
-	2450 4950 2700 4950
-Wire Wire Line
-	2700 5250 2150 5250
-Wire Wire Line
-	2700 5400 2000 5400
-Wire Wire Line
-	2700 5100 2300 5100
-$Sheet
-S 2700 4550 2350 1600
-U 5D5B17D8
-F0 "telemetry_radio" 50
-F1 "telemetry_radio.sch" 50
-F2 "RF_SCLK" I L 2700 5100 50 
-F3 "RF_MISO" O L 2700 5400 50 
-F4 "RF_MOSI" I L 2700 5250 50 
-F5 "RF_NSEL" I L 2700 4950 50 
-F6 "RF_SDN" I L 2700 5550 50 
-F7 "RF_NIRQ" O L 2700 5700 50 
-F8 "RF_GPIO0" B L 2700 5850 50 
-F9 "RF_GPIO1" B L 2700 6000 50 
-$EndSheet
-Wire Wire Line
-	6450 3450 6450 5050
-Wire Wire Line
-	6450 5050 7900 5050
-Wire Wire Line
-	7900 5150 6350 5150
-Wire Wire Line
-	6350 5150 6350 3550
-Wire Wire Line
-	2700 5850 1450 5850
-Wire Wire Line
-	2700 6000 1250 6000
-Wire Wire Line
-	5750 4000 5050 4000
-Wire Wire Line
-	5050 3900 5850 3900
-Wire Wire Line
-	6350 3550 5050 3550
-Wire Wire Line
-	5050 3450 6450 3450
-Wire Wire Line
 	5050 1450 7900 1450
 Wire Wire Line
 	5050 1900 7150 1900
 Wire Wire Line
 	5050 1750 7350 1750
-Wire Wire Line
-	1850 2700 1850 5550
-Wire Wire Line
-	2450 3300 2450 4950
-Wire Wire Line
-	1650 2550 2700 2550
-Wire Wire Line
-	1450 2400 2700 2400
-Wire Wire Line
-	1850 2700 2700 2700
-Wire Wire Line
-	2150 3000 2700 3000
-Wire Wire Line
-	2300 3150 2700 3150
-Wire Wire Line
-	2700 3300 2450 3300
-Wire Wire Line
-	1250 2250 2700 2250
-Wire Wire Line
-	1250 6000 1250 2250
-Wire Wire Line
-	1450 5850 1450 2400
-Wire Wire Line
-	1650 5700 1650 2550
-Wire Wire Line
-	2150 5250 2150 3000
-Wire Wire Line
-	2300 5100 2300 3150
 Wire Wire Line
 	2700 6700 900  6700
 Wire Wire Line
@@ -162,14 +88,6 @@ Wire Wire Line
 Wire Wire Line
 	700  6900 2700 6900
 Wire Wire Line
-	5750 5800 5750 4000
-Wire Wire Line
-	7900 5800 5750 5800
-Wire Wire Line
-	5850 5700 7900 5700
-Wire Wire Line
-	5850 3900 5850 5700
-Wire Wire Line
 	6750 4000 7900 4000
 Wire Wire Line
 	6750 2900 6750 4000
@@ -184,25 +102,11 @@ Wire Wire Line
 Wire Wire Line
 	5050 1300 7900 1300
 Wire Wire Line
-	2000 2850 2700 2850
-Wire Wire Line
-	2000 2850 2000 5400
-Wire Wire Line
 	5050 2050 7900 2050
 Wire Wire Line
 	7900 2200 5050 2200
 Wire Wire Line
 	5050 2350 7900 2350
-$Sheet
-S 7900 4700 2350 1600
-U 5D6468D5
-F0 "pyro_driver" 50
-F1 "pyro_driver.sch" 50
-F2 "SENSE_FET_A" O L 7900 5050 50 
-F3 "FIRE_A" O L 7900 5700 50 
-F4 "SENSE_FET_B" O L 7900 5150 50 
-F5 "FIRE_B" O L 7900 5800 50 
-$EndSheet
 Wire Wire Line
 	6950 3800 6950 2700
 Wire Wire Line
