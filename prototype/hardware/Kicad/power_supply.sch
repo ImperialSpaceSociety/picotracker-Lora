@@ -5,11 +5,11 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 5 5
-Title ""
-Date "2019-09-09"
+Title "Pico lora tracker"
+Date "2019-10-19"
 Rev "1.0"
 Comp "Imperial College Space Society"
-Comment1 ""
+Comment1 "Based on the Picotracker MK II and Project mach one flight computer"
 Comment2 ""
 Comment3 ""
 Comment4 ""

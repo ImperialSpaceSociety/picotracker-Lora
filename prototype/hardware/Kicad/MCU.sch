@@ -4,111 +4,16 @@ EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 5 5
-Title ""
-Date "2019-09-09"
+Sheet 4 5
+Title "Pico lora tracker"
+Date "2019-10-19"
 Rev "1.0"
 Comp "Imperial College Space Society"
-Comment1 ""
+Comment1 "Based on the Picotracker MK II and Project mach one flight computer"
 Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-$Comp
-L power:GND #PWR0106
-U 1 1 5D8CC1E1
-P 10900 5600
-F 0 "#PWR0106" H 10900 5350 50  0001 C CNN
-F 1 "GND" H 10905 5427 50  0000 C CNN
-F 2 "" H 10900 5600 50  0001 C CNN
-F 3 "" H 10900 5600 50  0001 C CNN
-	1    10900 5600
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10900 5300 10900 5600
-Connection ~ 10900 5300
-Wire Wire Line
-	10900 4900 10900 5300
-Wire Wire Line
-	10050 4900 9700 4900
-Wire Wire Line
-	10050 5300 9700 5300
-Text Label 9700 5300 0    50   ~ 0
-LED_BLUE
-Text Label 9700 4900 0    50   ~ 0
-LED_RED
-Wire Wire Line
-	10350 5300 10450 5300
-Wire Wire Line
-	10750 5300 10900 5300
-Wire Wire Line
-	10350 4900 10450 4900
-Wire Wire Line
-	10750 4900 10900 4900
-Wire Notes Line
-	9550 6150 11050 6150
-Text Notes 9600 6100 0    50   ~ 0
-Two indicator LEDs
-$Comp
-L Device:R R25
-U 1 1 5D84A9D3
-P 10200 4900
-F 0 "R25" V 10100 5000 50  0000 C CNN
-F 1 "1K" V 10100 4850 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 10130 4900 50  0001 C CNN
-F 3 "~" H 10200 4900 50  0001 C CNN
-F 4 "0.035" H 10200 4900 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/2132266/" H 10200 4900 50  0001 C CNN "Purchase link"
-F 6 "50" H 10200 4900 50  0001 C CNN "min_quantity"
-	1    10200 4900
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:LED D1
-U 1 1 5D84CD91
-P 10600 4900
-F 0 "D1" H 10593 4645 50  0000 C CNN
-F 1 "RED_LED" H 10593 4736 50  0000 C CNN
-F 2 "LED_SMD:LED_0603_1608Metric" H 10600 4900 50  0001 C CNN
-F 3 "~" H 10600 4900 50  0001 C CNN
-F 4 "0.038" H 10600 4900 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/leds/0450711/" H 10600 4900 50  0001 C CNN "Purchase link"
-F 6 "50" H 10600 4900 50  0001 C CNN "min_quantity"
-	1    10600 4900
-	-1   0    0    1   
-$EndComp
-$Comp
-L Device:R R26
-U 1 1 5D8A257E
-P 10200 5300
-F 0 "R26" V 10100 5400 50  0000 C CNN
-F 1 "1K" V 10100 5250 50  0000 C CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 10130 5300 50  0001 C CNN
-F 3 "~" H 10200 5300 50  0001 C CNN
-F 4 "0.035" H 10200 5300 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/2132266/" H 10200 5300 50  0001 C CNN "Purchase link"
-F 6 "50" H 10200 5300 50  0001 C CNN "min_quantity"
-	1    10200 5300
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:LED D2
-U 1 1 5D8A258A
-P 10600 5300
-F 0 "D2" H 10593 5045 50  0000 C CNN
-F 1 "BLUE_LED" H 10593 5136 50  0000 C CNN
-F 2 "LED_SMD:LED_0603_1608Metric" H 10600 5300 50  0001 C CNN
-F 3 "~" H 10600 5300 50  0001 C CNN
-	1    10600 5300
-	-1   0    0    1   
-$EndComp
-Wire Notes Line
-	9550 4500 11050 4500
-Wire Notes Line
-	11050 6150 11050 4500
-Wire Notes Line
-	9550 6150 9550 4500
 $Comp
 L RF_Module:CMWX1ZZABZ-078 U?
 U 1 1 5DB27A2E
@@ -188,29 +93,29 @@ $EndComp
 Wire Wire Line
 	4000 5300 4000 5450
 Wire Wire Line
-	1950 3350 2350 3350
+	1550 3250 1950 3250
 Wire Wire Line
-	2350 3350 2350 3050
+	1950 3250 1950 2950
 $Comp
 L power:+3.3V #PWR?
 U 1 1 5DB55728
-P 2350 3050
-F 0 "#PWR?" H 2350 2900 50  0001 C CNN
-F 1 "+3.3V" H 2365 3223 50  0000 C CNN
-F 2 "" H 2350 3050 50  0001 C CNN
-F 3 "" H 2350 3050 50  0001 C CNN
-	1    2350 3050
+P 1950 2950
+F 0 "#PWR?" H 1950 2800 50  0001 C CNN
+F 1 "+3.3V" H 1965 3123 50  0000 C CNN
+F 2 "" H 1950 2950 50  0001 C CNN
+F 3 "" H 1950 2950 50  0001 C CNN
+	1    1950 2950
 	-1   0    0    -1  
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x06 J?
 U 1 1 5DB45FE9
-P 1750 3550
-F 0 "J?" H 1668 3967 50  0000 C CNN
-F 1 "Conn_01x06" H 1668 3876 50  0000 C CNN
-F 2 "" H 1750 3550 50  0001 C CNN
-F 3 "~" H 1750 3550 50  0001 C CNN
-	1    1750 3550
+P 1350 3450
+F 0 "J?" H 1268 3867 50  0000 C CNN
+F 1 "Conn_01x06" H 1268 3776 50  0000 C CNN
+F 2 "" H 1350 3450 50  0001 C CNN
+F 3 "~" H 1350 3450 50  0001 C CNN
+	1    1350 3450
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
@@ -218,31 +123,31 @@ Wire Wire Line
 Text Label 3900 3700 0    50   ~ 0
 SWDIO
 Wire Wire Line
-	1950 3450 2250 3450
+	1550 3350 1850 3350
 Wire Wire Line
-	1950 3550 2350 3550
+	1550 3450 1950 3450
 Wire Wire Line
-	2350 3550 2350 4050
+	1950 3450 1950 3950
 Wire Wire Line
-	1950 3650 2250 3650
-NoConn ~ 1950 3850
+	1550 3550 1850 3550
+NoConn ~ 1550 3750
 Text Label 3900 3800 0    50   ~ 0
 SWCLK
 Wire Wire Line
 	3900 3800 4350 3800
-Text Label 2250 3450 2    50   ~ 0
+Text Label 1850 3350 2    50   ~ 0
 SWCLK
-Text Label 2250 3650 2    50   ~ 0
+Text Label 1850 3550 2    50   ~ 0
 SWDIO
 $Comp
 L power:GND #PWR?
 U 1 1 5DB70B69
-P 2350 4050
-F 0 "#PWR?" H 2350 3800 50  0001 C CNN
-F 1 "GND" H 2355 3877 50  0000 C CNN
-F 2 "" H 2350 4050 50  0001 C CNN
-F 3 "" H 2350 4050 50  0001 C CNN
-	1    2350 4050
+P 1950 3950
+F 0 "#PWR?" H 1950 3700 50  0001 C CNN
+F 1 "GND" H 1955 3777 50  0000 C CNN
+F 2 "" H 1950 3950 50  0001 C CNN
+F 3 "" H 1950 3950 50  0001 C CNN
+	1    1950 3950
 	1    0    0    -1  
 $EndComp
 Wire Notes Line
@@ -256,8 +161,8 @@ Wire Notes Line
 Text Notes 900  4600 0    50   ~ 0
 Debugging and programming\ninterface
 Wire Wire Line
-	1950 3750 2250 3750
-Text Label 2250 3750 2    50   ~ 0
+	1550 3650 1850 3650
+Text Label 1850 3650 2    50   ~ 0
 RESET
 Wire Wire Line
 	4350 4000 3550 4000
@@ -468,7 +373,7 @@ Wire Wire Line
 	6550 4900 6550 5100
 Connection ~ 6550 4900
 Wire Wire Line
-	6550 4900 6700 4900
+	6550 4900 6650 4900
 $Comp
 L power:GND #PWR?
 U 1 1 5DBCE3C8
@@ -525,14 +430,22 @@ Wire Wire Line
 $Comp
 L Device:L L?
 U 1 1 5DBD576A
-P 6850 4900
-F 0 "L?" V 6669 4900 50  0000 C CNN
-F 1 "NF 0603" V 6760 4900 50  0000 C CNN
-F 2 "" H 6850 4900 50  0001 C CNN
-F 3 "~" H 6850 4900 50  0001 C CNN
-	1    6850 4900
+P 6800 4900
+F 0 "L?" V 6619 4900 50  0000 C CNN
+F 1 "NF 0603" V 6710 4900 50  0000 C CNN
+F 2 "" H 6800 4900 50  0001 C CNN
+F 3 "~" H 6800 4900 50  0001 C CNN
+	1    6800 4900
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	7000 4900 7100 4900
+	6950 4900 7100 4900
+Wire Wire Line
+	6150 3100 6800 3100
+Wire Wire Line
+	6150 3200 6800 3200
+Text HLabel 6800 3100 2    50   Input ~ 0
+I2C1_SCL
+Text HLabel 6800 3200 2    50   Input ~ 0
+I2C1_SDA
 $EndSCHEMATC
