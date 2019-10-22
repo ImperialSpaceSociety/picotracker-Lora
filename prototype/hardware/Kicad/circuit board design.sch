@@ -137,13 +137,13 @@ Text Label 1650 1950 2    50   ~ 0
 RESET
 Wire Wire Line
 	5350 4300 4550 4300
-Text Label 4250 4300 0    50   ~ 0
+Text Label 4000 4300 0    50   ~ 0
 RESET
 Wire Wire Line
 	4550 4300 4550 4550
 Connection ~ 4550 4300
 Wire Wire Line
-	4550 4300 4250 4300
+	4550 4300 4000 4300
 $Comp
 L power:GND #PWR?
 U 1 1 5DC84068
