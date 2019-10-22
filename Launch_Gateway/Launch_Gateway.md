@@ -2,7 +2,6 @@
 
 
 
-The LoRaWAN Pico Balloons will be launched from safe approved launch sites which may not hav existing Things Network LoRaWAN coverage. The Launch Groundstation provides both a mobile Gateway th the Things Network, but also local monitoring of the balloon payload.
 
 ## Requirements
 * Portable Things Network LoRaWAN Gateway
@@ -21,6 +20,17 @@ The LoRaWAN Pico Balloons will be launched from safe approved launch sites which
 * 868 Antenna
 * Peli Case
 * 20 Ah USB Battery Pack
+
+## Application implementation
+
+* Things Network Packet Forwarder
+* Local Access Point
+* Cellular 3G/4G Modem
+* GPS
+* Python Language
+* tcpdump of payload and metadata
+* display of metadata
+* decryption of payload data and display
 
 ## License
 

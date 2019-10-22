@@ -11,7 +11,7 @@ As of now, 19/10/19, we have settled on the following components to go on the tr
 
 ### Tracker
 
-* Murata ABZ LoRa Module MCU with 833MHz LoRaWAN Radio and 32 Bit ARM CPU
+* Murata ABZ LoRa Module MCU with 868MHz LoRaWAN Radio and 32 Bit ARM CPU
 * Ublox Max M8Q GPS module
 * MS8607 Pressure temp humidity sensor
 * Solar Power Management
