@@ -1,4 +1,5 @@
 (fp_lib_table
   (lib (name flight-computer)(type KiCad)(uri "${KIPRJMOD}/flight computer.pretty")(options "")(descr ""))
   (lib (name pico_tracker)(type KiCad)(uri ${KIPRJMOD}/pico_tracker.pretty)(options "")(descr ""))
+  (lib (name femto_footprints)(type KiCad)(uri "${KIPRJMOD}/footprints from Femto.pretty")(options "")(descr ""))
 )

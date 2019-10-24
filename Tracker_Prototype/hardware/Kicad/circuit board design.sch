@@ -48,19 +48,6 @@ F 3 "" H 5000 5750 50  0001 C CNN
 	1    5000 5750
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:R R?
-U 1 1 5DC84036
-P 5000 5450
-AR Path="/5D5B15F7/5DC84036" Ref="R?"  Part="1" 
-AR Path="/5DC84036" Ref="R3"  Part="1" 
-F 0 "R3" H 5070 5496 50  0000 L CNN
-F 1 "10K 0402" H 5070 5405 50  0000 L CNN
-F 2 "" V 4930 5450 50  0001 C CNN
-F 3 "~" H 5000 5450 50  0001 C CNN
-	1    5000 5450
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	5000 5600 5000 5750
 Wire Wire Line
@@ -78,19 +65,6 @@ F 1 "+3.3V" H 1765 1423 50  0000 C CNN
 F 2 "" H 1750 1250 50  0001 C CNN
 F 3 "" H 1750 1250 50  0001 C CNN
 	1    1750 1250
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector_Generic:Conn_01x06 J?
-U 1 1 5DC84045
-P 1150 1750
-AR Path="/5D5B15F7/5DC84045" Ref="J?"  Part="1" 
-AR Path="/5DC84045" Ref="J1"  Part="1" 
-F 0 "J1" H 1068 2167 50  0000 C CNN
-F 1 "Conn_01x06" H 1068 2076 50  0000 C CNN
-F 2 "" H 1150 1750 50  0001 C CNN
-F 3 "~" H 1150 1750 50  0001 C CNN
-	1    1150 1750
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
@@ -157,19 +131,6 @@ F 3 "" H 4550 4900 50  0001 C CNN
 	1    4550 4900
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DC8406E
-P 4550 4650
-AR Path="/5D5B15F7/5DC8406E" Ref="C?"  Part="1" 
-AR Path="/5DC8406E" Ref="C1"  Part="1" 
-F 0 "C1" H 4642 4696 50  0000 L CNN
-F 1 "0.1uF 0402" H 4642 4605 50  0000 L CNN
-F 2 "" H 4550 4650 50  0001 C CNN
-F 3 "~" H 4550 4650 50  0001 C CNN
-	1    4550 4650
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	4550 4750 4550 4900
 Wire Wire Line
@@ -188,19 +149,6 @@ Wire Wire Line
 	6450 1350 7200 1350
 Wire Wire Line
 	7200 1350 7200 1450
-$Comp
-L Device:C_Small C?
-U 1 1 5DC84080
-P 6450 1550
-AR Path="/5D5B15F7/5DC84080" Ref="C?"  Part="1" 
-AR Path="/5DC84080" Ref="C5"  Part="1" 
-F 0 "C5" H 6542 1596 50  0000 L CNN
-F 1 "0.1uF 0402" H 6542 1505 50  0000 L CNN
-F 2 "" H 6450 1550 50  0001 C CNN
-F 3 "~" H 6450 1550 50  0001 C CNN
-	1    6450 1550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	6450 1650 6450 1700
 Connection ~ 7200 1350
@@ -227,34 +175,8 @@ F 3 "" H 7900 1050 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	7900 1350 7900 1050
-$Comp
-L Device:C_Small C?
-U 1 1 5DC84094
-P 7200 1550
-AR Path="/5D5B15F7/5DC84094" Ref="C?"  Part="1" 
-AR Path="/5DC84094" Ref="C7"  Part="1" 
-F 0 "C7" H 7292 1596 50  0000 L CNN
-F 1 "1uF 0603" H 7292 1505 50  0000 L CNN
-F 2 "" H 7200 1550 50  0001 C CNN
-F 3 "~" H 7200 1550 50  0001 C CNN
-	1    7200 1550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	7200 1650 7200 1700
-$Comp
-L Device:C_Small C?
-U 1 1 5DC8409B
-P 7900 1550
-AR Path="/5D5B15F7/5DC8409B" Ref="C?"  Part="1" 
-AR Path="/5DC8409B" Ref="C10"  Part="1" 
-F 0 "C10" H 7992 1596 50  0000 L CNN
-F 1 "10uF 0603" H 7992 1505 50  0000 L CNN
-F 2 "" H 7900 1550 50  0001 C CNN
-F 3 "~" H 7900 1550 50  0001 C CNN
-	1    7900 1550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	7900 1650 7900 1700
 $Comp
@@ -298,34 +220,8 @@ F 3 "" H 4750 1050 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	4750 1350 4750 1050
-$Comp
-L Device:C_Small C?
-U 1 1 5DC840B7
-P 5450 1550
-AR Path="/5D5B15F7/5DC840B7" Ref="C?"  Part="1" 
-AR Path="/5DC840B7" Ref="C3"  Part="1" 
-F 0 "C3" H 5358 1596 50  0000 R CNN
-F 1 "0.1uF 0402" H 5358 1505 50  0000 R CNN
-F 2 "" H 5450 1550 50  0001 C CNN
-F 3 "~" H 5450 1550 50  0001 C CNN
-	1    5450 1550
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
 	5450 1650 5450 1700
-$Comp
-L Device:C_Small C?
-U 1 1 5DC840BE
-P 4750 1550
-AR Path="/5D5B15F7/5DC840BE" Ref="C?"  Part="1" 
-AR Path="/5DC840BE" Ref="C2"  Part="1" 
-F 0 "C2" H 4842 1596 50  0000 L CNN
-F 1 "10uF 0603" H 4842 1505 50  0000 L CNN
-F 2 "" H 4750 1550 50  0001 C CNN
-F 3 "~" H 4750 1550 50  0001 C CNN
-	1    4750 1550
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
 	4750 1650 4750 1700
 $Comp
@@ -384,49 +280,10 @@ F 3 "" H 8100 5750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Connection ~ 8100 5200
-$Comp
-L Device:C_Small C?
-U 1 1 5DC840E6
-P 7550 5500
-AR Path="/5D5B15F7/5DC840E6" Ref="C?"  Part="1" 
-AR Path="/5DC840E6" Ref="C9"  Part="1" 
-F 0 "C9" H 7642 5546 50  0000 L CNN
-F 1 "NF 0603" H 7642 5455 50  0000 L CNN
-F 2 "" H 7550 5500 50  0001 C CNN
-F 3 "~" H 7550 5500 50  0001 C CNN
-	1    7550 5500
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	7550 5600 7550 5750
-$Comp
-L Device:C_Small C?
-U 1 1 5DC840ED
-P 8100 5500
-AR Path="/5D5B15F7/5DC840ED" Ref="C?"  Part="1" 
-AR Path="/5DC840ED" Ref="C11"  Part="1" 
-F 0 "C11" H 8192 5546 50  0000 L CNN
-F 1 "NF 0603" H 8192 5455 50  0000 L CNN
-F 2 "" H 8100 5500 50  0001 C CNN
-F 3 "~" H 8100 5500 50  0001 C CNN
-	1    8100 5500
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8100 5600 8100 5750
-$Comp
-L Device:L L?
-U 1 1 5DC840F4
-P 7800 5200
-AR Path="/5D5B15F7/5DC840F4" Ref="L?"  Part="1" 
-AR Path="/5DC840F4" Ref="L1"  Part="1" 
-F 0 "L1" V 7619 5200 50  0000 C CNN
-F 1 "NF 0603" V 7710 5200 50  0000 C CNN
-F 2 "" H 7800 5200 50  0001 C CNN
-F 3 "~" H 7800 5200 50  0001 C CNN
-	1    7800 5200
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	7950 5200 8100 5200
 Wire Wire Line
@@ -515,40 +372,6 @@ F 3 "" H 14650 2700 50  0001 C CNN
 	1    14650 2700
 	1    0    0    -1  
 $EndComp
-$Comp
-L Sensor_Pressure:MS5607-02BA U?
-U 1 1 5DC8412A
-P 14650 3300
-AR Path="/5D5B1586/5DC8412A" Ref="U?"  Part="1" 
-AR Path="/5D5B15F7/5DC8412A" Ref="U?"  Part="1" 
-AR Path="/5DC8412A" Ref="U6"  Part="1" 
-F 0 "U6" H 14980 3346 50  0000 L CNN
-F 1 "MS5607-02BA" H 14980 3255 50  0000 L CNN
-F 2 "Package_LGA:LGA-8_3x5mm_P1.25mm" H 14650 3300 50  0001 C CNN
-F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5607-02BA03%7FB2%7Fpdf%7FEnglish%7FENG_DS_MS5607-02BA03_B2.pdf%7FCAT-BLPS0035" H 14650 3300 50  0001 C CNN
-F 4 "https://uk.rs-online.com/web/p/absolute-pressure-sensor-ics/8937095/" H 14650 3300 50  0001 C CNN "Purchase link"
-F 5 "2.86" H 14650 3300 50  0001 C CNN "Cost"
-F 6 "1" H 14650 3300 50  0001 C CNN "min_quantity"
-	1    14650 3300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DC84133
-P 15100 2850
-AR Path="/5D5B1586/5DC84133" Ref="C?"  Part="1" 
-AR Path="/5D5B15F7/5DC84133" Ref="C?"  Part="1" 
-AR Path="/5DC84133" Ref="C14"  Part="1" 
-F 0 "C14" H 15192 2896 50  0000 L CNN
-F 1 "220nF" H 15192 2805 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 15100 2850 50  0001 C CNN
-F 3 "~" H 15100 2850 50  0001 C CNN
-F 4 "0.003" H 15100 2850 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/0391135/" H 15100 2850 50  0001 C CNN "Purchase link"
-F 6 "50" H 15100 2850 50  0001 C CNN "min_quantity"
-	1    15100 2850
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	13950 2200 13950 3400
 Wire Wire Line
@@ -591,42 +414,8 @@ F 3 "" H 13000 1050 50  0001 C CNN
 	1    13000 1050
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:R R?
-U 1 1 5DC84150
-P 12700 1550
-AR Path="/5D5B1586/5DC84150" Ref="R?"  Part="1" 
-AR Path="/5D5B15F7/5DC84150" Ref="R?"  Part="1" 
-AR Path="/5DC84150" Ref="R4"  Part="1" 
-F 0 "R4" H 12770 1596 50  0000 L CNN
-F 1 "4.7K" H 12770 1505 50  0000 L CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 12630 1550 50  0001 C CNN
-F 3 "~" H 12700 1550 50  0001 C CNN
-F 4 "0.01" H 12700 1550 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 12700 1550 50  0001 C CNN "Purchase link"
-F 6 "50" H 12700 1550 50  0001 C CNN "min_quantity"
-	1    12700 1550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	12700 1700 12700 2100
-$Comp
-L Device:R R?
-U 1 1 5DC8415A
-P 13000 1550
-AR Path="/5D5B1586/5DC8415A" Ref="R?"  Part="1" 
-AR Path="/5D5B15F7/5DC8415A" Ref="R?"  Part="1" 
-AR Path="/5DC8415A" Ref="R5"  Part="1" 
-F 0 "R5" H 13070 1596 50  0000 L CNN
-F 1 "4.7K" H 13070 1505 50  0000 L CNN
-F 2 "Resistor_SMD:R_0603_1608Metric" V 12930 1550 50  0001 C CNN
-F 3 "~" H 13000 1550 50  0001 C CNN
-F 4 "0.01" H 13000 1550 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 13000 1550 50  0001 C CNN "Purchase link"
-F 6 "50" H 13000 1550 50  0001 C CNN "min_quantity"
-	1    13000 1550
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	13000 1400 13000 1050
 Wire Wire Line
@@ -647,11 +436,6 @@ F 3 "" H 13550 8350 50  0001 C CNN
 	1    13550 8350
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	13350 6100 13350 6750
-Connection ~ 13350 6100
-Wire Wire Line
-	13350 5550 13350 6100
 $Comp
 L power:+3.3V #PWR?
 U 1 1 5DC841BA
@@ -672,49 +456,10 @@ Wire Wire Line
 	13150 6400 13150 6500
 Wire Wire Line
 	13150 6100 12800 6100
-Connection ~ 13150 6100
 Wire Wire Line
 	13150 6200 13150 6100
 Wire Wire Line
 	12800 6100 12800 6200
-Wire Wire Line
-	13350 6100 13150 6100
-$Comp
-L Device:C_Small C?
-U 1 1 5DC841CA
-P 12800 6300
-AR Path="/5D5B17D8/5DC841CA" Ref="C?"  Part="1" 
-AR Path="/5D5B165E/5DC841CA" Ref="C?"  Part="1" 
-AR Path="/5D5B15F7/5DC841CA" Ref="C?"  Part="1" 
-AR Path="/5DC841CA" Ref="C12"  Part="1" 
-F 0 "C12" H 12708 6346 50  0000 R CNN
-F 1 "100nF" H 12708 6255 50  0000 R CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 12800 6300 50  0001 C CNN
-F 3 "https://docs-emea.rs-online.com/webdocs/0dc2/0900766b80dc2409.pdf" H 12800 6300 50  0001 C CNN
-F 4 "0.01" H 12800 6300 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983251/" H 12800 6300 50  0001 C CNN "Purchase link"
-F 6 "50" H 12800 6300 50  0001 C CNN "min_quantity"
-	1    12800 6300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DC841D3
-P 13150 6300
-AR Path="/5D5B17D8/5DC841D3" Ref="C?"  Part="1" 
-AR Path="/5D5B165E/5DC841D3" Ref="C?"  Part="1" 
-AR Path="/5D5B15F7/5DC841D3" Ref="C?"  Part="1" 
-AR Path="/5DC841D3" Ref="C13"  Part="1" 
-F 0 "C13" H 13058 6346 50  0000 R CNN
-F 1 "10uF" H 13058 6255 50  0000 R CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 13150 6300 50  0001 C CNN
-F 3 "https://docs-emea.rs-online.com/webdocs/13b3/0900766b813b3e64.pdf" H 13150 6300 50  0001 C CNN
-F 4 "0.07" H 13150 6300 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/8467293/" H 13150 6300 50  0001 C CNN "Purchase link"
-F 6 "100" H 13150 6300 50  0001 C CNN "min_quantity"
-	1    13150 6300
-	1    0    0    -1  
-$EndComp
 $Comp
 L power:GND #PWR?
 U 1 1 5DC841DF
@@ -735,17 +480,6 @@ Wire Wire Line
 Connection ~ 12800 6500
 Wire Wire Line
 	12800 6500 13150 6500
-$Comp
-L Device:Antenna AE2
-U 1 1 5DDA946B
-P 14800 7150
-F 0 "AE2" H 14880 7139 50  0000 L CNN
-F 1 "GPS Antenna" H 14880 7048 50  0000 L CNN
-F 2 "" H 14800 7150 50  0001 C CNN
-F 3 "~" H 14800 7150 50  0001 C CNN
-	1    14800 7150
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	14800 7500 14800 7350
 Text Notes 11200 4850 0    50   ~ 0
@@ -768,17 +502,6 @@ Text Label 7800 3400 2    50   ~ 0
 I2C1_SCL
 Text Label 7800 3500 2    50   ~ 0
 I2C1_SDA
-$Comp
-L Device:Antenna AE1
-U 1 1 5DE442FF
-P 8750 4850
-F 0 "AE1" H 8830 4839 50  0000 L CNN
-F 1 "Lora Antenna" H 8830 4748 50  0000 L CNN
-F 2 "" H 8750 4850 50  0001 C CNN
-F 3 "~" H 8750 4850 50  0001 C CNN
-	1    8750 4850
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8750 5200 8750 5050
 Wire Wire Line
@@ -791,72 +514,6 @@ Text Label 12250 7400 0    50   ~ 0
 I2C1_SDA
 Text Label 12250 7500 0    50   ~ 0
 I2C1_SCL
-$Comp
-L Device:Solar_Cell SC1
-U 1 1 5DEDBCFD
-P 2300 8350
-F 0 "SC1" V 1995 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 2086 8400 50  0000 C CNN
-F 2 "" V 2300 8410 50  0001 C CNN
-F 3 "~" V 2300 8410 50  0001 C CNN
-	1    2300 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC2
-U 1 1 5DEDD65F
-P 2800 8350
-F 0 "SC2" V 2495 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 2586 8400 50  0000 C CNN
-F 2 "" V 2800 8410 50  0001 C CNN
-F 3 "~" V 2800 8410 50  0001 C CNN
-	1    2800 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC3
-U 1 1 5DEDDC62
-P 3300 8350
-F 0 "SC3" V 2995 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 3086 8400 50  0000 C CNN
-F 2 "" V 3300 8410 50  0001 C CNN
-F 3 "~" V 3300 8410 50  0001 C CNN
-	1    3300 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC4
-U 1 1 5DEDE1EB
-P 3750 8350
-F 0 "SC4" V 3445 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 3536 8400 50  0000 C CNN
-F 2 "" V 3750 8410 50  0001 C CNN
-F 3 "~" V 3750 8410 50  0001 C CNN
-	1    3750 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC5
-U 1 1 5DEDE88C
-P 4200 8350
-F 0 "SC5" V 3895 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 3986 8400 50  0000 C CNN
-F 2 "" V 4200 8410 50  0001 C CNN
-F 3 "~" V 4200 8410 50  0001 C CNN
-	1    4200 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC6
-U 1 1 5DEDF009
-P 4650 8350
-F 0 "SC6" V 4345 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 4436 8400 50  0000 C CNN
-F 2 "" V 4650 8410 50  0001 C CNN
-F 3 "~" V 4650 8410 50  0001 C CNN
-	1    4650 8350
-	0    1    1    0   
-$EndComp
 $Comp
 L power:GND #PWR0102
 U 1 1 5DEE121A
@@ -873,7 +530,7 @@ Wire Wire Line
 Wire Wire Line
 	1450 8350 2200 8350
 Wire Wire Line
-	4850 8350 5550 8350
+	4850 8350 5200 8350
 Wire Wire Line
 	5550 8350 5550 7850
 $Comp
@@ -911,23 +568,10 @@ Wire Wire Line
 	6050 1350 6050 2400
 Text Label 4900 4000 0    50   ~ 0
 SWDIO
-$Comp
-L RF_Module:CMWX1ZZABZ-078 U?
-U 1 1 5DC84013
-P 6250 3900
-AR Path="/5D5B15F7/5DC84013" Ref="U?"  Part="1" 
-AR Path="/5DC84013" Ref="U3"  Part="1" 
-F 0 "U3" H 5550 5500 50  0000 C CNN
-F 1 "CMWX1ZZABZ-078" H 5550 5350 50  0000 C CNN
-F 2 "RF_Module:CMWX1ZZABZ" H 6250 3900 50  0001 C CNN
-F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 8700 2400 50  0001 C CNN
-	1    6250 3900
-	1    0    0    -1  
-$EndComp
-Text Label 7800 3800 2    50   ~ 0
+Text Label 4900 3900 0    50   ~ 0
 VDD_TCXO
 Wire Wire Line
-	7150 3800 7800 3800
+	5350 3900 4900 3900
 Wire Wire Line
 	13450 6750 13350 6750
 Connection ~ 13350 6750
@@ -1002,29 +646,17 @@ Wire Wire Line
 Wire Wire Line
 	12950 7400 12250 7400
 NoConn ~ 13750 6800
-NoConn ~ 14150 7300
 Wire Wire Line
 	14150 7500 14800 7500
 Wire Wire Line
 	13550 8200 13550 8350
-$Comp
-L RF_GPS:MAX-M8C U1
-U 1 1 5DDCC018
-P 13550 7500
-F 0 "U1" H 13150 6700 50  0000 C CNN
-F 1 "MAX-M8C" H 13150 6600 50  0000 C CNN
-F 2 "RF_GPS:ublox_MAX" H 13950 6850 50  0001 C CNN
-F 3 "https://www.u-blox.com/sites/default/files/MAX-M8-FW3_DataSheet_%28UBX-15031506%29.pdf" H 13550 7500 50  0001 C CNN
-	1    13550 7500
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	14150 7800 15000 7800
 Text Label 15000 7800 2    50   ~ 0
 GPS_TIMEPULSE
 Wire Wire Line
-	7150 3900 7800 3900
-Text Label 7800 3900 2    50   ~ 0
+	7150 3800 7800 3800
+Text Label 7800 3800 2    50   ~ 0
 GPS_TIMEPULSE
 NoConn ~ 5350 4800
 NoConn ~ 5350 4700
@@ -1041,4 +673,409 @@ Wire Notes Line
 	16050 650  16050 9150
 Text Notes 3050 6550 0    50   ~ 0
 Main Microcontroller + Lora tranceiver\n
+$Comp
+L RF_GPS:MAX-M8C U1
+U 1 1 5DDCC018
+P 13550 7500
+F 0 "U1" H 13150 6700 50  0000 C CNN
+F 1 "MAX-M8C" H 13150 6600 50  0000 C CNN
+F 2 "RF_GPS:ublox_MAX" H 13950 6850 50  0001 C CNN
+F 3 "https://www.u-blox.com/sites/default/files/MAX-M8-FW3_DataSheet_%28UBX-15031506%29.pdf" H 13550 7500 50  0001 C CNN
+	1    13550 7500
+	1    0    0    -1  
+$EndComp
+$Comp
+L RF_Module:CMWX1ZZABZ-078 U?
+U 1 1 5DC84013
+P 6250 3900
+AR Path="/5D5B15F7/5DC84013" Ref="U?"  Part="1" 
+AR Path="/5DC84013" Ref="U3"  Part="1" 
+F 0 "U3" H 5550 5500 50  0000 C CNN
+F 1 "CMWX1ZZABZ-078" H 5550 5350 50  0000 C CNN
+F 2 "RF_Module:CMWX1ZZABZ" H 6250 3900 50  0001 C CNN
+F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 8700 2400 50  0001 C CNN
+	1    6250 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Solar_Cell SC6
+U 1 1 5DEDF009
+P 4650 8350
+F 0 "SC6" V 4345 8400 50  0000 C CNN
+F 1 "Solar_Cell" V 4436 8400 50  0000 C CNN
+F 2 "" V 4650 8410 50  0001 C CNN
+F 3 "~" V 4650 8410 50  0001 C CNN
+	1    4650 8350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Solar_Cell SC5
+U 1 1 5DEDE88C
+P 4200 8350
+F 0 "SC5" V 3895 8400 50  0000 C CNN
+F 1 "Solar_Cell" V 3986 8400 50  0000 C CNN
+F 2 "" V 4200 8410 50  0001 C CNN
+F 3 "~" V 4200 8410 50  0001 C CNN
+	1    4200 8350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Solar_Cell SC4
+U 1 1 5DEDE1EB
+P 3750 8350
+F 0 "SC4" V 3445 8400 50  0000 C CNN
+F 1 "Solar_Cell" V 3536 8400 50  0000 C CNN
+F 2 "" V 3750 8410 50  0001 C CNN
+F 3 "~" V 3750 8410 50  0001 C CNN
+	1    3750 8350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Solar_Cell SC3
+U 1 1 5DEDDC62
+P 3300 8350
+F 0 "SC3" V 2995 8400 50  0000 C CNN
+F 1 "Solar_Cell" V 3086 8400 50  0000 C CNN
+F 2 "" V 3300 8410 50  0001 C CNN
+F 3 "~" V 3300 8410 50  0001 C CNN
+	1    3300 8350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Solar_Cell SC2
+U 1 1 5DEDD65F
+P 2800 8350
+F 0 "SC2" V 2495 8400 50  0000 C CNN
+F 1 "Solar_Cell" V 2586 8400 50  0000 C CNN
+F 2 "" V 2800 8410 50  0001 C CNN
+F 3 "~" V 2800 8410 50  0001 C CNN
+	1    2800 8350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Solar_Cell SC1
+U 1 1 5DEDBCFD
+P 2300 8350
+F 0 "SC1" V 1995 8400 50  0000 C CNN
+F 1 "Solar_Cell" V 2086 8400 50  0000 C CNN
+F 2 "" V 2300 8410 50  0001 C CNN
+F 3 "~" V 2300 8410 50  0001 C CNN
+	1    2300 8350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:Antenna AE1
+U 1 1 5DE442FF
+P 8750 4850
+F 0 "AE1" H 8830 4839 50  0000 L CNN
+F 1 "Lora Antenna" H 8830 4748 50  0000 L CNN
+F 2 "femto_footprints:PAD_3x1.5" H 8750 4850 50  0001 C CNN
+F 3 "~" H 8750 4850 50  0001 C CNN
+	1    8750 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L flight-computer:GPS_Antenna AE2
+U 1 1 5DDA946B
+P 14800 7150
+F 0 "AE2" H 14880 7139 50  0000 L CNN
+F 1 "GPS Antenna" H 14880 7048 50  0000 L CNN
+F 2 "femto_footprints:PAD_3x1.5" H 14800 7150 50  0001 C CNN
+F 3 "~" H 14800 7150 50  0001 C CNN
+	1    14800 7150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC841D3
+P 13150 6300
+AR Path="/5D5B17D8/5DC841D3" Ref="C?"  Part="1" 
+AR Path="/5D5B165E/5DC841D3" Ref="C?"  Part="1" 
+AR Path="/5D5B15F7/5DC841D3" Ref="C?"  Part="1" 
+AR Path="/5DC841D3" Ref="C13"  Part="1" 
+F 0 "C13" H 13058 6346 50  0000 R CNN
+F 1 "10uF" H 13058 6255 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 13150 6300 50  0001 C CNN
+F 3 "https://docs-emea.rs-online.com/webdocs/13b3/0900766b813b3e64.pdf" H 13150 6300 50  0001 C CNN
+F 4 "0.07" H 13150 6300 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/8467293/" H 13150 6300 50  0001 C CNN "Purchase link"
+F 6 "100" H 13150 6300 50  0001 C CNN "min_quantity"
+	1    13150 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC841CA
+P 12800 6300
+AR Path="/5D5B17D8/5DC841CA" Ref="C?"  Part="1" 
+AR Path="/5D5B165E/5DC841CA" Ref="C?"  Part="1" 
+AR Path="/5D5B15F7/5DC841CA" Ref="C?"  Part="1" 
+AR Path="/5DC841CA" Ref="C12"  Part="1" 
+F 0 "C12" H 12708 6346 50  0000 R CNN
+F 1 "100nF" H 12708 6255 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 12800 6300 50  0001 C CNN
+F 3 "https://docs-emea.rs-online.com/webdocs/0dc2/0900766b80dc2409.pdf" H 12800 6300 50  0001 C CNN
+F 4 "0.01" H 12800 6300 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983251/" H 12800 6300 50  0001 C CNN "Purchase link"
+F 6 "50" H 12800 6300 50  0001 C CNN "min_quantity"
+	1    12800 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DC8415A
+P 13000 1550
+AR Path="/5D5B1586/5DC8415A" Ref="R?"  Part="1" 
+AR Path="/5D5B15F7/5DC8415A" Ref="R?"  Part="1" 
+AR Path="/5DC8415A" Ref="R5"  Part="1" 
+F 0 "R5" H 13070 1596 50  0000 L CNN
+F 1 "4.7K" H 13070 1505 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 12930 1550 50  0001 C CNN
+F 3 "~" H 13000 1550 50  0001 C CNN
+F 4 "0.01" H 13000 1550 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 13000 1550 50  0001 C CNN "Purchase link"
+F 6 "50" H 13000 1550 50  0001 C CNN "min_quantity"
+	1    13000 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DC84150
+P 12700 1550
+AR Path="/5D5B1586/5DC84150" Ref="R?"  Part="1" 
+AR Path="/5D5B15F7/5DC84150" Ref="R?"  Part="1" 
+AR Path="/5DC84150" Ref="R4"  Part="1" 
+F 0 "R4" H 12770 1596 50  0000 L CNN
+F 1 "4.7K" H 12770 1505 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 12630 1550 50  0001 C CNN
+F 3 "~" H 12700 1550 50  0001 C CNN
+F 4 "0.01" H 12700 1550 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 12700 1550 50  0001 C CNN "Purchase link"
+F 6 "50" H 12700 1550 50  0001 C CNN "min_quantity"
+	1    12700 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC84133
+P 15100 2850
+AR Path="/5D5B1586/5DC84133" Ref="C?"  Part="1" 
+AR Path="/5D5B15F7/5DC84133" Ref="C?"  Part="1" 
+AR Path="/5DC84133" Ref="C14"  Part="1" 
+F 0 "C14" H 15192 2896 50  0000 L CNN
+F 1 "220nF" H 15192 2805 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 15100 2850 50  0001 C CNN
+F 3 "~" H 15100 2850 50  0001 C CNN
+F 4 "0.003" H 15100 2850 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/0391135/" H 15100 2850 50  0001 C CNN "Purchase link"
+F 6 "50" H 15100 2850 50  0001 C CNN "min_quantity"
+	1    15100 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Sensor_Pressure:MS5607-02BA U?
+U 1 1 5DC8412A
+P 14650 3300
+AR Path="/5D5B1586/5DC8412A" Ref="U?"  Part="1" 
+AR Path="/5D5B15F7/5DC8412A" Ref="U?"  Part="1" 
+AR Path="/5DC8412A" Ref="U6"  Part="1" 
+F 0 "U6" H 14980 3346 50  0000 L CNN
+F 1 "MS5607-02BA" H 14980 3255 50  0000 L CNN
+F 2 "Package_LGA:LGA-8_3x5mm_P1.25mm" H 14650 3300 50  0001 C CNN
+F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5607-02BA03%7FB2%7Fpdf%7FEnglish%7FENG_DS_MS5607-02BA03_B2.pdf%7FCAT-BLPS0035" H 14650 3300 50  0001 C CNN
+F 4 "https://uk.rs-online.com/web/p/absolute-pressure-sensor-ics/8937095/" H 14650 3300 50  0001 C CNN "Purchase link"
+F 5 "2.86" H 14650 3300 50  0001 C CNN "Cost"
+F 6 "1" H 14650 3300 50  0001 C CNN "min_quantity"
+	1    14650 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:L L?
+U 1 1 5DC840F4
+P 7800 5200
+AR Path="/5D5B15F7/5DC840F4" Ref="L?"  Part="1" 
+AR Path="/5DC840F4" Ref="L1"  Part="1" 
+F 0 "L1" V 7619 5200 50  0000 C CNN
+F 1 "NF" V 7710 5200 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 7800 5200 50  0001 C CNN
+F 3 "~" H 7800 5200 50  0001 C CNN
+	1    7800 5200
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC840ED
+P 8100 5500
+AR Path="/5D5B15F7/5DC840ED" Ref="C?"  Part="1" 
+AR Path="/5DC840ED" Ref="C11"  Part="1" 
+F 0 "C11" H 8192 5546 50  0000 L CNN
+F 1 "NF" H 8192 5455 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 8100 5500 50  0001 C CNN
+F 3 "~" H 8100 5500 50  0001 C CNN
+	1    8100 5500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC840E6
+P 7550 5500
+AR Path="/5D5B15F7/5DC840E6" Ref="C?"  Part="1" 
+AR Path="/5DC840E6" Ref="C9"  Part="1" 
+F 0 "C9" H 7642 5546 50  0000 L CNN
+F 1 "NF" H 7642 5455 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 7550 5500 50  0001 C CNN
+F 3 "~" H 7550 5500 50  0001 C CNN
+	1    7550 5500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC840BE
+P 4750 1550
+AR Path="/5D5B15F7/5DC840BE" Ref="C?"  Part="1" 
+AR Path="/5DC840BE" Ref="C2"  Part="1" 
+F 0 "C2" H 4842 1596 50  0000 L CNN
+F 1 "10uF" H 4842 1505 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 4750 1550 50  0001 C CNN
+F 3 "~" H 4750 1550 50  0001 C CNN
+	1    4750 1550
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC840B7
+P 5450 1550
+AR Path="/5D5B15F7/5DC840B7" Ref="C?"  Part="1" 
+AR Path="/5DC840B7" Ref="C3"  Part="1" 
+F 0 "C3" H 5358 1596 50  0000 R CNN
+F 1 "100nF" H 5358 1505 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 5450 1550 50  0001 C CNN
+F 3 "~" H 5450 1550 50  0001 C CNN
+	1    5450 1550
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC8409B
+P 7900 1550
+AR Path="/5D5B15F7/5DC8409B" Ref="C?"  Part="1" 
+AR Path="/5DC8409B" Ref="C10"  Part="1" 
+F 0 "C10" H 7992 1596 50  0000 L CNN
+F 1 "10uF" H 7992 1505 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 7900 1550 50  0001 C CNN
+F 3 "~" H 7900 1550 50  0001 C CNN
+	1    7900 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC84094
+P 7200 1550
+AR Path="/5D5B15F7/5DC84094" Ref="C?"  Part="1" 
+AR Path="/5DC84094" Ref="C7"  Part="1" 
+F 0 "C7" H 7292 1596 50  0000 L CNN
+F 1 "1uF" H 7292 1505 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 7200 1550 50  0001 C CNN
+F 3 "~" H 7200 1550 50  0001 C CNN
+	1    7200 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC84080
+P 6450 1550
+AR Path="/5D5B15F7/5DC84080" Ref="C?"  Part="1" 
+AR Path="/5DC84080" Ref="C5"  Part="1" 
+F 0 "C5" H 6542 1596 50  0000 L CNN
+F 1 "100nF" H 6542 1505 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 6450 1550 50  0001 C CNN
+F 3 "~" H 6450 1550 50  0001 C CNN
+	1    6450 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC8406E
+P 4550 4650
+AR Path="/5D5B15F7/5DC8406E" Ref="C?"  Part="1" 
+AR Path="/5DC8406E" Ref="C1"  Part="1" 
+F 0 "C1" H 4642 4696 50  0000 L CNN
+F 1 "100nF" H 4642 4605 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 4550 4650 50  0001 C CNN
+F 3 "~" H 4550 4650 50  0001 C CNN
+	1    4550 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x06 J?
+U 1 1 5DC84045
+P 1150 1750
+AR Path="/5D5B15F7/5DC84045" Ref="J?"  Part="1" 
+AR Path="/5DC84045" Ref="J1"  Part="1" 
+F 0 "J1" H 1068 2167 50  0000 C CNN
+F 1 "Conn_01x06" H 1068 2076 50  0000 C CNN
+F 2 "femto_footprints:special_test_pads" H 1150 1750 50  0001 C CNN
+F 3 "~" H 1150 1750 50  0001 C CNN
+	1    1150 1750
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DC84036
+P 5000 5450
+AR Path="/5D5B15F7/5DC84036" Ref="R?"  Part="1" 
+AR Path="/5DC84036" Ref="R3"  Part="1" 
+F 0 "R3" H 5070 5496 50  0000 L CNN
+F 1 "10K" H 5070 5405 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 4930 5450 50  0001 C CNN
+F 3 "~" H 5000 5450 50  0001 C CNN
+	1    5000 5450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14150 7300 14250 7300
+Wire Wire Line
+	14250 7300 14250 7350
+$Comp
+L power:GND #PWR?
+U 1 1 5DB685A2
+P 14250 7350
+AR Path="/5D5B165E/5DB685A2" Ref="#PWR?"  Part="1" 
+AR Path="/5D5B15F7/5DB685A2" Ref="#PWR?"  Part="1" 
+AR Path="/5DB685A2" Ref="#PWR0124"  Part="1" 
+F 0 "#PWR0124" H 14250 7100 50  0001 C CNN
+F 1 "GND" H 14350 7350 50  0000 C CNN
+F 2 "" H 14250 7350 50  0001 C CNN
+F 3 "" H 14250 7350 50  0001 C CNN
+	1    14250 7350
+	1    0    0    -1  
+$EndComp
+NoConn ~ 7150 3900
+NoConn ~ 5350 5000
+NoConn ~ 6350 2400
+NoConn ~ 5350 3800
+Connection ~ 13150 6100
+Wire Wire Line
+	13350 5550 13350 6100
+Wire Wire Line
+	13350 6100 13350 6750
+Connection ~ 13350 6100
+Wire Wire Line
+	13350 6100 13150 6100
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 5DBC451E
+P 5200 8350
+F 0 "#FLG0101" H 5200 8425 50  0001 C CNN
+F 1 "PWR_FLAG" H 5200 8523 50  0000 C CNN
+F 2 "" H 5200 8350 50  0001 C CNN
+F 3 "~" H 5200 8350 50  0001 C CNN
+	1    5200 8350
+	1    0    0    -1  
+$EndComp
+Connection ~ 5200 8350
+Wire Wire Line
+	5200 8350 5550 8350
+Text Notes 7100 2400 0    50   ~ 0
+Connect VDD_TCXO to PA12 so that MCU can control \nTCXO on, according to datasheet reference
 $EndSCHEMATC

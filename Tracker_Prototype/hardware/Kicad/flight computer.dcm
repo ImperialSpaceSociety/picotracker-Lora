@@ -24,6 +24,12 @@ K diode Schottky
 F https://www.diodes.com/assets/Datasheets/ds30492.pdf
 $ENDCMP
 #
+$CMP GPS_Antenna
+D Antenna
+K antenna
+F ~
+$ENDCMP
+#
 $CMP H3LIS100DL
 D H3LIS100DL Series 3.6 V ±100 g 3-Axis Digital Accelerometer - TFLGA-16
 F https://docs-emea.rs-online.com/webdocs/14da/0900766b814da09a.pdf
