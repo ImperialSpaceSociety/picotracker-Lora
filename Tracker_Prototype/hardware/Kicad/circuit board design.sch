@@ -196,53 +196,6 @@ Wire Wire Line
 	7900 1850 7900 1700
 Connection ~ 7900 1700
 Wire Wire Line
-	5450 1350 5450 1450
-Connection ~ 5450 1350
-Wire Wire Line
-	5450 1700 4750 1700
-Wire Wire Line
-	5450 1350 4750 1350
-Connection ~ 4750 1350
-Wire Wire Line
-	4750 1350 4750 1450
-$Comp
-L power:+3.3V #PWR?
-U 1 1 5DC840B0
-P 4750 1050
-AR Path="/5D5B15F7/5DC840B0" Ref="#PWR?"  Part="1" 
-AR Path="/5DC840B0" Ref="#PWR0109"  Part="1" 
-F 0 "#PWR0109" H 4750 900 50  0001 C CNN
-F 1 "+3.3V" H 4765 1223 50  0000 C CNN
-F 2 "" H 4750 1050 50  0001 C CNN
-F 3 "" H 4750 1050 50  0001 C CNN
-	1    4750 1050
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4750 1350 4750 1050
-Wire Wire Line
-	5450 1650 5450 1700
-Wire Wire Line
-	4750 1650 4750 1700
-$Comp
-L power:GND #PWR?
-U 1 1 5DC840C5
-P 4750 1850
-AR Path="/5D5B15F7/5DC840C5" Ref="#PWR?"  Part="1" 
-AR Path="/5DC840C5" Ref="#PWR0110"  Part="1" 
-F 0 "#PWR0110" H 4750 1600 50  0001 C CNN
-F 1 "GND" H 4755 1677 50  0000 C CNN
-F 2 "" H 4750 1850 50  0001 C CNN
-F 3 "" H 4750 1850 50  0001 C CNN
-	1    4750 1850
-	-1   0    0    -1  
-$EndComp
-Wire Wire Line
-	4750 1850 4750 1700
-Connection ~ 4750 1700
-Wire Wire Line
-	5450 1350 6050 1350
-Wire Wire Line
 	6450 2250 6900 2250
 Text Label 6900 2250 2    50   ~ 0
 VDD_TCXO
@@ -564,14 +517,6 @@ Wire Wire Line
 	6250 2400 6250 2250
 Wire Wire Line
 	6150 2250 6150 2400
-Wire Wire Line
-	6050 1350 6050 2400
-Text Label 4900 4000 0    50   ~ 0
-SWDIO
-Text Label 4900 3900 0    50   ~ 0
-VDD_TCXO
-Wire Wire Line
-	5350 3900 4900 3900
 Wire Wire Line
 	13450 6750 13350 6750
 Connection ~ 13350 6750
@@ -930,32 +875,6 @@ F 3 "~" H 7550 5500 50  0001 C CNN
 $EndComp
 $Comp
 L Device:C_Small C?
-U 1 1 5DC840BE
-P 4750 1550
-AR Path="/5D5B15F7/5DC840BE" Ref="C?"  Part="1" 
-AR Path="/5DC840BE" Ref="C2"  Part="1" 
-F 0 "C2" H 4842 1596 50  0000 L CNN
-F 1 "10uF" H 4842 1505 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 4750 1550 50  0001 C CNN
-F 3 "~" H 4750 1550 50  0001 C CNN
-	1    4750 1550
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DC840B7
-P 5450 1550
-AR Path="/5D5B15F7/5DC840B7" Ref="C?"  Part="1" 
-AR Path="/5DC840B7" Ref="C3"  Part="1" 
-F 0 "C3" H 5358 1596 50  0000 R CNN
-F 1 "100nF" H 5358 1505 50  0000 R CNN
-F 2 "Capacitor_SMD:C_0402_1005Metric" H 5450 1550 50  0001 C CNN
-F 3 "~" H 5450 1550 50  0001 C CNN
-	1    5450 1550
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C?
 U 1 1 5DC8409B
 P 7900 1550
 AR Path="/5D5B15F7/5DC8409B" Ref="C?"  Part="1" 
@@ -1050,7 +969,6 @@ F 3 "" H 14250 7350 50  0001 C CNN
 	1    14250 7350
 	1    0    0    -1  
 $EndComp
-NoConn ~ 7150 3900
 NoConn ~ 5350 5000
 NoConn ~ 6350 2400
 NoConn ~ 5350 3800
@@ -1076,6 +994,86 @@ $EndComp
 Connection ~ 5200 8350
 Wire Wire Line
 	5200 8350 5550 8350
-Text Notes 7100 2400 0    50   ~ 0
-Connect VDD_TCXO to PA12 so that MCU can control \nTCXO on, according to datasheet reference
+Text Label 4900 4000 0    50   ~ 0
+SWDIO
+Text Label 7800 3900 2    50   ~ 0
+VDD_TCXO
+Wire Wire Line
+	7150 3900 7800 3900
+NoConn ~ 5350 3900
+Wire Wire Line
+	6050 1350 6050 2400
+$Comp
+L Device:C_Small C?
+U 1 1 5DC840B7
+P 5450 1550
+AR Path="/5D5B15F7/5DC840B7" Ref="C?"  Part="1" 
+AR Path="/5DC840B7" Ref="C3"  Part="1" 
+F 0 "C3" H 5358 1596 50  0000 R CNN
+F 1 "100nF" H 5358 1505 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 5450 1550 50  0001 C CNN
+F 3 "~" H 5450 1550 50  0001 C CNN
+	1    5450 1550
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DC840BE
+P 4750 1550
+AR Path="/5D5B15F7/5DC840BE" Ref="C?"  Part="1" 
+AR Path="/5DC840BE" Ref="C2"  Part="1" 
+F 0 "C2" H 4842 1596 50  0000 L CNN
+F 1 "10uF" H 4842 1505 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 4750 1550 50  0001 C CNN
+F 3 "~" H 4750 1550 50  0001 C CNN
+	1    4750 1550
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DC840C5
+P 4750 1850
+AR Path="/5D5B15F7/5DC840C5" Ref="#PWR?"  Part="1" 
+AR Path="/5DC840C5" Ref="#PWR0110"  Part="1" 
+F 0 "#PWR0110" H 4750 1600 50  0001 C CNN
+F 1 "GND" H 4755 1677 50  0000 C CNN
+F 2 "" H 4750 1850 50  0001 C CNN
+F 3 "" H 4750 1850 50  0001 C CNN
+	1    4750 1850
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5450 1650 5450 1700
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5DC840B0
+P 4750 1050
+AR Path="/5D5B15F7/5DC840B0" Ref="#PWR?"  Part="1" 
+AR Path="/5DC840B0" Ref="#PWR0109"  Part="1" 
+F 0 "#PWR0109" H 4750 900 50  0001 C CNN
+F 1 "+3.3V" H 4765 1223 50  0000 C CNN
+F 2 "" H 4750 1050 50  0001 C CNN
+F 3 "" H 4750 1050 50  0001 C CNN
+	1    4750 1050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4750 1350 4750 1050
+Wire Wire Line
+	4750 1350 4750 1450
+Connection ~ 4750 1350
+Wire Wire Line
+	4750 1850 4750 1700
+Wire Wire Line
+	4750 1650 4750 1700
+Connection ~ 4750 1700
+Wire Wire Line
+	5450 1700 4750 1700
+Wire Wire Line
+	5450 1350 6050 1350
+Wire Wire Line
+	5450 1350 4750 1350
+Connection ~ 5450 1350
+Wire Wire Line
+	5450 1350 5450 1450
 $EndSCHEMATC
