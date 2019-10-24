@@ -560,7 +560,6 @@ NoConn ~ 7150 4700
 NoConn ~ 7150 4800
 NoConn ~ 7150 4900
 NoConn ~ 7150 5000
-NoConn ~ 5350 3700
 NoConn ~ 5350 3600
 NoConn ~ 5350 3500
 NoConn ~ 5350 3400
@@ -709,7 +708,7 @@ U 1 1 5DE442FF
 P 8750 4850
 F 0 "AE1" H 8830 4839 50  0000 L CNN
 F 1 "Lora Antenna" H 8830 4748 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 8750 4850 50  0001 C CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 8750 4850 50  0001 C CNN
 F 3 "~" H 8750 4850 50  0001 C CNN
 	1    8750 4850
 	1    0    0    -1  
@@ -720,7 +719,7 @@ U 1 1 5DDA946B
 P 14800 7150
 F 0 "AE2" H 14880 7139 50  0000 L CNN
 F 1 "GPS Antenna" H 14880 7048 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 14800 7150 50  0001 C CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 14800 7150 50  0001 C CNN
 F 3 "~" H 14800 7150 50  0001 C CNN
 	1    14800 7150
 	1    0    0    -1  
@@ -991,54 +990,12 @@ Wire Wire Line
 	5200 8350 5400 8350
 Text Label 4900 4000 0    50   ~ 0
 SWDIO
-Text Label 7800 3900 2    50   ~ 0
+Text Label 4900 3900 0    50   ~ 0
 VDD_TCXO
 Wire Wire Line
-	7150 3900 7800 3900
-NoConn ~ 5350 3900
+	5350 3900 4900 3900
 Wire Wire Line
 	6050 1350 6050 2400
-$Comp
-L Device:C_Small C?
-U 1 1 5DC840B7
-P 5450 1550
-AR Path="/5D5B15F7/5DC840B7" Ref="C?"  Part="1" 
-AR Path="/5DC840B7" Ref="C3"  Part="1" 
-F 0 "C3" H 5358 1596 50  0000 R CNN
-F 1 "100nF" H 5358 1505 50  0000 R CNN
-F 2 "Capacitor_SMD:C_0402_1005Metric" H 5450 1550 50  0001 C CNN
-F 3 "~" H 5450 1550 50  0001 C CNN
-	1    5450 1550
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DC840BE
-P 4750 1550
-AR Path="/5D5B15F7/5DC840BE" Ref="C?"  Part="1" 
-AR Path="/5DC840BE" Ref="C2"  Part="1" 
-F 0 "C2" H 4842 1596 50  0000 L CNN
-F 1 "10uF" H 4842 1505 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 4750 1550 50  0001 C CNN
-F 3 "~" H 4750 1550 50  0001 C CNN
-	1    4750 1550
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR?
-U 1 1 5DC840C5
-P 4750 1850
-AR Path="/5D5B15F7/5DC840C5" Ref="#PWR?"  Part="1" 
-AR Path="/5DC840C5" Ref="#PWR0110"  Part="1" 
-F 0 "#PWR0110" H 4750 1600 50  0001 C CNN
-F 1 "GND" H 4755 1677 50  0000 C CNN
-F 2 "" H 4750 1850 50  0001 C CNN
-F 3 "" H 4750 1850 50  0001 C CNN
-	1    4750 1850
-	-1   0    0    -1  
-$EndComp
-Wire Wire Line
-	5450 1650 5450 1700
 $Comp
 L power:+3.3V #PWR?
 U 1 1 5DC840B0
@@ -1054,23 +1011,6 @@ F 3 "" H 4750 1050 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	4750 1350 4750 1050
-Wire Wire Line
-	4750 1350 4750 1450
-Connection ~ 4750 1350
-Wire Wire Line
-	4750 1850 4750 1700
-Wire Wire Line
-	4750 1650 4750 1700
-Connection ~ 4750 1700
-Wire Wire Line
-	5450 1700 4750 1700
-Wire Wire Line
-	5450 1350 6050 1350
-Wire Wire Line
-	5450 1350 4750 1350
-Connection ~ 5450 1350
-Wire Wire Line
-	5450 1350 5450 1450
 Connection ~ 5550 8350
 Wire Wire Line
 	5550 8350 5700 8350
@@ -1080,7 +1020,7 @@ U 1 1 5DC8A70A
 P 5900 8350
 F 0 "J3" H 5980 8392 50  0000 L CNN
 F 1 "3.3V" H 5980 8301 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 5900 8350 50  0001 C CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 5900 8350 50  0001 C CNN
 F 3 "~" H 5900 8350 50  0001 C CNN
 	1    5900 8350
 	1    0    0    -1  
@@ -1091,7 +1031,7 @@ U 1 1 5DC8B635
 P 1050 8350
 F 0 "J2" H 968 8125 50  0000 C CNN
 F 1 "GND" H 968 8216 50  0000 C CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 1050 8350 50  0001 C CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 1050 8350 50  0001 C CNN
 F 3 "~" H 1050 8350 50  0001 C CNN
 	1    1050 8350
 	-1   0    0    1   
@@ -1106,8 +1046,8 @@ L Connector_Generic:Conn_01x01 J4
 U 1 1 5DCBAB7A
 P 9150 7650
 F 0 "J4" H 9230 7692 50  0000 L CNN
-F 1 "3.3V" H 9230 7601 50  0000 L CNN
-F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 9150 7650 50  0001 C CNN
+F 1 "Unconnected" H 9230 7601 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 9150 7650 50  0001 C CNN
 F 3 "~" H 9150 7650 50  0001 C CNN
 	1    9150 7650
 	1    0    0    -1  
@@ -1169,4 +1109,10 @@ Wire Wire Line
 	5350 3100 4900 3100
 Text Label 4900 3100 0    50   ~ 0
 V_SOLAR
+Wire Wire Line
+	4750 1350 6050 1350
+NoConn ~ 7150 3900
+NoConn ~ 5350 3700
+NoConn ~ 8950 7650
+NoConn ~ 9800 3250
 $EndSCHEMATC
