@@ -438,8 +438,6 @@ Wire Wire Line
 Text Notes 11200 4850 0    50   ~ 0
 Pressure temperature humidity sensor\n
 Wire Notes Line
-	11100 9150 16050 9150
-Wire Notes Line
 	16050 4900 11100 4900
 Text Notes 11200 9100 0    50   ~ 0
 GPS circuit\n
@@ -568,7 +566,6 @@ NoConn ~ 5350 3500
 NoConn ~ 5350 3400
 NoConn ~ 5350 3300
 NoConn ~ 5350 3200
-NoConn ~ 5350 3100
 NoConn ~ 5350 3000
 Wire Wire Line
 	12950 7900 11750 7900
@@ -991,7 +988,7 @@ F 3 "~" H 5200 8350 50  0001 C CNN
 $EndComp
 Connection ~ 5200 8350
 Wire Wire Line
-	5200 8350 5550 8350
+	5200 8350 5400 8350
 Text Label 4900 4000 0    50   ~ 0
 SWDIO
 Text Label 7800 3900 2    50   ~ 0
@@ -1082,7 +1079,7 @@ L Connector_Generic:Conn_01x01 J3
 U 1 1 5DC8A70A
 P 5900 8350
 F 0 "J3" H 5980 8392 50  0000 L CNN
-F 1 "Conn_01x01" H 5980 8301 50  0000 L CNN
+F 1 "3.3V" H 5980 8301 50  0000 L CNN
 F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 5900 8350 50  0001 C CNN
 F 3 "~" H 5900 8350 50  0001 C CNN
 	1    5900 8350
@@ -1093,7 +1090,7 @@ L Connector_Generic:Conn_01x01 J2
 U 1 1 5DC8B635
 P 1050 8350
 F 0 "J2" H 968 8125 50  0000 C CNN
-F 1 "Conn_01x01" H 968 8216 50  0000 C CNN
+F 1 "GND" H 968 8216 50  0000 C CNN
 F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 1050 8350 50  0001 C CNN
 F 3 "~" H 1050 8350 50  0001 C CNN
 	1    1050 8350
@@ -1104,4 +1101,72 @@ Wire Wire Line
 	1450 9550 1450 8350
 Wire Wire Line
 	1250 8350 1450 8350
+$Comp
+L Connector_Generic:Conn_01x01 J4
+U 1 1 5DCBAB7A
+P 9150 7650
+F 0 "J4" H 9230 7692 50  0000 L CNN
+F 1 "3.3V" H 9230 7601 50  0000 L CNN
+F 2 "Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical" H 9150 7650 50  0001 C CNN
+F 3 "~" H 9150 7650 50  0001 C CNN
+	1    9150 7650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5400 8350 5400 8700
+Connection ~ 5400 8350
+Wire Wire Line
+	5400 8350 5550 8350
+$Comp
+L power:GND #PWR01
+U 1 1 5DCCDF86
+P 5400 9600
+F 0 "#PWR01" H 5400 9350 50  0001 C CNN
+F 1 "GND" H 5405 9427 50  0000 C CNN
+F 2 "" H 5400 9600 50  0001 C CNN
+F 3 "" H 5400 9600 50  0001 C CNN
+	1    5400 9600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 5DCCF4D3
+P 5400 8850
+F 0 "R1" H 5470 8896 50  0000 L CNN
+F 1 "100K" H 5470 8805 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 5330 8850 50  0001 C CNN
+F 3 "~" H 5400 8850 50  0001 C CNN
+	1    5400 8850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5400 9000 5400 9100
+$Comp
+L Device:R R2
+U 1 1 5DCD0192
+P 5400 9350
+F 0 "R2" H 5470 9396 50  0000 L CNN
+F 1 "100K" H 5470 9305 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 5330 9350 50  0001 C CNN
+F 3 "~" H 5400 9350 50  0001 C CNN
+	1    5400 9350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5400 9500 5400 9600
+Wire Wire Line
+	5400 9100 6050 9100
+Connection ~ 5400 9100
+Wire Wire Line
+	5400 9100 5400 9200
+Text Label 6050 9100 2    50   ~ 0
+V_SOLAR
+Wire Notes Line
+	6950 9150 16050 9150
+Text Notes 7650 8400 0    50   ~ 0
+Structural plated throughole to hold the guitar wire solar cell structure
+Wire Wire Line
+	5350 3100 4900 3100
+Text Label 4900 3100 0    50   ~ 0
+V_SOLAR
 $EndSCHEMATC
