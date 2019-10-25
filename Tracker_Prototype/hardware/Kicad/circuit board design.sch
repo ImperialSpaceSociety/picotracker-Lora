@@ -990,10 +990,10 @@ Wire Wire Line
 	5200 8350 5400 8350
 Text Label 4900 4000 0    50   ~ 0
 SWDIO
-Text Label 4900 3900 0    50   ~ 0
+Text Label 7800 3900 2    50   ~ 0
 VDD_TCXO
 Wire Wire Line
-	5350 3900 4900 3900
+	7150 3900 7800 3900
 Wire Wire Line
 	6050 1350 6050 2400
 $Comp
@@ -1111,8 +1111,7 @@ Text Label 4900 3100 0    50   ~ 0
 V_SOLAR
 Wire Wire Line
 	4750 1350 6050 1350
-NoConn ~ 7150 3900
 NoConn ~ 5350 3700
 NoConn ~ 8950 7650
-NoConn ~ 9800 3250
+NoConn ~ 5350 3900
 $EndSCHEMATC
