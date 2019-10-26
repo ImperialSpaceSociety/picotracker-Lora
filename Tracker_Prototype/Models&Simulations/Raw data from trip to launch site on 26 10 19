@@ -1,0 +1,277 @@
+{
+  "time": "2019-10-26T10:09:47.860996485Z",
+  "frequency": 867.5,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 2853576412,
+      "time": "2019-10-26T10:09:47.837974Z",
+      "channel": 5,
+      "rssi": -113,
+      "snr": -3.5,
+      "latitude": 51.59596,
+      "longitude": -0.24154,
+      "altitude": 85
+    }
+  ]
+}
+
+
+{
+  "time": "2019-10-26T09:54:48.442135167Z",
+  "frequency": 868.5,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1954166028,
+      "time": "2019-10-26T09:54:48.426951Z",
+      "channel": 2,
+      "rssi": -105,
+      "snr": 0.2,
+      "rf_chain": 1,
+      "latitude": 51.59601,
+      "longitude": -0.24156,
+      "altitude": 80
+    },
+    {
+      "gtw_id": "eui-0000024b0b030ca8",
+      "timestamp": 1961217836,
+      "time": "2019-10-26T09:54:48.42703Z",
+      "channel": 2,
+      "rssi": -105,
+      "snr": -0.2,
+      "rf_chain": 1,
+      "latitude": 51.37108,
+      "longitude": -0.09902,
+      "altitude": 108
+    }
+  ]
+}
+
+
+{
+  "time": "2019-10-26T09:51:54.353082567Z",
+  "frequency": 867.3,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1780075684,
+      "time": "2019-10-26T09:51:54.336484Z",
+      "channel": 4,
+      "rssi": -109,
+      "snr": 4.2,
+      "latitude": 51.59604,
+      "longitude": -0.24155,
+      "altitude": 76
+    }
+  ]
+}
+
+
+{
+  "time": "2019-10-26T09:48:30.956339585Z",
+  "frequency": 867.3,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1576673940,
+      "time": "2019-10-26T09:48:30.934595Z",
+      "channel": 4,
+      "rssi": -114,
+      "snr": -10,
+      "latitude": 51.59603,
+      "longitude": -0.24162,
+      "altitude": 83
+    }
+  ]
+}
+
+{
+  "time": "2019-10-26T09:47:47.377613441Z",
+  "frequency": 868.1,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1533100812,
+      "time": "2019-10-26T09:47:47.361436Z",
+      "channel": 0,
+      "rssi": -98,
+      "snr": -10.5,
+      "rf_chain": 1,
+      "latitude": 51.596,
+      "longitude": -0.24166,
+      "altitude": 87
+    }
+  ]
+}
+
+{
+  "time": "2019-10-26T09:45:13.930225745Z",
+  "frequency": 867.9,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1379649588,
+      "time": "2019-10-26T09:45:13.910103Z",
+      "channel": 7,
+      "rssi": -115,
+      "snr": -5.2,
+      "latitude": 51.59599,
+      "longitude": -0.24167,
+      "altitude": 84
+    }
+  ]
+}
+
+
+{
+  "time": "2019-10-26T09:44:48.761812329Z",
+  "frequency": 867.1,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1354485324,
+      "time": "2019-10-26T09:44:48.745821Z",
+      "channel": 3,
+      "rssi": -103,
+      "snr": 8.5,
+      "latitude": 51.59599,
+      "longitude": -0.24165,
+      "altitude": 82
+    }
+  ]
+}
+
+
+{
+  "time": "2019-10-26T09:43:06.562988748Z",
+  "frequency": 867.7,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1252284468,
+      "time": "2019-10-26T09:43:06.544893Z",
+      "channel": 6,
+      "rssi": -101,
+      "snr": 5.5,
+      "latitude": 51.59602,
+      "longitude": -0.24156,
+      "altitude": 73
+    },
+    {
+      "gtw_id": "eui-0000024b0b030ca8",
+      "timestamp": 1259336436,
+      "time": "2019-10-26T09:43:06.544973Z",
+      "channel": 6,
+      "rssi": -108,
+      "snr": -9.8,
+      "latitude": 51.37107,
+      "longitude": -0.09911,
+      "altitude": 109
+    },
+    {
+      "gtw_id": "eui-0000024b0b030f27",
+      "timestamp": 1260927460,
+      "time": "2019-10-26T09:43:06.544916Z",
+      "channel": 6,
+      "rssi": -103,
+      "snr": -8,
+      "latitude": 51.54271,
+      "longitude": -0.17113,
+      "altitude": 114
+    },
+    {
+      "gtw_id": "eui-647fdafffe005b91",
+      "timestamp": 1611161028,
+      "time": "",
+      "channel": 6,
+      "rssi": -105,
+      "snr": -6
+    }
+  ]
+}
+
+{
+  "time": "2019-10-26T09:42:48.343060596Z",
+  "frequency": 867.5,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1234069932,
+      "time": "2019-10-26T09:42:48.330344Z",
+      "channel": 5,
+      "rssi": -101,
+      "snr": 6.8,
+      "latitude": 51.59602,
+      "longitude": -0.24156,
+      "altitude": 73
+    }
+  ]
+}
+
+{
+  "time": "2019-10-26T09:41:21.472607746Z",
+  "frequency": 867.9,
+  "modulation": "LORA",
+  "data_rate": "SF8BW125",
+  "coding_rate": "4/5",
+  "gateways": [
+    {
+      "gtw_id": "eui-0000024b0b030d38",
+      "timestamp": 1147195204,
+      "time": "2019-10-26T09:41:21.455554Z",
+      "channel": 7,
+      "rssi": -107,
+      "snr": 6.8,
+      "latitude": 51.59599,
+      "longitude": -0.24161,
+      "altitude": 78
+    },
+    {
+      "gtw_id": "eui-0000024b0b030ca8",
+      "timestamp": 1154247188,
+      "time": "2019-10-26T09:41:21.455627Z",
+      "channel": 7,
+      "rssi": -107,
+      "snr": -7.2,
+      "latitude": 51.3711,
+      "longitude": -0.09896,
+      "altitude": 104
+    },
+    {
+      "gtw_id": "eui-647fdafffe005b91",
+      "timestamp": 1506071684,
+      "time": "",
+      "channel": 7,
+      "rssi": -96,
+      "snr": -6.8
+    }
+  ]
+}

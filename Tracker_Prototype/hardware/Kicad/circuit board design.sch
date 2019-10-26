@@ -437,8 +437,6 @@ Wire Wire Line
 	14800 7500 14800 7350
 Text Notes 11200 4850 0    50   ~ 0
 Pressure temperature humidity sensor\n
-Wire Notes Line
-	16050 4900 11100 4900
 Text Notes 11200 9100 0    50   ~ 0
 GPS circuit\n
 Wire Notes Line
@@ -454,9 +452,9 @@ I2C1_SCL
 Text Label 7800 3500 2    50   ~ 0
 I2C1_SDA
 Wire Wire Line
-	8750 5200 8750 5050
+	8600 5200 8600 5050
 Wire Wire Line
-	8100 5200 8750 5200
+	8100 5200 8600 5200
 Text Label 12000 2100 0    50   ~ 0
 I2C1_SDA
 Text Label 12000 2200 0    50   ~ 0
@@ -548,8 +546,6 @@ GPS_EXTINT
 Text Label 7800 3700 2    50   ~ 0
 GPS_EXTINT
 NoConn ~ 7150 3000
-NoConn ~ 7150 3100
-NoConn ~ 7150 3200
 NoConn ~ 7150 3300
 NoConn ~ 7150 4100
 NoConn ~ 7150 4200
@@ -705,12 +701,12 @@ $EndComp
 $Comp
 L Device:Antenna AE1
 U 1 1 5DE442FF
-P 8750 4850
-F 0 "AE1" H 8830 4839 50  0000 L CNN
-F 1 "Lora Antenna" H 8830 4748 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 8750 4850 50  0001 C CNN
-F 3 "~" H 8750 4850 50  0001 C CNN
-	1    8750 4850
+P 8600 4850
+F 0 "AE1" H 8680 4839 50  0000 L CNN
+F 1 "Lora Antenna" H 8680 4748 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 8600 4850 50  0001 C CNN
+F 3 "~" H 8600 4850 50  0001 C CNN
+	1    8600 4850
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -990,10 +986,10 @@ Wire Wire Line
 	5200 8350 5400 8350
 Text Label 4900 4000 0    50   ~ 0
 SWDIO
-Text Label 7800 3900 2    50   ~ 0
+Text Label 7800 3200 2    50   ~ 0
 VDD_TCXO
 Wire Wire Line
-	7150 3900 7800 3900
+	7150 3200 7800 3200
 Wire Wire Line
 	6050 1350 6050 2400
 $Comp
@@ -1114,4 +1110,129 @@ Wire Wire Line
 NoConn ~ 5350 3700
 NoConn ~ 8950 7650
 NoConn ~ 5350 3900
+Wire Wire Line
+	7150 3100 7800 3100
+Wire Wire Line
+	10850 3900 10850 4250
+$Comp
+L power:GND #PWR?
+U 1 1 5DBBC44F
+P 10850 4250
+AR Path="/5D5B15F7/5DBBC44F" Ref="#PWR?"  Part="1" 
+AR Path="/5DBBC44F" Ref="#PWR02"  Part="1" 
+F 0 "#PWR02" H 10850 4000 50  0001 C CNN
+F 1 "GND" H 10855 4077 50  0000 C CNN
+F 2 "" H 10850 4250 50  0001 C CNN
+F 3 "" H 10850 4250 50  0001 C CNN
+	1    10850 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D1
+U 1 1 5DBC4B62
+P 10450 3900
+F 0 "D1" H 10443 3645 50  0000 C CNN
+F 1 "LED" H 10443 3736 50  0000 C CNN
+F 2 "LED_SMD:LED_0402_1005Metric" H 10450 3900 50  0001 C CNN
+F 3 "~" H 10450 3900 50  0001 C CNN
+	1    10450 3900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	10600 3900 10850 3900
+$Comp
+L Device:R R6
+U 1 1 5DBC5657
+P 10150 3900
+F 0 "R6" V 9943 3900 50  0000 C CNN
+F 1 "R" V 10034 3900 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 10080 3900 50  0001 C CNN
+F 3 "~" H 10150 3900 50  0001 C CNN
+	1    10150 3900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7150 3900 7800 3900
+Text Label 7800 3900 2    50   ~ 0
+SWITCH
+Wire Notes Line
+	9350 4900 16050 4900
+Wire Wire Line
+	10150 5850 9900 5850
+Text Label 9500 5850 0    50   ~ 0
+SWITCH
+Wire Wire Line
+	9900 5850 9900 6000
+Connection ~ 9900 5850
+Wire Wire Line
+	9900 5850 9500 5850
+$Comp
+L power:GND #PWR?
+U 1 1 5DC040B5
+P 9900 6400
+AR Path="/5D5B15F7/5DC040B5" Ref="#PWR?"  Part="1" 
+AR Path="/5DC040B5" Ref="#PWR03"  Part="1" 
+F 0 "#PWR03" H 9900 6150 50  0001 C CNN
+F 1 "GND" H 9905 6227 50  0000 C CNN
+F 2 "" H 9900 6400 50  0001 C CNN
+F 3 "" H 9900 6400 50  0001 C CNN
+	1    9900 6400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW1
+U 1 1 5DC04C37
+P 10350 5850
+F 0 "SW1" H 10350 6135 50  0000 C CNN
+F 1 "SW_Push" H 10350 6044 50  0000 C CNN
+F 2 "" H 10350 6050 50  0001 C CNN
+F 3 "~" H 10350 6050 50  0001 C CNN
+	1    10350 5850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10550 5850 10750 5850
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5DC0A475
+P 10750 5300
+AR Path="/5D5B165E/5DC0A475" Ref="#PWR?"  Part="1" 
+AR Path="/5D5B15F7/5DC0A475" Ref="#PWR?"  Part="1" 
+AR Path="/5DC0A475" Ref="#PWR04"  Part="1" 
+F 0 "#PWR04" H 10750 5150 50  0001 C CNN
+F 1 "+3.3V" H 10765 5473 50  0000 C CNN
+F 2 "" H 10750 5300 50  0001 C CNN
+F 3 "" H 10750 5300 50  0001 C CNN
+	1    10750 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 5DC0F569
+P 9900 6150
+F 0 "R7" H 9970 6196 50  0000 L CNN
+F 1 "100K" H 9970 6105 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 9830 6150 50  0001 C CNN
+F 3 "~" H 9900 6150 50  0001 C CNN
+	1    9900 6150
+	1    0    0    -1  
+$EndComp
+Text Notes 9700 6750 0    50   ~ 0
+User interface button\n
+Wire Wire Line
+	9900 6300 9900 6400
+Wire Wire Line
+	10750 5300 10750 5850
+Wire Notes Line
+	9350 650  9350 6850
+Text Label 7800 3100 2    50   ~ 0
+LED
+Text Label 9550 3900 0    50   ~ 0
+LED
+Wire Wire Line
+	10000 3900 9550 3900
+Wire Notes Line
+	11100 3250 9350 3250
+Text Notes 9700 4700 0    50   ~ 0
+LED indicator\n
 $EndSCHEMATC
