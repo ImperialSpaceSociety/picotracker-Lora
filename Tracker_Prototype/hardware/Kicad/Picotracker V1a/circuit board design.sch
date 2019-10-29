@@ -1245,4 +1245,6 @@ Structural holes\n
 Wire Wire Line
 	6450 2250 6250 2250
 Connection ~ 6250 2250
+NoConn ~ 7150 3100
+NoConn ~ 7150 3200
 $EndSCHEMATC

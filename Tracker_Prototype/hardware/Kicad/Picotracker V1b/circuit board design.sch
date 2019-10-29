@@ -376,11 +376,9 @@ Pressure temperature humidity sensor\n
 Text Notes 11200 9100 0    50   ~ 0
 GPS circuit\n
 Wire Notes Line
-	500  11200 6950 11200
-Wire Notes Line
 	500  6850 500  11200
 Text Notes 650  11100 0    50   ~ 0
-Power supply\n
+Solar Connection\n\n
 Text Label 7800 3400 2    50   ~ 0
 I2C1_SCL
 Text Label 7800 3500 2    50   ~ 0
@@ -393,19 +391,6 @@ Text Label 12000 2100 0    50   ~ 0
 I2C1_SDA
 Text Label 12000 2200 0    50   ~ 0
 I2C1_SCL
-$Comp
-L power:GND #PWR0102
-U 1 1 5DEE121A
-P 1450 8750
-F 0 "#PWR0102" H 1450 8500 50  0001 C CNN
-F 1 "GND" H 1455 8577 50  0000 C CNN
-F 2 "" H 1450 8750 50  0001 C CNN
-F 3 "" H 1450 8750 50  0001 C CNN
-	1    1450 8750
-	1    0    0    -1  
-$EndComp
-Text Notes 3050 10200 0    50   ~ 0
-Ok, it is not as simple as this. -Medad 21/10/19
 Wire Wire Line
 	6450 2400 6450 2250
 Wire Wire Line
@@ -421,7 +406,6 @@ GPS_SAFEBOOT
 Text Label 7800 3700 2    50   ~ 0
 GPS_EXTINT
 NoConn ~ 7150 3000
-NoConn ~ 7150 3300
 NoConn ~ 7150 4100
 NoConn ~ 7150 4200
 NoConn ~ 7150 4300
@@ -436,10 +420,6 @@ NoConn ~ 5350 3500
 NoConn ~ 5350 3400
 NoConn ~ 5350 3200
 NoConn ~ 5350 3000
-Wire Wire Line
-	7150 3800 7800 3800
-Text Label 7800 3800 2    50   ~ 0
-GPS_TIMEPULSE
 NoConn ~ 5350 4800
 NoConn ~ 5350 4700
 NoConn ~ 5350 4500
@@ -449,8 +429,6 @@ Wire Notes Line
 	500  6850 11100 6850
 Wire Notes Line
 	550  650  16050 650 
-Wire Notes Line
-	11100 650  11100 9150
 Wire Notes Line
 	16050 650  16050 9150
 Text Notes 3050 6550 0    50   ~ 0
@@ -708,10 +686,6 @@ F 3 "~" H 1050 8350 50  0001 C CNN
 	1    1050 8350
 	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	1450 8750 1450 8350
-Wire Wire Line
-	1250 8350 1450 8350
 $Comp
 L Connector_Generic:Conn_01x01 SolarCellMount1
 U 1 1 5DCBAB7A
@@ -881,18 +855,16 @@ Wire Wire Line
 	6450 2250 6250 2250
 Connection ~ 6250 2250
 Wire Wire Line
-	1250 7950 1450 7950
-Wire Wire Line
-	1450 7950 1450 7450
+	1250 7950 1300 7950
 $Comp
 L femto-lib:+SOL #PWR0134
 U 1 1 5DCC7320
-P 1450 7450
-F 0 "#PWR0134" H 1450 7300 50  0001 C CNN
-F 1 "+SOL" H 1465 7623 50  0000 C CNN
-F 2 "" H 1450 7450 50  0000 C CNN
-F 3 "" H 1450 7450 50  0000 C CNN
-	1    1450 7450
+P 2400 7450
+F 0 "#PWR0134" H 2400 7300 50  0001 C CNN
+F 1 "+SOL" H 2415 7623 50  0000 C CNN
+F 2 "" H 2400 7450 50  0000 C CNN
+F 3 "" H 2400 7450 50  0000 C CNN
+	1    2400 7450
 	1    0    0    -1  
 $EndComp
 Wire Notes Line
@@ -918,7 +890,7 @@ AR Path="/5DD2F7AA/5DD9B4FC" Ref="C?"  Part="1"
 AR Path="/5DD9B4FC" Ref="C3"  Part="1" 
 F 0 "C3" V 8050 8150 50  0000 R CNN
 F 1 "22u" V 8050 8250 50  0000 L CNN
-F 2 "pecanpico:C_0805" H 8138 8050 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 8138 8050 50  0001 C CNN
 F 3 "" H 8100 8200 50  0001 C CNN
 	1    8100 8200
 	1    0    0    -1  
@@ -931,7 +903,7 @@ AR Path="/5DD2F7AA/5DD9B502" Ref="R?"  Part="1"
 AR Path="/5DD9B502" Ref="R8"  Part="1" 
 F 0 "R8" V 9600 8200 50  0000 C CNN
 F 1 "R" V 9700 8200 50  0000 C CNN
-F 2 "pecanpico:R_0402" V 9630 8200 50  0001 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 9630 8200 50  0001 C CNN
 F 3 "" H 9700 8200 50  0001 C CNN
 	1    9700 8200
 	-1   0    0    1   
@@ -944,7 +916,7 @@ AR Path="/5DD2F7AA/5DD9B508" Ref="R?"  Part="1"
 AR Path="/5DD9B508" Ref="R1"  Part="1" 
 F 0 "R1" V 9600 7900 50  0000 C CNN
 F 1 "R" V 9700 7900 50  0000 C CNN
-F 2 "pecanpico:R_0402" V 9630 7900 50  0001 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 9630 7900 50  0001 C CNN
 F 3 "" H 9700 7900 50  0001 C CNN
 	1    9700 7900
 	-1   0    0    1   
@@ -1036,7 +1008,7 @@ AR Path="/5DD2F7AA/5DD9B536" Ref="C?"  Part="1"
 AR Path="/5DD9B536" Ref="C17"  Part="1" 
 F 0 "C17" V 9950 8000 50  0000 R CNN
 F 1 "22u" V 9950 8100 50  0000 L CNN
-F 2 "pecanpico:C_0805" H 10038 7900 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 10038 7900 50  0001 C CNN
 F 3 "" H 10000 8050 50  0001 C CNN
 	1    10000 8050
 	1    0    0    -1  
@@ -1066,7 +1038,7 @@ AR Path="/5DD2F7AA/5DD9B544" Ref="C?"  Part="1"
 AR Path="/5DD9B544" Ref="C16"  Part="1" 
 F 0 "C16" V 9450 8200 50  0000 R CNN
 F 1 "1n" V 9450 8300 50  0000 L CNN
-F 2 "pecanpico:C_0402" H 9538 8100 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 9538 8100 50  0001 C CNN
 F 3 "" H 9500 8250 50  0001 C CNN
 	1    9500 8250
 	-1   0    0    1   
@@ -1292,10 +1264,6 @@ F 3 "" H 12850 6650 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	14550 5600 14350 5600
-Wire Wire Line
-	14350 6700 14750 6700
-Wire Wire Line
-	14750 6800 14350 6800
 $Comp
 L pecanpico:C C?
 U 1 1 5DDC9296
@@ -1304,7 +1272,7 @@ AR Path="/5DD2F7AA/5DDC9296" Ref="C?"  Part="1"
 AR Path="/5DDC9296" Ref="C18"  Part="1" 
 F 0 "C18" V 12700 6200 50  0000 R CNN
 F 1 "100n" V 12700 6300 50  0000 L CNN
-F 2 "pecanpico:C_0402" H 12788 6100 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 12788 6100 50  0001 C CNN
 F 3 "" H 12750 6250 50  0001 C CNN
 	1    12750 6250
 	1    0    0    -1  
@@ -1364,50 +1332,6 @@ Wire Wire Line
 Wire Wire Line
 	14450 7200 14450 7600
 Connection ~ 14450 7600
-Wire Wire Line
-	14350 6600 14750 6600
-Wire Wire Line
-	14350 6500 14750 6500
-Text Label 14750 6700 2    50   ~ 0
-MOSI
-Text Label 14750 6800 2    50   ~ 0
-MISO
-Text Label 14750 6500 2    50   ~ 0
-~CS_GPS
-$Comp
-L Device:LED D?
-U 1 1 5DDC92C2
-P 14700 7300
-AR Path="/5DD2F7AA/5DDC92C2" Ref="D?"  Part="1" 
-AR Path="/5DDC92C2" Ref="D2"  Part="1" 
-F 0 "D2" H 14691 7516 50  0000 C CNN
-F 1 "LED" H 14691 7425 50  0000 C CNN
-F 2 "pecanpico:LED_0402" H 14700 7300 50  0001 C CNN
-F 3 "~" H 14700 7300 50  0001 C CNN
-	1    14700 7300
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	14550 7300 14350 7300
-Wire Wire Line
-	14850 7300 14950 7300
-Wire Wire Line
-	14950 7300 14950 7200
-$Comp
-L pecanpico:+GPS #PWR?
-U 1 1 5DDC92CB
-P 14950 7200
-AR Path="/5DD2F7AA/5DDC92CB" Ref="#PWR?"  Part="1" 
-AR Path="/5DDC92CB" Ref="#PWR0154"  Part="1" 
-F 0 "#PWR0154" H 14950 7050 50  0001 C CNN
-F 1 "+GPS" V 14950 7325 50  0000 L CNN
-F 2 "" H 14950 7200 50  0000 C CNN
-F 3 "" H 14950 7200 50  0000 C CNN
-	1    14950 7200
-	1    0    0    -1  
-$EndComp
-Text Label 14750 6600 2    50   ~ 0
-SCK2
 $Comp
 L pecanpico:SIP3243x IC?
 U 1 1 5DDE74F3
@@ -1463,21 +1387,6 @@ Wire Wire Line
 Wire Wire Line
 	8600 9900 8500 9900
 Wire Wire Line
-	8500 9900 8500 9800
-$Comp
-L pecanpico:+1V8 #PWR?
-U 1 1 5DDE750E
-P 8500 9800
-AR Path="/5DD2F7AA/5DDE750E" Ref="#PWR?"  Part="1" 
-AR Path="/5DDE750E" Ref="#PWR0157"  Part="1" 
-F 0 "#PWR0157" H 8500 9650 50  0001 C CNN
-F 1 "+1V8" H 8500 9950 50  0000 C CNN
-F 2 "" H 8500 9800 50  0001 C CNN
-F 3 "" H 8500 9800 50  0001 C CNN
-	1    8500 9800
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
 	8600 10200 8300 10200
 Text Label 8300 10200 0    50   ~ 0
 GPS_EN
@@ -1509,4 +1418,177 @@ F 3 "" H 12750 5500 50  0001 C CNN
 	1    12750 5500
 	1    0    0    -1  
 $EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5DED6E47
+P 8500 9800
+AR Path="/5D5B165E/5DED6E47" Ref="#PWR?"  Part="1" 
+AR Path="/5D5B15F7/5DED6E47" Ref="#PWR?"  Part="1" 
+AR Path="/5DED6E47" Ref="#PWR0110"  Part="1" 
+F 0 "#PWR0110" H 8500 9650 50  0001 C CNN
+F 1 "+3.3V" H 8515 9973 50  0000 C CNN
+F 2 "" H 8500 9800 50  0001 C CNN
+F 3 "" H 8500 9800 50  0001 C CNN
+	1    8500 9800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8500 9800 8500 9900
+NoConn ~ 14350 5800
+NoConn ~ 14350 5900
+NoConn ~ 14350 6000
+NoConn ~ 14350 6100
+NoConn ~ 14350 6200
+NoConn ~ 14350 6300
+NoConn ~ 12950 7050
+NoConn ~ 12950 7300
+NoConn ~ 12950 7400
+Wire Wire Line
+	14350 6600 15150 6600
+Wire Wire Line
+	14350 6500 15150 6500
+Text Label 15150 6600 2    50   ~ 0
+I2C1_SCL
+Text Label 15150 6500 2    50   ~ 0
+I2C1_SDA
+NoConn ~ 14350 6800
+Wire Wire Line
+	14350 7000 15150 7000
+Text Label 15150 7000 2    50   ~ 0
+GPS_SAFEBOOT
+NoConn ~ 14350 6700
+NoConn ~ 14350 7100
+NoConn ~ 14350 7400
+Wire Wire Line
+	7150 3300 7800 3300
+Text Label 7800 3300 2    50   ~ 0
+GPS_EN
+NoConn ~ 7150 3100
+NoConn ~ 7150 3200
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 5E0E0060
+P 1300 7950
+F 0 "#FLG0101" H 1300 8025 50  0001 C CNN
+F 1 "PWR_FLAG" H 1300 8123 50  0000 C CNN
+F 2 "" H 1300 7950 50  0001 C CNN
+F 3 "~" H 1300 7950 50  0001 C CNN
+	1    1300 7950
+	1    0    0    -1  
+$EndComp
+Connection ~ 1300 7950
+Wire Wire Line
+	1300 7950 2400 7950
+Wire Wire Line
+	2400 7950 2400 7450
+Wire Wire Line
+	1250 8350 1800 8350
+Wire Wire Line
+	1800 8750 1800 8350
+$Comp
+L power:GND #PWR0102
+U 1 1 5DEE121A
+P 1800 8750
+F 0 "#PWR0102" H 1800 8500 50  0001 C CNN
+F 1 "GND" H 1805 8577 50  0000 C CNN
+F 2 "" H 1800 8750 50  0001 C CNN
+F 3 "" H 1800 8750 50  0001 C CNN
+	1    1800 8750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2400 7950 2400 8050
+Connection ~ 2400 7950
+$Comp
+L power:GND #PWR0119
+U 1 1 5E15E5A3
+P 2400 8750
+F 0 "#PWR0119" H 2400 8500 50  0001 C CNN
+F 1 "GND" H 2405 8577 50  0000 C CNN
+F 2 "" H 2400 8750 50  0001 C CNN
+F 3 "" H 2400 8750 50  0001 C CNN
+	1    2400 8750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5E16906A
+P 2400 8200
+AR Path="/5D5B15F7/5E16906A" Ref="R?"  Part="1" 
+AR Path="/5E16906A" Ref="R2"  Part="1" 
+F 0 "R2" H 2470 8246 50  0000 L CNN
+F 1 "10K" H 2470 8155 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 2330 8200 50  0001 C CNN
+F 3 "~" H 2400 8200 50  0001 C CNN
+	1    2400 8200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2400 8350 2400 8400
+$Comp
+L Device:R R?
+U 1 1 5E1696E7
+P 2400 8600
+AR Path="/5D5B15F7/5E1696E7" Ref="R?"  Part="1" 
+AR Path="/5E1696E7" Ref="R9"  Part="1" 
+F 0 "R9" H 2470 8646 50  0000 L CNN
+F 1 "10K" H 2470 8555 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 2330 8600 50  0001 C CNN
+F 3 "~" H 2400 8600 50  0001 C CNN
+	1    2400 8600
+	1    0    0    -1  
+$EndComp
+Connection ~ 2400 8400
+Wire Wire Line
+	2400 8400 2400 8450
+Text Label 3400 8400 2    50   ~ 0
+V_SOLAR
+Wire Wire Line
+	2400 8400 3400 8400
+Wire Notes Line
+	11100 650  11100 11200
+Wire Notes Line
+	500  11200 11100 11200
+Text Notes 7300 11000 0    50   ~ 0
+Switch to turn on and off GPS\n
+Text Notes 7250 9000 0    50   ~ 0
+MPPT + boost converter to charge battery
+NoConn ~ 7150 3800
+NoConn ~ 14350 7300
+Text Label 12300 7200 0    50   ~ 0
+GPS_EXTINT
+Wire Wire Line
+	12950 7200 12300 7200
+NoConn ~ 8100 8250
+NoConn ~ 8050 8100
+$Comp
+L Device:Battery_Cell BT?
+U 1 1 5E286112
+P 10350 8050
+F 0 "BT?" H 10468 8146 50  0000 L CNN
+F 1 "Battery_Cell" H 10468 8055 50  0000 L CNN
+F 2 "" V 10350 8110 50  0001 C CNN
+F 3 "~" V 10350 8110 50  0001 C CNN
+	1    10350 8050
+	1    0    0    -1  
+$EndComp
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5E287D9D
+P 10350 8450
+AR Path="/5DD2F7AA/5E287D9D" Ref="#PWR?"  Part="1" 
+AR Path="/5E287D9D" Ref="#PWR?"  Part="1" 
+F 0 "#PWR?" H 10350 8200 50  0001 C CNN
+F 1 "GND" H 10350 8300 50  0000 C CNN
+F 2 "" H 10350 8450 50  0001 C CNN
+F 3 "" H 10350 8450 50  0001 C CNN
+	1    10350 8450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10350 8450 10350 8150
+Wire Wire Line
+	10000 7550 10350 7550
+Wire Wire Line
+	10350 7550 10350 7850
 $EndSCHEMATC
