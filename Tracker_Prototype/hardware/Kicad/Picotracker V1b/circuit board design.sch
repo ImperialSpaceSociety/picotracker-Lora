@@ -371,66 +371,6 @@ Wire Wire Line
 	12000 2200 13000 2200
 Wire Wire Line
 	12000 2100 12700 2100
-$Comp
-L power:GND #PWR?
-U 1 1 5DC84165
-P 13550 8350
-AR Path="/5D5B165E/5DC84165" Ref="#PWR?"  Part="1" 
-AR Path="/5D5B15F7/5DC84165" Ref="#PWR?"  Part="1" 
-AR Path="/5DC84165" Ref="#PWR0119"  Part="1" 
-F 0 "#PWR0119" H 13550 8100 50  0001 C CNN
-F 1 "GND" H 13555 8177 50  0000 C CNN
-F 2 "" H 13550 8350 50  0001 C CNN
-F 3 "" H 13550 8350 50  0001 C CNN
-	1    13550 8350
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:+3.3V #PWR?
-U 1 1 5DC841BA
-P 13350 5550
-AR Path="/5D5B165E/5DC841BA" Ref="#PWR?"  Part="1" 
-AR Path="/5D5B15F7/5DC841BA" Ref="#PWR?"  Part="1" 
-AR Path="/5DC841BA" Ref="#PWR0122"  Part="1" 
-F 0 "#PWR0122" H 13350 5400 50  0001 C CNN
-F 1 "+3.3V" H 13365 5723 50  0000 C CNN
-F 2 "" H 13350 5550 50  0001 C CNN
-F 3 "" H 13350 5550 50  0001 C CNN
-	1    13350 5550
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	12800 6500 12800 6400
-Wire Wire Line
-	13150 6400 13150 6500
-Wire Wire Line
-	13150 6100 12800 6100
-Wire Wire Line
-	13150 6200 13150 6100
-Wire Wire Line
-	12800 6100 12800 6200
-$Comp
-L power:GND #PWR?
-U 1 1 5DC841DF
-P 12800 6600
-AR Path="/5D5B17D8/5DC841DF" Ref="#PWR?"  Part="1" 
-AR Path="/5D5B165E/5DC841DF" Ref="#PWR?"  Part="1" 
-AR Path="/5D5B15F7/5DC841DF" Ref="#PWR?"  Part="1" 
-AR Path="/5DC841DF" Ref="#PWR0123"  Part="1" 
-F 0 "#PWR0123" H 12800 6350 50  0001 C CNN
-F 1 "GND" H 12805 6427 50  0000 C CNN
-F 2 "" H 12800 6600 50  0001 C CNN
-F 3 "" H 12800 6600 50  0001 C CNN
-	1    12800 6600
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	12800 6600 12800 6500
-Connection ~ 12800 6500
-Wire Wire Line
-	12800 6500 13150 6500
-Wire Wire Line
-	14800 7500 14800 7350
 Text Notes 11200 4850 0    50   ~ 0
 Pressure temperature humidity sensor\n
 Text Notes 11200 9100 0    50   ~ 0
@@ -454,10 +394,6 @@ Wire Wire Line
 Text Label 12000 2100 0    50   ~ 0
 I2C1_SDA
 Text Label 12000 2200 0    50   ~ 0
-I2C1_SCL
-Text Label 12250 7400 0    50   ~ 0
-I2C1_SDA
-Text Label 12250 7500 0    50   ~ 0
 I2C1_SCL
 $Comp
 L power:GND #PWR0102
@@ -508,37 +444,11 @@ Wire Wire Line
 Wire Wire Line
 	6150 2250 6150 2400
 Wire Wire Line
-	13450 6750 13350 6750
-Connection ~ 13350 6750
-Wire Wire Line
-	13450 6750 13550 6750
-Connection ~ 13450 6750
-Wire Wire Line
 	7150 3600 7800 3600
 Wire Wire Line
 	7150 3700 7800 3700
-Wire Wire Line
-	11750 7900 11750 7500
-$Comp
-L power:+3.3V #PWR?
-U 1 1 5DFABE1F
-P 11750 7500
-AR Path="/5D5B165E/5DFABE1F" Ref="#PWR?"  Part="1" 
-AR Path="/5D5B15F7/5DFABE1F" Ref="#PWR?"  Part="1" 
-AR Path="/5DFABE1F" Ref="#PWR0121"  Part="1" 
-F 0 "#PWR0121" H 11750 7350 50  0001 C CNN
-F 1 "+3.3V" H 11765 7673 50  0000 C CNN
-F 2 "" H 11750 7500 50  0001 C CNN
-F 3 "" H 11750 7500 50  0001 C CNN
-	1    11750 7500
-	1    0    0    -1  
-$EndComp
-Text Label 12250 7800 0    50   ~ 0
-GPS_SAFEBOOT
 Text Label 7800 3600 2    50   ~ 0
 GPS_SAFEBOOT
-Text Label 12250 7700 0    50   ~ 0
-GPS_EXTINT
 Text Label 7800 3700 2    50   ~ 0
 GPS_EXTINT
 NoConn ~ 7150 3000
@@ -558,33 +468,6 @@ NoConn ~ 5350 3400
 NoConn ~ 5350 3200
 NoConn ~ 5350 3000
 Wire Wire Line
-	12950 7900 11750 7900
-Wire Wire Line
-	13350 6750 13350 6800
-Wire Wire Line
-	13450 6800 13450 6750
-Wire Wire Line
-	13550 6750 13550 6800
-Wire Wire Line
-	12950 7700 12250 7700
-NoConn ~ 12950 7100
-NoConn ~ 12950 7200
-Wire Wire Line
-	12950 7800 12250 7800
-Wire Wire Line
-	12250 7500 12950 7500
-Wire Wire Line
-	12950 7400 12250 7400
-NoConn ~ 13750 6800
-Wire Wire Line
-	14150 7500 14800 7500
-Wire Wire Line
-	13550 8200 13550 8350
-Wire Wire Line
-	14150 7800 15000 7800
-Text Label 15000 7800 2    50   ~ 0
-GPS_TIMEPULSE
-Wire Wire Line
 	7150 3800 7800 3800
 Text Label 7800 3800 2    50   ~ 0
 GPS_TIMEPULSE
@@ -603,17 +486,6 @@ Wire Notes Line
 	16050 650  16050 9150
 Text Notes 3050 6550 0    50   ~ 0
 Main Microcontroller + Lora tranceiver\n
-$Comp
-L RF_GPS:MAX-M8C U1
-U 1 1 5DDCC018
-P 13550 7500
-F 0 "U1" H 13150 6700 50  0000 C CNN
-F 1 "MAX-M8C" H 13150 6600 50  0000 C CNN
-F 2 "RF_GPS:ublox_MAX" H 13950 6850 50  0001 C CNN
-F 3 "https://www.u-blox.com/sites/default/files/MAX-M8-FW3_DataSheet_%28UBX-15031506%29.pdf" H 13550 7500 50  0001 C CNN
-	1    13550 7500
-	1    0    0    -1  
-$EndComp
 $Comp
 L RF_Module:CMWX1ZZABZ-078 U?
 U 1 1 5DC84013
@@ -702,53 +574,6 @@ F 1 "Lora Antenna" H 8680 4748 50  0000 L CNN
 F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 8600 4850 50  0001 C CNN
 F 3 "~" H 8600 4850 50  0001 C CNN
 	1    8600 4850
-	1    0    0    -1  
-$EndComp
-$Comp
-L flight-computer:GPS_Antenna AE2
-U 1 1 5DDA946B
-P 14800 7150
-F 0 "AE2" H 14880 7139 50  0000 L CNN
-F 1 "GPS Antenna" H 14880 7048 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 14800 7150 50  0001 C CNN
-F 3 "~" H 14800 7150 50  0001 C CNN
-	1    14800 7150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DC841D3
-P 13150 6300
-AR Path="/5D5B17D8/5DC841D3" Ref="C?"  Part="1" 
-AR Path="/5D5B165E/5DC841D3" Ref="C?"  Part="1" 
-AR Path="/5D5B15F7/5DC841D3" Ref="C?"  Part="1" 
-AR Path="/5DC841D3" Ref="C13"  Part="1" 
-F 0 "C13" H 13058 6346 50  0000 R CNN
-F 1 "10uF" H 13058 6255 50  0000 R CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 13150 6300 50  0001 C CNN
-F 3 "https://docs-emea.rs-online.com/webdocs/13b3/0900766b813b3e64.pdf" H 13150 6300 50  0001 C CNN
-F 4 "0.07" H 13150 6300 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/8467293/" H 13150 6300 50  0001 C CNN "Purchase link"
-F 6 "100" H 13150 6300 50  0001 C CNN "min_quantity"
-	1    13150 6300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DC841CA
-P 12800 6300
-AR Path="/5D5B17D8/5DC841CA" Ref="C?"  Part="1" 
-AR Path="/5D5B165E/5DC841CA" Ref="C?"  Part="1" 
-AR Path="/5D5B15F7/5DC841CA" Ref="C?"  Part="1" 
-AR Path="/5DC841CA" Ref="C12"  Part="1" 
-F 0 "C12" H 12708 6346 50  0000 R CNN
-F 1 "100nF" H 12708 6255 50  0000 R CNN
-F 2 "Capacitor_SMD:C_0402_1005Metric" H 12800 6300 50  0001 C CNN
-F 3 "https://docs-emea.rs-online.com/webdocs/0dc2/0900766b80dc2409.pdf" H 12800 6300 50  0001 C CNN
-F 4 "0.01" H 12800 6300 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983251/" H 12800 6300 50  0001 C CNN "Purchase link"
-F 6 "50" H 12800 6300 50  0001 C CNN "min_quantity"
-	1    12800 6300
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -936,35 +761,9 @@ F 3 "~" H 5000 5450 50  0001 C CNN
 	1    5000 5450
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	14150 7300 14250 7300
-Wire Wire Line
-	14250 7300 14250 7350
-$Comp
-L power:GND #PWR?
-U 1 1 5DB685A2
-P 14250 7350
-AR Path="/5D5B165E/5DB685A2" Ref="#PWR?"  Part="1" 
-AR Path="/5D5B15F7/5DB685A2" Ref="#PWR?"  Part="1" 
-AR Path="/5DB685A2" Ref="#PWR0124"  Part="1" 
-F 0 "#PWR0124" H 14250 7100 50  0001 C CNN
-F 1 "GND" H 14350 7350 50  0000 C CNN
-F 2 "" H 14250 7350 50  0001 C CNN
-F 3 "" H 14250 7350 50  0001 C CNN
-	1    14250 7350
-	1    0    0    -1  
-$EndComp
 NoConn ~ 5350 5000
 NoConn ~ 6350 2400
 NoConn ~ 5350 3800
-Connection ~ 13150 6100
-Wire Wire Line
-	13350 5550 13350 6100
-Wire Wire Line
-	13350 6100 13350 6750
-Connection ~ 13350 6100
-Wire Wire Line
-	13350 6100 13150 6100
 $Comp
 L power:PWR_FLAG #FLG0101
 U 1 1 5DBC451E
@@ -1031,12 +830,12 @@ Wire Wire Line
 $Comp
 L Connector_Generic:Conn_01x01 SolarCellMount1
 U 1 1 5DCBAB7A
-P 9150 7650
-F 0 "SolarCellMount1" H 9230 7692 50  0000 L CNN
-F 1 "Unconnected" H 9230 7601 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 9150 7650 50  0001 C CNN
-F 3 "~" H 9150 7650 50  0001 C CNN
-	1    9150 7650
+P 10000 1550
+F 0 "SolarCellMount1" H 10080 1592 50  0000 L CNN
+F 1 "Unconnected" H 10080 1501 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 10000 1550 50  0001 C CNN
+F 3 "~" H 10000 1550 50  0001 C CNN
+	1    10000 1550
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -1090,8 +889,8 @@ Text Label 6050 9100 2    50   ~ 0
 V_SOLAR
 Wire Notes Line
 	6950 9150 16050 9150
-Text Notes 7700 7850 0    50   ~ 0
-Structural plated throughole to hold the guitar wire solar cell structure
+Text Notes 9650 2000 0    50   ~ 0
+Structural plated throughole to \nhold the guitar wire solar \ncell structure
 Wire Wire Line
 	5350 3100 4900 3100
 Text Label 4900 3100 0    50   ~ 0
@@ -1099,7 +898,7 @@ V_SOLAR
 Wire Wire Line
 	4750 1350 6050 1350
 NoConn ~ 5350 3700
-NoConn ~ 8950 7650
+NoConn ~ 9800 1550
 NoConn ~ 5350 3900
 Wire Wire Line
 	5350 3300 4900 3300
@@ -1229,20 +1028,31 @@ LED indicator\n
 $Comp
 L Connector_Generic:Conn_01x01 StringHole1
 U 1 1 5DB85E84
-P 9150 8150
-F 0 "StringHole1" H 9230 8192 50  0000 L CNN
-F 1 "Unconnected" H 9230 8101 50  0000 L CNN
-F 2 "flight-computer:SolderWirePad_1x01_Drill0.8mm" H 9150 8150 50  0001 C CNN
-F 3 "~" H 9150 8150 50  0001 C CNN
-	1    9150 8150
+P 10000 2350
+F 0 "StringHole1" H 10080 2392 50  0000 L CNN
+F 1 "Unconnected" H 10080 2301 50  0000 L CNN
+F 2 "flight-computer:SolderWirePad_1x01_Drill0.8mm" H 10000 2350 50  0001 C CNN
+F 3 "~" H 10000 2350 50  0001 C CNN
+	1    10000 2350
 	1    0    0    -1  
 $EndComp
-NoConn ~ 8950 8150
-Text Notes 8950 8400 0    50   ~ 0
+NoConn ~ 9800 2350
+Text Notes 9800 2600 0    50   ~ 0
 Hole to tie string\n
-Text Notes 7100 9100 0    50   ~ 0
+Text Notes 9550 3150 0    50   ~ 0
 Structural holes\n
 Wire Wire Line
 	6450 2250 6250 2250
 Connection ~ 6250 2250
+$Comp
+L femto-lib:ZOE-M8G IC1
+U 1 1 5DB9C8A9
+P 13500 7450
+F 0 "IC1" H 13500 9615 50  0000 C CNN
+F 1 "ZOE-M8G" H 13500 9524 50  0000 C CNN
+F 2 "flight-computer:ZOE-M8" H 13400 7450 50  0001 C CNN
+F 3 "" H 13400 7450 50  0001 C CNN
+	1    13500 7450
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
