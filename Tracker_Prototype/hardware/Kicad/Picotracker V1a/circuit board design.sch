@@ -196,10 +196,6 @@ Wire Wire Line
 	7900 1850 7900 1700
 Connection ~ 7900 1700
 Wire Wire Line
-	6450 2250 6900 2250
-Text Label 6900 2250 2    50   ~ 0
-VDD_TCXO
-Wire Wire Line
 	7550 5200 7550 5400
 Connection ~ 7550 5200
 Wire Wire Line
@@ -986,10 +982,6 @@ Wire Wire Line
 	5200 8350 5400 8350
 Text Label 4900 4000 0    50   ~ 0
 SWDIO
-Text Label 7800 3200 2    50   ~ 0
-VDD_TCXO
-Wire Wire Line
-	7150 3200 7800 3200
 Wire Wire Line
 	6050 1350 6050 2400
 $Comp
@@ -1099,7 +1091,7 @@ Text Label 6050 9100 2    50   ~ 0
 V_SOLAR
 Wire Notes Line
 	6950 9150 16050 9150
-Text Notes 7650 8400 0    50   ~ 0
+Text Notes 7700 7850 0    50   ~ 0
 Structural plated throughole to hold the guitar wire solar cell structure
 Wire Wire Line
 	5350 3100 4900 3100
@@ -1185,7 +1177,7 @@ U 1 1 5DC04C37
 P 10350 5850
 F 0 "SW1" H 10350 6135 50  0000 C CNN
 F 1 "SW_Push" H 10350 6044 50  0000 C CNN
-F 2 "" H 10350 6050 50  0001 C CNN
+F 2 "flight-computer:EVPAWCD4A" H 10350 6050 50  0001 C CNN
 F 3 "~" H 10350 6050 50  0001 C CNN
 	1    10350 5850
 	1    0    0    -1  
@@ -1235,4 +1227,23 @@ Wire Notes Line
 	11100 3250 9350 3250
 Text Notes 9700 4700 0    50   ~ 0
 LED indicator\n
+$Comp
+L Connector_Generic:Conn_01x01 J5
+U 1 1 5DB85E84
+P 9150 8150
+F 0 "J5" H 9230 8192 50  0000 L CNN
+F 1 "Unconnected" H 9230 8101 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 9150 8150 50  0001 C CNN
+F 3 "~" H 9150 8150 50  0001 C CNN
+	1    9150 8150
+	1    0    0    -1  
+$EndComp
+NoConn ~ 8950 8150
+Text Notes 8950 8400 0    50   ~ 0
+Hole to tie string\n
+Text Notes 7100 9100 0    50   ~ 0
+Structural holes\n
+Wire Wire Line
+	6450 2250 6250 2250
+Connection ~ 6250 2250
 $EndSCHEMATC
