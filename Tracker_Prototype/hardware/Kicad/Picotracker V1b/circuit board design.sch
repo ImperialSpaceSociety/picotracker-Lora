@@ -378,8 +378,6 @@ GPS circuit\n
 Wire Notes Line
 	500  11200 6950 11200
 Wire Notes Line
-	6950 11200 6950 6850
-Wire Notes Line
 	500  6850 500  11200
 Text Notes 650  11100 0    50   ~ 0
 Power supply\n
@@ -398,45 +396,16 @@ I2C1_SCL
 $Comp
 L power:GND #PWR0102
 U 1 1 5DEE121A
-P 1450 9550
-F 0 "#PWR0102" H 1450 9300 50  0001 C CNN
-F 1 "GND" H 1455 9377 50  0000 C CNN
-F 2 "" H 1450 9550 50  0001 C CNN
-F 3 "" H 1450 9550 50  0001 C CNN
-	1    1450 9550
+P 1450 8750
+F 0 "#PWR0102" H 1450 8500 50  0001 C CNN
+F 1 "GND" H 1455 8577 50  0000 C CNN
+F 2 "" H 1450 8750 50  0001 C CNN
+F 3 "" H 1450 8750 50  0001 C CNN
+	1    1450 8750
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	1450 8350 2200 8350
-Wire Wire Line
-	4850 8350 5200 8350
-Wire Wire Line
-	5550 8350 5550 7850
-$Comp
-L power:+3.3V #PWR0120
-U 1 1 5DEE8C89
-P 5550 7850
-F 0 "#PWR0120" H 5550 7700 50  0001 C CNN
-F 1 "+3.3V" H 5565 8023 50  0000 C CNN
-F 2 "" H 5550 7850 50  0001 C CNN
-F 3 "" H 5550 7850 50  0001 C CNN
-	1    5550 7850
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2500 8350 2700 8350
-Wire Wire Line
-	3000 8350 3200 8350
-Wire Wire Line
-	3500 8350 3650 8350
-Wire Wire Line
-	3950 8350 4100 8350
-Wire Wire Line
-	4400 8350 4550 8350
 Text Notes 3050 10200 0    50   ~ 0
 Ok, it is not as simple as this. -Medad 21/10/19
-Text Notes 3450 8800 0    50   ~ 0
-0.5V solar cells
 Wire Wire Line
 	6450 2400 6450 2250
 Wire Wire Line
@@ -498,72 +467,6 @@ F 2 "RF_Module:CMWX1ZZABZ" H 6250 3900 50  0001 C CNN
 F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 8700 2400 50  0001 C CNN
 	1    6250 3900
 	1    0    0    -1  
-$EndComp
-$Comp
-L Device:Solar_Cell SC6
-U 1 1 5DEDF009
-P 4650 8350
-F 0 "SC6" V 4345 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 4436 8400 50  0000 C CNN
-F 2 "~" V 4650 8410 50  0001 C CNN
-F 3 "~" V 4650 8410 50  0001 C CNN
-	1    4650 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC5
-U 1 1 5DEDE88C
-P 4200 8350
-F 0 "SC5" V 3895 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 3986 8400 50  0000 C CNN
-F 2 "~" V 4200 8410 50  0001 C CNN
-F 3 "~" V 4200 8410 50  0001 C CNN
-	1    4200 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC4
-U 1 1 5DEDE1EB
-P 3750 8350
-F 0 "SC4" V 3445 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 3536 8400 50  0000 C CNN
-F 2 "~" V 3750 8410 50  0001 C CNN
-F 3 "~" V 3750 8410 50  0001 C CNN
-	1    3750 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC3
-U 1 1 5DEDDC62
-P 3300 8350
-F 0 "SC3" V 2995 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 3086 8400 50  0000 C CNN
-F 2 "~" V 3300 8410 50  0001 C CNN
-F 3 "~" V 3300 8410 50  0001 C CNN
-	1    3300 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC2
-U 1 1 5DEDD65F
-P 2800 8350
-F 0 "SC2" V 2495 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 2586 8400 50  0000 C CNN
-F 2 "~" V 2800 8410 50  0001 C CNN
-F 3 "~" V 2800 8410 50  0001 C CNN
-	1    2800 8350
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:Solar_Cell SC1
-U 1 1 5DEDBCFD
-P 2300 8350
-F 0 "SC1" V 1995 8400 50  0000 C CNN
-F 1 "Solar_Cell" V 2086 8400 50  0000 C CNN
-F 2 "~" V 2300 8410 50  0001 C CNN
-F 3 "~" V 2300 8410 50  0001 C CNN
-	1    2300 8350
-	0    1    1    0   
 $EndComp
 $Comp
 L Device:Antenna AE1
@@ -764,20 +667,6 @@ $EndComp
 NoConn ~ 5350 5000
 NoConn ~ 6350 2400
 NoConn ~ 5350 3800
-$Comp
-L power:PWR_FLAG #FLG0101
-U 1 1 5DBC451E
-P 5200 8350
-F 0 "#FLG0101" H 5200 8425 50  0001 C CNN
-F 1 "PWR_FLAG" H 5200 8523 50  0000 C CNN
-F 2 "" H 5200 8350 50  0001 C CNN
-F 3 "~" H 5200 8350 50  0001 C CNN
-	1    5200 8350
-	1    0    0    -1  
-$EndComp
-Connection ~ 5200 8350
-Wire Wire Line
-	5200 8350 5400 8350
 Text Label 4900 4000 0    50   ~ 0
 SWDIO
 Wire Wire Line
@@ -797,34 +686,30 @@ F 3 "" H 4750 1050 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	4750 1350 4750 1050
-Connection ~ 5550 8350
-Wire Wire Line
-	5550 8350 5700 8350
 $Comp
 L Connector_Generic:Conn_01x01 J3
 U 1 1 5DC8A70A
-P 5900 8350
-F 0 "J3" H 5980 8392 50  0000 L CNN
-F 1 "3.3V" H 5980 8301 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 5900 8350 50  0001 C CNN
-F 3 "~" H 5900 8350 50  0001 C CNN
-	1    5900 8350
-	1    0    0    -1  
+P 1050 7950
+F 0 "J3" H 1130 7992 50  0000 L CNN
+F 1 "+SOL" H 1130 7901 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 1050 7950 50  0001 C CNN
+F 3 "~" H 1050 7950 50  0001 C CNN
+	1    1050 7950
+	-1   0    0    1   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x01 J2
 U 1 1 5DC8B635
 P 1050 8350
-F 0 "J2" H 968 8125 50  0000 C CNN
-F 1 "GND" H 968 8216 50  0000 C CNN
+F 0 "J2" H 1200 8400 50  0000 C CNN
+F 1 "GND" H 1200 8300 50  0000 C CNN
 F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 1050 8350 50  0001 C CNN
 F 3 "~" H 1050 8350 50  0001 C CNN
 	1    1050 8350
 	-1   0    0    1   
 $EndComp
-Connection ~ 1450 8350
 Wire Wire Line
-	1450 9550 1450 8350
+	1450 8750 1450 8350
 Wire Wire Line
 	1250 8350 1450 8350
 $Comp
@@ -838,55 +723,6 @@ F 3 "~" H 10000 1550 50  0001 C CNN
 	1    10000 1550
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	5400 8350 5400 8700
-Connection ~ 5400 8350
-Wire Wire Line
-	5400 8350 5550 8350
-$Comp
-L power:GND #PWR01
-U 1 1 5DCCDF86
-P 5400 9600
-F 0 "#PWR01" H 5400 9350 50  0001 C CNN
-F 1 "GND" H 5405 9427 50  0000 C CNN
-F 2 "" H 5400 9600 50  0001 C CNN
-F 3 "" H 5400 9600 50  0001 C CNN
-	1    5400 9600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R1
-U 1 1 5DCCF4D3
-P 5400 8850
-F 0 "R1" H 5470 8896 50  0000 L CNN
-F 1 "100K" H 5470 8805 50  0000 L CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 5330 8850 50  0001 C CNN
-F 3 "~" H 5400 8850 50  0001 C CNN
-	1    5400 8850
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5400 9000 5400 9100
-$Comp
-L Device:R R2
-U 1 1 5DCD0192
-P 5400 9350
-F 0 "R2" H 5470 9396 50  0000 L CNN
-F 1 "100K" H 5470 9305 50  0000 L CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 5330 9350 50  0001 C CNN
-F 3 "~" H 5400 9350 50  0001 C CNN
-	1    5400 9350
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5400 9500 5400 9600
-Wire Wire Line
-	5400 9100 6050 9100
-Connection ~ 5400 9100
-Wire Wire Line
-	5400 9100 5400 9200
-Text Label 6050 9100 2    50   ~ 0
-V_SOLAR
 Wire Notes Line
 	6950 9150 16050 9150
 Text Notes 9650 2000 0    50   ~ 0
@@ -1044,15 +880,633 @@ Structural holes\n
 Wire Wire Line
 	6450 2250 6250 2250
 Connection ~ 6250 2250
+Wire Wire Line
+	1250 7950 1450 7950
+Wire Wire Line
+	1450 7950 1450 7450
 $Comp
-L femto-lib:ZOE-M8G IC1
-U 1 1 5DB9C8A9
-P 13500 7450
-F 0 "IC1" H 13500 9615 50  0000 C CNN
-F 1 "ZOE-M8G" H 13500 9524 50  0000 C CNN
-F 2 "flight-computer:ZOE-M8" H 13400 7450 50  0001 C CNN
-F 3 "" H 13400 7450 50  0001 C CNN
-	1    13500 7450
+L femto-lib:+SOL #PWR0134
+U 1 1 5DCC7320
+P 1450 7450
+F 0 "#PWR0134" H 1450 7300 50  0001 C CNN
+F 1 "+SOL" H 1465 7623 50  0000 C CNN
+F 2 "" H 1450 7450 50  0000 C CNN
+F 3 "" H 1450 7450 50  0000 C CNN
+	1    1450 7450
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	6950 11200 6950 6850
+$Comp
+L pecanpico:L_Small L?
+U 1 1 5DD9B4F6
+P 8300 7950
+AR Path="/5DD2F7AA/5DD9B4F6" Ref="L?"  Part="1" 
+AR Path="/5DD9B4F6" Ref="L7"  Part="1" 
+F 0 "L7" V 8375 7950 50  0000 C CNN
+F 1 "XFL2006-472MEB" V 8200 7800 50  0000 C CNN
+F 2 "pecanpico:XFL20xx" H 8300 7950 50  0001 C CNN
+F 3 "~" H 8300 7950 50  0001 C CNN
+	1    8300 7950
+	0    1    1    0   
+$EndComp
+$Comp
+L pecanpico:C C?
+U 1 1 5DD9B4FC
+P 8100 8200
+AR Path="/5DD2F7AA/5DD9B4FC" Ref="C?"  Part="1" 
+AR Path="/5DD9B4FC" Ref="C3"  Part="1" 
+F 0 "C3" V 8050 8150 50  0000 R CNN
+F 1 "22u" V 8050 8250 50  0000 L CNN
+F 2 "pecanpico:C_0805" H 8138 8050 50  0001 C CNN
+F 3 "" H 8100 8200 50  0001 C CNN
+	1    8100 8200
+	1    0    0    -1  
+$EndComp
+$Comp
+L pecanpico:R R?
+U 1 1 5DD9B502
+P 9700 8200
+AR Path="/5DD2F7AA/5DD9B502" Ref="R?"  Part="1" 
+AR Path="/5DD9B502" Ref="R8"  Part="1" 
+F 0 "R8" V 9600 8200 50  0000 C CNN
+F 1 "R" V 9700 8200 50  0000 C CNN
+F 2 "pecanpico:R_0402" V 9630 8200 50  0001 C CNN
+F 3 "" H 9700 8200 50  0001 C CNN
+	1    9700 8200
+	-1   0    0    1   
+$EndComp
+$Comp
+L pecanpico:R R?
+U 1 1 5DD9B508
+P 9700 7900
+AR Path="/5DD2F7AA/5DD9B508" Ref="R?"  Part="1" 
+AR Path="/5DD9B508" Ref="R1"  Part="1" 
+F 0 "R1" V 9600 7900 50  0000 C CNN
+F 1 "R" V 9700 7900 50  0000 C CNN
+F 2 "pecanpico:R_0402" V 9630 7900 50  0001 C CNN
+F 3 "" H 9700 7900 50  0001 C CNN
+	1    9700 7900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	9400 8050 9500 8050
+Wire Wire Line
+	9700 8450 9700 8350
+$Comp
+L pecanpico:SPV1040 IC?
+U 1 1 5DD9B510
+P 8950 7950
+AR Path="/5DD2F7AA/5DD9B510" Ref="IC?"  Part="1" 
+AR Path="/5DD9B510" Ref="IC7"  Part="1" 
+F 0 "IC7" H 8600 8500 60  0000 L CNN
+F 1 "SPV1040" H 9300 7700 60  0000 R CNN
+F 2 "Package_SO:TSSOP-8_4.4x3mm_P0.65mm" H 8950 7950 60  0001 C CNN
+F 3 "" H 8950 7950 60  0000 C CNN
+	1    8950 7950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 8050 8100 7950
+Wire Wire Line
+	8100 7950 8200 7950
+Wire Wire Line
+	8100 7950 8100 7550
+Wire Wire Line
+	8100 7550 8400 7550
+Connection ~ 8100 7950
+Wire Wire Line
+	8500 7650 8400 7650
+Wire Wire Line
+	8400 7650 8400 7550
+Connection ~ 8400 7550
+Wire Wire Line
+	8400 7550 8500 7550
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DD9B51F
+P 8100 8450
+AR Path="/5DD2F7AA/5DD9B51F" Ref="#PWR?"  Part="1" 
+AR Path="/5DD9B51F" Ref="#PWR0135"  Part="1" 
+F 0 "#PWR0135" H 8100 8200 50  0001 C CNN
+F 1 "GND" H 8100 8300 50  0000 C CNN
+F 2 "" H 8100 8450 50  0001 C CNN
+F 3 "" H 8100 8450 50  0001 C CNN
+	1    8100 8450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 8450 8100 8350
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DD9B526
+P 8400 8450
+AR Path="/5DD2F7AA/5DD9B526" Ref="#PWR?"  Part="1" 
+AR Path="/5DD9B526" Ref="#PWR0136"  Part="1" 
+F 0 "#PWR0136" H 8400 8200 50  0001 C CNN
+F 1 "GND" H 8400 8300 50  0000 C CNN
+F 2 "" H 8400 8450 50  0001 C CNN
+F 3 "" H 8400 8450 50  0001 C CNN
+	1    8400 8450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8400 8450 8400 8050
+Wire Wire Line
+	8400 8050 8500 8050
+Wire Wire Line
+	8400 7950 8500 7950
+Wire Wire Line
+	9400 7850 9500 7850
+Wire Wire Line
+	9500 7850 9500 7750
+Wire Wire Line
+	9500 7550 9400 7550
+Connection ~ 9500 7550
+Wire Wire Line
+	9400 7750 9500 7750
+Connection ~ 9500 7750
+Wire Wire Line
+	9500 7750 9500 7550
+$Comp
+L pecanpico:C C?
+U 1 1 5DD9B536
+P 10000 8050
+AR Path="/5DD2F7AA/5DD9B536" Ref="C?"  Part="1" 
+AR Path="/5DD9B536" Ref="C17"  Part="1" 
+F 0 "C17" V 9950 8000 50  0000 R CNN
+F 1 "22u" V 9950 8100 50  0000 L CNN
+F 2 "pecanpico:C_0805" H 10038 7900 50  0001 C CNN
+F 3 "" H 10000 8050 50  0001 C CNN
+	1    10000 8050
+	1    0    0    -1  
+$EndComp
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DD9B53C
+P 9700 8450
+AR Path="/5DD2F7AA/5DD9B53C" Ref="#PWR?"  Part="1" 
+AR Path="/5DD9B53C" Ref="#PWR0138"  Part="1" 
+F 0 "#PWR0138" H 9700 8200 50  0001 C CNN
+F 1 "GND" H 9700 8300 50  0000 C CNN
+F 2 "" H 9700 8450 50  0001 C CNN
+F 3 "" H 9700 8450 50  0001 C CNN
+	1    9700 8450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9700 7750 9700 7550
+Wire Wire Line
+	9500 7550 9700 7550
+$Comp
+L pecanpico:C C?
+U 1 1 5DD9B544
+P 9500 8250
+AR Path="/5DD2F7AA/5DD9B544" Ref="C?"  Part="1" 
+AR Path="/5DD9B544" Ref="C16"  Part="1" 
+F 0 "C16" V 9450 8200 50  0000 R CNN
+F 1 "1n" V 9450 8300 50  0000 L CNN
+F 2 "pecanpico:C_0402" H 9538 8100 50  0001 C CNN
+F 3 "" H 9500 8250 50  0001 C CNN
+	1    9500 8250
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	9500 8100 9500 8050
+Connection ~ 9500 8050
+Wire Wire Line
+	9500 8050 9700 8050
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DD9B54D
+P 9500 8450
+AR Path="/5DD2F7AA/5DD9B54D" Ref="#PWR?"  Part="1" 
+AR Path="/5DD9B54D" Ref="#PWR0140"  Part="1" 
+F 0 "#PWR0140" H 9500 8200 50  0001 C CNN
+F 1 "GND" H 9500 8300 50  0000 C CNN
+F 2 "" H 9500 8450 50  0001 C CNN
+F 3 "" H 9500 8450 50  0001 C CNN
+	1    9500 8450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9500 8450 9500 8400
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DD9B554
+P 10000 8450
+AR Path="/5DD2F7AA/5DD9B554" Ref="#PWR?"  Part="1" 
+AR Path="/5DD9B554" Ref="#PWR0141"  Part="1" 
+F 0 "#PWR0141" H 10000 8200 50  0001 C CNN
+F 1 "GND" H 10000 8300 50  0000 C CNN
+F 2 "" H 10000 8450 50  0001 C CNN
+F 3 "" H 10000 8450 50  0001 C CNN
+	1    10000 8450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10000 8450 10000 8200
+Wire Wire Line
+	9700 7550 10000 7550
+Wire Wire Line
+	10000 7550 10000 7900
+Connection ~ 9700 7550
+$Comp
+L pecanpico:+SOL #PWR?
+U 1 1 5DD9B55E
+P 8100 7450
+AR Path="/5DD2F7AA/5DD9B55E" Ref="#PWR?"  Part="1" 
+AR Path="/5DD9B55E" Ref="#PWR0147"  Part="1" 
+F 0 "#PWR0147" H 8100 7300 50  0001 C CNN
+F 1 "+SOL" H 8115 7623 50  0000 C CNN
+F 2 "" H 8100 7450 50  0000 C CNN
+F 3 "" H 8100 7450 50  0000 C CNN
+	1    8100 7450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 7450 8100 7550
+Connection ~ 8100 7550
+Wire Wire Line
+	10000 7450 10000 7550
+Connection ~ 10000 7550
+Connection ~ 9700 8050
+$Comp
+L pecanpico:ZOE-M8G IC?
+U 1 1 5DDC923C
+P 13650 7500
+AR Path="/5DD2F7AA/5DDC923C" Ref="IC?"  Part="1" 
+AR Path="/5DDC923C" Ref="IC9"  Part="1" 
+F 0 "IC9" H 13050 9550 50  0000 L CNN
+F 1 "ZOE-M8G/B" H 14250 6450 50  0000 R CNN
+F 2 "pecanpico:ZOE-M8" H 13550 7500 50  0001 C CNN
+F 3 "" H 13550 7500 50  0001 C CNN
+	1    13650 7500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14350 7600 14450 7600
+Wire Wire Line
+	14450 7600 14450 7700
+Wire Wire Line
+	14350 8400 14450 8400
+Connection ~ 14450 8400
+Wire Wire Line
+	14450 8400 14450 8500
+Wire Wire Line
+	14350 8300 14450 8300
+Connection ~ 14450 8300
+Wire Wire Line
+	14450 8300 14450 8400
+Wire Wire Line
+	14350 8200 14450 8200
+Connection ~ 14450 8200
+Wire Wire Line
+	14450 8200 14450 8300
+Wire Wire Line
+	14350 8100 14450 8100
+Connection ~ 14450 8100
+Wire Wire Line
+	14450 8100 14450 8200
+Wire Wire Line
+	14350 8000 14450 8000
+Connection ~ 14450 8000
+Wire Wire Line
+	14450 8000 14450 8100
+Wire Wire Line
+	14350 7900 14450 7900
+Connection ~ 14450 7900
+Wire Wire Line
+	14450 7900 14450 8000
+Wire Wire Line
+	14350 7800 14450 7800
+Connection ~ 14450 7800
+Wire Wire Line
+	14450 7800 14450 7900
+Wire Wire Line
+	14350 7700 14450 7700
+Connection ~ 14450 7700
+Wire Wire Line
+	14450 7700 14450 7800
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DDC925C
+P 14450 8500
+AR Path="/5DD2F7AA/5DDC925C" Ref="#PWR?"  Part="1" 
+AR Path="/5DDC925C" Ref="#PWR0149"  Part="1" 
+F 0 "#PWR0149" H 14450 8250 50  0001 C CNN
+F 1 "GND" H 14450 8350 50  0000 C CNN
+F 2 "" H 14450 8500 50  0001 C CNN
+F 3 "" H 14450 8500 50  0001 C CNN
+	1    14450 8500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12850 8500 12850 8400
+Wire Wire Line
+	12850 7600 12950 7600
+Wire Wire Line
+	12950 7700 12850 7700
+Connection ~ 12850 7700
+Wire Wire Line
+	12850 7700 12850 7600
+Wire Wire Line
+	12950 7800 12850 7800
+Connection ~ 12850 7800
+Wire Wire Line
+	12850 7800 12850 7700
+Wire Wire Line
+	12950 7900 12850 7900
+Connection ~ 12850 7900
+Wire Wire Line
+	12850 7900 12850 7800
+Wire Wire Line
+	12950 8000 12850 8000
+Connection ~ 12850 8000
+Wire Wire Line
+	12850 8000 12850 7900
+Wire Wire Line
+	12950 8100 12850 8100
+Connection ~ 12850 8100
+Wire Wire Line
+	12850 8100 12850 8000
+Wire Wire Line
+	12950 8200 12850 8200
+Connection ~ 12850 8200
+Wire Wire Line
+	12850 8200 12850 8100
+Wire Wire Line
+	12950 8300 12850 8300
+Connection ~ 12850 8300
+Wire Wire Line
+	12850 8300 12850 8200
+Wire Wire Line
+	12950 8400 12850 8400
+Connection ~ 12850 8400
+Wire Wire Line
+	12850 8400 12850 8300
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DDC927C
+P 12850 8500
+AR Path="/5DD2F7AA/5DDC927C" Ref="#PWR?"  Part="1" 
+AR Path="/5DDC927C" Ref="#PWR0150"  Part="1" 
+F 0 "#PWR0150" H 12850 8250 50  0001 C CNN
+F 1 "GND" H 12850 8350 50  0000 C CNN
+F 2 "" H 12850 8500 50  0001 C CNN
+F 3 "" H 12850 8500 50  0001 C CNN
+	1    12850 8500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12950 6000 12850 6000
+Wire Wire Line
+	12850 6000 12850 5900
+Wire Wire Line
+	12850 5700 12950 5700
+Connection ~ 12850 5700
+Wire Wire Line
+	12950 5800 12850 5800
+Connection ~ 12850 5800
+Wire Wire Line
+	12850 5800 12850 5700
+Wire Wire Line
+	12950 5900 12850 5900
+Connection ~ 12850 5900
+Wire Wire Line
+	12850 5900 12850 5800
+Wire Wire Line
+	12950 6650 12850 6650
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DDC928D
+P 12850 6650
+AR Path="/5DD2F7AA/5DDC928D" Ref="#PWR?"  Part="1" 
+AR Path="/5DDC928D" Ref="#PWR0151"  Part="1" 
+F 0 "#PWR0151" H 12850 6400 50  0001 C CNN
+F 1 "GND" H 12850 6500 50  0000 C CNN
+F 2 "" H 12850 6650 50  0001 C CNN
+F 3 "" H 12850 6650 50  0001 C CNN
+	1    12850 6650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	14550 5600 14350 5600
+Wire Wire Line
+	14350 6700 14750 6700
+Wire Wire Line
+	14750 6800 14350 6800
+$Comp
+L pecanpico:C C?
+U 1 1 5DDC9296
+P 12750 6250
+AR Path="/5DD2F7AA/5DDC9296" Ref="C?"  Part="1" 
+AR Path="/5DDC9296" Ref="C18"  Part="1" 
+F 0 "C18" V 12700 6200 50  0000 R CNN
+F 1 "100n" V 12700 6300 50  0000 L CNN
+F 2 "pecanpico:C_0402" H 12788 6100 50  0001 C CNN
+F 3 "" H 12750 6250 50  0001 C CNN
+	1    12750 6250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12750 6100 12750 6000
+Wire Wire Line
+	12750 6000 12850 6000
+Connection ~ 12850 6000
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DDC929F
+P 12750 6400
+AR Path="/5DD2F7AA/5DDC929F" Ref="#PWR?"  Part="1" 
+AR Path="/5DDC929F" Ref="#PWR0152"  Part="1" 
+F 0 "#PWR0152" H 12750 6150 50  0001 C CNN
+F 1 "GND" H 12750 6250 50  0000 C CNN
+F 2 "" H 12750 6400 50  0001 C CNN
+F 3 "" H 12750 6400 50  0001 C CNN
+	1    12750 6400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12850 5500 12850 5700
+$Comp
+L Connector_Generic:Conn_01x01 J?
+U 1 1 5DDC92A6
+P 14750 5600
+AR Path="/5DD2F7AA/5DDC92A6" Ref="J?"  Part="1" 
+AR Path="/5DDC92A6" Ref="J4"  Part="1" 
+F 0 "J4" H 14670 5375 50  0000 C CNN
+F 1 "Conn_01x01" H 14800 5450 50  0000 C CNN
+F 2 "Connector_PinHeader_1.27mm:PinHeader_1x01_P1.27mm_Vertical" H 14750 5600 50  0001 C CNN
+F 3 "~" H 14750 5600 50  0001 C CNN
+	1    14750 5600
+	1    0    0    1   
+$EndComp
+$Comp
+L pecanpico:+GPS #PWR?
+U 1 1 5DDC92AC
+P 12850 5500
+AR Path="/5DD2F7AA/5DDC92AC" Ref="#PWR?"  Part="1" 
+AR Path="/5DDC92AC" Ref="#PWR0153"  Part="1" 
+F 0 "#PWR0153" H 12850 5350 50  0001 C CNN
+F 1 "+GPS" V 12850 5625 50  0000 L CNN
+F 2 "" H 12850 5500 50  0000 C CNN
+F 3 "" H 12850 5500 50  0000 C CNN
+	1    12850 5500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12950 5600 12750 5600
+Wire Wire Line
+	12750 5600 12750 5500
+Wire Wire Line
+	14350 7200 14450 7200
+Wire Wire Line
+	14450 7200 14450 7600
+Connection ~ 14450 7600
+Wire Wire Line
+	14350 6600 14750 6600
+Wire Wire Line
+	14350 6500 14750 6500
+Text Label 14750 6700 2    50   ~ 0
+MOSI
+Text Label 14750 6800 2    50   ~ 0
+MISO
+Text Label 14750 6500 2    50   ~ 0
+~CS_GPS
+$Comp
+L Device:LED D?
+U 1 1 5DDC92C2
+P 14700 7300
+AR Path="/5DD2F7AA/5DDC92C2" Ref="D?"  Part="1" 
+AR Path="/5DDC92C2" Ref="D2"  Part="1" 
+F 0 "D2" H 14691 7516 50  0000 C CNN
+F 1 "LED" H 14691 7425 50  0000 C CNN
+F 2 "pecanpico:LED_0402" H 14700 7300 50  0001 C CNN
+F 3 "~" H 14700 7300 50  0001 C CNN
+	1    14700 7300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14550 7300 14350 7300
+Wire Wire Line
+	14850 7300 14950 7300
+Wire Wire Line
+	14950 7300 14950 7200
+$Comp
+L pecanpico:+GPS #PWR?
+U 1 1 5DDC92CB
+P 14950 7200
+AR Path="/5DD2F7AA/5DDC92CB" Ref="#PWR?"  Part="1" 
+AR Path="/5DDC92CB" Ref="#PWR0154"  Part="1" 
+F 0 "#PWR0154" H 14950 7050 50  0001 C CNN
+F 1 "+GPS" V 14950 7325 50  0000 L CNN
+F 2 "" H 14950 7200 50  0000 C CNN
+F 3 "" H 14950 7200 50  0000 C CNN
+	1    14950 7200
+	1    0    0    -1  
+$EndComp
+Text Label 14750 6600 2    50   ~ 0
+SCK2
+$Comp
+L pecanpico:SIP3243x IC?
+U 1 1 5DDE74F3
+P 9000 10050
+AR Path="/5DD2F7AA/5DDE74F3" Ref="IC?"  Part="1" 
+AR Path="/5DDE74F3" Ref="IC8"  Part="1" 
+F 0 "IC8" H 8700 10350 50  0000 L CNN
+F 1 "SIP32431DNP3-T1GE4" H 9000 9750 50  0000 C CNN
+F 2 "pecanpico:DFN-4-1EP_1.2x1.6mm_P0.5mm_EP" H 9000 10100 50  0001 C CNN
+F 3 "" H 9000 10100 50  0001 C CNN
+	1    9000 10050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9400 10100 9500 10100
+Wire Wire Line
+	9500 10100 9500 10200
+Wire Wire Line
+	9400 10200 9500 10200
+Connection ~ 9500 10200
+Wire Wire Line
+	9500 10200 9500 10300
+$Comp
+L pecanpico:GND #PWR?
+U 1 1 5DDE74FE
+P 9500 10300
+AR Path="/5DD2F7AA/5DDE74FE" Ref="#PWR?"  Part="1" 
+AR Path="/5DDE74FE" Ref="#PWR0155"  Part="1" 
+F 0 "#PWR0155" H 9500 10050 50  0001 C CNN
+F 1 "GND" H 9500 10150 50  0000 C CNN
+F 2 "" H 9500 10300 50  0001 C CNN
+F 3 "" H 9500 10300 50  0001 C CNN
+	1    9500 10300
+	1    0    0    -1  
+$EndComp
+$Comp
+L pecanpico:+GPS #PWR?
+U 1 1 5DDE7504
+P 9500 9800
+AR Path="/5DD2F7AA/5DDE7504" Ref="#PWR?"  Part="1" 
+AR Path="/5DDE7504" Ref="#PWR0156"  Part="1" 
+F 0 "#PWR0156" H 9500 9650 50  0001 C CNN
+F 1 "+GPS" H 9515 9973 50  0000 C CNN
+F 2 "" H 9500 9800 50  0000 C CNN
+F 3 "" H 9500 9800 50  0000 C CNN
+	1    9500 9800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9400 9900 9500 9900
+Wire Wire Line
+	9500 9900 9500 9800
+Wire Wire Line
+	8600 9900 8500 9900
+Wire Wire Line
+	8500 9900 8500 9800
+$Comp
+L pecanpico:+1V8 #PWR?
+U 1 1 5DDE750E
+P 8500 9800
+AR Path="/5DD2F7AA/5DDE750E" Ref="#PWR?"  Part="1" 
+AR Path="/5DDE750E" Ref="#PWR0157"  Part="1" 
+F 0 "#PWR0157" H 8500 9650 50  0001 C CNN
+F 1 "+1V8" H 8500 9950 50  0000 C CNN
+F 2 "" H 8500 9800 50  0001 C CNN
+F 3 "" H 8500 9800 50  0001 C CNN
+	1    8500 9800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8600 10200 8300 10200
+Text Label 8300 10200 0    50   ~ 0
+GPS_EN
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5DE20B53
+P 10000 7450
+AR Path="/5D5B165E/5DE20B53" Ref="#PWR?"  Part="1" 
+AR Path="/5D5B15F7/5DE20B53" Ref="#PWR?"  Part="1" 
+AR Path="/5DE20B53" Ref="#PWR0158"  Part="1" 
+F 0 "#PWR0158" H 10000 7300 50  0001 C CNN
+F 1 "+3.3V" H 10015 7623 50  0000 C CNN
+F 2 "" H 10000 7450 50  0001 C CNN
+F 3 "" H 10000 7450 50  0001 C CNN
+	1    10000 7450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5DE3BBF4
+P 12750 5500
+AR Path="/5D5B165E/5DE3BBF4" Ref="#PWR?"  Part="1" 
+AR Path="/5D5B15F7/5DE3BBF4" Ref="#PWR?"  Part="1" 
+AR Path="/5DE3BBF4" Ref="#PWR0159"  Part="1" 
+F 0 "#PWR0159" H 12750 5350 50  0001 C CNN
+F 1 "+3.3V" V 12750 5700 50  0000 C CNN
+F 2 "" H 12750 5500 50  0001 C CNN
+F 3 "" H 12750 5500 50  0001 C CNN
+	1    12750 5500
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
