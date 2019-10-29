@@ -555,7 +555,6 @@ NoConn ~ 7150 5000
 NoConn ~ 5350 3600
 NoConn ~ 5350 3500
 NoConn ~ 5350 3400
-NoConn ~ 5350 3300
 NoConn ~ 5350 3200
 NoConn ~ 5350 3000
 Wire Wire Line
@@ -1030,10 +1029,10 @@ Wire Wire Line
 Wire Wire Line
 	1250 8350 1450 8350
 $Comp
-L Connector_Generic:Conn_01x01 J4
+L Connector_Generic:Conn_01x01 SolarCellMount1
 U 1 1 5DCBAB7A
 P 9150 7650
-F 0 "J4" H 9230 7692 50  0000 L CNN
+F 0 "SolarCellMount1" H 9230 7692 50  0000 L CNN
 F 1 "Unconnected" H 9230 7601 50  0000 L CNN
 F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 9150 7650 50  0001 C CNN
 F 3 "~" H 9150 7650 50  0001 C CNN
@@ -1103,7 +1102,7 @@ NoConn ~ 5350 3700
 NoConn ~ 8950 7650
 NoConn ~ 5350 3900
 Wire Wire Line
-	7150 3100 7800 3100
+	5350 3300 4900 3300
 Wire Wire Line
 	10850 3900 10850 4250
 $Comp
@@ -1217,7 +1216,7 @@ Wire Wire Line
 	10750 5300 10750 5850
 Wire Notes Line
 	9350 650  9350 6850
-Text Label 7800 3100 2    50   ~ 0
+Text Label 4900 3300 0    50   ~ 0
 LED
 Text Label 9550 3900 0    50   ~ 0
 LED
@@ -1228,12 +1227,12 @@ Wire Notes Line
 Text Notes 9700 4700 0    50   ~ 0
 LED indicator\n
 $Comp
-L Connector_Generic:Conn_01x01 J5
+L Connector_Generic:Conn_01x01 StringHole1
 U 1 1 5DB85E84
 P 9150 8150
-F 0 "J5" H 9230 8192 50  0000 L CNN
+F 0 "StringHole1" H 9230 8192 50  0000 L CNN
 F 1 "Unconnected" H 9230 8101 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 9150 8150 50  0001 C CNN
+F 2 "flight-computer:SolderWirePad_1x01_Drill0.8mm" H 9150 8150 50  0001 C CNN
 F 3 "~" H 9150 8150 50  0001 C CNN
 	1    9150 8150
 	1    0    0    -1  

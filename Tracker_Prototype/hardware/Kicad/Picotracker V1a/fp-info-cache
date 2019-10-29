@@ -1,4 +1,4 @@
-15965448542029338
+15967020914959781
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -44260,6 +44260,13 @@ PQFN50P450X300X100-16N
 0
 16
 16
+flight-computer
+SolderWirePad_1x01_Drill0.8mm
+Wire solder connection
+connector
+0
+0
+0
 flight-computer
 TerminalBlock_TE_282834-4_1x04_P2.54mm_Horizontal
 Terminal Block TE 282834-4, 4 pins, pitch 2.54mm, size 10.620000000000001x6.5mm^2, drill diamater 1.1mm, pad diameter 2.1mm, see http://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Customer+Drawing%7F282834%7FC1%7Fpdf%7FEnglish%7FENG_CD_282834_C1.pdf, script-generated using https://github.com/pointhi/kicad-footprint-generator/scripts/TerminalBlock_TE-Connectivity
