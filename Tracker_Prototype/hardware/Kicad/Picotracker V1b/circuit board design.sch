@@ -242,136 +242,114 @@ Wire Wire Line
 $Comp
 L power:GND #PWR?
 U 1 1 5DC840FF
-P 14650 3850
+P 1500 4600
 AR Path="/5D5B1586/5DC840FF" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC840FF" Ref="#PWR?"  Part="1" 
 AR Path="/5DC840FF" Ref="#PWR0113"  Part="1" 
-F 0 "#PWR0113" H 14650 3600 50  0001 C CNN
-F 1 "GND" H 14655 3677 50  0000 C CNN
-F 2 "" H 14650 3850 50  0001 C CNN
-F 3 "" H 14650 3850 50  0001 C CNN
-	1    14650 3850
+F 0 "#PWR0113" H 1500 4350 50  0001 C CNN
+F 1 "GND" H 1505 4427 50  0000 C CNN
+F 2 "" H 1500 4600 50  0001 C CNN
+F 3 "" H 1500 4600 50  0001 C CNN
+	1    1500 4600
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:GND #PWR?
 U 1 1 5DC84105
-P 14050 3850
+P 900 4600
 AR Path="/5D5B1586/5DC84105" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC84105" Ref="#PWR?"  Part="1" 
 AR Path="/5DC84105" Ref="#PWR0114"  Part="1" 
-F 0 "#PWR0114" H 14050 3600 50  0001 C CNN
-F 1 "GND" H 14055 3677 50  0000 C CNN
-F 2 "" H 14050 3850 50  0001 C CNN
-F 3 "" H 14050 3850 50  0001 C CNN
-	1    14050 3850
+F 0 "#PWR0114" H 900 4350 50  0001 C CNN
+F 1 "GND" H 905 4427 50  0000 C CNN
+F 2 "" H 900 4600 50  0001 C CNN
+F 3 "" H 900 4600 50  0001 C CNN
+	1    900  4600
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	14650 3700 14650 3850
+	1500 4450 1500 4600
 Wire Wire Line
-	14250 3500 14050 3500
+	1100 4250 900  4250
 Wire Wire Line
-	14050 3500 14050 3850
-Wire Wire Line
-	14250 3300 14050 3300
-Wire Wire Line
-	14250 3400 13950 3400
+	900  4250 900  4600
 $Comp
 L power:GND #PWR?
 U 1 1 5DC84110
-P 15100 3000
+P 1950 3750
 AR Path="/5D5B1586/5DC84110" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC84110" Ref="#PWR?"  Part="1" 
 AR Path="/5DC84110" Ref="#PWR0115"  Part="1" 
-F 0 "#PWR0115" H 15100 2750 50  0001 C CNN
-F 1 "GND" H 15105 2827 50  0000 C CNN
-F 2 "" H 15100 3000 50  0001 C CNN
-F 3 "" H 15100 3000 50  0001 C CNN
-	1    15100 3000
+F 0 "#PWR0115" H 1950 3500 50  0001 C CNN
+F 1 "GND" H 1955 3577 50  0000 C CNN
+F 2 "" H 1950 3750 50  0001 C CNN
+F 3 "" H 1950 3750 50  0001 C CNN
+	1    1950 3750
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	14650 2700 14650 2750
+	1500 3450 1500 3500
 Wire Wire Line
-	15100 2950 15100 3000
+	1950 3700 1950 3750
 Wire Wire Line
-	15100 2750 14650 2750
-Connection ~ 14650 2750
+	1950 3500 1500 3500
+Connection ~ 1500 3500
 Wire Wire Line
-	14650 2750 14650 2900
+	1500 3500 1500 3650
 Wire Wire Line
-	14250 3100 14150 3100
+	1100 3850 1000 3850
 Wire Wire Line
-	14150 3100 14150 2750
+	1000 3850 1000 3500
 Wire Wire Line
-	14150 2750 14650 2750
-NoConn ~ 14250 3200
+	1000 3500 1500 3500
+NoConn ~ 1100 3950
 $Comp
 L power:+3.3V #PWR?
 U 1 1 5DC84121
-P 14650 2700
+P 1500 3450
 AR Path="/5D5B1586/5DC84121" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC84121" Ref="#PWR?"  Part="1" 
 AR Path="/5DC84121" Ref="#PWR0116"  Part="1" 
-F 0 "#PWR0116" H 14650 2550 50  0001 C CNN
-F 1 "+3.3V" H 14665 2873 50  0000 C CNN
-F 2 "" H 14650 2700 50  0001 C CNN
-F 3 "" H 14650 2700 50  0001 C CNN
-	1    14650 2700
+F 0 "#PWR0116" H 1500 3300 50  0001 C CNN
+F 1 "+3.3V" H 1515 3623 50  0000 C CNN
+F 2 "" H 1500 3450 50  0001 C CNN
+F 3 "" H 1500 3450 50  0001 C CNN
+	1    1500 3450
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	13950 2200 13950 3400
-Wire Wire Line
-	14050 2100 14050 3300
-Wire Wire Line
-	12700 1050 12700 1400
-Connection ~ 12700 2100
-Wire Wire Line
-	12700 2100 14050 2100
-Wire Wire Line
-	13000 2200 13000 1700
-Connection ~ 13000 2200
-Wire Wire Line
-	13000 2200 13950 2200
+	1250 5500 1250 5850
 $Comp
 L power:+3.3V #PWR?
 U 1 1 5DC84141
-P 12700 1050
+P 1250 5500
 AR Path="/5D5B1586/5DC84141" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC84141" Ref="#PWR?"  Part="1" 
 AR Path="/5DC84141" Ref="#PWR0117"  Part="1" 
-F 0 "#PWR0117" H 12700 900 50  0001 C CNN
-F 1 "+3.3V" H 12715 1223 50  0000 C CNN
-F 2 "" H 12700 1050 50  0001 C CNN
-F 3 "" H 12700 1050 50  0001 C CNN
-	1    12700 1050
+F 0 "#PWR0117" H 1250 5350 50  0001 C CNN
+F 1 "+3.3V" H 1265 5673 50  0000 C CNN
+F 2 "" H 1250 5500 50  0001 C CNN
+F 3 "" H 1250 5500 50  0001 C CNN
+	1    1250 5500
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:+3.3V #PWR?
 U 1 1 5DC84147
-P 13000 1050
+P 1550 5500
 AR Path="/5D5B1586/5DC84147" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC84147" Ref="#PWR?"  Part="1" 
 AR Path="/5DC84147" Ref="#PWR0118"  Part="1" 
-F 0 "#PWR0118" H 13000 900 50  0001 C CNN
-F 1 "+3.3V" H 13015 1223 50  0000 C CNN
-F 2 "" H 13000 1050 50  0001 C CNN
-F 3 "" H 13000 1050 50  0001 C CNN
-	1    13000 1050
+F 0 "#PWR0118" H 1550 5350 50  0001 C CNN
+F 1 "+3.3V" H 1565 5673 50  0000 C CNN
+F 2 "" H 1550 5500 50  0001 C CNN
+F 3 "" H 1550 5500 50  0001 C CNN
+	1    1550 5500
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	12700 1700 12700 2100
-Wire Wire Line
-	13000 1400 13000 1050
-Wire Wire Line
-	12000 2200 13000 2200
-Wire Wire Line
-	12000 2100 12700 2100
-Text Notes 11200 4850 0    50   ~ 0
+	1550 5850 1550 5500
+Text Notes 800  5150 0    50   ~ 0
 Pressure temperature humidity sensor\n
 Text Notes 11200 9100 0    50   ~ 0
 GPS circuit\n
@@ -387,9 +365,9 @@ Wire Wire Line
 	8600 5200 8600 5050
 Wire Wire Line
 	8100 5200 8600 5200
-Text Label 12000 2100 0    50   ~ 0
+Text Label 600  4050 0    50   ~ 0
 I2C1_SDA
-Text Label 12000 2200 0    50   ~ 0
+Text Label 600  4150 0    50   ~ 0
 I2C1_SCL
 Wire Wire Line
 	6450 2400 6450 2250
@@ -460,69 +438,69 @@ $EndComp
 $Comp
 L Device:R R?
 U 1 1 5DC8415A
-P 13000 1550
+P 1550 6000
 AR Path="/5D5B1586/5DC8415A" Ref="R?"  Part="1" 
 AR Path="/5D5B15F7/5DC8415A" Ref="R?"  Part="1" 
 AR Path="/5DC8415A" Ref="R5"  Part="1" 
-F 0 "R5" H 13070 1596 50  0000 L CNN
-F 1 "4.7K" H 13070 1505 50  0000 L CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 12930 1550 50  0001 C CNN
-F 3 "~" H 13000 1550 50  0001 C CNN
-F 4 "0.01" H 13000 1550 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 13000 1550 50  0001 C CNN "Purchase link"
-F 6 "50" H 13000 1550 50  0001 C CNN "min_quantity"
-	1    13000 1550
+F 0 "R5" H 1620 6046 50  0000 L CNN
+F 1 "4.7K" H 1620 5955 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 1480 6000 50  0001 C CNN
+F 3 "~" H 1550 6000 50  0001 C CNN
+F 4 "0.01" H 1550 6000 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 1550 6000 50  0001 C CNN "Purchase link"
+F 6 "50" H 1550 6000 50  0001 C CNN "min_quantity"
+	1    1550 6000
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R?
 U 1 1 5DC84150
-P 12700 1550
+P 1250 6000
 AR Path="/5D5B1586/5DC84150" Ref="R?"  Part="1" 
 AR Path="/5D5B15F7/5DC84150" Ref="R?"  Part="1" 
 AR Path="/5DC84150" Ref="R4"  Part="1" 
-F 0 "R4" H 12770 1596 50  0000 L CNN
-F 1 "4.7K" H 12770 1505 50  0000 L CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 12630 1550 50  0001 C CNN
-F 3 "~" H 12700 1550 50  0001 C CNN
-F 4 "0.01" H 12700 1550 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 12700 1550 50  0001 C CNN "Purchase link"
-F 6 "50" H 12700 1550 50  0001 C CNN "min_quantity"
-	1    12700 1550
+F 0 "R4" H 1320 6046 50  0000 L CNN
+F 1 "4.7K" H 1320 5955 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 1180 6000 50  0001 C CNN
+F 3 "~" H 1250 6000 50  0001 C CNN
+F 4 "0.01" H 1250 6000 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 1250 6000 50  0001 C CNN "Purchase link"
+F 6 "50" H 1250 6000 50  0001 C CNN "min_quantity"
+	1    1250 6000
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:C_Small C?
 U 1 1 5DC84133
-P 15100 2850
+P 1950 3600
 AR Path="/5D5B1586/5DC84133" Ref="C?"  Part="1" 
 AR Path="/5D5B15F7/5DC84133" Ref="C?"  Part="1" 
 AR Path="/5DC84133" Ref="C14"  Part="1" 
-F 0 "C14" H 15192 2896 50  0000 L CNN
-F 1 "220nF" H 15192 2805 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 15100 2850 50  0001 C CNN
-F 3 "~" H 15100 2850 50  0001 C CNN
-F 4 "0.003" H 15100 2850 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/0391135/" H 15100 2850 50  0001 C CNN "Purchase link"
-F 6 "50" H 15100 2850 50  0001 C CNN "min_quantity"
-	1    15100 2850
+F 0 "C14" H 2042 3646 50  0000 L CNN
+F 1 "220nF" H 2042 3555 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 1950 3600 50  0001 C CNN
+F 3 "~" H 1950 3600 50  0001 C CNN
+F 4 "0.003" H 1950 3600 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/0391135/" H 1950 3600 50  0001 C CNN "Purchase link"
+F 6 "50" H 1950 3600 50  0001 C CNN "min_quantity"
+	1    1950 3600
 	1    0    0    -1  
 $EndComp
 $Comp
 L Sensor_Pressure:MS5607-02BA U?
 U 1 1 5DC8412A
-P 14650 3300
+P 1500 4050
 AR Path="/5D5B1586/5DC8412A" Ref="U?"  Part="1" 
 AR Path="/5D5B15F7/5DC8412A" Ref="U?"  Part="1" 
 AR Path="/5DC8412A" Ref="U6"  Part="1" 
-F 0 "U6" H 14980 3346 50  0000 L CNN
-F 1 "MS5607-02BA" H 14980 3255 50  0000 L CNN
-F 2 "Package_LGA:LGA-8_3x5mm_P1.25mm" H 14650 3300 50  0001 C CNN
-F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5607-02BA03%7FB2%7Fpdf%7FEnglish%7FENG_DS_MS5607-02BA03_B2.pdf%7FCAT-BLPS0035" H 14650 3300 50  0001 C CNN
-F 4 "https://uk.rs-online.com/web/p/absolute-pressure-sensor-ics/8937095/" H 14650 3300 50  0001 C CNN "Purchase link"
-F 5 "2.86" H 14650 3300 50  0001 C CNN "Cost"
-F 6 "1" H 14650 3300 50  0001 C CNN "min_quantity"
-	1    14650 3300
+F 0 "U6" H 1830 4096 50  0000 L CNN
+F 1 "MS5607-02BA" H 1830 4005 50  0000 L CNN
+F 2 "Package_LGA:LGA-8_3x5mm_P1.25mm" H 1500 4050 50  0001 C CNN
+F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5607-02BA03%7FB2%7Fpdf%7FEnglish%7FENG_DS_MS5607-02BA03_B2.pdf%7FCAT-BLPS0035" H 1500 4050 50  0001 C CNN
+F 4 "https://uk.rs-online.com/web/p/absolute-pressure-sensor-ics/8937095/" H 1500 4050 50  0001 C CNN "Purchase link"
+F 5 "2.86" H 1500 4050 50  0001 C CNN "Cost"
+F 6 "1" H 1500 4050 50  0001 C CNN "min_quantity"
+	1    1500 4050
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1591,4 +1569,16 @@ Wire Wire Line
 	10000 7550 10350 7550
 Wire Wire Line
 	10350 7550 10350 7850
+Wire Wire Line
+	600  4050 1100 4050
+Wire Wire Line
+	1100 4150 600  4150
+Text Label 1250 6800 1    50   ~ 0
+I2C1_SDA
+Text Label 1550 6800 1    50   ~ 0
+I2C1_SCL
+Wire Wire Line
+	1250 6150 1250 6800
+Wire Wire Line
+	1550 6150 1550 6800
 $EndSCHEMATC
