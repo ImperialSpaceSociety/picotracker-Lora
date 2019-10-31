@@ -1176,7 +1176,7 @@
   )
 
   (module Connector_Wire:SolderWirePad_1x01_Drill0.8mm (layer F.Cu) (tedit 5A2676A0) (tstamp 5DBA95DC)
-    (at 299.72 152.908)
+    (at 299.847 152.146)
     (descr "Wire solder connection")
     (tags connector)
     (path /5E1C29C2)
