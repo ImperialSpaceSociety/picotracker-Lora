@@ -2,4 +2,5 @@
   (lib (name flight-computer)(type KiCad)(uri "${KIPRJMOD}/flight computer.pretty")(options "")(descr ""))
   (lib (name pico_tracker)(type KiCad)(uri ${KIPRJMOD}/pico_tracker.pretty)(options "")(descr ""))
   (lib (name pecanpico)(type KiCad)(uri ${KIPRJMOD}/lib/pecanpico.pretty)(options "")(descr ""))
+  (lib (name Inductor_coilcraft)(type Legacy)(uri ${KIPRJMOD}/lib/LPS3015-104MRC.mod)(options "")(descr ""))
 )

@@ -51,6 +51,11 @@ D High-accuracy, ultra-low-power, 3-axis digital output magnetometer
 F https://www.mouser.co.uk/datasheet/2/389/iis2mdc-1309412.pdf
 $ENDCMP
 #
+$CMP SENSOR_VCC
+D Power symbol creates a global label with name "VCC"
+K power-flag
+$ENDCMP
+#
 $CMP STF202-22T1G
 D USB Filter with ESDProtection
 F https://www.onsemi.com/pub/Collateral/STF202-22T1-D.PDF
@@ -63,6 +68,10 @@ $ENDCMP
 $CMP TM-32.000-AF3-33-S-Oscillator
 D 32 Mhz RS Pro TCXO
 F https://docs-emea.rs-online.com/webdocs/15dc/0900766b815dc7d9.pdf
+$ENDCMP
+#
+$CMP TPS62740
+F http://www.ti.com/lit/ds/symlink/tps62742.pdf
 $ENDCMP
 #
 $CMP W25Q64JVSSIM
