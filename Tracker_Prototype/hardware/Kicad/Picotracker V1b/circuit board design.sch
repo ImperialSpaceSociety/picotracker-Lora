@@ -1088,6 +1088,7 @@ F 0 "D2" V 14904 2429 50  0000 L CNN
 F 1 "D_Schottky" V 14800 2500 50  0000 L CNN
 F 2 "Diode_SMD:D_0402_1005Metric" H 14950 2350 50  0001 C CNN
 F 3 "~" H 14950 2350 50  0001 C CNN
+F 4 "https://uk.rs-online.com/web/p/rectifier-diodes-schottky-diodes/1867707/" H 14950 2350 50  0001 C CNN "Purchase link"
 	1    14950 2350
 	0    1    1    0   
 $EndComp
@@ -1124,46 +1125,22 @@ F 3 "" H 2600 9900 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	2600 8950 2600 9350
-Wire Wire Line
-	3150 9550 3050 9550
-Wire Wire Line
-	3050 9550 3050 9900
 $Comp
 L power:GND #PWR06
 U 1 1 5DF751EA
-P 3050 9900
-F 0 "#PWR06" H 3050 9650 50  0001 C CNN
-F 1 "GND" H 3055 9727 50  0000 C CNN
-F 2 "" H 3050 9900 50  0001 C CNN
-F 3 "" H 3050 9900 50  0001 C CNN
-	1    3050 9900
+P 2900 9900
+F 0 "#PWR06" H 2900 9650 50  0001 C CNN
+F 1 "GND" H 2905 9727 50  0000 C CNN
+F 2 "" H 2900 9900 50  0001 C CNN
+F 3 "" H 2900 9900 50  0001 C CNN
+	1    2900 9900
 	1    0    0    -1  
 $EndComp
-Connection ~ 3050 9550
-Wire Wire Line
-	3150 9350 3050 9350
-Wire Wire Line
-	3050 9350 3050 9450
-Wire Wire Line
-	3150 9450 3050 9450
-Connection ~ 3050 9450
-Wire Wire Line
-	3050 9450 3050 9550
-Wire Wire Line
-	3150 9150 3050 9150
-Wire Wire Line
-	3050 9150 3050 9050
 Connection ~ 3050 8950
 Wire Wire Line
 	3050 8950 2600 8950
 Wire Wire Line
-	3150 9250 3050 9250
-Wire Wire Line
-	3050 9250 3050 9150
-Connection ~ 3050 9150
-Wire Wire Line
 	3150 9050 3050 9050
-Connection ~ 3050 9050
 Wire Wire Line
 	3050 9050 3050 8950
 $Comp
@@ -1443,17 +1420,6 @@ $EndComp
 Wire Wire Line
 	4550 9550 4550 9950
 $Comp
-L flight-computer:SENSOR_VCC #PWR018
-U 1 1 5E02FB2C
-P 4050 9850
-F 0 "#PWR018" H 4050 9700 50  0001 C CNN
-F 1 "SENSOR_VCC" H 4050 10000 50  0000 C CNN
-F 2 "" H 4050 9850 50  0001 C CNN
-F 3 "" H 4050 9850 50  0001 C CNN
-	1    4050 9850
-	1    0    0    -1  
-$EndComp
-$Comp
 L flight-computer:SENSOR_VCC #PWR01
 U 1 1 5E03CB4D
 P 1400 5550
@@ -1549,8 +1515,6 @@ F 3 "" H 2600 8650 50  0001 C CNN
 $EndComp
 Text Notes 2100 10550 0    50   ~ 0
 Buck coverter to bring battery voltage down to voltage for GPS and ABZ module
-Text Notes 2850 8100 0    50   ~ 0
-Must adjust values of VSEL pin connections to target output voltage.
 Connection ~ 4550 8950
 $Comp
 L power:VCC #PWR021
@@ -1598,7 +1562,7 @@ U 1 1 5E24769B
 P 12450 1850
 F 0 "L3" V 12269 1850 50  0000 C CNN
 F 1 "10uH" V 12360 1850 50  0000 C CNN
-F 2 "Inductor_coilcraft:LPS3015" H 12450 1850 50  0001 C CNN
+F 2 "Inductor_SMD:L_Taiyo-Yuden_NR-30xx" H 12450 1850 50  0001 C CNN
 F 3 "https://www.mouser.co.uk/datasheet/2/597/lps3015-270734.pdf" H 12450 1850 50  0001 C CNN
 	1    12450 1850
 	0    1    1    0   
@@ -1795,14 +1759,10 @@ Wire Wire Line
 	4900 3250 4100 3250
 Text Label 4100 3250 0    50   ~ 0
 BATT_VOLTS
-Text Label 4100 3650 0    50   ~ 0
+Text Label 4100 3550 0    50   ~ 0
 BATT_PWR_MEASURE
 Wire Wire Line
-	4900 3650 4100 3650
-Text Label 4100 3750 0    50   ~ 0
-SOL_PWR_MEASURE
-Wire Wire Line
-	4900 3750 4100 3750
+	4900 3550 4100 3550
 Wire Notes Line
 	500  5200 2500 5200
 Text Notes 750  6700 0    50   ~ 0
@@ -1834,21 +1794,10 @@ F 3 "" H 9250 9850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L flight-computer:SENSOR_VCC #PWR?
-U 1 1 5DBE4A13
-P 11800 7350
-F 0 "#PWR?" H 11800 7200 50  0001 C CNN
-F 1 "SENSOR_VCC" H 11800 7500 50  0000 C CNN
-F 2 "" H 11800 7350 50  0001 C CNN
-F 3 "" H 11800 7350 50  0001 C CNN
-	1    11800 7350
-	1    0    0    -1  
-$EndComp
-$Comp
-L flight-computer:SENSOR_VCC #PWR?
+L flight-computer:SENSOR_VCC #PWR0109
 U 1 1 5DBE7B3F
 P 13400 5400
-F 0 "#PWR?" H 13400 5250 50  0001 C CNN
+F 0 "#PWR0109" H 13400 5250 50  0001 C CNN
 F 1 "SENSOR_VCC" H 13400 5550 50  0000 C CNN
 F 2 "" H 13400 5400 50  0001 C CNN
 F 3 "" H 13400 5400 50  0001 C CNN
@@ -1863,8 +1812,81 @@ Wire Wire Line
 	13600 6500 14200 6500
 Text Label 14200 6500 2    50   ~ 0
 GPS_BCKP
-Text Label 4100 3550 0    50   ~ 0
+Text Label 4100 3650 0    50   ~ 0
 GPS_BCKP
 Wire Wire Line
-	4100 3550 4900 3550
+	4100 3650 4900 3650
+NoConn ~ 4900 3750
+$Comp
+L Connector_Generic:Conn_01x01 J6
+U 1 1 5DC88318
+P 13550 9450
+F 0 "J6" H 13630 9492 50  0000 L CNN
+F 1 "ICSS LOGO" H 13630 9401 50  0000 L CNN
+F 2 "flight-computer:ICSS_Logo" H 13550 9450 50  0001 C CNN
+F 3 "~" H 13550 9450 50  0001 C CNN
+	1    13550 9450
+	-1   0    0    1   
+$EndComp
+NoConn ~ 13750 9450
+Text Notes 13050 9750 0    50   ~ 0
+ICSS Logo placeholder\n
+Wire Wire Line
+	3150 9450 3050 9450
+Wire Wire Line
+	3050 9450 3050 9350
+Connection ~ 3050 9050
+Wire Wire Line
+	3150 9350 3050 9350
+Connection ~ 3050 9350
+Wire Wire Line
+	3050 9350 3050 9050
+Wire Wire Line
+	3150 9250 2900 9250
+Wire Wire Line
+	2900 9250 2900 9900
+Wire Wire Line
+	3150 9150 2900 9150
+Wire Wire Line
+	2900 9150 2900 9250
+Connection ~ 2900 9250
+Wire Wire Line
+	3150 9550 3150 9900
+$Comp
+L power:GND #PWR0116
+U 1 1 5DD2A631
+P 3150 9900
+F 0 "#PWR0116" H 3150 9650 50  0001 C CNN
+F 1 "GND" H 3155 9727 50  0000 C CNN
+F 2 "" H 3150 9900 50  0001 C CNN
+F 3 "" H 3150 9900 50  0001 C CNN
+	1    3150 9900
+	1    0    0    -1  
+$EndComp
+Text Notes 2550 8300 0    50   ~ 0
+Output voltage is set to 3V, by setting the VSEL values
+Wire Wire Line
+	4050 9850 4050 9800
+$Comp
+L flight-computer:SENSOR_VCC #PWR0110
+U 1 1 5DBE4A13
+P 11800 7350
+F 0 "#PWR0110" H 11800 7200 50  0001 C CNN
+F 1 "SENSOR_VCC" H 11800 7500 50  0000 C CNN
+F 2 "" H 11800 7350 50  0001 C CNN
+F 3 "" H 11800 7350 50  0001 C CNN
+	1    11800 7350
+	1    0    0    -1  
+$EndComp
+$Comp
+L flight-computer:SENSOR_VCC #PWR0117
+U 1 1 5DDF39D8
+P 4050 9800
+F 0 "#PWR0117" H 4050 9650 50  0001 C CNN
+F 1 "SENSOR_VCC" H 4067 9973 50  0000 C CNN
+F 2 "" H 4050 9800 50  0001 C CNN
+F 3 "" H 4050 9800 50  0001 C CNN
+	1    4050 9800
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

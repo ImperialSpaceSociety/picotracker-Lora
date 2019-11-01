@@ -52,7 +52,7 @@ F https://www.mouser.co.uk/datasheet/2/389/iis2mdc-1309412.pdf
 $ENDCMP
 #
 $CMP SENSOR_VCC
-D Power symbol creates a global label with name "VCC"
+D Power symbol creates a global label with name "SENSOR_VCC"
 K power-flag
 $ENDCMP
 #

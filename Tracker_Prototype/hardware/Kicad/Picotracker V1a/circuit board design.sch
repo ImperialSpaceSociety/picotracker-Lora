@@ -599,8 +599,6 @@ Wire Notes Line
 	550  650  16050 650 
 Wire Notes Line
 	11100 650  11100 9150
-Wire Notes Line
-	16050 650  16050 9150
 Text Notes 3050 6550 0    50   ~ 0
 Main Microcontroller + Lora tranceiver\n
 $Comp
@@ -1251,4 +1249,24 @@ Text Label 7800 3100 2    50   ~ 0
 TCXO_EN
 Wire Wire Line
 	7150 3100 7800 3100
+$Comp
+L Connector_Generic:Conn_01x01 J4
+U 1 1 5DBBDDA8
+P 14000 9550
+F 0 "J4" H 14080 9592 50  0000 L CNN
+F 1 "ICSS Logo" H 14080 9501 50  0000 L CNN
+F 2 "flight-computer:ICSS_Logo" H 14000 9550 50  0001 C CNN
+F 3 "~" H 14000 9550 50  0001 C CNN
+	1    14000 9550
+	1    0    0    -1  
+$EndComp
+Text Notes 13700 9850 0    50   ~ 0
+ICSS Logo placeholder\n
+Wire Notes Line
+	11800 9200 11800 9950
+Wire Notes Line
+	11800 9950 16050 9950
+Wire Notes Line
+	16050 650  16050 9950
+NoConn ~ 13800 9550
 $EndSCHEMATC
