@@ -563,13 +563,13 @@ $EndComp
 Text Notes 9650 2000 0    50   ~ 0
 Structural plated throughole to \nhold the guitar wire solar \ncell structure
 Wire Wire Line
-	4900 3150 4100 3150
+	4900 3250 4100 3250
 Wire Wire Line
 	4300 1400 5600 1400
 NoConn ~ 9800 1550
 NoConn ~ 4900 3950
 Wire Wire Line
-	4900 3350 4100 3350
+	4900 3150 4100 3150
 Wire Wire Line
 	10850 3900 10850 4250
 $Comp
@@ -663,7 +663,7 @@ Wire Wire Line
 	10750 5300 10750 5850
 Wire Notes Line
 	9350 650  9350 6850
-Text Label 4100 3350 0    50   ~ 0
+Text Label 4100 3150 0    50   ~ 0
 LED
 Text Label 9550 3900 0    50   ~ 0
 LED
@@ -1216,12 +1216,8 @@ Wire Wire Line
 Connection ~ 13400 6600
 Wire Wire Line
 	11800 7750 11800 7350
-Text Label 12300 7650 0    50   ~ 0
-GPS_SAFEBOOT
 Text Label 12300 7550 0    50   ~ 0
 GPS_EXTINT
-Wire Wire Line
-	13000 7750 11800 7750
 Wire Wire Line
 	13400 6600 13400 6650
 Wire Wire Line
@@ -1230,8 +1226,6 @@ Wire Wire Line
 	13000 7550 12300 7550
 NoConn ~ 13000 6950
 NoConn ~ 13000 7050
-Wire Wire Line
-	13000 7650 12300 7650
 Wire Wire Line
 	12300 7350 13000 7350
 Wire Wire Line
@@ -1350,12 +1344,8 @@ Text Label 7350 3950 2    50   ~ 0
 SWITCH
 Text Label 7350 3850 2    50   ~ 0
 GPS_TIMEPULSE
-Text Label 7350 3650 2    50   ~ 0
-GPS_SAFEBOOT
 Wire Wire Line
 	6700 3750 7350 3750
-Wire Wire Line
-	6700 3650 7350 3650
 Wire Wire Line
 	6700 3550 7350 3550
 Wire Wire Line
@@ -1753,11 +1743,11 @@ F 3 "" H 8050 7200 50  0001 C CNN
 	1    8050 7200
 	1    0    0    -1  
 $EndComp
-Text Label 4100 3150 0    50   ~ 0
+Text Label 4100 3250 0    50   ~ 0
 SOLAR_VOLTS
 Wire Wire Line
-	4900 3250 4100 3250
-Text Label 4100 3250 0    50   ~ 0
+	4900 3350 4100 3350
+Text Label 4100 3350 0    50   ~ 0
 BATT_VOLTS
 Text Label 4100 3550 0    50   ~ 0
 BATT_PWR_MEASURE
@@ -1889,4 +1879,8 @@ F 3 "" H 4050 9800 50  0001 C CNN
 	1    4050 9800
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	13000 7750 11800 7750
+NoConn ~ 13000 7650
+NoConn ~ 6700 3650
 $EndSCHEMATC
