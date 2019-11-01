@@ -237,8 +237,6 @@ Wire Wire Line
 	7950 5200 8100 5200
 Wire Wire Line
 	7150 3400 7800 3400
-Wire Wire Line
-	7150 3500 7800 3500
 $Comp
 L power:GND #PWR?
 U 1 1 5DC840FF
@@ -445,8 +443,6 @@ Text Notes 650  11100 0    50   ~ 0
 Power supply\n
 Text Label 7800 3400 2    50   ~ 0
 I2C1_SCL
-Text Label 7800 3500 2    50   ~ 0
-I2C1_SDA
 Wire Wire Line
 	8600 5200 8600 5050
 Wire Wire Line
@@ -514,8 +510,6 @@ Wire Wire Line
 	13450 6750 13550 6750
 Connection ~ 13450 6750
 Wire Wire Line
-	7150 3600 7800 3600
-Wire Wire Line
 	7150 3700 7800 3700
 Wire Wire Line
 	11750 7900 11750 7500
@@ -533,10 +527,6 @@ F 3 "" H 11750 7500 50  0001 C CNN
 	1    11750 7500
 	1    0    0    -1  
 $EndComp
-Text Label 12250 7800 0    50   ~ 0
-GPS_SAFEBOOT
-Text Label 7800 3600 2    50   ~ 0
-GPS_SAFEBOOT
 Text Label 12250 7700 0    50   ~ 0
 GPS_EXTINT
 Text Label 7800 3700 2    50   ~ 0
@@ -554,11 +544,7 @@ NoConn ~ 7150 4900
 NoConn ~ 7150 5000
 NoConn ~ 5350 3600
 NoConn ~ 5350 3500
-NoConn ~ 5350 3400
-NoConn ~ 5350 3200
 NoConn ~ 5350 3000
-Wire Wire Line
-	12950 7900 11750 7900
 Wire Wire Line
 	13350 6750 13350 6800
 Wire Wire Line
@@ -569,8 +555,6 @@ Wire Wire Line
 	12950 7700 12250 7700
 NoConn ~ 12950 7100
 NoConn ~ 12950 7200
-Wire Wire Line
-	12950 7800 12250 7800
 Wire Wire Line
 	12250 7500 12950 7500
 Wire Wire Line
@@ -1091,16 +1075,12 @@ Wire Notes Line
 Text Notes 7700 7850 0    50   ~ 0
 Structural plated throughole to hold the guitar wire solar cell structure
 Wire Wire Line
-	5350 3100 4900 3100
-Text Label 4900 3100 0    50   ~ 0
-V_SOLAR
-Wire Wire Line
 	4750 1350 6050 1350
 NoConn ~ 5350 3700
 NoConn ~ 8950 7650
 NoConn ~ 5350 3900
 Wire Wire Line
-	5350 3300 4900 3300
+	5350 3100 4900 3100
 Wire Wire Line
 	10850 3900 10850 4250
 $Comp
@@ -1141,8 +1121,8 @@ F 3 "~" H 10150 3900 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	7150 3900 7800 3900
-Text Label 7800 3900 2    50   ~ 0
+	5350 3200 4900 3200
+Text Label 4900 3200 0    50   ~ 0
 SWITCH
 Wire Notes Line
 	9350 4900 16050 4900
@@ -1214,7 +1194,7 @@ Wire Wire Line
 	10750 5300 10750 5850
 Wire Notes Line
 	9350 650  9350 6850
-Text Label 4900 3300 0    50   ~ 0
+Text Label 4900 3100 0    50   ~ 0
 LED
 Text Label 9550 3900 0    50   ~ 0
 LED
@@ -1269,4 +1249,19 @@ Wire Notes Line
 Wire Notes Line
 	16050 650  16050 9950
 NoConn ~ 13800 9550
+Text Label 4900 3400 0    50   ~ 0
+V_SOLAR
+Wire Wire Line
+	5350 3400 4900 3400
+NoConn ~ 7150 3900
+NoConn ~ 5250 3350
+NoConn ~ 5350 3300
+Wire Wire Line
+	12950 7900 11750 7900
+NoConn ~ 12950 7800
+Text Label 7800 3500 2    50   ~ 0
+I2C1_SDA
+Wire Wire Line
+	7150 3500 7800 3500
+NoConn ~ 7150 3600
 $EndSCHEMATC
