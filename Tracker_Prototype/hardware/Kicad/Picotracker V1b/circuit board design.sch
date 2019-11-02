@@ -297,7 +297,6 @@ NoConn ~ 6700 4750
 NoConn ~ 6700 4850
 NoConn ~ 6700 4950
 NoConn ~ 6700 5050
-NoConn ~ 4900 3450
 NoConn ~ 4900 3050
 NoConn ~ 4900 4850
 NoConn ~ 4900 4750
@@ -563,7 +562,7 @@ $EndComp
 Text Notes 9650 2000 0    50   ~ 0
 Structural plated throughole to \nhold the guitar wire solar \ncell structure
 Wire Wire Line
-	4900 3250 4100 3250
+	4900 3450 4100 3450
 Wire Wire Line
 	4300 1400 5600 1400
 NoConn ~ 9800 1550
@@ -1216,14 +1215,10 @@ Wire Wire Line
 Connection ~ 13400 6600
 Wire Wire Line
 	11800 7750 11800 7350
-Text Label 12300 7550 0    50   ~ 0
-GPS_EXTINT
 Wire Wire Line
 	13400 6600 13400 6650
 Wire Wire Line
 	13500 6650 13500 6600
-Wire Wire Line
-	13000 7550 12300 7550
 NoConn ~ 13000 6950
 NoConn ~ 13000 7050
 Wire Wire Line
@@ -1334,18 +1329,10 @@ Text Label 7350 3450 2    50   ~ 0
 I2C1_SCL
 Text Label 7350 3550 2    50   ~ 0
 I2C1_SDA
-Text Label 7350 3750 2    50   ~ 0
-GPS_EXTINT
 Wire Wire Line
-	6700 3850 7350 3850
-Wire Wire Line
-	6700 3950 7350 3950
-Text Label 7350 3950 2    50   ~ 0
+	4900 3250 4100 3250
+Text Label 4100 3250 0    50   ~ 0
 SWITCH
-Text Label 7350 3850 2    50   ~ 0
-GPS_TIMEPULSE
-Wire Wire Line
-	6700 3750 7350 3750
 Wire Wire Line
 	6700 3550 7350 3550
 Wire Wire Line
@@ -1384,7 +1371,7 @@ U 1 1 5DCB8AA3
 P 4200 8950
 F 0 "L2" V 4019 8950 50  0000 C CNN
 F 1 "2.2uH" V 4110 8950 50  0000 C CNN
-F 2 "Inductor_SMD:L_Taiyo-Yuden_NR-30xx" H 4200 8950 50  0001 C CNN
+F 2 "flight-computer:L_Coilcraft_LPS3015" H 4200 8950 50  0001 C CNN
 F 3 "~" H 4200 8950 50  0001 C CNN
 	1    4200 8950
 	0    1    1    0   
@@ -1552,7 +1539,7 @@ U 1 1 5E24769B
 P 12450 1850
 F 0 "L3" V 12269 1850 50  0000 C CNN
 F 1 "10uH" V 12360 1850 50  0000 C CNN
-F 2 "Inductor_SMD:L_Taiyo-Yuden_NR-30xx" H 12450 1850 50  0001 C CNN
+F 2 "flight-computer:L_Coilcraft_LPS3015" H 12450 1850 50  0001 C CNN
 F 3 "https://www.mouser.co.uk/datasheet/2/597/lps3015-270734.pdf" H 12450 1850 50  0001 C CNN
 	1    12450 1850
 	0    1    1    0   
@@ -1743,7 +1730,7 @@ F 3 "" H 8050 7200 50  0001 C CNN
 	1    8050 7200
 	1    0    0    -1  
 $EndComp
-Text Label 4100 3250 0    50   ~ 0
+Text Label 4100 3450 0    50   ~ 0
 SOLAR_VOLTS
 Wire Wire Line
 	4900 3350 4100 3350
@@ -1879,8 +1866,15 @@ F 3 "" H 4050 9800 50  0001 C CNN
 	1    4050 9800
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	13000 7750 11800 7750
 NoConn ~ 13000 7650
 NoConn ~ 6700 3650
+NoConn ~ 6700 3950
+Wire Wire Line
+	13000 7750 11800 7750
+NoConn ~ 13000 7550
+Text Label 7350 3850 2    50   ~ 0
+GPS_TIMEPULSE
+Wire Wire Line
+	6700 3850 7350 3850
+NoConn ~ 6700 3750
 $EndSCHEMATC
