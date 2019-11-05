@@ -30,6 +30,10 @@ K connector SD microsd
 F https://www.hirose.com/product/en/download_file/key_name/DM3/category/Catalog/doc_file_id/49662/?file_category_id=4&item_id=195&is_series=1
 $ENDCMP
 #
+$CMP SPV1040
+F https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&ved=2ahUKEwjlpezx59HlAhVoQUEAHUBxCzYQFjABegQIAhAC&url=https%3A%2F%2Fwww.st.com%2Fresource%2Fen%2Fdatasheet%2Fspv1040.pdf&usg=AOvVaw3BRgA9n8LXDpN1rldI84jC
+$ENDCMP
+#
 $CMP STM32L4R9ZGJx
 D ARM Cortex-M4 MCU, 1024KB flash, 640KB RAM, 120MHz, 1.71-3.6V, 112 GPIO, UFBGA-144
 K ARM Cortex-M4 STM32L4+ STM32L4R9/S9

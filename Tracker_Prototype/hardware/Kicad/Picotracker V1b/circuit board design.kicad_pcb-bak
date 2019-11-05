@@ -19,7 +19,7 @@
 
   (layers
     (0 F.Cu signal)
-    (31 B.Cu signal)
+    (31 B.Cu signal hide)
     (32 B.Adhes user)
     (33 F.Adhes user)
     (34 B.Paste user)
@@ -102,7 +102,7 @@
       (mirror false)
       (drillshape 0)
       (scaleselection 1)
-      (outputdirectory "D:/Long term storage and temp/dead weight program downloads/Flight computer V1.1 gerbers/"))
+      (outputdirectory "D:/Long term storage and temp/dead weight program downloads/lora tracker outputs/"))
   )
 
   (net 0 "")
@@ -1688,7 +1688,7 @@
     (tags connector)
     (path /5E1F6946)
     (attr virtual)
-    (fp_text reference J5 (at 0 -2.54 -90) (layer B.SilkS)
+    (fp_text reference GND (at 0.889 -2.54 -90) (layer B.SilkS)
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
     (fp_text value BATT_GND (at 0 -2.54 -90) (layer B.Fab)
@@ -1711,7 +1711,7 @@
     (tags connector)
     (path /5E1C29C2)
     (attr virtual)
-    (fp_text reference J4 (at 0 2.54 -90) (layer B.SilkS)
+    (fp_text reference +BATT (at 1.143 2.413 -90) (layer B.SilkS)
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
     (fp_text value BATT_V+ (at 0 -2.54 -90) (layer B.Fab)
@@ -3052,7 +3052,7 @@
   (segment (start 299.107 163.881) (end 299.369 164.143) (width 0.25) (layer F.Cu) (net 33) (status 30))
   (segment (start 297.688 163.881) (end 299.107 163.881) (width 0.25) (layer F.Cu) (net 33) (status 30))
 
-  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5DBDA97A) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5DBDE761) (hatch edge 0.508)
     (connect_pads (clearance 0.15))
     (min_thickness 0.15)
     (fill yes (arc_segments 32) (thermal_gap 0.15) (thermal_bridge_width 0.2))
@@ -4053,7 +4053,7 @@
       )
     )
   )
-  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5DBDA977) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5DBDE75E) (hatch edge 0.508)
     (connect_pads (clearance 0.15))
     (min_thickness 0.15)
     (fill yes (arc_segments 32) (thermal_gap 0.15) (thermal_bridge_width 0.2))

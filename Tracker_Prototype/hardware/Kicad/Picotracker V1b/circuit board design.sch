@@ -317,6 +317,9 @@ F 0 "U3" H 5100 5550 50  0000 C CNN
 F 1 "CMWX1ZZABZ-078" H 5100 5400 50  0000 C CNN
 F 2 "RF_Module:CMWX1ZZABZ" H 5800 3950 50  0001 C CNN
 F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 8250 2450 50  0001 C CNN
+F 4 "13.32" H 5800 3950 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/radio-frequency-development-kits/1442713/" H 5800 3950 50  0001 C CNN "Purchase link"
+F 6 "1" H 5800 3950 50  0001 C CNN "min_quantity"
 	1    5800 3950
 	1    0    0    -1  
 $EndComp
@@ -342,8 +345,8 @@ F 0 "R5" H 1620 5946 50  0000 L CNN
 F 1 "4.7K" H 1620 5855 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 1480 5900 50  0001 C CNN
 F 3 "~" H 1550 5900 50  0001 C CNN
-F 4 "0.01" H 1550 5900 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 1550 5900 50  0001 C CNN "Purchase link"
+F 4 "0.0002" H 1550 5900 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/3715086/" H 1550 5900 50  0001 C CNN "Purchase link"
 F 6 "50" H 1550 5900 50  0001 C CNN "min_quantity"
 	1    1550 5900
 	1    0    0    -1  
@@ -359,8 +362,8 @@ F 0 "R4" H 1320 5946 50  0000 L CNN
 F 1 "4.7K" H 1320 5855 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 1180 5900 50  0001 C CNN
 F 3 "~" H 1250 5900 50  0001 C CNN
-F 4 "0.01" H 1250 5900 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/7408877/" H 1250 5900 50  0001 C CNN "Purchase link"
+F 4 "0.0002" H 1250 5900 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/3715086/" H 1250 5900 50  0001 C CNN "Purchase link"
 F 6 "50" H 1250 5900 50  0001 C CNN "min_quantity"
 	1    1250 5900
 	1    0    0    -1  
@@ -447,8 +450,10 @@ AR Path="/5DC8409B" Ref="C10"  Part="1"
 F 0 "C10" H 7542 1646 50  0000 L CNN
 F 1 "10uF" H 7542 1555 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0603_1608Metric" H 7450 1600 50  0001 C CNN
-F 3 "~" H 7450 1600 50  0001 C CNN
+F 3 "https://docs-emea.rs-online.com/webdocs/13b3/0900766b813b3e64.pdf" H 7450 1600 50  0001 C CNN
 F 4 "0.07" H 7450 1600 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/8467293/" H 7450 1600 50  0001 C CNN "Purchase link"
+F 6 "100" H 7450 1600 50  0001 C CNN "min_quantity"
 	1    7450 1600
 	1    0    0    -1  
 $EndComp
@@ -475,6 +480,9 @@ F 0 "C5" H 6092 1646 50  0000 L CNN
 F 1 "100nF" H 6092 1555 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0402_1005Metric" H 6000 1600 50  0001 C CNN
 F 3 "~" H 6000 1600 50  0001 C CNN
+F 4 "0.017" H 6000 1600 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983207/" H 6000 1600 50  0001 C CNN "Purchase link"
+F 6 "100" H 6000 1600 50  0001 C CNN "min_quantity"
 	1    6000 1600
 	1    0    0    -1  
 $EndComp
@@ -488,6 +496,9 @@ F 0 "C1" H 4192 4746 50  0000 L CNN
 F 1 "100nF" H 4192 4655 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0402_1005Metric" H 4100 4700 50  0001 C CNN
 F 3 "~" H 4100 4700 50  0001 C CNN
+F 4 "0.017" H 4100 4700 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983207/" H 4100 4700 50  0001 C CNN "Purchase link"
+F 6 "100" H 4100 4700 50  0001 C CNN "min_quantity"
 	1    4100 4700
 	1    0    0    -1  
 $EndComp
@@ -514,6 +525,9 @@ F 0 "R3" H 4620 5546 50  0000 L CNN
 F 1 "10K" H 4620 5455 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 4480 5500 50  0001 C CNN
 F 3 "~" H 4550 5500 50  0001 C CNN
+F 4 "0.033" H 4550 5500 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/6784697/" H 4550 5500 50  0001 C CNN "Purchase link"
+F 6 "50" H 4550 5500 50  0001 C CNN "min_quantity"
 	1    4550 5500
 	1    0    0    -1  
 $EndComp
@@ -592,6 +606,9 @@ F 0 "D1" H 10443 3645 50  0000 C CNN
 F 1 "LED" H 10443 3736 50  0000 C CNN
 F 2 "LED_SMD:LED_0402_1005Metric" H 10450 3900 50  0001 C CNN
 F 3 "~" H 10450 3900 50  0001 C CNN
+F 4 "0.155" H 10450 3900 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/leds/4663649/" H 10450 3900 50  0001 C CNN "Purchase link"
+F 6 "20" H 10450 3900 50  0001 C CNN "min_quantity"
 	1    10450 3900
 	-1   0    0    1   
 $EndComp
@@ -602,9 +619,12 @@ L Device:R R6
 U 1 1 5DBC5657
 P 10150 3900
 F 0 "R6" V 9943 3900 50  0000 C CNN
-F 1 "R" V 10034 3900 50  0000 C CNN
+F 1 "1K" V 10034 3900 50  0000 C CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 10080 3900 50  0001 C CNN
 F 3 "~" H 10150 3900 50  0001 C CNN
+F 4 "0.0114" H 10150 3900 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw04021k00fked/res-1k-1-0-063w-0402-thick-film/dp/1469662RL?st=1k%200402" H 10150 3900 50  0001 C CNN "Purchase link"
+F 6 "150" H 10150 3900 50  0001 C CNN "min_quantity"
 	1    10150 3900
 	0    1    1    0   
 $EndComp
@@ -637,7 +657,10 @@ P 10350 5850
 F 0 "SW1" H 10350 6135 50  0000 C CNN
 F 1 "SW_Push" H 10350 6044 50  0000 C CNN
 F 2 "flight-computer:EVPAWCD4A" H 10350 6050 50  0001 C CNN
-F 3 "~" H 10350 6050 50  0001 C CNN
+F 3 "https://docs-emea.rs-online.com/webdocs/1568/0900766b81568e09.pdf" H 10350 6050 50  0001 C CNN
+F 4 "0.207" H 10350 5850 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/tactile-switches/1250189/?relevancy-data=636F3D3126696E3D4931384E53656172636847656E65726963266C753D656E266D6D3D6D61746368616C6C7061727469616C26706D3D5E5B5C707B4C7D5C707B4E647D2D2C2F255C2E5D2B2426706F3D31333326736E3D592673723D2673743D4B4559574F52445F53494E474C455F414C5048415F4E554D455249432673633D592677633D4E4F4E45267573743D455650415743443441267374613D45565041574344344126&searchHistory=%7B%22enabled%22%3Atrue%7D" H 10350 5850 50  0001 C CNN "Purchase link"
+F 6 "10" H 10350 5850 50  0001 C CNN "min_quantity"
 	1    10350 5850
 	1    0    0    -1  
 $EndComp
@@ -651,6 +674,9 @@ F 0 "R7" H 9970 6196 50  0000 L CNN
 F 1 "100K" H 9970 6105 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 9830 6150 50  0001 C CNN
 F 3 "~" H 9900 6150 50  0001 C CNN
+F 4 "0.0114" H 9900 6150 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw0402100kfked/res-100k-1-0-063w-0402-thick-film/dp/1469671RL?st=100k%200402" H 9900 6150 50  0001 C CNN "Purchase link"
+F 6 "150" H 9900 6150 50  0001 C CNN "min_quantity"
 	1    9900 6150
 	1    0    0    -1  
 $EndComp
@@ -702,6 +728,9 @@ F 0 "IC7" H 12700 2800 60  0000 L CNN
 F 1 "SPV1040" H 13400 2000 60  0000 R CNN
 F 2 "Package_SO:TSSOP-8_4.4x3mm_P0.65mm" H 13050 2250 60  0001 C CNN
 F 3 "" H 13050 2250 60  0000 C CNN
+F 4 "2.95" H 13050 2250 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/stmicroelectronics/spv1040t/battery-charger-1-8a-tssop-8/dp/2762710?scope=partnumberlookahead&ost=SPV1040T&searchref=searchlookahead&exaMfpn=true&ddkey=https%3Aen-GB%2FElement14_United_Kingdom%2Fw%2Fsearch" H 13050 2250 50  0001 C CNN "Purchase link"
+F 6 "1" H 13050 2250 50  0001 C CNN "min_quantity"
 	1    13050 2250
 	1    0    0    -1  
 $EndComp
@@ -762,6 +791,9 @@ F 0 "R2" H 10520 8246 50  0000 L CNN
 F 1 "100K" H 10520 8155 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 10380 8200 50  0001 C CNN
 F 3 "~" H 10450 8200 50  0001 C CNN
+F 4 "0.0114" H 10450 8200 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw0402100kfked/res-100k-1-0-063w-0402-thick-film/dp/1469671RL?st=100k%200402" H 10450 8200 50  0001 C CNN "Purchase link"
+F 6 "150" H 10450 8200 50  0001 C CNN "min_quantity"
 	1    10450 8200
 	1    0    0    -1  
 $EndComp
@@ -775,6 +807,9 @@ F 0 "R9" H 10520 8646 50  0000 L CNN
 F 1 "100K" H 10520 8555 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 10380 8600 50  0001 C CNN
 F 3 "~" H 10450 8600 50  0001 C CNN
+F 4 "0.0114" H 10450 8600 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw0402100kfked/res-100k-1-0-063w-0402-thick-film/dp/1469671RL?st=100k%200402" H 10450 8600 50  0001 C CNN "Purchase link"
+F 6 "150" H 10450 8600 50  0001 C CNN "min_quantity"
 	1    10450 8600
 	1    0    0    -1  
 $EndComp
@@ -811,6 +846,9 @@ F 0 "C4" H 12292 2596 50  0000 L CNN
 F 1 "1nF" H 12292 2505 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0402_1005Metric" H 12200 2550 50  0001 C CNN
 F 3 "~" H 12200 2550 50  0001 C CNN
+F 4 "0.011" H 12200 2550 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983131/" H 12200 2550 50  0001 C CNN "Purchase link"
+F 6 "100" H 12200 2550 50  0001 C CNN "min_quantity"
 	1    12200 2550
 	1    0    0    -1  
 $EndComp
@@ -837,6 +875,9 @@ F 0 "C3" H 11992 2596 50  0000 L CNN
 F 1 "4.7uF" H 11950 2450 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric" H 11900 2550 50  0001 C CNN
 F 3 "~" H 11900 2550 50  0001 C CNN
+F 4 "0.074" H 11900 2550 50  0001 C CNN "Cost"
+F 5 "50" H 11900 2550 50  0001 C CNN "min_quantity"
+F 6 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/7661037/" H 11900 2550 50  0001 C CNN "Purchase link"
 	1    11900 2550
 	1    0    0    -1  
 $EndComp
@@ -850,6 +891,9 @@ F 0 "R8" H 12270 2096 50  0000 L CNN
 F 1 "1K" H 12270 2005 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 12130 2050 50  0001 C CNN
 F 3 "~" H 12200 2050 50  0001 C CNN
+F 4 "0.0114" H 12200 2050 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw04021k00fked/res-1k-1-0-063w-0402-thick-film/dp/1469662RL?st=1k%200402" H 12200 2050 50  0001 C CNN "Purchase link"
+F 6 "150" H 12200 2050 50  0001 C CNN "min_quantity"
 	1    12200 2050
 	1    0    0    -1  
 $EndComp
@@ -907,6 +951,9 @@ F 0 "C17" V 14250 1500 50  0000 L CNN
 F 1 "22uF" V 14150 1500 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric" H 14000 1550 50  0001 C CNN
 F 3 "" H 14000 1550 50  0001 C CNN
+F 4 "0.0107" H 14000 1550 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/7883023/" H 14000 1550 50  0001 C CNN "Purchase link"
+F 6 "10" H 14000 1550 50  0001 C CNN "min_quantity"
 	1    14000 1550
 	0    -1   -1   0   
 $EndComp
@@ -961,6 +1008,9 @@ F 0 "C16" H 13742 2596 50  0000 L CNN
 F 1 "1nF" H 13742 2505 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0402_1005Metric" H 13650 2550 50  0001 C CNN
 F 3 "~" H 13650 2550 50  0001 C CNN
+F 4 "0.011" H 13650 2550 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983131/" H 13650 2550 50  0001 C CNN "Purchase link"
+F 6 "100" H 13650 2550 50  0001 C CNN "min_quantity"
 	1    13650 2550
 	1    0    0    -1  
 $EndComp
@@ -990,6 +1040,9 @@ F 0 "R10" V 13900 2000 50  0000 C CNN
 F 1 "1K" V 14000 2000 50  0000 C CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 13930 2000 50  0001 C CNN
 F 3 "~" H 14000 2000 50  0001 C CNN
+F 4 "0.0114" H 14000 2000 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw04021k00fked/res-1k-1-0-063w-0402-thick-film/dp/1469662RL?st=1k%200402" H 14000 2000 50  0001 C CNN "Purchase link"
+F 6 "150" H 14000 2000 50  0001 C CNN "min_quantity"
 	1    14000 2000
 	0    1    1    0   
 $EndComp
@@ -1003,6 +1056,9 @@ F 0 "R11" V 13900 2200 50  0000 C CNN
 F 1 "1K" V 14000 2200 50  0000 C CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 13930 2200 50  0001 C CNN
 F 3 "~" H 14000 2200 50  0001 C CNN
+F 4 "0.0114" H 14000 2200 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw04021k00fked/res-1k-1-0-063w-0402-thick-film/dp/1469662RL?st=1k%200402" H 14000 2200 50  0001 C CNN "Purchase link"
+F 6 "150" H 14000 2200 50  0001 C CNN "min_quantity"
 	1    14000 2200
 	0    1    1    0   
 $EndComp
@@ -1016,6 +1072,9 @@ F 0 "R13" V 14443 2100 50  0000 C CNN
 F 1 "10M" V 14534 2100 50  0000 C CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 14580 2100 50  0001 C CNN
 F 3 "~" H 14650 2100 50  0001 C CNN
+F 4 "0.02" H 14650 2100 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/6788709/" H 14650 2100 50  0001 C CNN "Purchase link"
+F 6 "50" H 14650 2100 50  0001 C CNN "min_quantity"
 	1    14650 2100
 	-1   0    0    1   
 $EndComp
@@ -1029,6 +1088,9 @@ F 0 "R14" V 14443 2550 50  0000 C CNN
 F 1 "5.1M" V 14534 2550 50  0000 C CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 14580 2550 50  0001 C CNN
 F 3 "~" H 14650 2550 50  0001 C CNN
+F 4 "0.0137" H 14650 2550 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/yageo/rc0402fr-075m1l/res-5m1-1-0-063w-0402-thick-film/dp/1458808" H 14650 2550 50  0001 C CNN "Purchase link"
+F 6 "10" H 14650 2550 50  0001 C CNN "min_quantity"
 	1    14650 2550
 	-1   0    0    1   
 $EndComp
@@ -1042,6 +1104,9 @@ F 0 "R12" V 14450 1850 50  0000 C CNN
 F 1 "1Ohm" V 14350 1850 50  0000 C CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 14280 1850 50  0001 C CNN
 F 3 "~" H 14350 1850 50  0001 C CNN
+F 4 "0.0004" H 14350 1850 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/0430284/" H 14350 1850 50  0001 C CNN "Purchase link"
+F 6 "100" H 14350 1850 50  0001 C CNN "min_quantity"
 	1    14350 1850
 	0    -1   -1   0   
 $EndComp
@@ -1088,6 +1153,8 @@ F 1 "D_Schottky" V 14800 2500 50  0000 L CNN
 F 2 "Diode_SMD:D_0402_1005Metric" H 14950 2350 50  0001 C CNN
 F 3 "~" H 14950 2350 50  0001 C CNN
 F 4 "https://uk.rs-online.com/web/p/rectifier-diodes-schottky-diodes/1867707/" H 14950 2350 50  0001 C CNN "Purchase link"
+F 5 "0.22" H 14950 2350 50  0001 C CNN "Cost"
+F 6 "25" H 14950 2350 50  0001 C CNN "min_quantity"
 	1    14950 2350
 	0    1    1    0   
 $EndComp
@@ -1151,8 +1218,10 @@ AR Path="/5DFD1A5E" Ref="C2"  Part="1"
 F 0 "C2" H 2692 9496 50  0000 L CNN
 F 1 "10uF" H 2692 9405 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0603_1608Metric" H 2600 9450 50  0001 C CNN
-F 3 "~" H 2600 9450 50  0001 C CNN
+F 3 "https://docs-emea.rs-online.com/webdocs/13b3/0900766b813b3e64.pdf" H 2600 9450 50  0001 C CNN
 F 4 "0.07" H 2600 9450 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/8467293/" H 2600 9450 50  0001 C CNN "Purchase link"
+F 6 "100" H 2600 9450 50  0001 C CNN "min_quantity"
 	1    2600 9450
 	1    0    0    -1  
 $EndComp
@@ -1292,9 +1361,9 @@ F 0 "C6" H 12758 6196 50  0000 R CNN
 F 1 "100nF" H 12758 6105 50  0000 R CNN
 F 2 "Capacitor_SMD:C_0402_1005Metric" H 12850 6150 50  0001 C CNN
 F 3 "https://docs-emea.rs-online.com/webdocs/0dc2/0900766b80dc2409.pdf" H 12850 6150 50  0001 C CNN
-F 4 "0.01" H 12850 6150 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983251/" H 12850 6150 50  0001 C CNN "Purchase link"
-F 6 "50" H 12850 6150 50  0001 C CNN "min_quantity"
+F 4 "0.017" H 12850 6150 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983207/" H 12850 6150 50  0001 C CNN "Purchase link"
+F 6 "100" H 12850 6150 50  0001 C CNN "min_quantity"
 	1    12850 6150
 	1    0    0    -1  
 $EndComp
@@ -1373,6 +1442,9 @@ F 0 "L2" V 4019 8950 50  0000 C CNN
 F 1 "2.2uH" V 4110 8950 50  0000 C CNN
 F 2 "flight-computer:L_Coilcraft_LPS3015" H 4200 8950 50  0001 C CNN
 F 3 "~" H 4200 8950 50  0001 C CNN
+F 4 "1.41" H 4200 8950 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/coilcraft/lps3015-222mrb/inductor-2-2uh-20-1-1a-shld-smd/dp/2408020?st=LPS3015" H 4200 8950 50  0001 C CNN "Purchase link"
+F 6 "1" H 4200 8950 50  0001 C CNN "min_quantity"
 	1    4200 8950
 	0    1    1    0   
 $EndComp
@@ -1389,8 +1461,10 @@ AR Path="/5DCF62B4" Ref="C12"  Part="1"
 F 0 "C12" H 4642 9496 50  0000 L CNN
 F 1 "10uF" H 4642 9405 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0603_1608Metric" H 4550 9450 50  0001 C CNN
-F 3 "~" H 4550 9450 50  0001 C CNN
+F 3 "https://docs-emea.rs-online.com/webdocs/13b3/0900766b813b3e64.pdf" H 4550 9450 50  0001 C CNN
 F 4 "0.07" H 4550 9450 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/8467293/" H 4550 9450 50  0001 C CNN "Purchase link"
+F 6 "100" H 4550 9450 50  0001 C CNN "min_quantity"
 	1    4550 9450
 	1    0    0    -1  
 $EndComp
@@ -1541,6 +1615,9 @@ F 0 "L3" V 12269 1850 50  0000 C CNN
 F 1 "10uH" V 12360 1850 50  0000 C CNN
 F 2 "flight-computer:L_Coilcraft_LPS3015" H 12450 1850 50  0001 C CNN
 F 3 "https://www.mouser.co.uk/datasheet/2/597/lps3015-270734.pdf" H 12450 1850 50  0001 C CNN
+F 4 "1.42" H 12450 1850 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/coilcraft/lps3015-103mrb/inductor-10uh-20-0-55a-shld-smd/dp/2408024?st=LPS3015" H 12450 1850 50  0001 C CNN "Purchase link"
+F 6 "1" H 12450 1850 50  0001 C CNN "min_quantity"
 	1    12450 1850
 	0    1    1    0   
 $EndComp
@@ -1552,6 +1629,9 @@ F 0 "U2" H 3550 9115 50  0000 C CNN
 F 1 "TPS62740" H 3550 9024 50  0000 C CNN
 F 2 "Package_SON:WSON-12-1EP_3x2mm_P0.5mm_EP1x2.65" H 3550 8900 50  0001 C CNN
 F 3 "http://www.ti.com/lit/ds/symlink/tps62742.pdf" H 3550 8900 50  0001 C CNN
+F 4 "1.575" H 3550 8900 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/buck-converters/8257018/" H 3550 8900 50  0001 C CNN "Purchase link"
+F 6 "2" H 3550 8900 50  0001 C CNN "min_quantity"
 	1    3550 8900
 	1    0    0    -1  
 $EndComp
@@ -1637,6 +1717,9 @@ F 0 "R15" H 8120 8246 50  0000 L CNN
 F 1 "100K" H 8120 8155 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 7980 8200 50  0001 C CNN
 F 3 "~" H 8050 8200 50  0001 C CNN
+F 4 "0.0114" H 8050 8200 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw0402100kfked/res-100k-1-0-063w-0402-thick-film/dp/1469671RL?st=100k%200402" H 8050 8200 50  0001 C CNN "Purchase link"
+F 6 "150" H 8050 8200 50  0001 C CNN "min_quantity"
 	1    8050 8200
 	1    0    0    -1  
 $EndComp
@@ -1650,6 +1733,9 @@ F 0 "R16" H 8120 8646 50  0000 L CNN
 F 1 "100K" H 8120 8555 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 7980 8600 50  0001 C CNN
 F 3 "~" H 8050 8600 50  0001 C CNN
+F 4 "0.0114" H 8050 8600 50  0001 C CNN "Cost"
+F 5 "https://uk.farnell.com/vishay/crcw0402100kfked/res-100k-1-0-063w-0402-thick-film/dp/1469671RL?st=100k%200402" H 8050 8600 50  0001 C CNN "Purchase link"
+F 6 "150" H 8050 8600 50  0001 C CNN "min_quantity"
 	1    8050 8600
 	1    0    0    -1  
 $EndComp
@@ -1669,6 +1755,9 @@ F 0 "C13" V 7100 7800 50  0000 L CNN
 F 1 "100nF" V 7200 7750 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0402_1005Metric" H 7350 7800 50  0001 C CNN
 F 3 "~" H 7350 7800 50  0001 C CNN
+F 4 "0.017" H 7350 7800 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983207/" H 7350 7800 50  0001 C CNN "Purchase link"
+F 6 "100" H 7350 7800 50  0001 C CNN "min_quantity"
 	1    7350 7800
 	0    1    1    0   
 $EndComp
@@ -1680,6 +1769,9 @@ F 0 "R1" H 7720 7546 50  0000 L CNN
 F 1 "10K" H 7720 7455 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" V 7580 7500 50  0001 C CNN
 F 3 "~" H 7650 7500 50  0001 C CNN
+F 4 "0.033" H 7650 7500 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/surface-mount-fixed-resistors/6784697/" H 7650 7500 50  0001 C CNN "Purchase link"
+F 6 "50" H 7650 7500 50  0001 C CNN "min_quantity"
 	1    7650 7500
 	1    0    0    -1  
 $EndComp
@@ -1693,6 +1785,9 @@ F 0 "Q1" H 8156 7754 50  0000 L CNN
 F 1 "Q_PMOS_DGS" H 8156 7845 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 8150 7900 50  0001 C CNN
 F 3 "~" H 7950 7800 50  0001 C CNN
+F 4 "0.415" H 7950 7800 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mosfets/0301322/" H 7950 7800 50  0001 C CNN "Purchase link"
+F 6 "5" H 7950 7800 50  0001 C CNN "min_quantity"
 	1    7950 7800
 	1    0    0    1   
 $EndComp
