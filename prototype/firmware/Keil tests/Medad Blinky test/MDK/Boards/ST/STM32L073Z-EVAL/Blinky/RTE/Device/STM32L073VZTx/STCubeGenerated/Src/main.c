@@ -147,6 +147,7 @@ void SystemClock_Config(void)
     */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
+
     /**Initializes the CPU, AHB and APB busses clocks 
     */
 	// Enable HSI oscillator and activate PLL with HSI as source
@@ -161,6 +162,7 @@ void SystemClock_Config(void)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
+	
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
