@@ -40,6 +40,8 @@
 #include "main.h"
 #include "stm32l0xx_hal.h"
 
+//#include "Board_Buttons.h"              // ::Board Support:Buttons
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -69,9 +71,7 @@ uint32_t HAL_GetTick (void) {
   static uint32_t ticks = 0U;
          uint32_t i;
 
-  if (osKernelGetState () == osKernelRunning) {
-    return ((uint32_t)osKernelGetTickCount ());
-  }
+
 
   /* If Kernel is not running wait approximately 1 ms then increment 
      and return auxiliary tick counter value */
@@ -81,6 +81,53 @@ uint32_t HAL_GetTick (void) {
   }
   return ++ticks;
 }
+
+
+
+
+volatile uint32_t msTicks;                      /* counts 1ms timeTicks       */
+/*----------------------------------------------------------------------------
+  SysTick_Handler
+ *----------------------------------------------------------------------------*/
+void SysTick_Handler(void) {
+  msTicks++;
+}
+
+/*----------------------------------------------------------------------------
+  delays number of tick Systicks (happens every 10 ms)
+ *----------------------------------------------------------------------------*/
+void Delay (uint32_t dlyTicks) {
+  uint32_t curTicks;
+
+  curTicks = msTicks;
+  while ((msTicks - curTicks) < dlyTicks) { __NOP(); }
+}
+
+
+/*----------------------------------------------------------------------------
+  MAIN function
+ *----------------------------------------------------------------------------*/
+int main_old (void) {
+
+  SystemCoreClockUpdate();                      /* Get Core Clock Frequency   */
+	
+
+	
+	
+	//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2,1);
+
+  while(1) {                                    /* Loop forever               */
+		
+			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+			ITM_SendChar( 65 );   //  Send ASCII code 65 = ’A’
+      HAL_Delay(100);                                /* Delay 1000ms                */
+			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+		  ITM_SendChar( 65 );   //  Send ASCII code 65 = ’A’
+			HAL_Delay(100);                                /* Delay 1000ms                */     
+  }
+
+}
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -111,14 +158,6 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
-  /* Initialize CMSIS-RTOS2 */
-  osKernelInitialize ();
-
-  /* Create application main thread */
-  osThreadNew(app_main, NULL, &app_main_attr);
-
-  /* Start thread execution */
-  osKernelStart();
 
   /* USER CODE END 2 */
 
@@ -126,6 +165,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		
+		main_old();
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -135,37 +176,35 @@ int main(void)
 
 }
 
-/** System Clock Configuration
-*/
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
-  RCC_OscInitTypeDef RCC_OscInitStruct;
-  RCC_ClkInitTypeDef RCC_ClkInitStruct;
-
-    /**Configure the main internal regulator output voltage 
-    */
+  /** Configure the main internal regulator output voltage 
+  */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-
-
-    /**Initializes the CPU, AHB and APB busses clocks 
-    */
-	// Enable HSI oscillator and activate PLL with HSI as source
-	RCC_OscInitStruct.OscillatorType       = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_HSE;
-	RCC_OscInitStruct.HSEState             = RCC_HSE_OFF;
-	RCC_OscInitStruct.HSIState             = RCC_HSI_ON;
-	RCC_OscInitStruct.HSICalibrationValue  = RCC_HSICALIBRATION_DEFAULT;
-	RCC_OscInitStruct.PLL.PLLState         = RCC_PLL_ON;
-	RCC_OscInitStruct.PLL.PLLSource        = RCC_PLLSOURCE_HSI; // 16 MHz
-  RCC_OscInitStruct.PLL.PLLMUL					 = 2; //32Mhz
+  /** Initializes the CPU, AHB and APB busses clocks 
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLLMUL_6;
+  RCC_OscInitStruct.PLL.PLLDIV = RCC_PLLDIV_3;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
-	
-
-    /**Initializes the CPU, AHB and APB busses clocks 
-    */
+  /** Initializes the CPU, AHB and APB busses clocks 
+  */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
@@ -175,19 +214,15 @@ void SystemClock_Config(void)
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
-    _Error_Handler(__FILE__, __LINE__);
+    Error_Handler();
   }
-
-    /**Configure the Systick interrupt time 
-    */
-  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
-
-    /**Configure the Systick 
-    */
-  HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-
-  /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 3, 0);
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_RTC;
+  PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /** Configure pins as 
@@ -203,37 +238,16 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct;
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	
+	// Initialize LED
+	GPIO_InitStruct.Pin = GPIO_PIN_2;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_7, GPIO_PIN_SET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1, GPIO_PIN_SET);
-
-  /*Configure GPIO pins : PE4 PE5 PE7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PC13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PD1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
+  
 }
 
 /* USER CODE BEGIN 4 */

@@ -42,7 +42,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "cmsis_os2.h"                  // ::CMSIS:RTOS2
+
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
@@ -57,8 +57,7 @@
 /* USER CODE BEGIN Private defines */
 extern void app_main (void *arg);
 
-extern uint64_t app_main_stk[];
-extern const osThreadAttr_t app_main_attr;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
