@@ -250,3 +250,11 @@ prototype/firmware/EDBG UART erert/EDBG UART erert/.atmel-start-backup/*
 # !my_customized_scatter_file.sct
 
 
+
+
+# ignore for stm32cube
+
+*.bin
+*.elf
+*.ld
+*.o
