@@ -2,7 +2,7 @@
 
   (general
     (thickness 0.4)
-    (drawings 22)
+    (drawings 24)
     (tracks 273)
     (zones 0)
     (modules 30)
@@ -19,7 +19,7 @@
 
   (layers
     (0 F.Cu signal)
-    (31 B.Cu signal hide)
+    (31 B.Cu signal)
     (32 B.Adhes user hide)
     (33 F.Adhes user)
     (34 B.Paste user hide)
@@ -101,7 +101,7 @@
       (mirror false)
       (drillshape 0)
       (scaleselection 1)
-      (outputdirectory "D:/Long term storage and temp/dead weight program downloads/lora tracker outputs/loratracker v1a/"))
+      (outputdirectory "D:/Long term storage and temp/dead weight program downloads/lora tracker outputs/loratracker v1.1a/"))
   )
 
   (net 0 "")
@@ -330,7 +330,7 @@
     (tags connector)
     (path /5DC8A70A)
     (attr virtual)
-    (fp_text reference J3 (at 0.127 2.667 180) (layer B.SilkS)
+    (fp_text reference J3 (at 0.127 2.667 180) (layer B.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
     (fp_text value 3.3V (at 0 2.54 90) (layer F.Fab)
@@ -353,7 +353,7 @@
     (tags connector)
     (path /5DC8B635)
     (attr virtual)
-    (fp_text reference J2 (at 0.127 2.794 180) (layer B.SilkS)
+    (fp_text reference J2 (at 0.127 2.794 180) (layer B.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
     )
     (fp_text value GND (at 0 2.54 90) (layer F.Fab)
@@ -1524,6 +1524,12 @@
     )
   )
 
+  (gr_text GND (at 293.116 166.751 180) (layer B.SilkS) (tstamp 5DDE83E6)
+    (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
+  )
+  (gr_text 3V3 (at 293.116 173.228) (layer B.SilkS) (tstamp 5DDE83E6)
+    (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
+  )
   (gr_text "RX\n" (at 292.227 175.26 90) (layer B.SilkS) (tstamp 5DDE5923)
     (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
   )
@@ -1876,7 +1882,7 @@
   (segment (start 289.433 177.927) (end 289.096001 177.927) (width 0.25) (layer B.Cu) (net 20) (status 30))
   (segment (start 289.096001 177.927) (end 280.66474 169.495739) (width 0.25) (layer B.Cu) (net 20) (status 10))
 
-  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5DBD57CC) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer F.Cu) (tstamp 5DDE7D78) (hatch edge 0.508)
     (connect_pads (clearance 0.15))
     (min_thickness 0.15)
     (fill yes (arc_segments 32) (thermal_gap 0.15) (thermal_bridge_width 0.2))
@@ -2550,7 +2556,7 @@
       )
     )
   )
-  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5DBD57C9) (hatch edge 0.508)
+  (zone (net 1) (net_name GND) (layer B.Cu) (tstamp 5DDE7D75) (hatch edge 0.508)
     (connect_pads (clearance 0.15))
     (min_thickness 0.15)
     (fill yes (arc_segments 32) (thermal_gap 0.15) (thermal_bridge_width 0.2))
