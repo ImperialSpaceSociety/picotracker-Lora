@@ -1,0 +1,12 @@
+; ** macro file for Tera Term **
+; The following command sets the RTC date
+;
+; Replace dd mm yy ww with day, month, year and weekday.
+; Take care that weekday 1 is Monday and weekday 7 is Sunday
+
+day = '13'
+month = '11'
+year = '18'
+week = '02'
+
+send '!rtcdateD' day 'M' month 'Y' year 'W' week 013 010

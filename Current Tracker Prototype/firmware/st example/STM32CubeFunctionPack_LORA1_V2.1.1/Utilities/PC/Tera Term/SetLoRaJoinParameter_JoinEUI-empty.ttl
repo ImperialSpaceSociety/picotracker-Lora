@@ -1,0 +1,18 @@
+; ** macro file for Tera Term **
+; The following command sets the LoRa join EUI
+;
+; Replace xxxxxxxxxxxxxxxx with the join EUI
+
+joinEUI = 'xxxxxxxxxxxxxxxx'
+
+reset = 1
+timeout = 5
+
+cmdjoinEUI = '!joineui-'
+strconcat cmdjoinEUI joinEUI
+send cmdjoinEUI
+send 013 010
+waitln 'replacing' 'Command complete' 
+if result=1 then
+   reset = 0
+endif

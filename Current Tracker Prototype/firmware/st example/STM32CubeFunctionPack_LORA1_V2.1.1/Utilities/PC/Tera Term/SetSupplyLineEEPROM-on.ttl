@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command switches on the EEPROM supply line
+
+send '!powereeprom-' 049 013 010

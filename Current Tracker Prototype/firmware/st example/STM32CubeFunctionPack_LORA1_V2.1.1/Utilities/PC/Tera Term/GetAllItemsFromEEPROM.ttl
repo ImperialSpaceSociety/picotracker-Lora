@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command gets all items from the EEPROM
+
+send '?getlogs' 013 010

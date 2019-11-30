@@ -1,0 +1,23 @@
+; ** macro file for Tera Term **
+; Configuration file
+
+; ** Serial port parameters ** 
+;	  Port number
+ComPort = 11
+;	  Baud rate
+BaudRate = 115200
+
+
+; ** Configuration commands ** 
+
+; Screen clearing
+clearscreen 0
+
+; connection
+connect '/C=ComPort'
+
+; baud rate
+;setbaud BaudRate
+
+; local echo on
+;setecho 1

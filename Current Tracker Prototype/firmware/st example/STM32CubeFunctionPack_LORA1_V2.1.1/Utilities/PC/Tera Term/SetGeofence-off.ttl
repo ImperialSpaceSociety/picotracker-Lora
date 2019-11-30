@@ -1,0 +1,8 @@
+; ** macro file for Tera Term **
+; The following command sets off the geofence
+
+send '!geofence-X' 013 010
+waitln 'Command complete' 
+if result=1 then
+   send '!sysreset' 013 010
+endif

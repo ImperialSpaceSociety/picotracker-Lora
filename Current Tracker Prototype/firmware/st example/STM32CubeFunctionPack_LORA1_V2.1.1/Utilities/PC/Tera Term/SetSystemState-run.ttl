@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command sets the system state to run
+
+send '!sysrun' 013 010

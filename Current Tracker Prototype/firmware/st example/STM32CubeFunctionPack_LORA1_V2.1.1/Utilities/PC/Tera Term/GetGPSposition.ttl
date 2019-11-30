@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command gets the GPS position
+
+send '?gpsgetposition' 013 010

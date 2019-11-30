@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command switches on the sensors supply line
+
+send '!powersens-' 049 013 010

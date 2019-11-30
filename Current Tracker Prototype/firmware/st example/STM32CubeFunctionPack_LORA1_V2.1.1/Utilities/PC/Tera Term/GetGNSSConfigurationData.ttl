@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command gets the GNSS configuration data
+
+send '?gnssappconf' 013 010

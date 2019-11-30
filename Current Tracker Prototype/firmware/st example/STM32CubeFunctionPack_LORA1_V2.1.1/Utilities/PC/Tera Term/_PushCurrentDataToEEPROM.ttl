@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command pushes the current data to the EEPROM
+
+send '!pushlog' 013 010

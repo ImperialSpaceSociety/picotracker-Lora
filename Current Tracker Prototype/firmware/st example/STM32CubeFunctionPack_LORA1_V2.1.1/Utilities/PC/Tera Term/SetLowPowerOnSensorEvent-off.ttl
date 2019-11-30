@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command set off low power on sensor event
+
+send '!lpsensorevent-' 048 013 010

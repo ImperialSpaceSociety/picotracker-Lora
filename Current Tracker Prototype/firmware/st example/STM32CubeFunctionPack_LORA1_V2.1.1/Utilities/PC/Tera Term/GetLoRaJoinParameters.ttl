@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command gets the LoRa join parameters
+
+send '?devicejoinparam' 013 010

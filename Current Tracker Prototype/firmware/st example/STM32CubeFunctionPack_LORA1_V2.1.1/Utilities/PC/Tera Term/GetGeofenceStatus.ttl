@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command gets the geofence status
+
+send '?geofence' 013 010

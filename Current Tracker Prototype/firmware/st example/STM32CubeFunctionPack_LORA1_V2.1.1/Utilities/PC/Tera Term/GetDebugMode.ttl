@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command gets the debug mode
+
+send '?debugmode' 013 010

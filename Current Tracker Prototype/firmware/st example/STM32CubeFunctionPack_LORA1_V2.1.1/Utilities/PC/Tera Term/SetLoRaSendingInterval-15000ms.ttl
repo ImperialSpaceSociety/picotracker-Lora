@@ -1,0 +1,20 @@
+; ** macro file for Tera Term **
+; The following command sets to 15000ms the sending interval
+
+lorainterval = '15000'
+
+reset = 1
+timeout = 5
+
+cmdlorainterval = '!lorainterval-'
+strconcat cmdlorainterval lorainterval
+send cmdlorainterval 
+send 013 010
+waitln 'Wrong' 'Command complete'
+if (result=1 || result = 0) then
+   reset = 0
+endif
+
+if reset = 1 then
+   send '!sysreset' 013 010
+endif

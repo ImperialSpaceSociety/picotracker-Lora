@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command sets off sending sensor data on wake up
+
+send '!sendonwake-' 048 013 010

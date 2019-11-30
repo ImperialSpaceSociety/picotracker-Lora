@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command sets the parameter "no wait" in GNSS configuration data
+
+send '!gnssappconf-0-0' 013 010

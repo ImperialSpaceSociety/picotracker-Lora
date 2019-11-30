@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command sets the GPS cold start
+
+send '!gpscoldstart' 013 010

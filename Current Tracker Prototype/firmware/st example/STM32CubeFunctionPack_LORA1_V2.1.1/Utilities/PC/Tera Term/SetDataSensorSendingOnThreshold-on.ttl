@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command sets on sending sensor data on threshold
+
+send '!sendonthreshold-' 049 013 010

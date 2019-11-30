@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command gets the EEPROM data log status
+
+send '?logmanager' 013 010

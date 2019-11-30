@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command sets the parameter "wait on send" in GNSS configuration data
+
+send '!gnssappconf-1-0' 013 010

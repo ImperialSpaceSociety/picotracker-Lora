@@ -1,0 +1,6 @@
+; ** macro file for Tera Term **
+; The following command sets the debug mode
+
+status = 'd'
+
+send '!debugmodeS' status 013 010

@@ -1,0 +1,8 @@
+; ** macro file for Tera Term **
+; The following command sets geofence centered on current location and 450m radius
+
+send '!geofence-H-450' 013 010
+waitln 'Command complete' 
+if result=1 then
+   send '!sysreset' 013 010
+endif

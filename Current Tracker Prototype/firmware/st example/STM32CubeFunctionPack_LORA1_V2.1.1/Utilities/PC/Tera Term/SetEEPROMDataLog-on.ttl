@@ -1,0 +1,4 @@
+; ** macro file for Tera Term **
+; The following command sets on the EEPROM data log
+
+send '!logmanager-' 049 013 010
