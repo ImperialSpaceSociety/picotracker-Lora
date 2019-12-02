@@ -1,4 +1,0 @@
-; ** macro file for Tera Term **
-; The following command gets one item from the EEPROM
-
-send '?getsingleitem' 013 010

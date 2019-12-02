@@ -1,4 +1,0 @@
-; ** macro file for Tera Term **
-; The following command switches on the GNSS supply line
-
-send '!powergnss-' 049 013 010

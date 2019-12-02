@@ -1,4 +1,0 @@
-; ** macro file for Tera Term **
-; The following command restores the EEPROM default settings
-
-send '!defaultsettings' 013 010

@@ -1,8 +1,0 @@
-; ** macro file for Tera Term **
-; The following command sets off LoRa ADR
-
-send '!loraadronoff-' 048 013 010
-waitln 'Command complete' 
-if result=1 then
-   send '!sysreset' 013 010
-endif

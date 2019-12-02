@@ -1,4 +1,0 @@
-; ** macro file for Tera Term **
-; The following command gets the LoRa join status
-
-send '?devicejoinstatus' 013 010

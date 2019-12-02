@@ -1,4 +1,0 @@
-; ** macro file for Tera Term **
-; The following command sets on low power on sleep timer
-
-send '!lpsleeptimer-' 049 013 010

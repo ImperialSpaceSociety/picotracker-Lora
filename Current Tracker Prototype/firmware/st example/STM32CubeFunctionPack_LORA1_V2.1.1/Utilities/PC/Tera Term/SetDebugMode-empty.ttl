@@ -1,8 +1,0 @@
-; ** macro file for Tera Term **
-; The following command sets the debug mode
-;
-; Replace s with e (enable) or d (disable)
-
-status = 's'
-
-send '!debugmodeS' status 013 010

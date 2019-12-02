@@ -1,8 +1,0 @@
-; ** macro file for Tera Term **
-; The following command erases the LoRa keys
-
-send '!eraselorakeys' 013 010
-waitln 'Command complete' 
-if result=1 then
-   send '!sysreset' 013 010
-endif

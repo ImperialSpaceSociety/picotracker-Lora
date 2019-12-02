@@ -1,4 +1,0 @@
-; ** macro file for Tera Term **
-; The following command gets the firmware version
-
-send '?fwversion' 013 010

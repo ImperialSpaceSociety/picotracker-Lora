@@ -1,4 +1,0 @@
-; ** macro file for Tera Term **
-; The following command sets off sending sensor data on threshold
-
-send '!sendonthreshold-' 048 013 010
