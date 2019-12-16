@@ -421,6 +421,9 @@
           <GroupName>::CMSIS Driver</GroupName>
         </Group>
         <Group>
+          <GroupName>::Compiler</GroupName>
+        </Group>
+        <Group>
           <GroupName>::Device</GroupName>
         </Group>
       </Groups>
@@ -456,6 +459,18 @@
           <targetInfo name="Target 1"/>
         </targetInfos>
       </component>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDIN" Cvariant="User" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M">
+        <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.2"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="User" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M">
+        <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.2"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
       <component Cbundle="STM32CubeMX" Cclass="Device" Cgroup="STM32Cube HAL" Cvendor="Keil" Cversion="1.10.0" condition="STM32L0 CMSIS STM32CubeMX">
         <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.0.1"/>
         <targetInfos>
@@ -463,6 +478,24 @@
         </targetInfos>
       </component>
       <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Csub="USART Async" Cvendor="Keil" Cversion="1.1.0" condition="STM32L0 CMSIS STM32CubeMX">
+        <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.0.1"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Csub="USART IrDA" Cvendor="Keil" Cversion="1.0.0" condition="STM32L0 CMSIS STM32CubeMX">
+        <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.0.1"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Csub="USART SmartCard" Cvendor="Keil" Cversion="1.0.0" condition="STM32L0 CMSIS STM32CubeMX">
+        <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.0.1"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Csub="USART Sync" Cvendor="Keil" Cversion="1.0.0" condition="STM32L0 CMSIS STM32CubeMX">
         <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.0.1"/>
         <targetInfos>
           <targetInfo name="Target 1"/>

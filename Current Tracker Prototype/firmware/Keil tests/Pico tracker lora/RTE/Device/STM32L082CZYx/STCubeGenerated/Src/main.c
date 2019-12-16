@@ -25,7 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
-#include <stdio.h>
+//include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -36,15 +36,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
-// Add syscalls.c with GCC
-
-#ifdef __GNUC__
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
-
 
 
 /* USER CODE END PD */
@@ -61,8 +52,7 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
-extern int stdin_init (void);
-extern int stdout_init (void);
+int fputc(int ch, FILE *f){  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);  return ch;}
 
 
 
@@ -76,16 +66,7 @@ static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 
-/**
-  * @brief  Retargets the C library printf function to the USART.
-  * @param  None
-  * @retval None
-  */
-PUTCHAR_PROTOTYPE
-{
-  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
-  return ch;
-}
+
 
 /* USER CODE END PFP */
 
@@ -139,7 +120,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-	//stdin_init();                             /* Initialize printf output      */
+    //stdin_init();                             /* Initialize printf output      */
 
 
   /* USER CODE END SysInit */
@@ -149,40 +130,40 @@ int main(void)
   MX_I2C1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-	
-	char uart2Data[24] = "Connected to UART Two\r\n";
-	/*
-	* Output to uart2
-	* use screen or putty or whatever terminal software
-	* 8N1 115200
-	*/
-	HAL_UART_Transmit(&huart1, (uint8_t *)&uart2Data,sizeof(uart2Data), HAL_MAX_DELAY);
+    
+    char uart2Data[24] = "Connected to UART One\r\n";
+    /*
+    * Output to uart2
+    * use screen or putty or whatever terminal software
+    * 8N1 115200
+    */
+    HAL_UART_Transmit(&huart1, (uint8_t *)&uart2Data,sizeof(uart2Data), HAL_MAX_DELAY);
 
-	printf("\r\n");
+    printf("\r\n");
 
-	printf("Scanning I2C bus:\r\n");
-	HAL_StatusTypeDef result;
-	uint8_t i;
-	for (i=1; i<128; i++)
-	{
-		/*
-		 * the HAL wants a left aligned i2c address
-		 * &hi2c1 is the handle
-		 * (uint16_t)(i<<1) is the i2c address left aligned
-		 * retries 2
-		 * timeout 2
-		 */
-		result = HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t)(i<<1), 2, 2);
-		if (result != HAL_OK) // HAL_ERROR or HAL_BUSY or HAL_TIMEOUT
-		{
-			printf("."); // No ACK received at that address
-		}
-		if (result == HAL_OK)
-		{
-			printf("0x%X", i); // Received an ACK at that address
-		}
-	}
-	printf("\r\n");
+    printf("Scanning I2C bus:\r\n");
+    HAL_StatusTypeDef result;
+    uint8_t i;
+    for (i=1; i<128; i++)
+    {
+        /*
+         * the HAL wants a left aligned i2c address
+         * &hi2c1 is the handle
+         * (uint16_t)(i<<1) is the i2c address left aligned
+         * retries 2
+         * timeout 2
+         */
+        result = HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t)(i<<1), 2, 2);
+        if (result != HAL_OK) // HAL_ERROR or HAL_BUSY or HAL_TIMEOUT
+        {
+            printf("."); // No ACK received at that address
+        }
+        if (result == HAL_OK)
+        {
+            printf("0x%X", i); // Received an ACK at that address
+        }
+    }
+    printf("\r\n");
 
 
 
@@ -192,12 +173,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
     HAL_Delay(100);                                /* Delay 1000ms                */
-		//HAL_UART_Transmit(&huart1, (uint8_t*)"Hello world\n", strlen("Hello world\n"), HAL_MAX_DELAY);
-    printf("Hello World\n");
-		
-		//main_old();
+     //HAL_UART_Transmit(&huart1, (uint8_t*)"printing_direct_uart\n", strlen("printing_direct_uart\n"), HAL_MAX_DELAY);
+    //printf("printing fing\n");
+        
+        //main_old();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -358,6 +339,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+
+void my_printf(){
+
+}
 
 /* USER CODE END 4 */
 
