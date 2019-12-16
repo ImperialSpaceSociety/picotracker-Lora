@@ -20,6 +20,11 @@
 #define RTE_DEVICE_FRAMEWORK_CUBE_MX
 /*  Keil.STM32CubeMX::Device:STM32Cube HAL:1.10.0 */
 #define RTE_DEVICE_CUBE_MX_HAL
+/*  Keil::CMSIS Driver:USART:USART Async:1.1.0 */
+#define RTE_Drivers_USART1_Async        /* Driver USART1 */
+        #define RTE_Drivers_USART2_Async        /* Driver USART2 */
+        #define RTE_Drivers_USART4_Async        /* Driver USART4 */
+        #define RTE_Drivers_USART5_Async        /* Driver USART5 */
 
 
 #endif /* RTE_COMPONENTS_H */
