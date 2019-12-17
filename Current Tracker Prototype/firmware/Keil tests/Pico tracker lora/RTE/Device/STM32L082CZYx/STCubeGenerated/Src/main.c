@@ -21,7 +21,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
@@ -144,6 +143,7 @@ int main(void)
     printf("Scanning I2C bus:\r\n");
     HAL_StatusTypeDef result;
     uint8_t i;
+		while(1){
     for (i=1; i<128; i++)
     {
         /*
@@ -153,8 +153,9 @@ int main(void)
          * retries 2
          * timeout 2
          */
-        result = HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t)(i<<1), 2, 2);
+        result = HAL_I2C_IsDeviceReady(&hi2c1, (uint16_t)(i<<1), 20, 20);
         if (result != HAL_OK) // HAL_ERROR or HAL_BUSY or HAL_TIMEOUT
+						
         {
             printf("."); // No ACK received at that address
         }
@@ -164,7 +165,9 @@ int main(void)
         }
     }
     printf("\r\n");
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
 
+	}
 
 
   /* USER CODE END 2 */
