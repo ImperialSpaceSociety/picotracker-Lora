@@ -62,6 +62,9 @@ void Error_Handler(void);
 
 /* USER CODE END Private defines */
 
+
+void DO_I2C_SCAN(void);
+
 #ifdef __cplusplus
 }
 #endif
