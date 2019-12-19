@@ -258,3 +258,4 @@ prototype/firmware/EDBG UART erert/EDBG UART erert/.atmel-start-backup/*
 *.elf
 *.ld
 *.o
+*.1a
