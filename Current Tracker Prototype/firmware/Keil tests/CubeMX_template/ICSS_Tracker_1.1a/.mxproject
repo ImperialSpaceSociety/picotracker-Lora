@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/Richard Ibbotson/Documents/RTE/Device/ICSS_Tracker_1.1a/Inc
+HeaderPath=C:/Users/Richard Ibbotson/Documents/GitHub/picotracker-Lora/Current Tracker Prototype/firmware/Keil tests/CubeMX_template/ICSS_Tracker_1.1a/Inc
 HeaderFiles=stm32l0xx_it.h;stm32l0xx_hal_conf.h;main.h;
-SourcePath=C:/Users/Richard Ibbotson/Documents/RTE/Device/ICSS_Tracker_1.1a/Src
+SourcePath=C:/Users/Richard Ibbotson/Documents/GitHub/picotracker-Lora/Current Tracker Prototype/firmware/Keil tests/CubeMX_template/ICSS_Tracker_1.1a/Src
 SourceFiles=stm32l0xx_it.c;stm32l0xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
