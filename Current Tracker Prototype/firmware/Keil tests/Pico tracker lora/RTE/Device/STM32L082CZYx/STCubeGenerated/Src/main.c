@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include <string.h>
 //include <stdio.h>
+#include "ms5607.h"
 
 /* USER CODE END Includes */
 
@@ -36,6 +37,11 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+#define UBLOX_ADDRESS     0x42 
+
+uint8_t data;
+//uint8_t device_address = UBLOX_ADDRESS;
+static const uint8_t device_address = 0x42 << 1; // Use 8-bit address
 
 /* USER CODE END PD */
 
@@ -151,7 +157,26 @@ int main(void)
 	{	
 
 		//printf("\r\n");
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+		
+		
+		/* Receieve data in the register */
+		while(HAL_I2C_Master_Receive(&hi2c1, device_address, (uint8_t *)&data, 1, HAL_MAX_DELAY) != HAL_OK) {
+
+		/* Error_Handler() function is called when Timeout error occurs.
+				 When Acknowledge failure occurs (Slave don't acknowledge it's address)
+				 Master restarts communication */
+			if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF)
+			{
+				Error_Handler();
+			}
+		}
+		/* Send the data to serial buffer */
+		//HAL_UART_Transmit(&huart1, data, sprintf(tx, "data: %d\n", data), 500);	
+		HAL_UART_Transmit(&huart1, (uint8_t *)&data,1, HAL_MAX_DELAY);
+
+		//HAL_Delay(100);
+			
 
 	/* USER CODE END WHILE */
 
