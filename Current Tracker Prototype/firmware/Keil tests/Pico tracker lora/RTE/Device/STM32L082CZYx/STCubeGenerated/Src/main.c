@@ -161,7 +161,7 @@ int main(void)
 		
 		
 		/* Receieve data in the register */
-		while(HAL_I2C_Master_Receive(&hi2c1, device_address, (uint8_t *)&data, 1, HAL_MAX_DELAY) != HAL_OK) {
+		while(HAL_I2C_Master_Receive(&hi2c1, device_address, (uint8_t *)&data, 1,HAL_MAX_DELAY) != HAL_OK) {
 
 		/* Error_Handler() function is called when Timeout error occurs.
 				 When Acknowledge failure occurs (Slave don't acknowledge it's address)
@@ -171,16 +171,18 @@ int main(void)
 				Error_Handler();
 			}
 		}
-		/* Send the data to serial buffer */
-		//HAL_UART_Transmit(&huart1, data, sprintf(tx, "data: %d\n", data), 500);	
-		HAL_UART_Transmit(&huart1, (uint8_t *)&data,1, HAL_MAX_DELAY);
+		if (data!=255)
+		{
+			/* Send the data to serial buffer */
+			HAL_UART_Transmit(&huart1, (uint8_t *)&data,1,HAL_MAX_DELAY);
+		}
 
 		//HAL_Delay(100);
 			
 
-	/* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
-	/* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
 	}
   /* USER CODE END 3 */
 }

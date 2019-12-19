@@ -54,6 +54,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+void DO_I2C_SCAN(void);
 
 /* USER CODE END EFP */
 
@@ -61,9 +62,6 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
-
-
-void DO_I2C_SCAN(void);
 
 #ifdef __cplusplus
 }
