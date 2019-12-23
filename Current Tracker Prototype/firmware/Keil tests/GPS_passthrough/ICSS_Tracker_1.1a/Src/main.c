@@ -21,6 +21,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include <stdio.h>
+#include "ms5607.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -136,6 +138,9 @@ int main(void)
 	i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
 	
 	HAL_Delay(2000);
+	
+	ms5607_Init();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -143,9 +148,13 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
-		if((i2c_status == HAL_I2C_ERROR_NONE) && (i2c_buffer[0] != 0xff))
-			HAL_UART_Transmit(&huart1 , i2c_buffer, 1, 0xFFFF);
+		MS5607_GET_TEMP_PRESSURE();
+		HAL_Delay(1000);
+
+		
+		//i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
+		//if((i2c_status == HAL_I2C_ERROR_NONE) && (i2c_buffer[0] != 0xff))
+		//HAL_UART_Transmit(&huart1 , i2c_buffer, 1, 0xFFFF);
 
     /* USER CODE BEGIN 3 */
   }
