@@ -22,7 +22,7 @@ unsigned long cmd_adc(char cmd);
 HAL_StatusTypeDef ms5607_transmit(uint8_t *pBuffer, uint16_t Length);
 HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length);
 unsigned long cmd_adc(char cmd);
-void MS5607_GET_TEMP_PRESSURE(void);
+void MS5607_get_temp_pressure(void);
 uint8_t ms5607_Init(void);
 
 

@@ -23,7 +23,7 @@
  
  
 extern I2C_HandleTypeDef hi2c1;
-extern uint8_t	i2c_buffer[16];
+extern uint8_t	i2c_buffer[2];
 extern HAL_StatusTypeDef i2c_status;
 
 
@@ -51,9 +51,7 @@ uint8_t ms5607_Init(void)
     }
 		
 		factory_crc = 0x000F & (C[7]); // the factory calculated crc
-		
-
-		
+				
     calculated_crc=crc4(C);
     
 		if(calculated_crc==factory_crc)
@@ -66,11 +64,11 @@ uint8_t ms5607_Init(void)
 uint16_t cmd_prom(uint8_t coef_num){
     uint8_t  temp_date[2]= {0};
     unsigned int rC=0;
-    uint8_t Buffer[2]={0};
+    uint8_t i2c_buffer[2]={0};
     
-		Buffer[0]=CMD_PROM_RD+coef_num*2;           
+		i2c_buffer[0]=CMD_PROM_RD+coef_num*2;           
 
-    ms5607_transmit(Buffer,1); // send PROM READ command
+    ms5607_transmit(i2c_buffer,1); // send PROM READ command
     ms5607_receive(temp_date,2);
     rC=256*temp_date[0]+temp_date[1];
 
@@ -79,9 +77,9 @@ uint16_t cmd_prom(uint8_t coef_num){
 
 void cmd_reset(void)
 {
-	uint8_t Buffer[2]={0};
-	Buffer[0]=CMD_RESET;
-	ms5607_transmit(Buffer,1);
+	uint8_t i2c_buffer[2]={0};
+	i2c_buffer[0]=CMD_RESET;
+	ms5607_transmit(i2c_buffer,1);
 }
 
 uint8_t crc4(uint16_t n_prom[]) // n_prom defined as 8x unsigned int (n_prom[8])
@@ -130,10 +128,10 @@ unsigned long cmd_adc(char cmd)
 
     unsigned long temp=0;
 
-    uint8_t Buffer[2]={0};
-    Buffer[0]=CMD_ADC_CONV+cmd;
+    uint8_t i2c_buffer[2]={0};
+    i2c_buffer[0]=CMD_ADC_CONV+cmd;
 
-    ms5607_transmit(Buffer,1); // send conversion command
+    ms5607_transmit(i2c_buffer,1); // send conversion command
 
     switch (cmd & 0x0f) // wait necessary conversion time
     {
@@ -164,9 +162,9 @@ unsigned long cmd_adc(char cmd)
 
     }
 
-    Buffer[0]=CMD_ADC_READ;
+    i2c_buffer[0]=CMD_ADC_READ;
 
-    ms5607_transmit(Buffer,1);
+    ms5607_transmit(i2c_buffer,1);
     ms5607_receive(temp_date,3);
 
     temp=65536*temp_date[0]+256*temp_date[1]+temp_date[2];
@@ -176,28 +174,28 @@ unsigned long cmd_adc(char cmd)
 
 HAL_StatusTypeDef ms5607_transmit( uint8_t *pBuffer, uint16_t Length)
 {
-    HAL_StatusTypeDef status = HAL_OK;
-    status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length, 100);
+    HAL_StatusTypeDef i2c_status = HAL_OK;
+    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length, 100);
     HAL_Delay(5);
 
-    if(status != HAL_OK)
+    if(i2c_status != HAL_OK)
     {
         //I2C_Error();
     }
-    return status;
+    return i2c_status;
 }
 
 HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length)
 {
-    HAL_StatusTypeDef status = HAL_OK;
-    status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length, 100);
+    HAL_StatusTypeDef i2c_status = HAL_OK;
+    i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length, 100);
 
-    if(status != HAL_OK)
+    if(i2c_status != HAL_OK)
     {
 			//I2C_Error();
     }
 		
-    return status;
+    return i2c_status;
 }
 
 void ms5607_Read_T(void)
@@ -226,12 +224,10 @@ void ms5607_Cal_T_P(void)
 		printf("%lf", P); 
 		printf("\r\n"); 
 	
-	
-
 }
 
 
-void MS5607_GET_TEMP_PRESSURE(void)
+void MS5607_get_temp_pressure(void)
 {
 
 	ms5607_Read_T();

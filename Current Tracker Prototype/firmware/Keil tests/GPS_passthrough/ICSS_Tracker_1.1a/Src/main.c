@@ -101,7 +101,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	
-	uint8_t	i2c_buffer[16];
+	uint8_t	i2c_buffer[2];
 	HAL_StatusTypeDef i2c_status;
 
   /* USER CODE END 1 */
@@ -132,12 +132,12 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 	
-	printf("\r\nI2C GPS Passthrough\r\n");
+	printf("\r\nI2C get temperature and pressure\r\n");
 	
 
 	i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
 	
-	HAL_Delay(2000);
+	HAL_Delay(500);
 	
 	ms5607_Init();
 
@@ -148,7 +148,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		MS5607_GET_TEMP_PRESSURE();
+		MS5607_get_temp_pressure();
 		HAL_Delay(1000);
 
 		
