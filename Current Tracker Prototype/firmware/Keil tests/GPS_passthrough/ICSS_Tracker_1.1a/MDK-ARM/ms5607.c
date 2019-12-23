@@ -31,7 +31,7 @@ extern HAL_StatusTypeDef i2c_status;
 char buf0[26]={0,};
 unsigned long D1; // ADC value of the pressure conversion
 unsigned long D2; // ADC value of the temperature conversion
-unsigned int C[8]; // calibration coefficients
+uint16_t C[8]; // calibration coefficients
 double P; // compensated pressure value
 double T; // compensated temperature value
 double dT; // difference between actual and measured temperature
@@ -40,27 +40,27 @@ double SENS; // sensitivity at actual temperature
 
 uint8_t ms5607_Init(void)
 {
-	  unsigned int i,n_crc,ci;
-    unsigned int crx;
+    uint8_t i;
+		uint8_t calculated_crc;
+		uint8_t factory_crc;
 
     cmd_reset(); // reset IC
 
     for (i=0; i<8; i++) {
-			C[i]=cmd_prom(i);   // read coefficients
+        C[i]=cmd_prom(i);   // read coefficients
     }
+		
+		factory_crc = 0x000F & (C[7]); // the factory calculated crc
+		
 
-		n_crc=crc4(C);
+		
+    calculated_crc=crc4(C);
+    
+		if(calculated_crc==factory_crc)
+        return 0;
+    else
+        return 1;
 
-    crx=C[0] & 0xf000;                   //MSB 4bit
-    ci = crx>>12;
-
-
-    if(n_crc==ci){
-      return 0;
-		}
-    else{
-      return 1;
-		}
 }
 
 uint16_t cmd_prom(uint8_t coef_num){
@@ -84,20 +84,16 @@ void cmd_reset(void)
 	ms5607_transmit(Buffer,1);
 }
 
-unsigned char crc4(unsigned int n_prom[]) // n_prom defined as 8x unsigned int (n_prom[8])
+uint8_t crc4(uint16_t n_prom[]) // n_prom defined as 8x unsigned int (n_prom[8])
 {
 
 	int cnt; // simple counter
-	unsigned int n_rem; // crc reminder
-	unsigned int crc_read; // original value of the crc
-	unsigned char n_bit;
-	n_rem = 0x00;
+	uint16_t  n_rem=0; // crc reminder
+	uint8_t  n_bit;
 
 
-	crc_read=n_prom[7]; //save read CRC
-	
-	n_prom[7]=(0xFF00 & (n_prom[7])); //CRC byte is replaced by 0
-	
+	C[7]=(0xFF00 & (C[7]));  //CRC byte is replaced by 00 before calculating crc
+
 	for (cnt = 0; cnt < 16; cnt++) // operation is performed on bytes
 	{// choose LSB or MSB
 		if (cnt%2==1)
@@ -122,11 +118,9 @@ unsigned char crc4(unsigned int n_prom[]) // n_prom defined as 8x unsigned int (
 		}
 	}
 	
-	n_rem= (0x000F & (n_rem >> 12)); // final 4-bit reminder is CRC code
-	
-	n_prom[7]=crc_read; // restore the crc_read to its original place
-	
-	return (n_rem ^ 0x0);
+
+	n_rem = ((n_rem >> 12) & 0x000F); // final 4-bit reminder is CRC code
+	return (n_rem ^ 0x00);
 
 }
 
@@ -231,6 +225,8 @@ void ms5607_Cal_T_P(void)
 		printf("Pressure mBar: "); 
 		printf("%lf", P); 
 		printf("\r\n"); 
+	
+	
 
 }
 
