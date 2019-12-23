@@ -27,7 +27,6 @@ extern uint8_t	i2c_buffer[2];
 extern HAL_StatusTypeDef i2c_status;
 
 
-
 char buf0[26]={0,};
 unsigned long D1; // ADC value of the pressure conversion
 unsigned long D2; // ADC value of the temperature conversion
@@ -200,22 +199,24 @@ HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length)
 
 void ms5607_Read_T(void)
 {
-    D2=cmd_adc(CMD_ADC_D2+CMD_ADC_256); // read D2
+    D2 = cmd_adc(CMD_ADC_D2+CMD_ADC_256); // read D2
 }
 
 void ms5607_Read_P(void)
 {
-    D1=cmd_adc(CMD_ADC_D1+CMD_ADC_256); // read D1
+    D1 = cmd_adc(CMD_ADC_D1+CMD_ADC_256); // read D1
 }
 
 void ms5607_Cal_T_P(void)
 {
     // calculate 1st order pressure and temperature (MS5607 1st order algorithm)
-    dT=D2-C[5]*pow(2,8);
-    OFF=C[2]*pow(2,17)+dT*C[4]/pow(2,6);
-    SENS=C[1]*pow(2,16)+dT*C[3]/pow(2,7);
+    dT = D2-C[5]*pow(2,8);
+    OFF = C[2]*pow(2,17)+dT*C[4]/pow(2,6);
+    SENS = C[1]*pow(2,16)+dT*C[3]/pow(2,7);
     T =(2000+(dT*C[6])/pow(2,23))/100;
-    P =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
+    
+	  
+	  P =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
 	  
 		printf("Temperature degrees C: "); 
 		printf("%lf", T); 
@@ -229,7 +230,6 @@ void ms5607_Cal_T_P(void)
 
 void MS5607_get_temp_pressure(void)
 {
-
 	ms5607_Read_T();
 	ms5607_Read_P();
 	ms5607_Cal_T_P();

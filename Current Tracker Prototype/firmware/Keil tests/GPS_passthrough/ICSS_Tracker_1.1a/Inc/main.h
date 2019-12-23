@@ -102,6 +102,9 @@ void Error_Handler(void);
 #define BUTTON_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
+#define GPS_I2C_ADDRESS 0x42
+
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

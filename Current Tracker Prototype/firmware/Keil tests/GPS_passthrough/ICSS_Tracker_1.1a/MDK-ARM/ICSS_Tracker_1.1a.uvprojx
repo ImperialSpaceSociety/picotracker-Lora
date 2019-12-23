@@ -481,6 +481,11 @@
               <FileType>1</FileType>
               <FilePath>.\ms5607.c</FilePath>
             </File>
+            <File>
+              <FileName>ublox.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ublox.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -22,7 +22,7 @@
 #include "main.h"
 #include <stdio.h>
 #include "ms5607.h"
-
+#include "ublox.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -37,7 +37,6 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
-#define GPS_I2C_ADDRESS 0x42
 
 /* USER CODE END PD */
 
@@ -56,6 +55,71 @@ RTC_HandleTypeDef hrtc;
 SPI_HandleTypeDef hspi1;
 
 UART_HandleTypeDef huart1;
+
+
+
+// UBLOX variables
+// UBLOX -----------------------------------------------------------------------------------------------------------------
+uint8_t GPS_UBX_error_bitfield								= 0;
+
+uint16_t GPS_NMEA_latitude_int								= 0;
+uint32_t GPS_NMEA_latitude_dec								= 0;
+uint16_t GPS_NMEA_longitude_int								= 0;
+uint32_t GPS_NMEA_longitude_dec								= 0;
+uint8_t GPS_NMEA_NS											= 1;
+uint8_t GPS_NMEA_EW											= 1;
+
+int32_t GPS_UBX_latitude									= 0;
+int32_t GPS_UBX_longitude									= 0;
+float GPS_UBX_latitude_Float								= 0.0;
+float GPS_UBX_longitude_Float								= 0.0;
+
+int32_t GPSaltitude											= 0;
+
+uint8_t GPShour												= 0;
+uint8_t GPSminute											= 0;
+uint8_t GPSsecond											= 0;
+uint8_t GPSday												= 0;
+uint8_t GPSmonth											= 0;
+uint16_t GPSyear											= 0;
+
+uint8_t GPSsats												= 0;
+uint8_t GPSfix												= 0;
+uint8_t GPSfix_0107											= 0;
+uint8_t GPSvalidity											= 0;
+
+uint8_t GPSnavigation										= 0;
+uint8_t GPSpowermode										= 0;
+uint8_t GPSpowersavemodestate								= 0;
+
+int32_t GPSgroundspeed										= 0;
+int32_t GPSheading											= 0;
+
+uint16_t AD3data											= 0;
+uint16_t AD9data											= 0;
+uint16_t AD15data											= 0;
+uint16_t Si4060Temp											= 0;
+uint32_t telemCount											= 0;
+uint32_t telemetry_len										= 0;
+
+int32_t GPS_UBX_latitude_L									= 0;
+int32_t GPS_UBX_longitude_L									= 0;
+int32_t GPSaltitude_L										= 0;
+uint8_t GPS_NMEA_NS_L										= 0;
+uint8_t GPS_NMEA_EW_L										= 0;
+uint16_t GPS_NMEA_latitude_int_L							= 0;
+uint32_t GPS_NMEA_latitude_dec_L							= 0;
+uint16_t GPS_NMEA_longitude_int_L							= 0;
+uint32_t GPS_NMEA_longitude_dec_L							= 0;
+
+uint32_t SSDVimages											= 0;
+uint32_t SSDVstatus											= '0';
+
+
+
+//I2C related
+uint8_t	i2c_buffer[2];
+HAL_StatusTypeDef i2c_status;
 
 /* USER CODE BEGIN PV */
 
@@ -101,8 +165,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	
-	uint8_t	i2c_buffer[2];
-	HAL_StatusTypeDef i2c_status;
+
 
   /* USER CODE END 1 */
   
@@ -113,6 +176,11 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+	
+	// GPS INITIAL BACKUP
+	UBLOX_send_message(dummyByte, 1);									// in case only MCU restarted while GPS stayed powered
+	HAL_Delay(1000);												// wait for GPS module to be ready
+	UBLOX_send_message(setSwBackupMode, 16);							// low consumption at this point
 
   /* USER CODE END Init */
 
@@ -140,6 +208,17 @@ int main(void)
 	HAL_Delay(500);
 	
 	ms5607_Init();
+	
+	
+	// GPS SETUP
+	HAL_Delay(1000);											        // in case this follows immediately after the backup command
+	UBLOX_send_message(dummyByte, 1);							// wake up GPS module
+	HAL_Delay(1000);												      // wait for GPS module to be ready
+	UBLOX_request_UBX(setNMEAoff, 28, 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+	UBLOX_request_UBX(setNAVmode, 44, 10, UBLOX_parse_ACK);				// set Dynamic Model: airborne with <1g acceleration
+	UBLOX_request_UBX(setGPSonly, 28, 10, UBLOX_parse_ACK);				// turn off GLONASS
+	UBLOX_request_UBX(saveConfiguration, 21, 10, UBLOX_parse_ACK);		// save current configuration
+	
 
   /* USER CODE END 2 */
 
@@ -149,7 +228,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 		MS5607_get_temp_pressure();
-		HAL_Delay(1000);
+		//HAL_Delay(1000);
 
 		
 		//i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
