@@ -17,11 +17,8 @@ extern I2C_HandleTypeDef hi2c1;
 extern uint8_t	i2c_buffer[2];
 extern HAL_StatusTypeDef i2c_status;
 
-volatile uint8_t UART0_RX_buffer[UART0_BUFFER_SIZE];
-volatile uint8_t UART1_RX_buffer[UART1_BUFFER_SIZE];
-volatile uint32_t UART0_buffer_pointer;
-volatile uint32_t UART1_buffer_pointer;
-volatile uint32_t UART0_temp;
+volatile uint8_t I2C1_RX_buffer[I2C1_BUFFER_SIZE];
+volatile uint32_t I2C1_buffer_pointer;
 volatile uint32_t UART1_temp;
 
 
@@ -107,52 +104,23 @@ uint8_t UBLOX_verify_checksum(volatile uint8_t *buffer, uint8_t len)
 
 
 /*
-    Waits for the UART1_RX_buffer[] to be filled with an expected number of bytes
+    Waits for the I2C1_RX_buffer[] to be filled with an expected number of bytes
     and then empties the buffer to a desired buffer for further processing.
 */
 uint8_t UBLOX_fill_buffer_UBX(uint8_t *buffer, uint8_t len)
 {
-    uint32_t timeout = 500000;                                  // decreased for 2MHz PLL operation to 500000 (increase 10x for 64MHz PLL)
-    uint32_t pos = UART1_buffer_pointer;
 
-    while(UART1_buffer_pointer < (pos + len) && timeout) timeout--;
-    
-    if(!timeout) return 0;
-    
-    uint8_t bytes = UART1_buffer_pointer;
-    for(uint8_t i = 0; i < bytes; i++)
-    {
-        buffer[i] = UART1_RX_buffer[i];
-    }
-    
-    return 1;
+		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1),  buffer, len, 100);
+		if (i2c_status == HAL_OK)
+		{
+			return 1;
+		}else
+		{
+			return 0;
+		}
 }
 
 
-/*
-    Waits for the UART1_RX_buffer[] to contain an NMEA message terminated by the '\n' character
-    and then empties the buffer to a desired buffer for further processing.
-*/
-uint8_t UBLOX_fill_buffer_NMEA(uint8_t *buffer)
-{
-    uint32_t timeout = 5000000;
-
-    while(UART1_RX_buffer[UART1_buffer_pointer - 1] != '\n' && timeout) timeout--;
-    
-    if(!timeout)
-    {
-        GPS_NMEA_error_bitfield |= (1 << 0);
-        return 0;
-    }
-    
-    uint8_t bytes = UART1_buffer_pointer;
-    for(uint8_t i = 0; i < bytes; i++)
-    {
-        buffer[i] = UART1_RX_buffer[i];
-    }
-    
-    return 1;
-}
 
 
 /*
@@ -161,14 +129,15 @@ uint8_t UBLOX_fill_buffer_NMEA(uint8_t *buffer)
 void UBLOX_send_message(uint8_t *message, uint8_t len)
 	
 {
-		i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
-
-    //for(uint8_t i = 0; i < len; i++)
-    //{
-    //    UART1_TX(message[i]);
-    //}
-    UART1_buffer_pointer = 0;
+		i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), message, len, 0xff);	
 		
+		//if (i2c_status == HAL_OK)
+		//{
+		//	return 1;
+		//}else
+		//{
+		//	return 0;
+		//}	
 }
 
 
@@ -176,22 +145,15 @@ void UBLOX_send_message(uint8_t *message, uint8_t len)
     Function polling desired GPS data. It first sends the set UBX request.
     Then waits for the data and calls the appropriate parsing function.
 */
-uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, void (*parse)(volatile uint8_t*))
+uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
-    for(uint8_t i = 0; i < len; i++)                            // send the request
-    {
-        UART1_TX(*request++);
-    }
+
+    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 0xff);
+    HAL_Delay(300);	
+    uint8_t ack = UBLOX_fill_buffer_UBX(GPSbuffer, expectlen);  // copy the response from I2C1_RX_buffer to GPSbuffe
     
-    UART1_buffer_pointer = 0;                                   // reset UART1 RX buffer pointer
-    
-    uint8_t ack = UBLOX_fill_buffer_UBX(GPSbuffer, expectlen);  // copy the response from UART1_RX_buffer to GPSbuffer
-    
-    if(!ack) return 0;
-    
-    parse(GPSbuffer);                                           // parse the response to appropriate variables
-    
-    return 1;
+    volatile uint8_t success  = parse(GPSbuffer);          // parse the response to appropriate variables
+    return success;
 }
 
 
@@ -458,18 +420,24 @@ void UBLOX_parse_0107(volatile uint8_t *buffer)
 /*
     UBX 05 01   ACK
     
-    Checks the header and the checksum.
+    Checks the header and the checksum. returns 1 when an ack is received, returns 0 when a nak is received.
 */
-void UBLOX_parse_ACK(volatile uint8_t *buffer)
+uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer)
 {
     if(buffer[0] == 0xB5 && buffer[1] == 0x62 && buffer[2] == 0x05)
     {
         if(buffer[3] != 0x01)
         {
             GPS_UBX_ack_error++;
+						return 0;
         }
+				else
+				{
+					return 1;
+				}
     }else{
         GPS_UBX_buffer_error++;
+				return 0;
     }
 }
 
@@ -814,8 +782,8 @@ uint32_t UBLOX_get_version(uint8_t *buffer)
 {
     UBLOX_send_message(request0A04, 8);                                                 // request UBX-MON-VER
     
-    UART1_buffer_pointer = 0;                                                           // reset UART1 RX buffer pointer
-    UBLOX_fill_buffer_UBX(GPSbuffer, 104);                                              // copy the response from UART1_RX_buffer to GPSbuffer
+    I2C1_buffer_pointer = 0;                                                           // reset UART1 RX buffer pointer
+    UBLOX_fill_buffer_UBX(GPSbuffer, 104);                                              // copy the response from I2C1_RX_buffer to GPSbuffer
     
     if(GPSbuffer[0] == 0xB5 && GPSbuffer[1] == 0x62 && GPSbuffer[2] == 0x0A && GPSbuffer[3] == 0x04)
     {

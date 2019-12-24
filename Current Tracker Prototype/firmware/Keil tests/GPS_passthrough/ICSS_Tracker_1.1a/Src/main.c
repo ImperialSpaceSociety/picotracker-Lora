@@ -118,7 +118,7 @@ uint32_t SSDVstatus											= '0';
 
 
 //I2C related
-uint8_t	i2c_buffer[2];
+uint8_t	i2c_buffer[200];
 HAL_StatusTypeDef i2c_status;
 
 /* USER CODE BEGIN PV */
@@ -214,10 +214,10 @@ int main(void)
 	HAL_Delay(1000);											        // in case this follows immediately after the backup command
 	UBLOX_send_message(dummyByte, 1);							// wake up GPS module
 	HAL_Delay(1000);												      // wait for GPS module to be ready
-	UBLOX_request_UBX(setNMEAoff, 28, 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
-	UBLOX_request_UBX(setNAVmode, 44, 10, UBLOX_parse_ACK);				// set Dynamic Model: airborne with <1g acceleration
-	UBLOX_request_UBX(setGPSonly, 28, 10, UBLOX_parse_ACK);				// turn off GLONASS
-	UBLOX_request_UBX(saveConfiguration, 21, 10, UBLOX_parse_ACK);		// save current configuration
+	while(!UBLOX_request_UBX(setNMEAoff, 28, 10, UBLOX_parse_ACK));				// turn off periodic NMEA output
+	while(!UBLOX_request_UBX(setNAVmode, 44, 10, UBLOX_parse_ACK));				// set Dynamic Model: airborne with <1g acceleration
+	while(!UBLOX_request_UBX(setGPSonly, 68, 10, UBLOX_parse_ACK));				// turn off all constellations: UBX-CFG-GNSS
+	while(!UBLOX_request_UBX(saveConfiguration, 21, 10, UBLOX_parse_ACK));		// save current configuration
 	
 
   /* USER CODE END 2 */
@@ -227,13 +227,13 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-		MS5607_get_temp_pressure();
+		//MS5607_get_temp_pressure();
 		//HAL_Delay(1000);
 
 		
-		//i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
-		//if((i2c_status == HAL_I2C_ERROR_NONE) && (i2c_buffer[0] != 0xff))
-		//HAL_UART_Transmit(&huart1 , i2c_buffer, 1, 0xFFFF);
+		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
+		if((i2c_status == HAL_I2C_ERROR_NONE) && (i2c_buffer[0] != 0xff))
+		HAL_UART_Transmit(&huart1 , i2c_buffer, 1, 0xFFFF);
 
     /* USER CODE BEGIN 3 */
   }
