@@ -32,3 +32,4 @@ for i in results:
 
     print(process_coords(i.find("coordinates").get_text()))
     print("};")
+    print("")
