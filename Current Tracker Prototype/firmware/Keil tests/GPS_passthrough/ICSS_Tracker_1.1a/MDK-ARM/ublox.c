@@ -17,6 +17,7 @@
 
 /* 
  * sets up gps by putting in airbourne mode, setting to use GPS satellites only, turning off NMEA
+ * Needs TO BE REFACTORED TO TIME OUT OR EXIT IF NO MESSAGED IS ReCEIVED BACK!
  */
 uint8_t setup_GPS(){
 	
@@ -362,7 +363,13 @@ uint8_t UBLOX_parse_0611(volatile uint8_t *buffer)
         GPShour                     9
         GPSminute                   14
         GPSsecond                   55
-        GPSfix                      3
+        GPSfix                      1
+																		0   no fix
+																		1   dead reckoning only
+																		2   2D-fix
+																		3   3D-fix
+																		4   GNSS + dead reckoning combined
+																		5   time only fix
         GPSpowersavemodestate       0   PSM is not active
                                     1   Enabled (an intermediate state before Acquisition state)
                                     2   Acquisition
@@ -380,6 +387,8 @@ uint8_t UBLOX_parse_0611(volatile uint8_t *buffer)
     
     Checks the header and the checksum.
     UBLOX 7 message is shorter then UBLOX 8 message. It must be reflected in the checksum verification.
+		Comment Medad 27/12/19: looks like the pvt message is parsed according to the m8 spec. But not sure why it verifies checksum
+		with 2 lengths(92 and 100 bytes). maybe flexible to accomodate the m7 spec.
 */
 uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
 {
@@ -400,12 +409,13 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPSsecond = buffer[16];
             
             // FIX
-            GPSfix = buffer[26];
-            GPSfix_0107 = buffer[27] & 0x01;
-            GPSvalidity = buffer[17];
+            GPSfix = buffer[26];             // GNSSfix Type
+					
+					  GPSfix_0107 = buffer[27] & 0x01; // Fix status flags: gnssFixOK
+            GPSvalidity = buffer[17];        // Validity flags
             
             // POWER SAVE MODE STATE
-            GPSpowersavemodestate = (buffer[27] >> 2) & 0x07;
+            GPSpowersavemodestate = (buffer[27] >> 2) & 0x07; // Fix status flags: PSM state
             
             // SATS
             GPSsats = buffer[29];

@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include "ms5607.h"
 #include "ublox.h"
-
+#include "geofence.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -63,52 +63,59 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart1;
 
 
+// Radio variables
+uint32_t APRS_tx_frequency									= 144800000; // needs to be changed to Lora TX frequency. 
+uint8_t TXLoRa                              = 1;
 
 // UBLOX variables
-uint8_t GPS_UBX_error_bitfield								= 0;
-
-
+uint8_t GPS_UBX_error_bitfield						= 0;
 
 int32_t GPS_UBX_latitude									= 0;
 int32_t GPS_UBX_longitude									= 0;
-float GPS_UBX_latitude_Float								= 0.0;
-float GPS_UBX_longitude_Float								= 0.0;
+float GPS_UBX_latitude_Float							= 0.0;
+float GPS_UBX_longitude_Float							= 0.0;
 
-int32_t GPSaltitude											= 0;
+int32_t GPSaltitude												= 0;
 
-uint8_t GPShour												= 0;
-uint8_t GPSminute											= 0;
-uint8_t GPSsecond											= 0;
-uint8_t GPSday												= 0;
-uint8_t GPSmonth											= 0;
-uint16_t GPSyear											= 0;
+uint8_t GPShour														= 0;
+uint8_t GPSminute													= 0;
+uint8_t GPSsecond													= 0;
+uint8_t GPSday														= 0;
+uint8_t GPSmonth													= 0;
+uint16_t GPSyear													= 0;
 
-uint8_t GPSsats												= 0;
-uint8_t GPSfix												= 0;
-uint8_t GPSfix_0107											= 0;
-uint8_t GPSvalidity											= 0;
+uint8_t GPSsats														= 0;
+uint8_t GPSfix														= 0;
+uint8_t GPSfix_0107												= 0;
+uint8_t GPSvalidity												= 0;
 
-uint8_t GPSnavigation										= 0;
-uint8_t GPSpowermode										= 0;
-uint8_t GPSpowersavemodestate								= 0;
+uint8_t GPSnavigation											= 0;
+uint8_t GPSpowermode											= 0;
+uint8_t GPSpowersavemodestate							= 0;
 
 int32_t GPSgroundspeed										= 0;
-int32_t GPSheading											= 0;
+int32_t GPSheading												= 0;
 
-uint16_t AD3data											= 0;
-uint16_t AD9data											= 0;
-uint16_t AD15data											= 0;
-uint16_t Si4060Temp											= 0;
-uint32_t telemCount											= 0;
+uint16_t AD3data													= 0;
+uint16_t AD9data													= 0;
+uint16_t AD15data													= 0;
+uint16_t Si4060Temp												= 0;
+uint32_t telemCount												= 0;
 uint32_t telemetry_len										= 0;
 
-int32_t GPS_UBX_latitude_L									= 0;
-int32_t GPS_UBX_longitude_L									= 0;
-int32_t GPSaltitude_L										= 0;
+int32_t GPS_UBX_latitude_L								= 0;
+int32_t GPS_UBX_longitude_L								= 0;
+int32_t GPSaltitude_L											= 0;
 
 // Temperature Pressure variables
 double Pressure; // compensated pressure value
 double Temperature; // compensated temperature value
+
+
+// GEOFENCE variables
+uint32_t GEOFENCE_APRS_frequency					= 144800000;
+uint32_t GEOFENCE_no_tx										= 0;
+
 
 //I2C related
 uint8_t	i2c_buffer[2];
@@ -234,7 +241,7 @@ int main(void)
     /* USER CODE END WHILE */
 		MS5607_get_temp_pressure();
 		
-				printf("Temperature degrees C: "); 
+		printf("Temperature degrees C: "); 
 		printf("%lf", Temperature); 
 		printf("\r\n"); 
 		printf("Pressure mBar: "); 
@@ -246,50 +253,54 @@ int main(void)
 		
 
 
-//		// GPS FIX
-//		uint32_t fixCount = 0;
-//		
-//		while(1)																	// poll UBX-NAV-PVT until the module has fix (limited)
-//		{
-//			
-//			GPSfix = 0;
-//			GPSfix_0107 = 0;
-//			GPSsats = 0;
-//			
-//			UBLOX_send_message(dummyByte, 1);						  // wake up GPS module
-//			HAL_Delay(1000);												      // wait for GPS module to be ready
-//			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // UBX-NAV-PVT
-//			
-//			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
-//			
-//			fixCount++;
-//			
-//			if(fixCount > FIX)														// if taking too long reset and re-initialize GPS module
-//			{
-//				setup_GPS();
-//				GPSfix = 0;
-//				GPSfix_0107 = 0;
-//				GPSsats = 0;
-//				break;
-//			}
-//		}
+		// GET GPS FIX
+		uint32_t fixCount = 0;
 		
-//		UBLOX_send_message(setSwBackupMode, 16);									// switch GPS module to software backup mode	
-
+		while(1)																	// poll UBX-NAV-PVT until the module has fix (limited)
+		{
+			
+			GPSfix = 0;
+			GPSfix_0107 = 0;
+			GPSsats = 0;
+			
+			UBLOX_send_message(dummyByte, 1);						  // wake up GPS module
+			HAL_Delay(1000);												      // wait for GPS module to be ready
+			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
+			
+			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
+			
+			fixCount++;
+			
+			if(fixCount > FIX)														// if taking too long reset and re-initialize GPS module
+			{
+				setup_GPS();
+				GPSfix = 0;
+				GPSfix_0107 = 0;
+				GPSsats = 0;
+				break;
+			}
+		}
 		
-		// now process the data
-		// 1. string the data together
-		// 2. determine geofence based frequency to transmit
-		// 3. how to put everything into sleep mode
+		// PUT GPS TO SLEEP
+		UBLOX_send_message(setSwBackupMode, 16);									// switch GPS module to software backup mode	
 
+				
 		
-//		
-//		// GEOFENCE
-//		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
-//		APRS_tx_frequency = GEOFENCE_APRS_frequency;
-//		if(GEOFENCE_no_tx) TXaprs = 0;												// disable APRS transmission in NO AIRBORNE areas
-//		
-
+		// GEOFENCE
+ 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
+		APRS_tx_frequency = GEOFENCE_APRS_frequency;
+		
+		if(GEOFENCE_no_tx){ 
+			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
+		}
+		
+		// TRANSMIT DATA(TODO)
+		
+		// GO TO POWERSAVE MODE(TODO)
+		
+		
+		// TODO: make the watchdog work
+		// TODO: include a time out for the GPS commands.
 		
 
   /* USER CODE BEGIN 3 */

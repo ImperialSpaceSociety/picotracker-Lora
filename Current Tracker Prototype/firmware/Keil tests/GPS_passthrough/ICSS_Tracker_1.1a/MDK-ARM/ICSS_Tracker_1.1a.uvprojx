@@ -486,6 +486,11 @@
               <FileType>1</FileType>
               <FilePath>.\ublox.c</FilePath>
             </File>
+            <File>
+              <FileName>geofence.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\geofence.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
