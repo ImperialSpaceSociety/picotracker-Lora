@@ -545,7 +545,7 @@ static void MX_RTC_Init(void)
   * @param None
   * @retval None
   */
-static void MX_SPI1_Init(void)
+static void MX_SPI1_Init(void)\
 {
 
   /* USER CODE BEGIN SPI1_Init 0 */
