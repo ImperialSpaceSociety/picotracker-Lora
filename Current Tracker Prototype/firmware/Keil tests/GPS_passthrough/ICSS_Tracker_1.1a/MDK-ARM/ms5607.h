@@ -17,7 +17,15 @@
 
 /* Variables */
 
-
+static char buf0[26]={0,};
+static unsigned long D1; // ADC value of the pressure conversion
+static unsigned long D2; // ADC value of the temperature conversion
+static uint16_t C[8]; // calibration coefficients
+static double dT; // difference between actual and measured temperature
+static double OFF; // offset at actual temperature
+static double SENS; // sensitivity at actual temperature
+static double Pressure; // compensated pressure value
+static double Temperature; // compensated temperature value
 
 /* Function prototypes*/
 

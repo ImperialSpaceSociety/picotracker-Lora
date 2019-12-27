@@ -28,15 +28,15 @@ extern HAL_StatusTypeDef i2c_status;
 
  
  
-char buf0[26]={0,};
-unsigned long D1; // ADC value of the pressure conversion
-unsigned long D2; // ADC value of the temperature conversion
-uint16_t C[8]; // calibration coefficients
-double dT; // difference between actual and measured temperature
-double OFF; // offset at actual temperature
-double SENS; // sensitivity at actual temperature
-double Pressure; // compensated pressure value
-double Temperature; // compensated temperature value
+//char buf0[26]={0,};
+//unsigned long D1; // ADC value of the pressure conversion
+//unsigned long D2; // ADC value of the temperature conversion
+//uint16_t C[8]; // calibration coefficients
+//double dT; // difference between actual and measured temperature
+//double OFF; // offset at actual temperature
+//double SENS; // sensitivity at actual temperature
+//double Pressure; // compensated pressure value
+//double Temperature; // compensated temperature value
 
 
 uint8_t ms5607_Init(void)
@@ -209,7 +209,7 @@ void ms5607_Cal_T_P(void)
     Temperature =(2000+(dT*C[6])/pow(2,23))/100;
 	  Pressure =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
 	  
-		printf("Temperature degrees C: "); 
+				printf("Temperature degrees C: "); 
 		printf("%lf", Temperature); 
 		printf("\r\n"); 
 		printf("Pressure mBar: "); 

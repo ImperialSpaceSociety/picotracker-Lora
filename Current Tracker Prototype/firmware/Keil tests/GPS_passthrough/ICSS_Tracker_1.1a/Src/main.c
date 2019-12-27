@@ -233,7 +233,11 @@ int main(void)
   {
     /* USER CODE END WHILE */
 		MS5607_get_temp_pressure();
+		
+
+		
 	  HAL_Delay(1000);
+		
 
 
 //		// GPS FIX
