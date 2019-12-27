@@ -22,6 +22,11 @@ volatile uint32_t I2C1_buffer_pointer;
 volatile uint32_t UART1_temp;
 
 
+volatile static uint8_t ack_error_counter = 0;
+volatile static uint8_t buffer_error_counter = 0;
+volatile static uint8_t receive_failure_counter = 0;
+
+
 /*
     Converts GPS coordinates in Degrees and Decimal Minutes (4928.08702) to Decimal Degrees (49.4681170).
     
@@ -107,10 +112,10 @@ uint8_t UBLOX_verify_checksum(volatile uint8_t *buffer, uint8_t len)
     Waits for the I2C1_RX_buffer[] to be filled with an expected number of bytes
     and then empties the buffer to a desired buffer for further processing.
 */
-uint8_t UBLOX_fill_buffer_UBX(uint8_t *buffer, uint8_t len)
+uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len)
 {
 
-		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1),  buffer, len, 100);
+		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1),  buffer, len, 0xFF);
 		if (i2c_status == HAL_OK)
 		{
 			return 1;
@@ -126,18 +131,18 @@ uint8_t UBLOX_fill_buffer_UBX(uint8_t *buffer, uint8_t len)
 /*
     Transmits a desired UBX message across I2C1.
 */
-void UBLOX_send_message(uint8_t *message, uint8_t len)
+uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 	
 {
 		i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), message, len, 0xff);	
 		
-		//if (i2c_status == HAL_OK)
-		//{
-		//	return 1;
-		//}else
-		//{
-		//	return 0;
-		//}	
+		if (i2c_status == HAL_OK)
+		{
+			return 1;
+		}else
+		{
+			return 0;
+		}	
 }
 
 
@@ -147,12 +152,16 @@ void UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
-
-    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 0xff);
-    HAL_Delay(300);	
-    uint8_t ack = UBLOX_fill_buffer_UBX(GPSbuffer, expectlen);  // copy the response from I2C1_RX_buffer to GPSbuffe
-    
-    volatile uint8_t success  = parse(GPSbuffer);          // parse the response to appropriate variables
+    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 300);
+		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), GPSbuffer, expectlen, 300); // copy the response from I2C1_RX_buffer to GPSbuffe
+		
+		if (i2c_status != HAL_OK)
+		{
+			receive_failure_counter++;
+			return 0;
+		}
+	
+    uint8_t success  = parse(GPSbuffer);          // parse the response to appropriate variables
     return success;
 }
 
@@ -422,6 +431,9 @@ void UBLOX_parse_0107(volatile uint8_t *buffer)
     
     Checks the header and the checksum. returns 1 when an ack is received, returns 0 when a nak is received.
 */
+
+
+
 uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer)
 {
     if(buffer[0] == 0xB5 && buffer[1] == 0x62 && buffer[2] == 0x05)
@@ -429,6 +441,7 @@ uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer)
         if(buffer[3] != 0x01)
         {
             GPS_UBX_ack_error++;
+					  ack_error_counter++;
 						return 0;
         }
 				else
@@ -437,6 +450,7 @@ uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer)
 				}
     }else{
         GPS_UBX_buffer_error++;
+				buffer_error_counter++;
 				return 0;
     }
 }
@@ -783,7 +797,7 @@ uint32_t UBLOX_get_version(uint8_t *buffer)
     UBLOX_send_message(request0A04, 8);                                                 // request UBX-MON-VER
     
     I2C1_buffer_pointer = 0;                                                           // reset UART1 RX buffer pointer
-    UBLOX_fill_buffer_UBX(GPSbuffer, 104);                                              // copy the response from I2C1_RX_buffer to GPSbuffer
+    UBLOX_receive_UBX(GPSbuffer, 104);                                              // copy the response from I2C1_RX_buffer to GPSbuffer
     
     if(GPSbuffer[0] == 0xB5 && GPSbuffer[1] == 0x62 && GPSbuffer[2] == 0x0A && GPSbuffer[3] == 0x04)
     {
