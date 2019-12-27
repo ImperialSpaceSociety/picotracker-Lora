@@ -5,16 +5,12 @@ from bs4 import BeautifulSoup
 
 
 def process_coords(raw):
-    print("raw1",raw)
     raw = raw.strip()
     raw  = raw.split(" ")
-    print("raw2",raw)
-
-    raw = raw[1:-1]
     all_coords = ""
     for i in raw:
         i,j,k = i.split(",")
-        coord = i+", "+j+", "
+        coord = "{0:.7f},{1:.7f},".format(float(i),float(j))
         all_coords+=coord
         all_coords+="\n"
     #raw  = [i+j for i,j,k in raw.split(",")]
@@ -27,10 +23,12 @@ with open("geofence.kml", encoding='utf8') as f:
 
 results = soup.find_all('Placemark')
 
+fences = []
 
 print("// GEOFENCE ARRAYS (longitude, latitude)")
 for i in results:
-    print("static float "+i.find("name").get_text().replace("-", "")+"[] = {")
+    name = i.find("name").get_text().replace("-", "")
+    print("static float "+name+"[] = {")
 
     print(process_coords(i.find("coordinates").get_text()))
     print("};")
