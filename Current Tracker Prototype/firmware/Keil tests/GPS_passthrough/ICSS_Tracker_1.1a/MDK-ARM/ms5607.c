@@ -21,21 +21,23 @@
 #include "stm32l0xx_hal.h"
 #include "ms5607.h"
  
- 
 extern I2C_HandleTypeDef hi2c1;
 extern uint8_t	i2c_buffer[2];
 extern HAL_StatusTypeDef i2c_status;
 
 
+ 
+ 
 char buf0[26]={0,};
 unsigned long D1; // ADC value of the pressure conversion
 unsigned long D2; // ADC value of the temperature conversion
 uint16_t C[8]; // calibration coefficients
-double P; // compensated pressure value
-double T; // compensated temperature value
 double dT; // difference between actual and measured temperature
 double OFF; // offset at actual temperature
 double SENS; // sensitivity at actual temperature
+double Pressure; // compensated pressure value
+double Temperature; // compensated temperature value
+
 
 uint8_t ms5607_Init(void)
 {
@@ -173,27 +175,18 @@ unsigned long cmd_adc(char cmd)
 
 HAL_StatusTypeDef ms5607_transmit( uint8_t *pBuffer, uint16_t Length)
 {
-    HAL_StatusTypeDef i2c_status = HAL_OK;
+	  HAL_StatusTypeDef i2c_status = HAL_OK;
     i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length, 100);
-    HAL_Delay(5);
-
-    if(i2c_status != HAL_OK)
-    {
-        //I2C_Error();
-    }
+		HAL_Delay(10);
     return i2c_status;
 }
 
 HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length)
 {
-    HAL_StatusTypeDef i2c_status = HAL_OK;
+	  HAL_StatusTypeDef i2c_status = HAL_OK;
     i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length, 100);
+		HAL_Delay(10);
 
-    if(i2c_status != HAL_OK)
-    {
-			//I2C_Error();
-    }
-		
     return i2c_status;
 }
 
@@ -213,16 +206,14 @@ void ms5607_Cal_T_P(void)
     dT = D2-C[5]*pow(2,8);
     OFF = C[2]*pow(2,17)+dT*C[4]/pow(2,6);
     SENS = C[1]*pow(2,16)+dT*C[3]/pow(2,7);
-    T =(2000+(dT*C[6])/pow(2,23))/100;
-    
-	  
-	  P =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
+    Temperature =(2000+(dT*C[6])/pow(2,23))/100;
+	  Pressure =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
 	  
 		printf("Temperature degrees C: "); 
-		printf("%lf", T); 
+		printf("%lf", Temperature); 
 		printf("\r\n"); 
 		printf("Pressure mBar: "); 
-		printf("%lf", P); 
+		printf("%lf", Pressure); 
 		printf("\r\n"); 
 	
 }

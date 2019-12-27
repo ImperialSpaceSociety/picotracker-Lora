@@ -13,18 +13,23 @@
 #include "main.h"
 
 
-extern I2C_HandleTypeDef hi2c1;
-extern uint8_t	i2c_buffer[2];
-extern HAL_StatusTypeDef i2c_status;
-
-volatile uint8_t I2C1_RX_buffer[I2C1_BUFFER_SIZE];
-volatile uint32_t I2C1_buffer_pointer;
-volatile uint32_t UART1_temp;
 
 
-volatile static uint8_t ack_error_counter = 0;
-volatile static uint8_t buffer_error_counter = 0;
-volatile static uint8_t receive_failure_counter = 0;
+/* 
+ * sets up gps by putting in airbourne mode, setting to use GPS satellites only, turning off NMEA
+ */
+uint8_t setup_GPS(){
+	
+	
+	UBLOX_send_message(resetReceiver, 12);								// reset GPS module
+	HAL_Delay(1000);												      // wait for GPS module to be ready
+	UBLOX_send_message(restore_default_config, sizeof(restore_default_config)); // reset GPS to default config
+	while(!UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK));				// turn off periodic NMEA output
+	while(!UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK));				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
+	while(!UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK));				// set to airbourne mode
+	while(!UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK));		// save current configuration
+	return 0;
+}
 
 
 /*
@@ -161,8 +166,8 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 			return 0;
 		}
 	
-    uint8_t success  = parse(GPSbuffer);          // parse the response to appropriate variables
-    return success;
+    parse_success  = parse(GPSbuffer);          // parse the response to appropriate variables
+    return parse_success;
 }
 
 
@@ -177,7 +182,7 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
         
     Checks the header and the checksum.
 */
-void UBLOX_parse_0102(volatile uint8_t *buffer)
+uint8_t UBLOX_parse_0102(volatile uint8_t *buffer)
 {
     GPS_UBX_error_bitfield |= (1 << 2);
     
@@ -201,6 +206,8 @@ void UBLOX_parse_0102(volatile uint8_t *buffer)
     }else{
         GPS_UBX_buffer_error++;
     }
+   
+	  return 0;
 }
 
 
@@ -213,7 +220,7 @@ void UBLOX_parse_0102(volatile uint8_t *buffer)
         
     Checks the header and the checksum.
 */
-void UBLOX_parse_0121(volatile uint8_t *buffer)
+uint8_t UBLOX_parse_0121(volatile uint8_t *buffer)
 {
     GPS_UBX_error_bitfield |= (1 << 3);
     
@@ -232,6 +239,8 @@ void UBLOX_parse_0121(volatile uint8_t *buffer)
     }else{
         GPS_UBX_buffer_error++;
     }
+   
+	 return 0;
 }
 
 
@@ -248,7 +257,7 @@ void UBLOX_parse_0121(volatile uint8_t *buffer)
         
     Checks the header and the checksum.
 */
-void UBLOX_parse_0106(volatile uint8_t *buffer)
+uint8_t UBLOX_parse_0106(volatile uint8_t *buffer)
 {
     if(buffer[0] == 0xB5 && buffer[1] == 0x62 && buffer[2] == 0x01 && buffer[3] == 0x06)
     {
@@ -268,6 +277,7 @@ void UBLOX_parse_0106(volatile uint8_t *buffer)
         GPSfix = 0;
         GPSsats = 0;
     }
+		return 0;
 }
 
 
@@ -286,7 +296,7 @@ void UBLOX_parse_0106(volatile uint8_t *buffer)
     
     Checks the header and the checksum.
 */
-void UBLOX_parse_0624(volatile uint8_t *buffer)
+uint8_t UBLOX_parse_0624(volatile uint8_t *buffer)
 {
     if(buffer[0] == 0xB5 && buffer[1] == 0x62 && buffer[2] == 0x06 && buffer[3] == 0x24)
     {
@@ -303,6 +313,7 @@ void UBLOX_parse_0624(volatile uint8_t *buffer)
         
         GPSnavigation = 0;
     }
+	  return 0;
 }
 
 
@@ -315,7 +326,7 @@ void UBLOX_parse_0624(volatile uint8_t *buffer)
     
     Checks the header and the checksum.
 */
-void UBLOX_parse_0611(volatile uint8_t *buffer)
+uint8_t UBLOX_parse_0611(volatile uint8_t *buffer)
 {
     GPS_UBX_error_bitfield |= (1 << 4);
     
@@ -336,6 +347,9 @@ void UBLOX_parse_0611(volatile uint8_t *buffer)
         
         GPSpowermode = 0;
     }
+		
+		return 0;
+
 }
 
 
@@ -367,7 +381,7 @@ void UBLOX_parse_0611(volatile uint8_t *buffer)
     Checks the header and the checksum.
     UBLOX 7 message is shorter then UBLOX 8 message. It must be reflected in the checksum verification.
 */
-void UBLOX_parse_0107(volatile uint8_t *buffer)
+uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
 {
     GPS_UBX_error_bitfield |= (1 << 2);
     
@@ -423,6 +437,8 @@ void UBLOX_parse_0107(volatile uint8_t *buffer)
         GPSfix = 0;
         GPSsats = 0;
     }
+		
+		return 0;
 }
 
 
@@ -453,320 +469,16 @@ uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer)
 				buffer_error_counter++;
 				return 0;
     }
+		
 }
 
 
 /*
     Dummy parse function.
 */
-void UBLOX_parse_empty(void)
+uint8_t UBLOX_parse_empty(void)
 {
-    
-}
-
-
-/*
-    Processes and parses an NMEA GGA message located in the input buffer.
-    Accepts both GPGGA and GNGGA messages.
-        
-        GPShour                     15
-        GPSminute                   30
-        GPSsecond                   43
-        GPS_NMEA_latitude_int       4928
-        GPS_NMEA_latitude_dec       00456
-        GPS_NMEA_longitude_int      01815
-        GPS_NMEA_longitude_dec      58561
-        GPS_NMEA_NS                 1/0
-        GPS_NMEA_EW                 1/0
-        GPSfix                      3
-        GPSsats                     11
-        GPSaltitude                 403
-        
-        GPS_NMEA_checksum_toverify
-        GPS_NMEA_checksum_calculated
-        
-    Checks the header, saves the checksum and calculates a control checksum.
-*/
-void UBLOX_process_GGA(uint8_t *buffer)
-{
-    if(buffer[1] == 'G' && (buffer[2] == 'N' || buffer[2] == 'P') && buffer[3] == 'G' && buffer[4] == 'G' && buffer[5] == 'A')
-    {
-        uint8_t i, j, IntegerPart;
-        uint8_t GPSaltitudeNeg = 0;
-        
-        GPShour = 0;
-        GPSminute = 0;
-        GPSsecond = 0;
-        GPS_NMEA_latitude_int = 0;
-        GPS_NMEA_latitude_dec = 0;
-        GPS_NMEA_longitude_int = 0;
-        GPS_NMEA_longitude_dec = 0;
-        GPS_NMEA_NS = 1;
-        GPS_NMEA_EW = 1;
-        GPSfix = 0;
-        GPSsats = 0;
-        GPSaltitude = 0;
-        GPS_NMEA_checksum_calculated = 0;
-        GPS_NMEA_checksum_toverify = 0;
-        IntegerPart = 1;
-        
-        i = 1;
-        while(buffer[i] != '*')
-        {
-            GPS_NMEA_checksum_calculated ^= buffer[i];
-            i++;
-        }
-        
-        for(i = 6, j = 0; i < GPSBUFFER_SIZE && (j < 15); i++)
-        {
-            if(buffer[i] == ',')
-            {
-                j++;
-                IntegerPart = 1;
-            }else{
-                switch(j)
-                {
-                    case 1:                                                             // TIME
-                        if((buffer[i] >= '0') && (buffer[i] <= '9'))
-                        {
-                            if(i == 7 || i == 8)
-                            {
-                                GPShour = GPShour * 10;
-                                GPShour += (buffer[i] - '0');
-                            }
-                            if(i == 9 || i == 10)
-                            {
-                                GPSminute = GPSminute * 10;
-                                GPSminute += (buffer[i] - '0');
-                            }
-                            if(i == 11 || i == 12)
-                            {
-                                GPSsecond = GPSsecond * 10;
-                                GPSsecond += (buffer[i] - '0');
-                            }
-                        }
-                        break;
-                    
-                    case 2:                                                             // LATITUDE
-                        if((buffer[i] >= '0') && (buffer[i] <= '9') && IntegerPart)
-                        {
-                            GPS_NMEA_latitude_int = GPS_NMEA_latitude_int * 10;
-                            GPS_NMEA_latitude_int += (uint16_t)(buffer[i] - '0');
-                        }
-                        if(buffer[i] == '.') IntegerPart = 0;
-                        if((buffer[i] >= '0') && (buffer[i] <= '9') && !IntegerPart)
-                        {
-                            GPS_NMEA_latitude_dec = GPS_NMEA_latitude_dec * 10;
-                            GPS_NMEA_latitude_dec += (uint32_t)(buffer[i] - '0');
-                        }
-                        break;
-                    
-                    case 3:                                                             // NORTH/SOUTH
-                        if(buffer[i] == 'N')
-                        {
-                            GPS_NMEA_NS = 1;
-                        }
-                        else if(buffer[i] == 'S')
-                        {
-                            GPS_NMEA_NS = 0;
-                        }
-                        break;
-                    
-                    case 4:                                                             // LONGITUDE
-                        if((buffer[i] >= '0') && (buffer[i] <= '9') && IntegerPart)
-                        {
-                            GPS_NMEA_longitude_int = GPS_NMEA_longitude_int * 10;
-                            GPS_NMEA_longitude_int += (uint16_t)(buffer[i] - '0');
-                        }
-                        if(buffer[i] == '.') IntegerPart = 0;
-                        if((buffer[i] >= '0') && (buffer[i] <= '9') && !IntegerPart)
-                        {
-                            GPS_NMEA_longitude_dec = GPS_NMEA_longitude_dec * 10;
-                            GPS_NMEA_longitude_dec += (uint32_t)(buffer[i] - '0');
-                        }
-                        break;
-                    
-                    case 5:                                                             // EAST/WEST
-                        if(buffer[i] == 'E')
-                        {
-                            GPS_NMEA_EW = 1;
-                        }
-                        else if(buffer[i] == 'W')
-                        {
-                            GPS_NMEA_EW = 0;
-                        }
-                        break;
-                    
-                    case 6:                                                             // FIX
-                        GPSfix = buffer[i] - '0';
-                        break;
-                    
-                    case 7:                                                             // SATELLITES
-                        if((buffer[i] >= '0') && (buffer[i] <= '9'))
-                        {
-                            GPSsats = GPSsats * 10;
-                            GPSsats += (uint8_t)(buffer[i] - '0');
-                        }
-                        break;
-                    
-                    case 9:                                                             // ALTITUDE
-                        if(buffer[i] == '-') GPSaltitudeNeg = 1;
-                        if((buffer[i] >= '0') && (buffer[i] <= '9') && IntegerPart)
-                        {
-                            GPSaltitude = GPSaltitude * 10;
-                            GPSaltitude += (int32_t)(buffer[i] - '0');
-                        }
-                        if(buffer[i] == '.') IntegerPart = 0;
-                        break;
-                    
-                    case 14:                                                            // CHECKSUM (XOR of $ ... * bytes)
-                        if(IntegerPart == 3)
-                        {
-                            if((buffer[i] >= '0') && (buffer[i] <= '9')) GPS_NMEA_checksum_toverify += (buffer[i] - '0');
-                            else if((buffer[i] >= 'A') && (buffer[i] <= 'F')) GPS_NMEA_checksum_toverify += (buffer[i] - '7');
-                            IntegerPart++;
-                        }
-                        if(IntegerPart == 2)
-                        {
-                            if((buffer[i] >= '0') && (buffer[i] <= '9')) GPS_NMEA_checksum_toverify = ((buffer[i] - '0') << 4);
-                            else if((buffer[i] >= 'A') && (buffer[i] <= 'F')) GPS_NMEA_checksum_toverify = ((buffer[i] - '7') << 4);
-                            IntegerPart++;
-                        }
-                        if(buffer[i] == '*') IntegerPart = 2;
-                        break;
-                    
-                    default:
-                        break;
-                }
-            }
-        }
-        
-        if(GPSaltitudeNeg) GPSaltitude *= -1;                                           // adjust the altitude value if negative
-        
-        if(GPS_NMEA_checksum_calculated != GPS_NMEA_checksum_toverify)
-                                             GPS_NMEA_error_bitfield |= (1 << 2);       // GGA checksum error
-        
-    }else{
-        GPS_NMEA_error_bitfield |= (1 << 1);                                            // GGA buffer error
-    }
-}
-
-
-/*
-    Processes and parses an NMEA ZDA message located in the input buffer.
-    Accepts both GPZDA and GNZDA messages.
-    
-        GPShour                     15
-        GPSminute                   30
-        GPSsecond                   43
-        GPSday                      18
-        GPSmonth                    10
-        GPSyear                     2016
-        
-        GPS_NMEA_checksum_toverify
-        GPS_NMEA_checksum_calculated
-        
-    Checks the header, saves the checksum and calculates a control checksum.
-*/
-void UBLOX_process_ZDA(uint8_t *buffer)
-{
-    if(buffer[1] == 'G' && (buffer[2] == 'N' || buffer[2] == 'P') && buffer[3] == 'Z' && buffer[4] == 'D' && buffer[5] == 'A')
-    {
-        uint8_t i, j, IntegerPart;
-        
-        GPShour = 0;
-        GPSminute = 0;
-        GPSsecond = 0;
-        GPSday = 0;
-        GPSmonth = 0;
-        GPSyear = 0;
-        GPS_NMEA_checksum_calculated = 0;
-        GPS_NMEA_checksum_toverify = 0;
-        IntegerPart = 1;
-        
-        i = 1;
-        while(buffer[i] != '*')
-        {
-            GPS_NMEA_checksum_calculated ^= buffer[i];
-            i++;
-        }
-        
-        for(i = 6, j = 0; i < GPSBUFFER_SIZE && (j < 7); i++)
-        {
-            if(buffer[i] == ',')
-            {
-                j++;
-                IntegerPart = 1;
-            }else{
-                switch(j)
-                {
-                    case 1:                                                             // TIME
-                        if((buffer[i] >= '0') && (buffer[i] <= '9'))
-                        {
-                            if(i == 7 || i == 8)
-                            {
-                                GPShour = GPShour * 10;
-                                GPShour += (buffer[i] - '0');
-                            }
-                            if(i == 9 || i == 10)
-                            {
-                                GPSminute = GPSminute * 10;
-                                GPSminute += (buffer[i] - '0');
-                            }
-                            if(i == 11 || i == 12)
-                            {
-                                GPSsecond = GPSsecond * 10;
-                                GPSsecond += (buffer[i] - '0');
-                            }
-                        }
-                        break;
-                    
-                    case 2:                                                             // DAY
-                        if((buffer[i] >= '0') && (buffer[i] <= '9'))
-                        {
-                            GPSday = GPSday * 10;
-                            GPSday += (uint8_t)(buffer[i] - '0');
-                        }
-                        break;
-                    
-                    case 3:                                                             // MONTH
-                        if((buffer[i] >= '0') && (buffer[i] <= '9'))
-                        {
-                            GPSmonth = GPSmonth * 10;
-                            GPSmonth += (uint8_t)(buffer[i] - '0');
-                        }
-                        break;
-                    
-                    case 4:                                                             // YEAR
-                        if((buffer[i] >= '0') && (buffer[i] <= '9'))
-                        {
-                            GPSyear = GPSyear * 10;
-                            GPSyear += (uint8_t)(buffer[i] - '0');
-                        }
-                        break;
-                    
-                    case 7:                                                             // CHECKSUM (XOR of $ ... * bytes)
-                        if(IntegerPart == 3)
-                        {
-                            if((buffer[i] >= '0') && (buffer[i] <= '9')) GPS_NMEA_checksum_toverify += (buffer[i] - '0');
-                            else if((buffer[i] >= 'A') && (buffer[i] <= 'F')) GPS_NMEA_checksum_toverify += (buffer[i] - '7');
-                            IntegerPart++;
-                        }
-                        if(IntegerPart == 2)
-                        {
-                            if((buffer[i] >= '0') && (buffer[i] <= '9')) GPS_NMEA_checksum_toverify = ((buffer[i] - '0') << 4);
-                            else if((buffer[i] >= 'A') && (buffer[i] <= 'F')) GPS_NMEA_checksum_toverify = ((buffer[i] - '7') << 4);
-                            IntegerPart++;
-                        }
-                        if(buffer[i] == '*') IntegerPart = 2;
-                        break;
-                    
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+   return 0;
 }
 
 
@@ -796,7 +508,6 @@ uint32_t UBLOX_get_version(uint8_t *buffer)
 {
     UBLOX_send_message(request0A04, 8);                                                 // request UBX-MON-VER
     
-    I2C1_buffer_pointer = 0;                                                           // reset UART1 RX buffer pointer
     UBLOX_receive_UBX(GPSbuffer, 104);                                              // copy the response from I2C1_RX_buffer to GPSbuffer
     
     if(GPSbuffer[0] == 0xB5 && GPSbuffer[1] == 0x62 && GPSbuffer[2] == 0x0A && GPSbuffer[3] == 0x04)

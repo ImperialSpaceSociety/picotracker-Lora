@@ -242,6 +242,7 @@ static  uint8_t GPSbuffer[GPSBUFFER_SIZE];
 volatile static  uint8_t GPS_UBX_ack_error = 0;
 volatile static  uint8_t GPS_UBX_checksum_error = 0;
 volatile static  uint8_t GPS_UBX_buffer_error = 0;
+static uint8_t parse_success;
 
 static uint8_t GPS_NMEA_checksum_toverify = 0;
 static uint8_t GPS_NMEA_checksum_calculated = 0;
@@ -300,25 +301,16 @@ extern uint16_t GPS_NMEA_longitude_int_L;						// LAST valid value (in case of l
 extern uint32_t GPS_NMEA_longitude_dec_L;						// LAST valid value (in case of lost FIX)
 
 
-// USART test variables to be removed later
-#define UART1_BAUD 78
-#define I2C1_BUFFER_SIZE 100
+/* I2C related*/
+extern I2C_HandleTypeDef hi2c1;
+extern HAL_StatusTypeDef i2c_status;
+
+/* debugging how many communication failures seen*/
+volatile static uint8_t ack_error_counter = 0;
+volatile static uint8_t buffer_error_counter = 0;
+volatile static uint8_t receive_failure_counter = 0;
 
 
-
-
-extern uint32_t SSDVimages;										// number of transmitted SSDV images since power up
-extern uint32_t SSDVstatus;										// status of last SSDV attempt
-/*
-	SSDVstatus
-		S		failed to communicate/exit standby
-		V		failed communication/wrong version
-		P		failed enter PREVIEW
-		C		failed enter CAPTURE
-		D		failed to sample data
-		L		sampled image exceeded buffer size
-		E		failed to enter standby on exit
-*/
 
 // FUNCTIONS
 uint16_t crc_xmodem_update(uint16_t crc, uint8_t data);
@@ -336,27 +328,21 @@ uint8_t UBLOX_fill_buffer_UBX(uint8_t *buffer, uint8_t len);
 uint8_t UBLOX_fill_buffer_NMEA(uint8_t *buffer);
 uint8_t UBLOX_send_message(uint8_t *message, uint8_t len);
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*));
-void UBLOX_parse_0102(volatile uint8_t *buffer);
-void UBLOX_parse_0121(volatile uint8_t *buffer);
-void UBLOX_parse_0106(volatile uint8_t *buffer);
-void UBLOX_parse_0624(volatile uint8_t *buffer);
-void UBLOX_parse_0611(volatile uint8_t *buffer);
-void UBLOX_parse_0107(volatile uint8_t *buffer);
+uint8_t UBLOX_parse_0102(volatile uint8_t *buffer);
+uint8_t UBLOX_parse_0121(volatile uint8_t *buffer);
+uint8_t UBLOX_parse_0106(volatile uint8_t *buffer);
+uint8_t UBLOX_parse_0624(volatile uint8_t *buffer);
+uint8_t UBLOX_parse_0611(volatile uint8_t *buffer);
+uint8_t UBLOX_parse_0107(volatile uint8_t *buffer);
 uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer);
-void UBLOX_parse_empty(void);
+uint8_t UBLOX_parse_empty(void);
 void UBLOX_process_GGA(uint8_t *buffer);
 void UBLOX_process_ZDA(uint8_t *buffer);
 uint32_t UBLOX_construct_telemetry_UBX(uint8_t *buffer, uint32_t sequence);
 uint32_t UBLOX_construct_telemetry_NMEA(uint8_t *buffer, uint32_t sequence);
 void UBLOX_powersave_mode_init(uint8_t * mode);
 uint32_t UBLOX_get_version(uint8_t *buffer);
-
-
-
-// temperory usart transmit functions. must be removed later
-
-// Functions
-
+uint8_t setup_GPS(void);
 
 
 
