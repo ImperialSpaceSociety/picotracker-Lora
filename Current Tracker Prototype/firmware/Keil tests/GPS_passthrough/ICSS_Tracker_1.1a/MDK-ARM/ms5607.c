@@ -209,13 +209,7 @@ void ms5607_Cal_T_P(void)
     Temperature =(2000+(dT*C[6])/pow(2,23))/100;
 	  Pressure =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
 	  
-				printf("Temperature degrees C: "); 
-		printf("%lf", Temperature); 
-		printf("\r\n"); 
-		printf("Pressure mBar: "); 
-		printf("%lf", Pressure); 
-		printf("\r\n"); 
-	
+
 }
 
 

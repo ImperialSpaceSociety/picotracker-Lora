@@ -107,8 +107,8 @@ int32_t GPS_UBX_longitude_L									= 0;
 int32_t GPSaltitude_L										= 0;
 
 // Temperature Pressure variables
-//double Pressure; // compensated pressure value
-//double Temperature; // compensated temperature value
+double Pressure; // compensated pressure value
+double Temperature; // compensated temperature value
 
 //I2C related
 uint8_t	i2c_buffer[2];
@@ -234,7 +234,13 @@ int main(void)
     /* USER CODE END WHILE */
 		MS5607_get_temp_pressure();
 		
-
+				printf("Temperature degrees C: "); 
+		printf("%lf", Temperature); 
+		printf("\r\n"); 
+		printf("Pressure mBar: "); 
+		printf("%lf", Pressure); 
+		printf("\r\n"); 
+	
 		
 	  HAL_Delay(1000);
 		

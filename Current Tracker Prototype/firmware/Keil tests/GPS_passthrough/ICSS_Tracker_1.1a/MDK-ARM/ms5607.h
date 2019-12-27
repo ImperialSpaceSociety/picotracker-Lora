@@ -24,8 +24,8 @@ static uint16_t C[8]; // calibration coefficients
 static double dT; // difference between actual and measured temperature
 static double OFF; // offset at actual temperature
 static double SENS; // sensitivity at actual temperature
-static double Pressure; // compensated pressure value
-static double Temperature; // compensated temperature value
+extern double Pressure; // compensated pressure value
+extern double Temperature; // compensated temperature value
 
 /* Function prototypes*/
 
