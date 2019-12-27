@@ -224,7 +224,7 @@ int main(void)
 
 	// GPS SETUP
 	HAL_Delay(1000);											        // in case this follows immediately after the backup command
-	uint8_t setup_GPS();
+	setup_GPS();
 	
 
 	// GPS INITIAL BACKUP
@@ -287,12 +287,12 @@ int main(void)
 				
 		
 		// GEOFENCE
- 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
-		APRS_tx_frequency = GEOFENCE_APRS_frequency;
-		
-		if(GEOFENCE_no_tx){ 
-			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
-		}
+// 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
+//		APRS_tx_frequency = GEOFENCE_APRS_frequency;
+//		
+//		if(GEOFENCE_no_tx){ 
+//			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
+//		}
 		
 		// TRANSMIT DATA(TODO)
 		
