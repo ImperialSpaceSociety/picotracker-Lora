@@ -242,42 +242,42 @@ int main(void)
 		
 
 
-//		// GET GPS FIX
-//		uint32_t fixCount = 0;
-//		
-//		while(1)																	// poll UBX-NAV-PVT until the module has fix (limited)
-//		{
-//			
-//			GPSfix = 0;
-//			GPSfix_0107 = 0;
-//			GPSsats = 0;
-//			
-//			UBLOX_send_message(dummyByte, 1);						  // wake up GPS module
-//			HAL_Delay(1000);												      // wait for GPS module to be ready
-//			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
-//			
-//			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
-//			
-//			fixCount++;
-//			
-//			if(fixCount > FIX)														// if taking too long reset and re-initialize GPS module
-//			{
-//				setup_GPS();
-//				GPSfix = 0;
-//				GPSfix_0107 = 0;
-//				GPSsats = 0;
-//				break;
-//				
-//			}
-//		}
-//		
-//		// PUT GPS TO SLEEP
-//		UBLOX_send_message(powersave, sizeof(powersave));									// switch GPS module to software backup mode	
+		// GET GPS FIX
+		uint32_t fixCount = 0;
+		
+		while(1)																	// poll UBX-NAV-PVT until the module has fix (limited)
+		{
+			
+			GPSfix = 0;
+			GPSfix_0107 = 0;
+			GPSsats = 0;
+			
+			UBLOX_send_message(dummyByte, 1);						  // wake up GPS module
+			HAL_Delay(1000);												      // wait for GPS module to be ready
+			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
+			
+			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
+			
+			fixCount++;
+			
+			if(fixCount > FIX)														// if taking too long reset and re-initialize GPS module
+			{
+				setup_GPS();
+				GPSfix = 0;
+				GPSfix_0107 = 0;
+				GPSsats = 0;
+				break;
+				
+			}
+		}
+		
+		// PUT GPS TO SLEEP
+		UBLOX_send_message(powersave, sizeof(powersave));									// switch GPS module to software backup mode	
 
 				
 		
 		// GEOFENCE
- 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
+ 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right LoRa frequency based on current location
 		LoRa_tx_frequency = GEOFENCE_LoRa_frequency;
 		
 		if(GEOFENCE_no_tx){ 
