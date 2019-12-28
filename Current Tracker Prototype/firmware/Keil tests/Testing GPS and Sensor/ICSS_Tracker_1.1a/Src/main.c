@@ -63,8 +63,11 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart1;
 
 
+
+/* USER CODE BEGIN PV */
+
 // Radio variables
-uint32_t APRS_tx_frequency									= 144800000; // needs to be changed to Lora TX frequency. 
+uint32_t LoRa_tx_frequency									= 144800000; // needs to be changed to Lora TX frequency. 
 uint8_t TXLoRa                              = 1;
 
 // UBLOX variables
@@ -121,7 +124,6 @@ uint32_t GEOFENCE_no_tx										= 0;
 uint8_t	i2c_buffer[2];
 HAL_StatusTypeDef i2c_status;
 
-/* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
 
@@ -134,15 +136,17 @@ static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART1_UART_Init(void);
 
+
+
+
+
+/* USER CODE BEGIN 0 */
+
 #ifdef __GNUC__
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #else
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif
-
-
-
-/* USER CODE BEGIN 0 */
 
 PUTCHAR_PROTOTYPE
 {
@@ -151,6 +155,7 @@ PUTCHAR_PROTOTYPE
 }
 
 /* USER CODE END PFP */
+
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -238,7 +243,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
 		MS5607_get_temp_pressure();
 		
 		printf("Temperature degrees C: "); 
@@ -289,12 +293,12 @@ int main(void)
 				
 		
 		// GEOFENCE
-// 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
-//		APRS_tx_frequency = GEOFENCE_APRS_frequency;
-//		
-//		if(GEOFENCE_no_tx){ 
-//			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
-//		}
+ 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
+		LoRa_tx_frequency = GEOFENCE_APRS_frequency;
+		
+		if(GEOFENCE_no_tx){ 
+			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
+		}
 		
 		// TRANSMIT DATA(TODO)
 		
@@ -302,8 +306,10 @@ int main(void)
 		
 		
 		// TODO: make the watchdog work
-		// TODO: include a time out for the GPS commands.
 		
+		
+		
+	/* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
   }
