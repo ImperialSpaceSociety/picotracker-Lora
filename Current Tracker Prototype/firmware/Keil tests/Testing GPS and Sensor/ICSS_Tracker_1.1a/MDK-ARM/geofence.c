@@ -160,7 +160,7 @@ void GEOFENCE_position(float latitude, float longitude)
 	
 	// Over the sea or areas where there is no frequency declared, transmit on EU frequencies!!
 
-	else																{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
+	else {GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
 }
 	
 	

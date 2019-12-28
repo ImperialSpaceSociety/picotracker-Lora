@@ -58,8 +58,6 @@ ADC_HandleTypeDef hadc;
 
 I2C_HandleTypeDef hi2c1;
 
-IWDG_HandleTypeDef hiwdg;
-
 RTC_HandleTypeDef hrtc;
 
 SPI_HandleTypeDef hspi1;
@@ -77,8 +75,8 @@ uint8_t GPS_UBX_error_bitfield						= 0;
 
 int32_t GPS_UBX_latitude									= 0;
 int32_t GPS_UBX_longitude									= 0;
-float GPS_UBX_latitude_Float							= 0.0;
-float GPS_UBX_longitude_Float							= 0.0;
+float GPS_UBX_latitude_Float							= 52.4485914; // temp dummy for testing geofencing
+float GPS_UBX_longitude_Float							= 0.7407117;  // temp dummy for testing geofencing
 
 int32_t GPSaltitude												= 0;
 
@@ -117,7 +115,7 @@ double Temperature; // compensated temperature value
 
 
 // GEOFENCE variables
-uint32_t GEOFENCE_LoRa_frequency					= 144800000;
+uint32_t GEOFENCE_LoRa_frequency					= 0;
 uint32_t GEOFENCE_no_tx										= 0;
 
 
@@ -141,7 +139,6 @@ static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART1_UART_Init(void);
-static void MX_IWDG_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -208,7 +205,6 @@ int main(void)
   MX_RTC_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
-  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
 	
 	// keep checking if vcc voltage is high enough to carry on. NOT SURE IF NEEDED!. I think I should use inbuilt voltage measuremnt function
@@ -225,7 +221,7 @@ int main(void)
 	// GPS INITIAL BACKUP
 	UBLOX_send_message(dummyByte, 1);									// in case only MCU restarted while GPS stayed powered
 	HAL_Delay(1000);												// wait for GPS module to be ready
-	//UBLOX_send_message(setSwBackupMode, 16);							// low consumption at this point
+	UBLOX_send_message(powersave, sizeof(powersave));									// switch GPS module to software backup mode	
 
   /* USER CODE END 2 */
 
@@ -246,37 +242,37 @@ int main(void)
 		
 
 
-		// GET GPS FIX
-		uint32_t fixCount = 0;
-		
-		while(1)																	// poll UBX-NAV-PVT until the module has fix (limited)
-		{
-			
-			GPSfix = 0;
-			GPSfix_0107 = 0;
-			GPSsats = 0;
-			
-			UBLOX_send_message(dummyByte, 1);						  // wake up GPS module
-			HAL_Delay(1000);												      // wait for GPS module to be ready
-			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
-			
-			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
-			
-			fixCount++;
-			
-			if(fixCount > FIX)														// if taking too long reset and re-initialize GPS module
-			{
-				setup_GPS();
-				GPSfix = 0;
-				GPSfix_0107 = 0;
-				GPSsats = 0;
-				break;
-				
-			}
-		}
-		
-		// PUT GPS TO SLEEP
-		UBLOX_send_message(setSwBackupMode, 16);									// switch GPS module to software backup mode	
+//		// GET GPS FIX
+//		uint32_t fixCount = 0;
+//		
+//		while(1)																	// poll UBX-NAV-PVT until the module has fix (limited)
+//		{
+//			
+//			GPSfix = 0;
+//			GPSfix_0107 = 0;
+//			GPSsats = 0;
+//			
+//			UBLOX_send_message(dummyByte, 1);						  // wake up GPS module
+//			HAL_Delay(1000);												      // wait for GPS module to be ready
+//			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
+//			
+//			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
+//			
+//			fixCount++;
+//			
+//			if(fixCount > FIX)														// if taking too long reset and re-initialize GPS module
+//			{
+//				setup_GPS();
+//				GPSfix = 0;
+//				GPSfix_0107 = 0;
+//				GPSsats = 0;
+//				break;
+//				
+//			}
+//		}
+//		
+//		// PUT GPS TO SLEEP
+//		UBLOX_send_message(powersave, sizeof(powersave));									// switch GPS module to software backup mode	
 
 				
 		
@@ -453,35 +449,6 @@ static void MX_I2C1_Init(void)
   /* USER CODE BEGIN I2C1_Init 2 */
 
   /* USER CODE END I2C1_Init 2 */
-
-}
-
-/**
-  * @brief IWDG Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_IWDG_Init(void)
-{
-
-  /* USER CODE BEGIN IWDG_Init 0 */
-
-  /* USER CODE END IWDG_Init 0 */
-
-  /* USER CODE BEGIN IWDG_Init 1 */
-
-  /* USER CODE END IWDG_Init 1 */
-  hiwdg.Instance = IWDG;
-  hiwdg.Init.Prescaler = IWDG_PRESCALER_4;
-  hiwdg.Init.Window = 4095;
-  hiwdg.Init.Reload = 4095;
-  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN IWDG_Init 2 */
-
-  /* USER CODE END IWDG_Init 2 */
 
 }
 
