@@ -158,7 +158,7 @@ static uint8_t requestGNZDA[15]			= "$EIGNQ,ZDA*27\r\n";
 */
 
 /* To wake up the module. Wait for 1.5s. */
-static uint8_t dummyByte[1]								= {0xFF};
+static uint8_t dummyByte[4]								= {0xFF,0xFF,0xFF,0xFF};
 
 /* Switches to the continuous mode. */
 static uint8_t setContinuousMode[10]					= {0xB5, 0x62, 0x06, 0x11, 0x02, 0x00, 0x00, 0x00, 0x19, 0x81};

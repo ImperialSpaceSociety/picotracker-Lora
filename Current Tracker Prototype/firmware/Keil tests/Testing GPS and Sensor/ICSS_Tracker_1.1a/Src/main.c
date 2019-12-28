@@ -252,26 +252,26 @@ int main(void)
 			GPSfix_0107 = 0;
 			GPSsats = 0;
 			
-			UBLOX_send_message(dummyByte, 1);						  // wake up GPS module
+			UBLOX_send_message(dummyByte, 4);						  // wake up GPS module
 			HAL_Delay(1000);												      // wait for GPS module to be ready
 			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
-			if(GPSfix != 0) break;
 
-			//if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
+			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
 			
 			fixCount++;
 			HAL_Delay(1000);
 
 			
-//			if(fixCount > FIX)														// if taking too long reset and re-initialize GPS module
-//			{
-//				setup_GPS();
-//				GPSfix = 0;
-//				GPSfix_0107 = 0;
-//				GPSsats = 0;
-//				//break;
-//				
-//			}
+			if(fixCount > FIX)														// if taking too long reset and re-initialize GPS module
+			{
+				UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module
+				setup_GPS();
+				GPSfix = 0;
+				GPSfix_0107 = 0;
+				GPSsats = 0;
+				break;
+				
+			}
 		}
 		
 		// PUT GPS TO SLEEP
