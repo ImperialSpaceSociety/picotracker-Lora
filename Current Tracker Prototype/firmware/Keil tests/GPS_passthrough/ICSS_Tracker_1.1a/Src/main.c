@@ -56,6 +56,7 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
+static uint8_t restore_default_config[] = {0xB5,0x62,0x06,0x09,0x0D,0x00,0xFF,0xFF,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0x00,0x00,0x03,0x1B,0x9A};
 
 /* USER CODE END PV */
 
@@ -134,7 +135,8 @@ int main(void)
 	
 
 	i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), i2c_buffer, 1, 0xff);
-	
+	i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), restore_default_config, sizeof(restore_default_config), 0xff);
+
 	HAL_Delay(2000);
   /* USER CODE END 2 */
 
