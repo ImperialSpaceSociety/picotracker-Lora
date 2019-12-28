@@ -20,12 +20,14 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+
 #include <stdio.h>
 #include "ms5607.h"
 #include "ublox.h"
 #include "geofence.h"
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
@@ -40,7 +42,7 @@
 #define LONG_CYCLE			96		// value / 0.83 = ~duration of one main loop in seconds (Power Saving mode)
 #define SOLAR				0		// mV
 #define BATTERY				2500	// mV
-#define BATTERY_ON			0		// mV
+#define BATTERY_ON			3.0		// mV
 #define FIX					90		// attempts to poll UBX-NAV-PVT
 #define SATS				4		// number of satellites required for positional solution
 
@@ -56,13 +58,13 @@ ADC_HandleTypeDef hadc;
 
 I2C_HandleTypeDef hi2c1;
 
+IWDG_HandleTypeDef hiwdg;
+
 RTC_HandleTypeDef hrtc;
 
 SPI_HandleTypeDef hspi1;
 
 UART_HandleTypeDef huart1;
-
-
 
 /* USER CODE BEGIN PV */
 
@@ -102,7 +104,6 @@ int32_t GPSheading												= 0;
 uint16_t AD3data													= 0;
 uint16_t AD9data													= 0;
 uint16_t AD15data													= 0;
-uint16_t Si4060Temp												= 0;
 uint32_t telemCount												= 0;
 uint32_t telemetry_len										= 0;
 
@@ -125,6 +126,11 @@ uint8_t	i2c_buffer[2];
 HAL_StatusTypeDef i2c_status;
 
 
+// Battery/Solar voltage
+uint32_t VCC_ADC												= 0;
+
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -135,11 +141,12 @@ static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_IWDG_Init(void);
+/* USER CODE BEGIN PFP */
 
+/* USER CODE END PFP */
 
-
-
-
+/* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
 #ifdef __GNUC__
@@ -153,6 +160,9 @@ PUTCHAR_PROTOTYPE
     HAL_UART_Transmit(&huart1 , (uint8_t *)&ch, 1, 0xFFFF);
     return ch;
 }
+
+
+void check_ADC();
 
 /* USER CODE END PFP */
 
@@ -170,26 +180,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	
-//	// keep checking if vcc voltage is high enough to carry on.
-//	while(1)
-//	{
-//		// WATCHDOG RESTART
-//		WATCHDOG_restart();
-//		
-//		ADC_start();
-//		AD9data = ADC_sample(9, 100);									// sample battery voltage
-//		ADC_stop();
-//		
-//		AD9 = ((uint32_t)AD9data * 6600) / 4096;
-//		if(AD9 >= BATTERY_ON) break;									// Battery minimum voltage limit (mV)
-//		
-//		// change clocks etc. TODO
-//		RTT_init(1, 0x8000, 0);											// wake up every 1s
-//		PS_switch_MCK_to_FastRC(0, 0);
-//		PS_enter_Wait_Mode(1, 0, 0);									// enable wake up on RTT and enter wait mode
-//		RTT_off();
-//		PS_SystemInit(11, 3, 5);										// MCK: 2MHz PLL
-//	}
+
 
   /* USER CODE END 1 */
   
@@ -201,11 +192,6 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 	
-	// GPS INITIAL BACKUP
-	UBLOX_send_message(dummyByte, 1);									// in case only MCU restarted while GPS stayed powered
-	HAL_Delay(1000);												// wait for GPS module to be ready
-	//UBLOX_send_message(setSwBackupMode, 16);							// low consumption at this point
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -222,7 +208,22 @@ int main(void)
   MX_RTC_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
+	
+	// keep checking if vcc voltage is high enough to carry on. NOT SURE IF NEEDED!. I think I should use inbuilt voltage measuremnt function
+	while(1)
+	{
+		// WATCHDOG RESTART
+		
+		
+		check_ADC();
+		// TODO: convert VCC_ADC to voltage value
+		
+		if(VCC_ADC >= BATTERY_ON) break;									// Battery minimum voltage limit (mV)
+	}
+	
+	
 	
 	// Setup pressure and temperature sensor
 	ms5607_Init();
@@ -250,10 +251,8 @@ int main(void)
 		printf("\r\n"); 
 		printf("Pressure mBar: "); 
 		printf("%lf", Pressure); 
-		printf("\r\n"); 
-	
+		printf("\r\n");
 
-		
 	  HAL_Delay(1000);
 		
 
@@ -293,12 +292,12 @@ int main(void)
 				
 		
 		// GEOFENCE
- 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
-		LoRa_tx_frequency = GEOFENCE_APRS_frequency;
-		
-		if(GEOFENCE_no_tx){ 
-			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
-		}
+// 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
+//		LoRa_tx_frequency = GEOFENCE_APRS_frequency;
+//		
+//		if(GEOFENCE_no_tx){ 
+//			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
+//		}
 		
 		// TRANSMIT DATA(TODO)
 		
@@ -306,12 +305,13 @@ int main(void)
 		
 		
 		// TODO: make the watchdog work
+		// TODO: deinit I2C, uart etc to save power
 		
 		
 		
-	/* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
-  /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
@@ -468,6 +468,35 @@ static void MX_I2C1_Init(void)
 }
 
 /**
+  * @brief IWDG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_IWDG_Init(void)
+{
+
+  /* USER CODE BEGIN IWDG_Init 0 */
+
+  /* USER CODE END IWDG_Init 0 */
+
+  /* USER CODE BEGIN IWDG_Init 1 */
+
+  /* USER CODE END IWDG_Init 1 */
+  hiwdg.Instance = IWDG;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_4;
+  hiwdg.Init.Window = 4095;
+  hiwdg.Init.Reload = 4095;
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN IWDG_Init 2 */
+
+  /* USER CODE END IWDG_Init 2 */
+
+}
+
+/**
   * @brief RTC Initialization Function
   * @param None
   * @retval None
@@ -553,7 +582,7 @@ static void MX_RTC_Init(void)
   * @param None
   * @retval None
   */
-static void MX_SPI1_Init(void)\
+static void MX_SPI1_Init(void)
 {
 
   /* USER CODE BEGIN SPI1_Init 0 */
@@ -697,6 +726,15 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+void check_ADC(){
+	
+    HAL_ADC_Start(&hadc);
+		if (HAL_ADC_PollForConversion(&hadc, 0xFF) == HAL_OK)
+		{
+				VCC_ADC = HAL_ADC_GetValue(&hadc);
+		}
+		HAL_ADC_Stop(&hadc);
+}
 /* USER CODE END 4 */
 
 /**

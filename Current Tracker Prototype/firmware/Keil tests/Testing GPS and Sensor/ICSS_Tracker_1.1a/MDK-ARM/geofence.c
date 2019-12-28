@@ -47,69 +47,69 @@ void doit(void){
 
 
 
-//// Strategy: check if GPS coordinate is in any of the polygons. If so, look up what transmit frequency it uses.
+// Strategy: check if GPS coordinate is in any of the polygons. If so, look up what transmit frequency it uses.
 
-///*
-//	Adapted version of pointInPolygon() function from:	http://alienryderflex.com/polygon/
-//	
-//	Returns '0' if the point is outside of the polygon and '1' if it's inside.
-//	
-//	Expects input DEGREES * 100000 for latitude and longitude. Eg 4961070 for 49.61070 N.
-//	The reason is to make sure all calculations fit inside int32_t.
-//	
-//	However, this function is not very accurate due to rounding within the computation.
-//*/
-//int32_t pointInPolygon(int32_t polyCorners, int32_t * polygon, int32_t latitude, int32_t longitude)
-//{
-//	int32_t i;
-//	int32_t j = polyCorners * 2 - 2;
-//	int32_t oddNodes = 0;
+/*
+	Adapted version of pointInPolygon() function from:	http://alienryderflex.com/polygon/
+	
+	Returns '0' if the point is outside of the polygon and '1' if it's inside.
+	
+	Expects input DEGREES * 100000 for latitude and longitude. Eg 4961070 for 49.61070 N.
+	The reason is to make sure all calculations fit inside int32_t.
+	
+	However, this function is not very accurate due to rounding within the computation.
+*/
+int32_t pointInPolygon(int32_t polyCorners, int32_t * polygon, int32_t latitude, int32_t longitude)
+{
+	int32_t i;
+	int32_t j = polyCorners * 2 - 2;
+	int32_t oddNodes = 0;
 
-//	for(i = 0; i < polyCorners * 2; i += 2)
-//	{
-//		if((polygon[i + 1] < latitude && polygon[j + 1] >= latitude
-//			|| polygon[j + 1] < latitude && polygon[i + 1] >= latitude)
-//			&& (polygon[i] <= longitude || polygon[j] <= longitude))
-//		{
-//			oddNodes ^= (polygon[i] + (latitude - polygon[i + 1])
-//			/ (polygon[j + 1] - polygon[i + 1]) * (polygon[j] - polygon[i]) < longitude);
-//		}
+	for(i = 0; i < polyCorners * 2; i += 2)
+	{
+		if((polygon[i + 1] < latitude && polygon[j + 1] >= latitude
+			|| polygon[j + 1] < latitude && polygon[i + 1] >= latitude)
+			&& (polygon[i] <= longitude || polygon[j] <= longitude))
+		{
+			oddNodes ^= (polygon[i] + (latitude - polygon[i + 1])
+			/ (polygon[j + 1] - polygon[i + 1]) * (polygon[j] - polygon[i]) < longitude);
+		}
 
-//		j = i;
-//	}
+		j = i;
+	}
 
-//	return oddNodes;
-//}
+	return oddNodes;
+}
 
 
-///*
-//	Adapted version of pointInPolygon() function from:	http://alienryderflex.com/polygon/
-//	
-//	Returns '0' if the point is outside of the polygon and '1' if it's inside.
-//	
-//	Uses FLOAT input for better accuracy.
-//*/
-//int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, float longitude)
-//{
-//	int32_t i;
-//	int32_t j = polyCorners * 2 - 2;
-//	int32_t oddNodes = 0;
+/*
+	Adapted version of pointInPolygon() function from:	http://alienryderflex.com/polygon/
+	
+	Returns '0' if the point is outside of the polygon and '1' if it's inside.
+	
+	Uses FLOAT input for better accuracy.
+*/
+int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, float longitude)
+{
+	int32_t i;
+	int32_t j = polyCorners * 2 - 2;
+	int32_t oddNodes = 0;
 
-//	for(i = 0; i < polyCorners * 2; i += 2)
-//	{
-//		if((polygon[i + 1] < latitude && polygon[j + 1] >= latitude
-//		|| polygon[j + 1] < latitude && polygon[i + 1] >= latitude)
-//		&& (polygon[i] <= longitude || polygon[j] <= longitude))
-//		{
-//			oddNodes ^= (polygon[i] + (latitude - polygon[i + 1])
-//			/ (polygon[j + 1] - polygon[i + 1]) * (polygon[j] - polygon[i]) < longitude);
-//		}
+	for(i = 0; i < polyCorners * 2; i += 2)
+	{
+		if((polygon[i + 1] < latitude && polygon[j + 1] >= latitude
+		|| polygon[j + 1] < latitude && polygon[i + 1] >= latitude)
+		&& (polygon[i] <= longitude || polygon[j] <= longitude))
+		{
+			oddNodes ^= (polygon[i] + (latitude - polygon[i + 1])
+			/ (polygon[j + 1] - polygon[i + 1]) * (polygon[j] - polygon[i]) < longitude);
+		}
 
-//		j = i;
-//	}
+		j = i;
+	}
 
-//	return oddNodes;
-//}
+	return oddNodes;
+}
 
 
 ///*
