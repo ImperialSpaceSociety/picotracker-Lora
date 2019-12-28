@@ -9,10 +9,11 @@
 #include "stdint.h"
 
 
-
+/* These are the fence polygons. There are several 
+ * polygons that have the same frequency names */
 
 // GEOFENCE ARRAYS (longitude, latitude)
-static float EU863870_1[] = {
+static float EU863870_1F[] = {
 -45.7287364,84.0038050,
 -71.7315531,78.3085111,
 -65.0190278,72.2973983,
@@ -44,7 +45,7 @@ static float EU863870_1[] = {
 
 };
 
-static float EU863870_2[] = {
+static float EU863870_2F[] = {
 10.3722165,-4.8686219,
 6.3736931,-16.4863800,
 6.2378701,-23.4395296,
@@ -66,7 +67,7 @@ static float EU863870_2[] = {
 
 };
 
-static float EU863870_3[] = {
+static float EU863870_3F[] = {
 50.4480346,26.3415916,
 50.3409179,26.0335100,
 50.5414184,25.7097700,
@@ -76,7 +77,7 @@ static float EU863870_3[] = {
 
 };
 
-static float EU863870_4[] = {
+static float EU863870_4F[] = {
 119.3532577,19.4762086,
 115.4860702,9.9680758,
 118.2546249,7.1001120,
@@ -87,7 +88,7 @@ static float EU863870_4[] = {
 
 };
 
-static float EU863870_5[] = {
+static float EU863870_5F[] = {
 38.0779396,32.5019912,
 34.1228615,28.8750915,
 40.3630959,17.1739761,
@@ -99,7 +100,7 @@ static float EU863870_5[] = {
 
 };
 
-static float US902928_1[] = {
+static float US902928_1F[] = {
 -168.7027336,73.3247732,
 -173.1448696,55.5924093,
 -136.5689581,-9.9756255,
@@ -119,7 +120,7 @@ static float US902928_1[] = {
 
 };
 
-static float AS923925_1[] = {
+static float AS923925_1F[] = {
 114.0640018,4.8983103,
 114.5254275,3.9508360,
 115.4675052,4.2658809,
@@ -129,7 +130,7 @@ static float AS923925_1[] = {
 
 };
 
-static float AS923925_2[] = {
+static float AS923925_2F[] = {
 111.7282640,21.9729270,
 115.4416429,19.2793370,
 122.7365648,20.7451480,
@@ -140,7 +141,7 @@ static float AS923925_2[] = {
 
 };
 
-static float AS923925_3[] = {
+static float AS923925_3F[] = {
 92.0169202,5.8666595,
 103.0032483,-10.4129187,
 120.5813733,-11.6206873,
@@ -158,7 +159,7 @@ static float AS923925_3[] = {
 
 };
 
-static float AS923925_4[] = {
+static float AS923925_4F[] = {
 98.9064259,12.7547087,
 97.0826954,7.0209871,
 100.1588672,6.4318115,
@@ -173,7 +174,7 @@ static float AS923925_4[] = {
 
 };
 
-static float US902928_2[] = {
+static float US902928_2F[] = {
 -67.4910270,-22.9178491,
 -70.2831558,-31.7501663,
 -71.6015152,-45.9691318,
@@ -187,7 +188,7 @@ static float US902928_2[] = {
 
 };
 
-static float AU915928_1[] = {
+static float AU915928_1F[] = {
 -68.9076353,4.4069495,
 -57.6882310,-19.3140056,
 -57.1899991,-30.6979608,
@@ -199,7 +200,7 @@ static float AU915928_1[] = {
 
 };
 
-static float AU915928_2[] = {
+static float AU915928_2F[] = {
 -70.8809439,-17.0850458,
 -76.4988889,-44.5032079,
 -73.0107832,-60.5153307,
@@ -211,7 +212,7 @@ static float AU915928_2[] = {
 
 };
 
-static float CN470510_1[] = {
+static float CN470510_1F[] = {
 82.2920464,48.5487533,
 67.8779839,37.8264390,
 82.8633355,29.6729628,
@@ -231,7 +232,7 @@ static float CN470510_1[] = {
 
 };
 
-static float IN865867_1[] = {
+static float IN865867_1F[] = {
 72.9657956,34.2669858,
 66.7255612,23.1966786,
 75.1630612,4.1664689,
@@ -243,7 +244,7 @@ static float IN865867_1[] = {
 
 };
 
-static float AS920923_1[] = {
+static float AS920923_1F[] = {
 139.6865360,45.9589978,
 139.3349735,45.5296526,
 127.5576297,32.4822181,
@@ -254,7 +255,7 @@ static float AS920923_1[] = {
 
 };
 
-static float KR920923_1[] = {
+static float KR920923_1F[] = {
 124.5298130,38.1546136,
 124.1782505,32.7163257,
 127.4302036,32.0483253,
@@ -264,7 +265,7 @@ static float KR920923_1[] = {
 
 };
 
-static float AS920923_2[] = {
+static float AS920923_2F[] = {
 97.2668300,6.6766567,
 99.2730530,3.8564705,
 102.2217995,1.3048669,
@@ -283,7 +284,7 @@ static float AS920923_2[] = {
 
 };
 
-static float AU915928_3[] = {
+static float AU915928_3F[] = {
 122.8931003,-39.3676696,
 140.0391417,-46.8929932,
 153.2707224,-44.5239753,
@@ -300,7 +301,23 @@ static float AU915928_3[] = {
 
 };
 
+/* Defining the frequencies to transmit on. Currently holding dummy values
+ * I think there has to be a list of frequencies instead, because it has 
+ * to try all
+ */
 
+typedef enum
+{
+  EU863870    = 0x00U,
+  AU915928    = 0x01U,
+  US902928    = 0x02U,
+  KR920923    = 0x03U,
+	IN865867    = 0x03U,
+	AS920923		= 0x03U,
+	CN470510		= 0x03U,
+	AS923925		= 0x03U,
+	
+} LoRa_FREQUENCIES;
 
 
 // VARIABLES

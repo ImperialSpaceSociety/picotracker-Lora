@@ -18,30 +18,32 @@
  * to see their memory footprint. MUST NEVER BE CALLED!
  */
 void doit(void){
-	EU863870_1[1] = 1;
-	EU863870_2[1] = 1;
-	EU863870_3[1] = 1;
-	EU863870_4[1] = 1;
-	EU863870_5[1] = 1;
+	EU863870_1F[1] = 1;
+	EU863870_2F[1] = 1;
+	EU863870_3F[1] = 1;
+	EU863870_4F[1] = 1;
+	EU863870_5F[1] = 1;
 
 	
-	AU915928_1[1] =1;
-	AU915928_2[1] = 1;
-	AU915928_3[1] = 1;
+	AU915928_1F[1] =1;
+	AU915928_2F[1] = 1;
+	AU915928_3F[1] = 1;
 
-	US902928_1[1] = 1;
-	KR920923_1[1] = 1;
-	IN865867_1[1] = 1;
-	
-	AS920923_2[1] = 1;
-	AS920923_1[1] = 1;
+	US902928_1F[1] = 1;
+	US902928_2F[1] = 1;
 
-	CN470510_1[1] = 1;
+	KR920923_1F[1] = 1;
+	IN865867_1F[1] = 1;
 	
-	AS923925_4[1] = 1;
-	AS923925_3[1] = 1;
-	AS923925_2[1] = 1;
-	AS923925_1[1] = 1;
+	AS920923_2F[1] = 1;
+	AS920923_1F[1] = 1;
+
+	CN470510_1F[1] = 1;
+	
+	AS923925_4F[1] = 1;
+	AS923925_3F[1] = 1;
+	AS923925_2F[1] = 1;
+	AS923925_1F[1] = 1;
 
 }
 
@@ -112,18 +114,7 @@ int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, fl
 }
 
 
-typedef enum
-{
-  EU863870    = 0x00U,
-  AU915928    = 0x01U,
-  US902928    = 0x02U,
-  KR920923    = 0x03U,
-	IN865867    = 0x03U,
-	AS920923		= 0x03U,
-	CN470510		= 0x03U,
-	AS923925		= 0x03U,
-	
-} LoRa_FREQUENCIES;
+
 
 ///*
 //	Changes GEOFENCE_LoRA_frequency and GEOFENCE_no_tx global variables based on the input coordinates.
@@ -136,40 +127,40 @@ typedef enum
 //*/
 void GEOFENCE_position(float latitude, float longitude)
 {
-	EU863870_1[1] = 1;
-	EU863870_2[1] = 1;
-	EU863870_3[1] = 1;
-	EU863870_4[1] = 1;
-	EU863870_5[1] = 1;
+
+
+	if     (pointInPolygonF(sizeof(EU863870_1F)/2, EU863870_1F, latitude, longitude) == 1)  {GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
+	else if(pointInPolygonF(sizeof(EU863870_2F)/2, EU863870_2F, latitude, longitude) == 1)  {GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
+	else if(pointInPolygonF(sizeof(EU863870_3F)/2, EU863870_3F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
+	else if(pointInPolygonF(sizeof(EU863870_4F)/2, EU863870_4F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
+	
+	else if(pointInPolygonF(sizeof(AU915928_1F)/2, AU915928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+	else if(pointInPolygonF(sizeof(AU915928_2F)/2, AU915928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+	else if(pointInPolygonF(sizeof(AU915928_3F)/2, AU915928_3F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+	
+	else if(pointInPolygonF(sizeof(US902928_1F)/2, US902928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
+	else if(pointInPolygonF(sizeof(US902928_2F)/2, US902928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
+
+	else if(pointInPolygonF(sizeof(KR920923_1F)/2, KR920923_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = KR920923;}
+	
+	else if(pointInPolygonF(sizeof(IN865867_1F)/2, IN865867_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = IN865867;}
+
+	else if(pointInPolygonF(sizeof(AS920923_1F)/2, AS920923_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AS920923;}
+	else if(pointInPolygonF(sizeof(AS920923_2F)/2, AS920923_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AS920923;}
+	
+
+  else if(pointInPolygonF(sizeof(CN470510_1F)/2, CN470510_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = CN470510;}
+	
+
+  else if(pointInPolygonF(sizeof(AS923925_1F)/2, AS923925_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AS923925;}
+  else if(pointInPolygonF(sizeof(AS923925_2F)/2, AS923925_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AS923925;}
+  else if(pointInPolygonF(sizeof(AS923925_3F)/2, AS923925_3F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AS923925;}
+  else if(pointInPolygonF(sizeof(AS923925_4F)/2, AS923925_4F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AS923925;}
 
 	
-	AU915928_1[1] =1;
-	AU915928_2[1] = 1;
-	AU915928_3[1] = 1;
+	// Over the sea or areas where there is no frequency declared, transmit on EU frequencies!!
 
-	US902928_1[1] = 1;
-	KR920923_1[1] = 1;
-	IN865867_1[1] = 1;
-	
-	AS920923_2[1] = 1;
-	AS920923_1[1] = 1;
-
-	CN470510_1[1] = 1;
-	
-	AS923925_4[1] = 1;
-	AS923925_3[1] = 1;
-	AS923925_2[1] = 1;
-	AS923925_1[1] = 1;
-		
-
-	if(pointInPolygonF(sizeof(EU863870_1)/2, EU863870_1, latitude, longitude) == 1)		{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = 144930000;}
-	else if(pointInPolygonF(sizeof(EU863870_2)/2, EU863870_2, latitude, longitude) == 1)		{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = 145570000;}
-	else if(pointInPolygonF(sizeof(EU863870_3)/2, EU863870_3, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = 145010000;}
-	else if(pointInPolygonF(sizeof(EU863870_4)/2, EU863870_4, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = 145010000;}
-	
-	// Over the sea or areas where there is no frequency declared
-
-	else																{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = 144390000;}
+	else																{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
 }
 	
 	
