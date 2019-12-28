@@ -21,13 +21,13 @@
  */
 uint8_t setup_GPS(){
 
-	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module
+	//UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module
 	HAL_Delay(1000);		// wait for GPS module to be ready
 	
-	//UBLOX_send_message(restore_default_config, sizeof(restore_default_config)); // reset GPS to default config
+	UBLOX_send_message(restore_default_config, sizeof(restore_default_config)); // reset GPS to default config
 	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
-	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
+	//UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
 	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
 	return 0;
 }
@@ -158,8 +158,8 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
-    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 1000);
-		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), GPSbuffer, expectlen, 1000); // copy the response from I2C1_RX_buffer to GPSbuffe
+    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
+		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), GPSbuffer, expectlen, 10000); // copy the response from I2C1_RX_buffer to GPSbuffe
 		
 		if (i2c_status != HAL_OK)
 		{
