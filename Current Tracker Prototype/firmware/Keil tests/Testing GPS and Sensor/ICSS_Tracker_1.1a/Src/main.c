@@ -162,7 +162,7 @@ PUTCHAR_PROTOTYPE
 }
 
 
-void check_ADC();
+void check_ADC(void);
 
 /* USER CODE END PFP */
 
@@ -212,17 +212,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	
 	// keep checking if vcc voltage is high enough to carry on. NOT SURE IF NEEDED!. I think I should use inbuilt voltage measuremnt function
-	while(1)
-	{
-		// WATCHDOG RESTART
-		
-		
-		check_ADC();
-		// TODO: convert VCC_ADC to voltage value
-		
-		if(VCC_ADC >= BATTERY_ON) break;									// Battery minimum voltage limit (mV)
-	}
-	
 	
 	
 	// Setup pressure and temperature sensor
@@ -253,7 +242,7 @@ int main(void)
 		printf("%lf", Pressure); 
 		printf("\r\n");
 
-	  HAL_Delay(1000);
+		check_ADC(); // check solar voltage? not sure if accurate
 		
 
 
@@ -307,7 +296,7 @@ int main(void)
 		// TODO: make the watchdog work
 		// TODO: deinit I2C, uart etc to save power
 		
-		
+		HAL_Delay(1000);
 		
     /* USER CODE END WHILE */
 
