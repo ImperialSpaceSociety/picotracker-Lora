@@ -140,19 +140,19 @@ void GEOFENCE_position(float latitude, float longitude)
 	
 
 	else if(pointInPolygonF((int32_t)sizeof(US902928_1F)/2, US902928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
-	else if(pointInPolygonF((int32_t)sizeof(US902928_2F)/2, US902928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
+	//else if(pointInPolygonF((int32_t)sizeof(US902928_2F)/2, US902928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
 
   //else if(pointInPolygonF(sizeof(IN865867_1F)/2, IN865867_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = IN865867;}
 
 	
-	else if(pointInPolygonF(sizeof(KR920923_1F)/2, KR920923_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = KR920923;}
+	//else if(pointInPolygonF(sizeof(KR920923_1F)/2, KR920923_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = KR920923;}
 	
-  else if(pointInPolygonF((int32_t)sizeof(AU915928_1F)/2, AU915928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+  //else if(pointInPolygonF((int32_t)sizeof(AU915928_1F)/2, AU915928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
 	
 	// there is something wrong with the AU915928_2F polygons. it was detecting a point in INDIA
-  else if(pointInPolygonF((int32_t)sizeof(AU915928_2F)/2, AU915928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+  //else if(pointInPolygonF((int32_t)sizeof(AU915928_2F)/2, AU915928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
 	
-  else if(pointInPolygonF((int32_t)sizeof(AU915928_3F)/2, AU915928_3F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+  //else if(pointInPolygonF((int32_t)sizeof(AU915928_3F)/2, AU915928_3F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
 	
 	
 
@@ -173,7 +173,7 @@ void GEOFENCE_position(float latitude, float longitude)
 	
 	// Over the sea or areas where there is no frequency declared, transmit on EU frequencies!!
 
-	else {GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
+	else {GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = NONEFREQUENCY;}
 }
 	
 	
