@@ -75,8 +75,8 @@ uint8_t GPS_UBX_error_bitfield						= 0;
 
 int32_t GPS_UBX_latitude									= 0;
 int32_t GPS_UBX_longitude									= 0;
-float GPS_UBX_latitude_Float							= 52.4485914; // temp dummy for testing geofencing
-float GPS_UBX_longitude_Float							= 0.7407117;  // temp dummy for testing geofencing
+float GPS_UBX_latitude_Float							= 22.3148941; // temp dummy for testing geofencing
+float GPS_UBX_longitude_Float							= 75.6746919;  // temp dummy for testing geofencing
 
 int32_t GPSaltitude												= 0;
 

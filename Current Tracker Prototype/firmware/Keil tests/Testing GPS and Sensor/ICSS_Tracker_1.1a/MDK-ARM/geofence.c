@@ -115,14 +115,18 @@ int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, fl
 
 
 
-
 ///*
 //	Changes GEOFENCE_LoRA_frequency and GEOFENCE_no_tx global variables based on the input coordinates.
 //	TODO: documentation must be updated for LoRa frequencies
 //	FREQUENCIES:
-//						Africa				144.800
-//						Europe				144.800
-//						Russia				144.800
+//						EU863870    = 0x01,
+//						AU915928    = 0x02,
+//						US902928    = 0x03,
+//						KR920923    = 0x04,
+//						IN865867    = 0x05,
+//						AS920923		= 0x06,
+//						CN470510		= 0x07,
+//						AS923925		= 0x08,
 //	Expected input FLOAT for latitude and longitude as in GPS_UBX_latitude_Float and GPS_UBX_longitude_Float.
 //*/
 void GEOFENCE_position(float latitude, float longitude)
@@ -134,20 +138,29 @@ void GEOFENCE_position(float latitude, float longitude)
 	else if(pointInPolygonF(sizeof(EU863870_3F)/2, EU863870_3F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
 	else if(pointInPolygonF(sizeof(EU863870_4F)/2, EU863870_4F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = EU863870;}
 	
-	else if(pointInPolygonF(sizeof(AU915928_1F)/2, AU915928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
-	else if(pointInPolygonF(sizeof(AU915928_2F)/2, AU915928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
-	else if(pointInPolygonF(sizeof(AU915928_3F)/2, AU915928_3F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
-	
-	else if(pointInPolygonF(sizeof(US902928_1F)/2, US902928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
-	else if(pointInPolygonF(sizeof(US902928_2F)/2, US902928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
 
+	else if(pointInPolygonF((int32_t)sizeof(US902928_1F)/2, US902928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
+	else if(pointInPolygonF((int32_t)sizeof(US902928_2F)/2, US902928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = US902928;}
+
+  //else if(pointInPolygonF(sizeof(IN865867_1F)/2, IN865867_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = IN865867;}
+
+	
 	else if(pointInPolygonF(sizeof(KR920923_1F)/2, KR920923_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = KR920923;}
 	
-	else if(pointInPolygonF(sizeof(IN865867_1F)/2, IN865867_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = IN865867;}
+  else if(pointInPolygonF((int32_t)sizeof(AU915928_1F)/2, AU915928_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+	
+	// there is something wrong with the AU915928_2F polygons. it was detecting a point in INDIA
+  else if(pointInPolygonF((int32_t)sizeof(AU915928_2F)/2, AU915928_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+	
+  else if(pointInPolygonF((int32_t)sizeof(AU915928_3F)/2, AU915928_3F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AU915928;}
+	
+	
 
 	else if(pointInPolygonF(sizeof(AS920923_1F)/2, AS920923_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AS920923;}
 	else if(pointInPolygonF(sizeof(AS920923_2F)/2, AS920923_2F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = AS920923;}
 	
+	
+
 
   else if(pointInPolygonF(sizeof(CN470510_1F)/2, CN470510_1F, latitude, longitude) == 1)	{GEOFENCE_no_tx = 0; GEOFENCE_LoRa_frequency = CN470510;}
 	

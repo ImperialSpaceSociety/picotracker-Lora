@@ -8,8 +8,8 @@ def process_coords(raw):
     raw = raw.strip()
     raw  = raw.split(" ")
     all_coords = ""
-    for i in raw:
-        i,j,k = i.split(",")
+    for coord in raw:
+        i,j,k = coord.split(",")
         coord = "{0:.7f},{1:.7f},".format(float(i),float(j))
         all_coords+=coord
         all_coords+="\n"
