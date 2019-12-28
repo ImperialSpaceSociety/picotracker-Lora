@@ -246,19 +246,19 @@ prototype/firmware/EDBG UART erert/EDBG UART erert/.atmel-start-backup/*
 *.l2p
 *.iex
 
-# To explicitly override the above, define any exceptions here; e.g.:
-# !my_customized_scatter_file.sct
+# # To explicitly override the above, define any exceptions here; e.g.:
+# # !my_customized_scatter_file.sct
 
 
 
 
-# ignore for stm32cube
+# # ignore for stm32cube
 
 *.bin
 *.elf
 *.ld
 *.o
-*.1a
+# *.1a
 
 
 
@@ -334,8 +334,11 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-Current Tracker Prototype/firmware/Util scripts/.idea/vcs.xml
-Current Tracker Prototype/firmware/Util scripts/.idea/misc.xml
+ Current Tracker Prototype/firmware/Util scripts/.idea/vcs.xml
+ Current Tracker Prototype/firmware/Util scripts/.idea/misc.xml
 Current Tracker Prototype/firmware/Util scripts/.idea/modules.xml
+ Current Tracker Prototype/firmware/Util scripts/.idea/workspace.xml
+ *.xml___jb_tmp___
+Current Tracker Prototype/firmware/Util scripts/.idea/misc.xml
+Current Tracker Prototype/firmware/Util scripts/.idea/vcs.xml
 Current Tracker Prototype/firmware/Util scripts/.idea/workspace.xml
-*.xml___jb_tmp___
