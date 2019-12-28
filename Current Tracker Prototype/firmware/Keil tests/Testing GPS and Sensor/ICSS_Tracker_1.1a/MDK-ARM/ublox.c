@@ -20,15 +20,15 @@
  * Needs TO BE REFACTORED TO TIME OUT OR EXIT IF NO MESSAGED IS ReCEIVED BACK!
  */
 uint8_t setup_GPS(){
+
+	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module
+	HAL_Delay(1000);		// wait for GPS module to be ready
 	
-	
-	UBLOX_send_message(resetReceiver, 12);								// reset GPS module
-	HAL_Delay(1000);												      // wait for GPS module to be ready
 	UBLOX_send_message(restore_default_config, sizeof(restore_default_config)); // reset GPS to default config
-	while(!UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK));				// turn off periodic NMEA output
-	while(!UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK));				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
-	while(!UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK));				// set to airbourne mode
-	while(!UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK));		// save current configuration
+	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
+	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
+	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
 	return 0;
 }
 
