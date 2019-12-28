@@ -66,7 +66,7 @@ static float EU863870_2[] = {
 
 };
 
-static float  volatile EU863870_3[] = {
+static float EU863870_3[] = {
 50.4480346,26.3415916,
 50.3409179,26.0335100,
 50.5414184,25.7097700,
@@ -76,7 +76,7 @@ static float  volatile EU863870_3[] = {
 
 };
 
-static float volatile EU863870_4[] = {
+static float EU863870_4[] = {
 119.3532577,19.4762086,
 115.4860702,9.9680758,
 118.2546249,7.1001120,
@@ -304,7 +304,7 @@ static float AU915928_3[] = {
 
 
 // VARIABLES
-extern uint32_t GEOFENCE_APRS_frequency; 
+extern uint32_t GEOFENCE_LoRa_frequency; 
 extern uint32_t GEOFENCE_no_tx;
 
 

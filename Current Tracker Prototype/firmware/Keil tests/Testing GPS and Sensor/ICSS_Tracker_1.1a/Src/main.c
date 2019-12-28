@@ -117,7 +117,7 @@ double Temperature; // compensated temperature value
 
 
 // GEOFENCE variables
-uint32_t GEOFENCE_APRS_frequency					= 144800000;
+uint32_t GEOFENCE_LoRa_frequency					= 144800000;
 uint32_t GEOFENCE_no_tx										= 0;
 
 
@@ -281,12 +281,12 @@ int main(void)
 				
 		
 		// GEOFENCE
-// 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
-//		LoRa_tx_frequency = GEOFENCE_APRS_frequency;
-//		
-//		if(GEOFENCE_no_tx){ 
-//			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
-//		}
+ 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right APRS frequency based on current location
+		LoRa_tx_frequency = GEOFENCE_LoRa_frequency;
+		
+		if(GEOFENCE_no_tx){ 
+			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
+		}
 		
 		// TRANSMIT DATA(TODO)
 		
