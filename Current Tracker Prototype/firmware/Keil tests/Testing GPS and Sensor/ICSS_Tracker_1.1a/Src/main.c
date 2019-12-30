@@ -218,7 +218,6 @@ int main(void)
 	ms5607_Init();
 
 	// GPS SETUP
-	HAL_Delay(1000);											        // in case this follows immediately after the backup command
 	setup_GPS();
 	
 
@@ -255,15 +254,14 @@ int main(void)
 			GPSfix_OK = 0;
 			GPSsats = 0;
 			
-		  // pull GPS extint pin high to wake gps	
-			HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode
-			HAL_Delay(1000); // wait for things to be setup
-			UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	// switch GPS module to continueous mode
-			HAL_Delay(1000); // wait for things to be setup
+			HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint pin high to wake gps	
+			HAL_Delay(1000);                                                          // wait for things to be setup
+			UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode
+			HAL_Delay(1000);                                                          // wait for things to be setup
 
-			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
+			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);                 // get fix info UBX-NAV-PVT
 
-			if(GPSfix_type == 3 && GPSfix_OK == 1 && GPSsats >= SATS) break;  // check if we have a good fix
+			if(GPSfix_type == 3 && GPSfix_OK == 1 && GPSsats >= SATS) break;          // check if we have a good fix
 			
 			fixAttemptCount++;
 			HAL_Delay(1000);
@@ -271,11 +269,12 @@ int main(void)
 			
 			/* If fix taking too long, reset and re-initialize GPS module. 
 			 * It does a forced hardware reset and recovers from a warm start
+			 * Reset only after 70 tries
 			 */
 			if(fixAttemptCount > FIX)														
 			{
-				UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module. warm start
-				setup_GPS(); // configure gps module again
+				UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module. warm start
+				setup_GPS();                                                    // configure gps module again
 				GPSfix_type = 0;
 				GPSfix_OK = 0;
 				GPSsats = 0;
@@ -291,7 +290,7 @@ int main(void)
 
 		
 		// GEOFENCE
-		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right LoRa frequency based on current location
+		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);		// choose the right LoRa frequency based on current location
 		LoRa_tx_frequency = GEOFENCE_LoRa_frequency;
 
 		if(GEOFENCE_no_tx){ 
