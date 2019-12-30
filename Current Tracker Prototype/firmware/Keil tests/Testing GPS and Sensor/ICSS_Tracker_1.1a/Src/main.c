@@ -294,7 +294,7 @@ int main(void)
 		LoRa_tx_frequency = GEOFENCE_LoRa_frequency;
 
 		if(GEOFENCE_no_tx){ 
-			TXLoRa = 0;												// disable APRS transmission in NO AIRBORNE areas
+			TXLoRa = 0;												// disable LoRa transmission in NO AIRBORNE areas
 		}
 		
 		// TRANSMIT DATA(TODO)
