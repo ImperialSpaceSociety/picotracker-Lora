@@ -223,7 +223,8 @@ int main(void)
 	
 
 	// GPS INITIAL BACKUP
-	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode	
+	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode and save config. No response expected
+  HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode
 
   /* USER CODE END 2 */
 
@@ -254,8 +255,12 @@ int main(void)
 			GPSfix_OK = 0;
 			GPSsats = 0;
 			
-		  // pull extint pin high to wake gps	
+		  // pull GPS extint pin high to wake gps	
+			HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode
+			HAL_Delay(1000); // wait for things to be setup
 			UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	// switch GPS module to continueous mode
+			HAL_Delay(1000); // wait for things to be setup
+
 			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
 
 			if(GPSfix_type == 3 && GPSfix_OK == 1 && GPSsats >= SATS) break;  // check if we have a good fix
@@ -264,7 +269,8 @@ int main(void)
 			HAL_Delay(1000);
 
 			
-			/* If fix taking too long, reset and re-initialize GPS module. It does a hardware reset, from a warm start
+			/* If fix taking too long, reset and re-initialize GPS module. 
+			 * It does a forced hardware reset and recovers from a warm start
 			 */
 			if(fixAttemptCount > FIX)														
 			{
@@ -280,7 +286,9 @@ int main(void)
 		
 		// PUT GPS TO SLEEP
 	  UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode and save config. No response expected
-		// now pull extint pin low		
+		HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
+
+
 		
 		// GEOFENCE
 		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);			// choose the right LoRa frequency based on current location
