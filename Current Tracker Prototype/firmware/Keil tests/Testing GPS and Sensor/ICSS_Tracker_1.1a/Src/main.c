@@ -75,8 +75,8 @@ uint8_t GPS_UBX_error_bitfield						= 0;
 
 int32_t GPS_UBX_latitude									= 0;
 int32_t GPS_UBX_longitude									= 0;
-float GPS_UBX_latitude_Float							= 22.3148941; // temp dummy for testing geofencing
-float GPS_UBX_longitude_Float							= 75.6746919;  // temp dummy for testing geofencing
+float GPS_UBX_latitude_Float							= 1.499827; // temp dummy for testing geofencing
+float GPS_UBX_longitude_Float							= 103.813151;  // temp dummy for testing geofencing
 
 
 int32_t GPSaltitude												= 0;
@@ -224,8 +224,8 @@ int main(void)
 
 	// GPS INITIAL BACKUP
 	UBLOX_send_message(dummyByte, 1);									// in case only MCU restarted while GPS stayed powered
-	HAL_Delay(1000);												// wait for GPS module to be ready
-	UBLOX_send_message(powersave, sizeof(powersave));									// switch GPS module to software backup mode	
+	HAL_Delay(1000);												          // wait for GPS module to be ready
+	UBLOX_send_message(powersave, sizeof(powersave));	// switch GPS module to software backup mode	
 
   /* USER CODE END 2 */
 
@@ -246,44 +246,44 @@ int main(void)
 		
 
 
-//		// GET GPS FIX
-//		fixAttemptCount = 0;
-//		
-//		while(1)				// poll UBX-NAV-PVT until the module has fix
-//		{
-//			
-//			GPSfix = 0;
-//			GPSfix_0107 = 0;
-//			GPSsats = 0;
-//			
-//			UBLOX_send_message(dummyByte, 4);						  // wake up GPS module
-//			HAL_Delay(1000);												      // wait for GPS module to be ready
-//			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
+		// GET GPS FIX
+		fixAttemptCount = 0;
+		
+		while(1)				// poll UBX-NAV-PVT until the module has fix
+		{
+			
+			GPSfix = 0;
+			GPSfix_0107 = 0;
+			GPSsats = 0;
+			
+			UBLOX_send_message(dummyByte, 4);						  // wake up GPS module
+			HAL_Delay(1000);												      // wait for GPS module to be ready
+			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
 
-//			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
-//			
-//			fixAttemptCount++;
-//			HAL_Delay(1000);
+			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
+			
+			fixAttemptCount++;
+			HAL_Delay(1000);
 
-//			
-//			/* If fix taking too long, reset and re-initialize GPS module
-//			 * A full reset will delete all satellite ephemeris data, i.e. start again from a cold
-//			 * start. Getting a fix after a cold start could take several minutes, and given the limited
-//			 * power, this should not be done often. Currently, it only carries out a full reset after 70
-//			 * tries.
-//			 */
-//			if(fixAttemptCount > FIX)														
-//			{
-//				UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module
-//				setup_GPS(); // configure gps module again
-//				GPSfix = 0;
-//				GPSfix_0107 = 0;
-//				GPSsats = 0;
-//				break;
-//				
-//			}
-//		}
-//		
+			
+			/* If fix taking too long, reset and re-initialize GPS module
+			 * A full reset will delete all satellite ephemeris data, i.e. start again from a cold
+			 * start. Getting a fix after a cold start could take several minutes, and given the limited
+			 * power, this should not be done often. Currently, it only carries out a full reset after 70
+			 * tries.
+			 */
+			if(fixAttemptCount > FIX)														
+			{
+				UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module
+				setup_GPS(); // configure gps module again
+				GPSfix = 0;
+				GPSfix_0107 = 0;
+				GPSsats = 0;
+				break;
+				
+			}
+		}
+		
 		// PUT GPS TO SLEEP
 		//UBLOX_send_message(powersave, sizeof(powersave));									// switch GPS module to software backup mode	
 
