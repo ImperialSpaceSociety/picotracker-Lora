@@ -632,6 +632,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, ANT_BST_Pin|RA_RES_Pin|ANT_TX_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pins : RA_NSS_Pin TCXO_EN_Pin ANT_RX_Pin */
   GPIO_InitStruct.Pin = RA_NSS_Pin|TCXO_EN_Pin|ANT_RX_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -658,11 +661,18 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : GPS_PPS_Pin GPS_INT_Pin */
-  GPIO_InitStruct.Pin = GPS_PPS_Pin|GPS_INT_Pin;
+  /*Configure GPIO pin : GPS_PPS_Pin */
+  GPIO_InitStruct.Pin = GPS_PPS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPS_PPS_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : GPS_INT_Pin */
+  GPIO_InitStruct.Pin = GPS_INT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPS_INT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : LED_Pin */
   GPIO_InitStruct.Pin = LED_Pin;
