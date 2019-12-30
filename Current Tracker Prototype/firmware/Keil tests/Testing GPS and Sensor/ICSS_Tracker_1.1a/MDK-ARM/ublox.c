@@ -409,7 +409,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             // FIX
             GPSfix_type = buffer[26];             // GNSSfix Type
 					
-					  GPSfix_0107 = buffer[27] & 0x01; // Fix status flags: gnssFixOK
+					  GPSfix_OK = buffer[27] & 0x01; // Fix status flags: gnssFixOK
             GPSvalidity = buffer[17];        // Validity flags
             
             // POWER SAVE MODE STATE
