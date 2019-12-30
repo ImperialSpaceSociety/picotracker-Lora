@@ -161,7 +161,6 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 		
 		if (i2c_status != HAL_OK)
 		{
-			receive_failure_counter++;
 			return 0;
 		}
 	
@@ -465,7 +464,6 @@ uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer)
         if(buffer[3] != 0x01)
         {
             GPS_UBX_ack_error++;
-					  ack_error_counter++;
 						return 0;
         }
 				else
@@ -474,7 +472,6 @@ uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer)
 				}
     }else{
         GPS_UBX_buffer_error++;
-				buffer_error_counter++;
 				return 0;
     }
 		

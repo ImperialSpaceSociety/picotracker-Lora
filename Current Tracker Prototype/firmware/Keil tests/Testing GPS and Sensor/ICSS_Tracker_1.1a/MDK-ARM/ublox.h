@@ -34,9 +34,7 @@ GPS_UBX_error_bitfield
 #include "stm32l0xx_hal.h"
 #include <stdint.h>
 
-static char RTTY_callsign[] = "TT7F6W";							// CALLSIGN for the RTTY telemetry string
 
-#define TELEMETRY_SYNC_BYTES	4								// number of '$' characters at the beginning of the telemetry string
 
 
 /*
@@ -63,18 +61,6 @@ static uint8_t setGPSonly[] = {
 		0x2D,0x59                                   /* checksum */
 };	
 
-//static uint8_t setGPSonly[] = {
-//0xB5 ,0x62 ,0x06 ,0x3E ,0x3C ,0x00 ,
-//0x00 ,0x00 ,0x20 ,0x07 ,
-//0x00 ,0x00 ,0x00 ,0x00 ,0x01 ,0x00 ,0x01 ,0x01 ,
-//0x01 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x01 ,
-//0x02 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x01 ,
-//0x03 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x01 ,
-//0x04 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x01 ,
-//0x05 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x01 ,
-//0x06 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0x01 ,
-//0xC5 ,0xEE
-//};
 
 static uint8_t setNMEAoff[28]	 = {
 		0xB5, 0x62, 0x06, 0x00, 0x14, 0x00,
@@ -323,27 +309,13 @@ extern uint32_t GPS_NMEA_longitude_dec_L;						// LAST valid value (in case of l
 extern I2C_HandleTypeDef hi2c1;
 extern HAL_StatusTypeDef i2c_status;
 
-/* debugging how many communication failures seen*/
-volatile static uint8_t ack_error_counter = 0;
-volatile static uint8_t buffer_error_counter = 0;
-volatile static uint8_t receive_failure_counter = 0;
-
 
 
 // FUNCTIONS
-uint16_t crc_xmodem_update(uint16_t crc, uint8_t data);
-uint16_t CRC16_checksum(uint8_t *string, uint32_t len, uint32_t start);
-uint32_t ASCII_8bit_transmit(uint8_t number, uint8_t *buffer, uint32_t sequence);
-uint32_t ASCII_8bit_2DEC_transmit(uint8_t number, uint8_t *buffer, uint32_t sequence);
-uint32_t ASCII_16bit_transmit(uint16_t number, uint8_t *buffer, uint32_t sequence);
-uint32_t ASCII_16bit_HEX_transmit(uint16_t number, uint8_t *buffer, uint32_t sequence);
-uint32_t ASCII_32bit_transmit(uint32_t number, uint8_t *buffer, uint32_t sequence);
-uint32_t ASCII_32bit_LATLON_DECIMAL_transmit(uint32_t number, uint8_t *buffer, uint32_t sequence, uint8_t figures);
+
 void Coords_DEGtoDEC(uint32_t lat_INT, uint32_t lat_DEC, uint32_t lon_INT, uint32_t lon_DEC, uint8_t latNS, uint8_t lonEW);
 
 uint8_t UBLOX_verify_checksum(volatile uint8_t *buffer, uint8_t len);
-uint8_t UBLOX_fill_buffer_UBX(uint8_t *buffer, uint8_t len);
-uint8_t UBLOX_fill_buffer_NMEA(uint8_t *buffer);
 uint8_t UBLOX_send_message(uint8_t *message, uint8_t len);
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*));
 uint8_t UBLOX_parse_0102(volatile uint8_t *buffer);
@@ -354,10 +326,6 @@ uint8_t UBLOX_parse_0611(volatile uint8_t *buffer);
 uint8_t UBLOX_parse_0107(volatile uint8_t *buffer);
 uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer);
 uint8_t UBLOX_parse_empty(void);
-void UBLOX_process_GGA(uint8_t *buffer);
-void UBLOX_process_ZDA(uint8_t *buffer);
-uint32_t UBLOX_construct_telemetry_UBX(uint8_t *buffer, uint32_t sequence);
-uint32_t UBLOX_construct_telemetry_NMEA(uint8_t *buffer, uint32_t sequence);
 void UBLOX_powersave_mode_init(uint8_t * mode);
 uint32_t UBLOX_get_version(uint8_t *buffer);
 uint8_t setup_GPS(void);
