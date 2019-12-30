@@ -89,7 +89,7 @@ uint8_t GPSmonth													= 0;
 uint16_t GPSyear													= 0;
 
 uint8_t GPSsats														= 0;
-uint8_t GPSfix														= 0;
+uint8_t GPSfix_type														= 0;
 uint8_t GPSfix_0107												= 0;
 uint8_t GPSvalidity												= 0;
 
@@ -111,7 +111,7 @@ int32_t GPS_UBX_longitude_L								= 0;
 int32_t GPSaltitude_L											= 0;
 
 uint32_t fixAttemptCount                  = 0;
-
+uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 
 // Temperature Pressure variables
 double Pressure; // compensated pressure value
@@ -223,9 +223,7 @@ int main(void)
 	
 
 	// GPS INITIAL BACKUP
-	UBLOX_send_message(dummyByte, 1);									// in case only MCU restarted while GPS stayed powered
-	HAL_Delay(1000);												          // wait for GPS module to be ready
-	UBLOX_send_message(powersave, sizeof(powersave));	// switch GPS module to software backup mode	
+	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode	
 
   /* USER CODE END 2 */
 
@@ -252,15 +250,16 @@ int main(void)
 		while(1)				// poll UBX-NAV-PVT until the module has fix
 		{
 			
-			GPSfix = 0;
+			GPSfix_type = 0;
 			GPSfix_0107 = 0;
 			GPSsats = 0;
 			
 			UBLOX_send_message(dummyByte, 4);						  // wake up GPS module
 			HAL_Delay(1000);												      // wait for GPS module to be ready
+			UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	// switch GPS module to continueous mode
 			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107); // get fix info UBX-NAV-PVT
 
-			if(GPSfix == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
+			if(GPSfix_type == 3 && GPSfix_0107 == 1 && GPSsats >= SATS) break;
 			
 			fixAttemptCount++;
 			HAL_Delay(1000);
@@ -274,9 +273,9 @@ int main(void)
 			 */
 			if(fixAttemptCount > FIX)														
 			{
-				UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module
+				UBLOX_send_message(resetReceiver, sizeof(resetReceiver));								// reset GPS module. from cold start
 				setup_GPS(); // configure gps module again
-				GPSfix = 0;
+				GPSfix_type = 0;
 				GPSfix_0107 = 0;
 				GPSsats = 0;
 				break;
@@ -285,8 +284,7 @@ int main(void)
 		}
 		
 		// PUT GPS TO SLEEP
-		//UBLOX_send_message(powersave, sizeof(powersave));									// switch GPS module to software backup mode	
-
+	  UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode and save config. No response expected
 				
 		
 		// GEOFENCE

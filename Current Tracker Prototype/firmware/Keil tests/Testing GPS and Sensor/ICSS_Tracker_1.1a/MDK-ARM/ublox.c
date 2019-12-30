@@ -20,12 +20,13 @@
  * Needs TO BE REFACTORED TO TIME OUT OR EXIT IF NO MESSAGED IS ReCEIVED BACK!
  */
 uint8_t setup_GPS(){
-
-	HAL_Delay(1000);		// wait for GPS module to be ready
 	
-	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+	UBLOX_send_message(dummyByte, 1);									// in case only MCU restarted while GPS stayed powered
+	HAL_Delay(1000);		// wait for GPS module to be ready
+	ack = UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
+	UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
 	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
 	return 0;
 }
@@ -246,7 +247,7 @@ uint8_t UBLOX_parse_0121(volatile uint8_t *buffer)
     UBX 01 06   SATS & FIX
         
         GPSsats             7
-        GPSfix              0x00        No Fix
+        GPSfix_type              0x00        No Fix
                             0x01        Dead Reckoning only
                             0x02        2D-Fix
                             0x03        3D-Fix
@@ -261,18 +262,18 @@ uint8_t UBLOX_parse_0106(volatile uint8_t *buffer)
     {
         if(UBLOX_verify_checksum(buffer, 60))
         {
-            GPSfix = buffer[16];
+            GPSfix_type = buffer[16];
             GPSsats = buffer[53];
         }else{
             GPS_UBX_checksum_error++;
             
-            GPSfix = 0;
+            GPSfix_type = 0;
             GPSsats = 0;
         }
     }else{
         GPS_UBX_buffer_error++;
         
-        GPSfix = 0;
+        GPSfix_type = 0;
         GPSsats = 0;
     }
 		return 0;
@@ -360,7 +361,7 @@ uint8_t UBLOX_parse_0611(volatile uint8_t *buffer)
         GPShour                     9
         GPSminute                   14
         GPSsecond                   55
-        GPSfix                      1
+        GPSfix_type                      1
 																		0   no fix
 																		1   dead reckoning only
 																		2   2D-fix
@@ -406,7 +407,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPSsecond = buffer[16];
             
             // FIX
-            GPSfix = buffer[26];             // GNSSfix Type
+            GPSfix_type = buffer[26];             // GNSSfix Type
 					
 					  GPSfix_0107 = buffer[27] & 0x01; // Fix status flags: gnssFixOK
             GPSvalidity = buffer[17];        // Validity flags
@@ -435,13 +436,13 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
         }else{
             GPS_UBX_checksum_error++;
             
-            GPSfix = 0;
+            GPSfix_type = 0;
             GPSsats = 0;
         }
     }else{
         GPS_UBX_buffer_error++;
         
-        GPSfix = 0;
+        GPSfix_type = 0;
         GPSsats = 0;
     }
 		
