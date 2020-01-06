@@ -214,6 +214,9 @@ int main(void)
 	// keep checking if vcc voltage is high enough to carry on. NOT SURE IF NEEDED!. I think I should use inbuilt voltage measuremnt function
 	
 	
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+
+	
 	// Setup pressure and temperature sensor
 	ms5607_Init();
 
@@ -222,8 +225,10 @@ int main(void)
 	
 
 	// GPS INITIAL BACKUP
-	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode and save config. No response expected
-  HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode
+	Backup_GPS();
+
+
+
 
   /* USER CODE END 2 */
 
@@ -254,10 +259,7 @@ int main(void)
 			GPSfix_OK = 0;
 			GPSsats = 0;
 			
-			HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint pin high to wake gps	
-			HAL_Delay(1000);                                                          // wait for things to be setup
-			UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode
-			HAL_Delay(1000);                                                          // wait for things to be setup
+			Wakeup_GPS();
 
 			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);                 // get fix info UBX-NAV-PVT
 
@@ -284,8 +286,7 @@ int main(void)
 		}
 		
 		// PUT GPS TO SLEEP
-	  UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode and save config. No response expected
-		HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
+		Backup_GPS();
 
 
 		
@@ -294,7 +295,7 @@ int main(void)
 		LoRa_tx_frequency = GEOFENCE_LoRa_frequency;
 
 		if(GEOFENCE_no_tx){ 
-			TXLoRa = 0;												// disable LoRa transmission in NO AIRBORNE areas
+			TXLoRa = 0;												                                  // disable LoRa transmission in NO AIRBORNE areas
 		}
 		
 		// TRANSMIT DATA(TODO)

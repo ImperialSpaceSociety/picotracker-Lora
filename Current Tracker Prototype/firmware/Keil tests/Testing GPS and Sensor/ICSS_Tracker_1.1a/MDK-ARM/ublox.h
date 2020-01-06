@@ -306,7 +306,8 @@ uint8_t UBLOX_parse_empty(void);
 void UBLOX_powersave_mode_init(uint8_t * mode);
 uint32_t UBLOX_get_version(uint8_t *buffer);
 uint8_t setup_GPS(void);
-
+uint8_t Backup_GPS(void);
+uint8_t Wakeup_GPS(void);
 
 
 #endif // UBLOX_H

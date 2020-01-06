@@ -14,6 +14,32 @@
 
 
 
+/* 
+ * GPS backup. 
+ */
+uint8_t Backup_GPS(){
+	
+	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode and save config. No response expected
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
+
+	return 0;
+}
+
+
+/* 
+ * GPS Wake up. 
+ */
+uint8_t Wakeup_GPS(){
+	
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
+	HAL_Delay(1000);                                                          // wait for things to be setup
+	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode
+	HAL_Delay(1000);                                                          // wait for things to be setup
+	
+	return 0;
+
+}
+
 
 /* 
  * sets up gps by putting in airbourne mode, setting to use GPS satellites only, turning off NMEA
@@ -21,9 +47,9 @@
  */
 uint8_t setup_GPS(){
 	
-	UBLOX_send_message(dummyByte, 1);									// in case only MCU restarted while GPS stayed powered
-	HAL_Delay(1000);		// wait for GPS module to be ready
-	ack = UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
+	HAL_Delay(1000);                                                              // Wait for things to be setup
+	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
 	UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
