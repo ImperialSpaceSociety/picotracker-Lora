@@ -198,7 +198,7 @@ int main( void )
 		//DelayMs( 2 );
 		
   }
-}
+} // main()
 
 static void LORA_HasJoined( void )
 {
