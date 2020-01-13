@@ -49,7 +49,7 @@ extern "C" {
 #include "hw_msp.h"
 #include "util_console.h"
 #include "debug.h"
-
+#include "hw_i2c.h"
 
 #ifdef __cplusplus
 }

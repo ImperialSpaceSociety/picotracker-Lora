@@ -1,0 +1,4 @@
+load STM32L072CZYx 
+project name STCubeGenerated 
+project toolchain "MDK-ARM V5" 
+project path "D:\High Altitude Ballooning\Github data\picotracker-Lora\Current Tracker Prototype\firmware\Keil tests\Testing GPS and Sensor\ICSS_Tracker_1.1a\MDK-ARM\RTE\Device\STM32L072CZYx\" 

@@ -338,7 +338,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>STM32L072xx,USE_ICSS_LORATRACKERV1_1A,USE_HAL_DRIVER, REGION_EU868</Define>
               <Undefine></Undefine>
-              <IncludePath>..\LoRaWAN\App\inc;..\Core\inc;..\..\..\..\..\..\Drivers\BSP\CMWX1ZZABZ-0xx;..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Crypto;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Mac;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Phy;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Utilities;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Core;..\..\..\..\..\..\Drivers\BSP\Components\Common;..\..\..\..\..\..\Drivers\BSP\Components\hts221;..\..\..\..\..\..\Drivers\BSP\Components\lps22hb;..\..\..\..\..\..\Drivers\BSP\Components\lps25hb;..\..\..\..\..\..\Drivers\BSP\Components\sx1276;..\..\..\..\..\..\Drivers\BSP\X_NUCLEO_IKS01A1;..\..\..\..\..\..\Drivers\BSP\X_NUCLEO_IKS01A2;..\..\..\..\..\..\Drivers\BSP\B-L072Z-LRWAN1;..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Mac\region</IncludePath>
+              <IncludePath>..\LoRaWAN\App\inc;..\Core\inc;..\..\..\..\..\..\Drivers\BSP\CMWX1ZZABZ-0xx;..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Crypto;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Mac;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Phy;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Utilities;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Core;..\..\..\..\..\..\Drivers\BSP\Components\Common;..\..\..\..\..\..\Drivers\BSP\Components\hts221;..\..\..\..\..\..\Drivers\BSP\Components\lps22hb;..\..\..\..\..\..\Drivers\BSP\Components\lps25hb;..\..\..\..\..\..\Drivers\BSP\Components\sx1276;..\..\..\..\..\..\Drivers\BSP\X_NUCLEO_IKS01A1;..\..\..\..\..\..\Drivers\BSP\X_NUCLEO_IKS01A2;..\..\..\..\..\..\Drivers\BSP\B-L072Z-LRWAN1;..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A;..\..\..\..\..\..\Middlewares\Third_Party\LoRaWAN\Mac\region;..\..\..\..\..\..\Drivers\BSP\Components\ublox;..\..\..\..\..\..\Drivers\BSP\Components\ms5607</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -396,6 +396,21 @@
               <FileName>sx1276.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\sx1276\sx1276.c</FilePath>
+            </File>
+            <File>
+              <FileName>geofence.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\geofence.c</FilePath>
+            </File>
+            <File>
+              <FileName>ublox.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox.c</FilePath>
+            </File>
+            <File>
+              <FileName>ms5607.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -586,6 +601,11 @@
               <FileName>mlm32l0xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\src\mlm32l0xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>hw_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\hw_i2c.c</FilePath>
             </File>
           </Files>
         </Group>

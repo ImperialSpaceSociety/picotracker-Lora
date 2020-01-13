@@ -25,9 +25,26 @@
 #include "timeServer.h"
 #include "vcom.h"
 #include "version.h"
+#include "ublox.h"
+#include "geofence.h"
+#include "ms5607.h"
+
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+
+
+/* 
+ *  GPS related defines
+*/
+
+#define SHORT_CYCLE			46		// value / 0.83 = ~duration of one main loop in seconds (Normal mode)
+#define LONG_CYCLE			96		// value / 0.83 = ~duration of one main loop in seconds (Power Saving mode)
+#define SOLAR				0		// mV
+#define BATTERY				2500	// mV
+#define BATTERY_ON			3.0		// mV
+#define FIX					90		// attempts to poll UBX-NAV-PVT
+#define SATS				4		// number of satellites required for positional solution
 
 /*!
  * CAYENNE_LPP is myDevices Application server.
@@ -134,7 +151,75 @@ static TimerEvent_t TxTimer;
  */
 static  LoRaParam_t LoRaParamInit= {LORAWAN_ADR_STATE,
                                     LORAWAN_DEFAULT_DATA_RATE,  
-                                    LORAWAN_PUBLIC_NETWORK};
+                                    LORAWAN_PUBLIC_NETWORK};	
+																		
+// Radio variables
+uint32_t LoRa_tx_frequency									= 144800000; // needs to be changed to Lora TX frequency. 
+uint8_t TXLoRa                              = 1;
+
+// UBLOX variables
+uint8_t GPS_UBX_error_bitfield						= 0;
+
+int32_t GPS_UBX_latitude									= 0;
+int32_t GPS_UBX_longitude									= 0;
+float GPS_UBX_latitude_Float							= 1.499827; // temp dummy for testing geofencing
+float GPS_UBX_longitude_Float							= 103.813151;  // temp dummy for testing geofencing
+
+
+int32_t GPSaltitude												= 0;
+
+uint8_t GPShour														= 0;
+uint8_t GPSminute													= 0;
+uint8_t GPSsecond													= 0;
+uint8_t GPSday														= 0;
+uint8_t GPSmonth													= 0;
+uint16_t GPSyear													= 0;
+
+uint8_t GPSsats														= 0;
+uint8_t GPSfix_type														= 0;
+uint8_t GPSfix_OK												= 0;
+uint8_t GPSvalidity												= 0;
+
+uint8_t GPSnavigation											= 0;
+uint8_t GPSpowermode											= 0;
+uint8_t GPSpowersavemodestate							= 0;
+
+int32_t GPSgroundspeed										= 0;
+int32_t GPSheading												= 0;
+
+uint16_t AD3data													= 0;
+uint16_t AD9data													= 0;
+uint16_t AD15data													= 0;
+uint32_t telemCount												= 0;
+uint32_t telemetry_len										= 0;
+
+int32_t GPS_UBX_latitude_L								= 0;
+int32_t GPS_UBX_longitude_L								= 0;
+int32_t GPSaltitude_L											= 0;
+
+uint32_t fixAttemptCount                  = 0;
+uint8_t ack			                          = 0; // 1 is ack, 0 is nak
+
+// Temperature Pressure variables
+double Pressure; // compensated pressure value
+double Temperature; // compensated temperature value
+
+
+// GEOFENCE variables
+uint32_t GEOFENCE_LoRa_frequency					= 0;
+uint32_t GEOFENCE_no_tx										= 0;
+
+
+
+//I2C related
+uint8_t	i2c_buffer[2];
+HAL_StatusTypeDef i2c_status;
+
+
+// Battery/Solar voltage
+uint32_t VCC_ADC												= 0;
+
+
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -158,6 +243,22 @@ int main( void )
   HW_Init();
   
   /* USER CODE BEGIN 1 */
+	
+	
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+
+	
+	// Setup pressure and temperature sensor
+	ms5607_Init();
+
+	// GPS SETUP
+	setup_GPS();
+	
+
+	// GPS INITIAL BACKUP
+	Backup_GPS();
+
+	
   /* USER CODE END 1 */
   
   /*Disbale Stand-by mode*/
@@ -204,7 +305,7 @@ int main( void )
     /* USER CODE BEGIN 2 */
     /* USER CODE END 2 */
   }
-}
+} // END main()
 
 
 void LoraMacProcessNotify(void)

@@ -115,7 +115,8 @@ void HW_Init( void )
     BSP_sensor_Init( );
             
     BSP_LED_Init( LED1 );
-  
+		
+		MX_I2C1_Init();
 
     McuInitialized = true;
   }
