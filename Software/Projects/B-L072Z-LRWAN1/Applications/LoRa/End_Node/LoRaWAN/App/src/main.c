@@ -245,6 +245,7 @@ int main( void )
   /* USER CODE BEGIN 1 */
 	
 	
+	// set LED pin high
 	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
 
 	
@@ -273,6 +274,8 @@ int main( void )
   
   LoraStartTx( TX_ON_TIMER) ;
   
+	
+	// Infinite loop
   while( 1 )
   {
     if (AppProcessRequest==LORA_SET)
@@ -303,6 +306,7 @@ int main( void )
     ENABLE_IRQ();
     
     /* USER CODE BEGIN 2 */
+	
     /* USER CODE END 2 */
   }
 } // END main()
