@@ -52,9 +52,13 @@
 #define CAYENNE_LPP
 #define LPP_DATATYPE_DIGITAL_INPUT  0x0
 #define LPP_DATATYPE_DIGITAL_OUTPUT 0x1
+#define LPP_DATATYPE_ANALOG_INPUT   0x2
 #define LPP_DATATYPE_HUMIDITY       0x68
 #define LPP_DATATYPE_TEMPERATURE    0x67
 #define LPP_DATATYPE_BAROMETER      0x73
+#define LPP_DATATYPE_GPSLOCATION    0x88
+#define LPP_DATATYPE_ACCELEROMETER  0x71
+#define LPP_DATATYPE_GPSTIME        0x85
 #define LPP_APP_PORT 99
 /*!
  * Defines the application data transmission duty cycle. 5s, value in [ms].
@@ -366,8 +370,8 @@ static void Send( void* context )
 
   batteryLevel = HW_GetBatteryLevel( );                     /* 1 (very low) to 254 (fully charged) */
 
-  AppData.Port = LPP_APP_PORT;
-
+   AppData.Port = LPP_APP_PORT;
+  
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_BAROMETER;
   AppData.Buff[i++] = ( pressure >> 8 ) & 0xFF;
@@ -379,15 +383,48 @@ static void Send( void* context )
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_HUMIDITY;
   AppData.Buff[i++] = humidity & 0xFF;
+
+  
+#if defined( REGION_US915 ) || defined ( REGION_AU915 )
+  if(PlatformStatus.s.LORA_DR > DR_3)
+  {
+#endif //defined( REGION_US915 ) || defined ( REGION_AU915 )
+  AppData.Buff[i++] = cchannel++;
+  AppData.Buff[i++] = LPP_DATATYPE_GPSLOCATION;
+  AppData.Buff[i++] = ( GPS_UBX_latitude >> 24 ) & 0xFF; 
+  AppData.Buff[i++] = ( GPS_UBX_latitude >> 16 ) & 0xFF;
+  AppData.Buff[i++] = ( GPS_UBX_latitude >> 8 ) & 0xFF;
+  AppData.Buff[i++] = ( GPS_UBX_longitude >> 24 ) & 0xFF;
+  AppData.Buff[i++] = ( GPS_UBX_longitude >> 16 ) & 0xFF;
+  AppData.Buff[i++] = ( GPS_UBX_longitude >> 8) & 0xFF;
+  AppData.Buff[i++] = ( GPSaltitude >> 16 ) & 0xFF; 
+  AppData.Buff[i++] = ( GPSaltitude >> 8 ) & 0xFF;
+  AppData.Buff[i++] = GPSaltitude & 0xFF;
+#if defined( REGION_US915 ) || defined ( REGION_AU915 )
+  }
+#endif //defined( REGION_US915 ) || defined ( REGION_AU915 )
+  
 #if defined( REGION_US915 ) || defined ( REGION_AU915 )
   /* The maximum payload size does not allow to send more data for lowest DRs */
+	UNUSED(battery_voltage);
 #else
   AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_INPUT; 
-  AppData.Buff[i++] = batteryLevel*100/254;
+  AppData.Buff[i++] = LPP_DATATYPE_ANALOG_INPUT;
+  AppData.Buff[i++] = ( battery_voltage >> 8 ) & 0xFF;
+  AppData.Buff[i++] = battery_voltage & 0xFF;
+  
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 
   AppData.Buff[i++] = AppLedStateOn;
+  
+
+	AppData.Buff[i++] = cchannel++;
+	AppData.Buff[i++] = LPP_DATATYPE_GPSTIME;
+	AppData.Buff[i++] = ((epoch_value>>24) & 0xFF);  // MSB value
+	AppData.Buff[i++] = ((epoch_value>>16) & 0xFF);   
+	AppData.Buff[i++] = ((epoch_value>>8) & 0xFF);   
+	AppData.Buff[i++] = (epoch_value & 0xFF);        // LSB value
+  
 #endif  /* REGION_XX915 */
 #else  /* not CAYENNE_LPP */
 
