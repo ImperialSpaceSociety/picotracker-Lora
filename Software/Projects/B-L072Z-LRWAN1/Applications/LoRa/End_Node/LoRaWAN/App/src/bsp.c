@@ -32,6 +32,8 @@
 #define STSOP_LATTITUDE ((float) 43.618622 )
 #define STSOP_LONGITUDE ((float) 7.051415  )
 #define MAX_GPS_POS ((int32_t) 8388607  ) // 2^23 - 1
+#define BATTERY_ADC_CHANNEL             ADC_CHANNEL_5
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -87,6 +89,38 @@ void  BSP_sensor_Init( void  )
 
 #endif
     /* USER CODE END 6 */
+}
+
+
+/**
+  * @brief It measures the battery voltage by returning the value in mV
+  * @param none
+  * @retval uint16_t The battery voltage value in mV
+  */
+uint16_t BSP_GetBatteryLevel16( void )
+{
+  #define VDDA_VREFINT_CAL            ((uint32_t) 3000)        
+  #define VREFINT_CAL       ((uint16_t*) ((uint32_t) 0x1FF80078))
+
+  uint16_t batteryLevel = 0;
+  uint16_t measuredLevel = 0;
+  uint16_t nVrefIntLevel = 0;
+  float batteryVoltage = 0;
+  float nVddValue = 0;
+  
+
+  measuredLevel = HW_AdcReadChannel( BATTERY_ADC_CHANNEL ); 
+
+
+  
+  nVrefIntLevel = HW_AdcReadChannel( ADC_CHANNEL_VREFINT ); 
+  nVddValue = (( (uint32_t) VDDA_VREFINT_CAL * (*VREFINT_CAL ) )/ nVrefIntLevel);
+  
+  batteryVoltage =  ((( (float)(measuredLevel) * nVddValue/*3300*/) / 4096) * RESITOR_DIVIDER);
+  
+  batteryLevel = (uint16_t)(batteryVoltage / 1.0);
+  
+  return batteryLevel;
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

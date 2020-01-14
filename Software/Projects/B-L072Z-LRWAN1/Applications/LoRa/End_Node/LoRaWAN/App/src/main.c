@@ -178,7 +178,6 @@ uint8_t GPSsecond													= 0;
 uint8_t GPSday														= 0;
 uint8_t GPSmonth													= 0;
 uint16_t GPSyear													= 0;
-uint32_t ITOW                             = 0;
 
 uint8_t GPSsats														= 0;
 uint8_t GPSfix_type														= 0;
@@ -293,7 +292,7 @@ int main( void )
 			
 
 	    /*Send*/
-      Send( NULL );
+      Send( NULL ); // Here lies the function to read sensor and GPS, parse and send it
     }
 	if (LoraMacProcessRequest==LORA_SET)
     {
@@ -301,6 +300,10 @@ int main( void )
       LoraMacProcessRequest=LORA_RESET;
       LoRaMacProcess( );
     }
+		
+
+
+		
     /*If a flag is set at this point, mcu must not enter low power and must loop*/
     DISABLE_IRQ( );
     
@@ -342,9 +345,12 @@ static void Send( void* context )
   uint16_t pressure = 0;
   int16_t temperature = 0;
   uint16_t humidity = 0;
-  uint8_t batteryLevel;
   sensor_t sensor_data;
-  
+  //int32_t latitude=0, longitude = 0, altitudeGps=0;
+  //int32_t epoch_value =0;
+  uint16_t battery_level16;
+  uint16_t battery_voltage;
+
   if ( LORA_JoinStatus () != LORA_SET)
   {
     /*Not joined, try again later*/
@@ -363,15 +369,20 @@ static void Send( void* context )
   BSP_sensor_Read( &sensor_data );
 
 #ifdef CAYENNE_LPP
+	
+	/* Evaluate battery level */
+  //battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
   uint8_t cchannel=0;
   temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
   pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
   humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
-  uint32_t i = 0;
+  battery_voltage = (uint16_t) (battery_level16/10);               /* Battery level expressed in hundreds of mV */
 
-  batteryLevel = HW_GetBatteryLevel( );                     /* 1 (very low) to 254 (fully charged) */
+	uint32_t i = 0;
 
-   AppData.Port = LPP_APP_PORT;
+
+  
+  AppData.Port = LPP_APP_PORT;
   
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_BAROMETER;
@@ -381,9 +392,11 @@ static void Send( void* context )
   AppData.Buff[i++] = LPP_DATATYPE_TEMPERATURE; 
   AppData.Buff[i++] = ( temperature >> 8 ) & 0xFF;
   AppData.Buff[i++] = temperature & 0xFF;
-  AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_HUMIDITY;
-  AppData.Buff[i++] = humidity & 0xFF;
+	
+	// TO be uncommented if humidity value is recorded
+//  AppData.Buff[i++] = cchannel++;
+//  AppData.Buff[i++] = LPP_DATATYPE_HUMIDITY;
+//  AppData.Buff[i++] = humidity & 0xFF;
 
   
 #if defined( REGION_US915 ) || defined ( REGION_AU915 )
@@ -405,6 +418,8 @@ static void Send( void* context )
   }
 #endif //defined( REGION_US915 ) || defined ( REGION_AU915 )
   
+	
+	
 #if defined( REGION_US915 ) || defined ( REGION_AU915 )
   /* The maximum payload size does not allow to send more data for lowest DRs */
 	UNUSED(battery_voltage);
@@ -418,13 +433,7 @@ static void Send( void* context )
   AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 
   AppData.Buff[i++] = AppLedStateOn;
   
-
-	AppData.Buff[i++] = cchannel++;
-	AppData.Buff[i++] = LPP_DATATYPE_GPSTIME;
-	AppData.Buff[i++] = ((ITOW>>24) & 0xFF);  // MSB value  TODO: verify if ITOW has been added in the right way around
-	AppData.Buff[i++] = ((ITOW>>16) & 0xFF);   
-	AppData.Buff[i++] = ((ITOW>>8) & 0xFF);   
-	AppData.Buff[i++] = (ITOW & 0xFF);        // LSB value
+	
   
 #endif  /* REGION_XX915 */
 #else  /* not CAYENNE_LPP */

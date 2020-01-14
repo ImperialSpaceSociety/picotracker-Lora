@@ -422,6 +422,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
     {
         if(UBLOX_verify_checksum(buffer, 92) || UBLOX_verify_checksum(buffer, 100))
         {
+											
             // YEAR, MONTH, DAY
             GPSyear = (uint16_t)buffer[10] | (uint16_t)buffer[11] << 8;
             GPSmonth = buffer[12];

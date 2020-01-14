@@ -53,6 +53,12 @@ typedef struct{
 } sensor_t;
 
 
+
+
+#define RESITOR_DIVIDER_PROD                    ((100000.0+100000.0)/100000.0)
+#define RESITOR_DIVIDER                         (float)(RESITOR_DIVIDER_PROD)
+	
+
 /* Exported constants --------------------------------------------------------*/
 /* External variables --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
@@ -72,6 +78,15 @@ void  BSP_sensor_Init( void  );
  * @retval sensor_data
  */
 void BSP_sensor_Read( sensor_t *sensor_data);
+
+
+
+/**
+  * @brief It measures the battery voltage by returning the value in mV
+  * @param none
+  * @retval uint16_t The battery voltage value in mV
+  */
+uint16_t BSP_GetBatteryLevel16( void );
 
 #ifdef __cplusplus
 }
