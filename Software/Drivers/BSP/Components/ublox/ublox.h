@@ -249,6 +249,8 @@ extern uint8_t GPSsecond;										// for both UBX and NMEA
 extern uint8_t GPSday;											// for both UBX and NMEA
 extern uint8_t GPSmonth;										// for both UBX and NMEA
 extern uint16_t GPSyear;										// for both UBX and NMEA
+extern uint32_t ITOW;
+
 
 extern uint8_t GPSsats;											// for both UBX and NMEA
 extern uint8_t GPSfix_type;											// for both UBX and NMEA

@@ -178,6 +178,7 @@ uint8_t GPSsecond													= 0;
 uint8_t GPSday														= 0;
 uint8_t GPSmonth													= 0;
 uint16_t GPSyear													= 0;
+uint32_t ITOW                             = 0;
 
 uint8_t GPSsats														= 0;
 uint8_t GPSfix_type														= 0;
@@ -410,7 +411,7 @@ static void Send( void* context )
 #else
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_ANALOG_INPUT;
-  AppData.Buff[i++] = ( battery_voltage >> 8 ) & 0xFF;
+  AppData.Buff[i++] = ( battery_voltage >> 8 ) & 0xFF; // TODO: read battery ADC
   AppData.Buff[i++] = battery_voltage & 0xFF;
   
   AppData.Buff[i++] = cchannel++;
@@ -420,10 +421,10 @@ static void Send( void* context )
 
 	AppData.Buff[i++] = cchannel++;
 	AppData.Buff[i++] = LPP_DATATYPE_GPSTIME;
-	AppData.Buff[i++] = ((epoch_value>>24) & 0xFF);  // MSB value
-	AppData.Buff[i++] = ((epoch_value>>16) & 0xFF);   
-	AppData.Buff[i++] = ((epoch_value>>8) & 0xFF);   
-	AppData.Buff[i++] = (epoch_value & 0xFF);        // LSB value
+	AppData.Buff[i++] = ((ITOW>>24) & 0xFF);  // MSB value  TODO: verify if ITOW has been added in the right way around
+	AppData.Buff[i++] = ((ITOW>>16) & 0xFF);   
+	AppData.Buff[i++] = ((ITOW>>8) & 0xFF);   
+	AppData.Buff[i++] = (ITOW & 0xFF);        // LSB value
   
 #endif  /* REGION_XX915 */
 #else  /* not CAYENNE_LPP */
