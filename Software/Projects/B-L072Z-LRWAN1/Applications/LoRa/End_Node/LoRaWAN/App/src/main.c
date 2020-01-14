@@ -49,7 +49,7 @@
 /*!
  * CAYENNE_LPP is myDevices Application server.
  */
-//#define CAYENNE_LPP
+#define CAYENNE_LPP
 #define LPP_DATATYPE_DIGITAL_INPUT  0x0
 #define LPP_DATATYPE_DIGITAL_OUTPUT 0x1
 #define LPP_DATATYPE_HUMIDITY       0x68
@@ -59,7 +59,7 @@
 /*!
  * Defines the application data transmission duty cycle. 5s, value in [ms].
  */
-#define APP_TX_DUTYCYCLE                            10000
+#define APP_TX_DUTYCYCLE                            20000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -200,10 +200,10 @@ int32_t GPSaltitude_L											= 0;
 uint32_t fixAttemptCount                  = 0;
 uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 
-// Temperature Pressure variables
-double Pressure; // compensated pressure value
-double Temperature; // compensated temperature value
 
+// Temp pressure
+double PRESSURE_Value; // compensated pressure value
+double TEMPERATURE_Value; // compensated temperature value
 
 // GEOFENCE variables
 uint32_t GEOFENCE_LoRa_frequency					= 0;
@@ -250,7 +250,7 @@ int main( void )
 
 	
 	// Setup pressure and temperature sensor
-	ms5607_Init();
+	//ms5607_Init(); // Now initialised in bsp.c . Need to verify if it works
 
 	// GPS SETUP
 	setup_GPS();
@@ -280,9 +280,14 @@ int main( void )
   {
     if (AppProcessRequest==LORA_SET)
     {
+			
+			// MEDAD: It looks like it transmits after entering here
+			
       /*reset notification flag*/
       AppProcessRequest=LORA_RESET;
-	  /*Send*/
+			
+
+	    /*Send*/
       Send( NULL );
     }
 	if (LoraMacProcessRequest==LORA_SET)
@@ -306,7 +311,7 @@ int main( void )
     ENABLE_IRQ();
     
     /* USER CODE BEGIN 2 */
-	
+
     /* USER CODE END 2 */
   }
 } // END main()

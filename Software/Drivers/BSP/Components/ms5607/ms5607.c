@@ -206,8 +206,8 @@ void ms5607_Cal_T_P(void)
     dT = D2-C[5]*pow(2,8);
     OFF = C[2]*pow(2,17)+dT*C[4]/pow(2,6);
     SENS = C[1]*pow(2,16)+dT*C[3]/pow(2,7);
-    Temperature =(2000+(dT*C[6])/pow(2,23))/100;
-	  Pressure =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
+    TEMPERATURE_Value =(2000+(dT*C[6])/pow(2,23))/100;
+	  PRESSURE_Value =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
 	  
 
 }

@@ -23,24 +23,7 @@
 #include "hw.h"
 #include "timeServer.h"
 #include "bsp.h"
-#if defined(LRWAN_NS1)
-#include "lrwan_ns1_humidity.h"
-#include "lrwan_ns1_pressure.h"
-#include "lrwan_ns1_temperature.h"
-#else  /* not LRWAN_NS1 */
-#if defined(SENSOR_ENABLED)
-#if defined (X_NUCLEO_IKS01A1)
-#warning "Do not forget to select X_NUCLEO_IKS01A1 files group instead of X_NUCLEO_IKS01A2"
-#include "x_nucleo_iks01a1_humidity.h"
-#include "x_nucleo_iks01a1_pressure.h"
-#include "x_nucleo_iks01a1_temperature.h"
-#else  /* not X_NUCLEO_IKS01A1 */
-#include "x_nucleo_iks01a2_humidity.h"
-#include "x_nucleo_iks01a2_pressure.h"
-#include "x_nucleo_iks01a2_temperature.h"
-#endif  /* X_NUCLEO_IKS01A1 */
-#endif  /* SENSOR_ENABLED */
-#endif  /* LRWAN_NS1 */
+#include "ms5607.h"
 
 
 
@@ -64,16 +47,18 @@ void *PRESSURE_handle = NULL;
 void BSP_sensor_Read( sensor_t *sensor_data)
 {
   /* USER CODE BEGIN 5 */
-  float HUMIDITY_Value = 0;
-  float TEMPERATURE_Value = 0;
-  float PRESSURE_Value = 0;
 
-#if defined(SENSOR_ENABLED) || defined (LRWAN_NS1)
-  BSP_HUMIDITY_Get_Hum(HUMIDITY_handle, &HUMIDITY_Value);
-  BSP_TEMPERATURE_Get_Temp(TEMPERATURE_handle, &TEMPERATURE_Value);
-  BSP_PRESSURE_Get_Press(PRESSURE_handle, &PRESSURE_Value);
-#endif  
-  sensor_data->humidity    = HUMIDITY_Value;
+	MS5607_get_temp_pressure();
+	
+	PRINTF("Temperature degrees C: "); 
+	PRINTF("%lf", TEMPERATURE_Value); 
+	PRINTF("\r\n"); 
+	PRINTF("Pressure mBar: "); 
+	PRINTF("%lf", PRESSURE_Value); 
+	PRINTF("\r\n");
+	
+	
+  sensor_data->humidity    = 34;
   sensor_data->temperature = TEMPERATURE_Value;
   sensor_data->pressure    = PRESSURE_Value;
   
@@ -88,14 +73,18 @@ void  BSP_sensor_Init( void  )
 
 #if defined(SENSOR_ENABLED) || defined (LRWAN_NS1)
   /* Initialize sensors */
-  BSP_HUMIDITY_Init( HTS221_H_0, &HUMIDITY_handle );
-  BSP_TEMPERATURE_Init( HTS221_T_0, &TEMPERATURE_handle );
-  BSP_PRESSURE_Init( PRESSURE_SENSORS_AUTO, &PRESSURE_handle );
-  
-  /* Enable sensors */
-  BSP_HUMIDITY_Sensor_Enable( HUMIDITY_handle );
-  BSP_TEMPERATURE_Sensor_Enable( TEMPERATURE_handle );
-  BSP_PRESSURE_Sensor_Enable( PRESSURE_handle );
+//  BSP_HUMIDITY_Init( HTS221_H_0, &HUMIDITY_handle );
+//  BSP_TEMPERATURE_Init( HTS221_T_0, &TEMPERATURE_handle );
+//  BSP_PRESSURE_Init( PRESSURE_SENSORS_AUTO, &PRESSURE_handle );
+//  
+//  /* Enable sensors */
+//  BSP_HUMIDITY_Sensor_Enable( HUMIDITY_handle );
+//  BSP_TEMPERATURE_Sensor_Enable( TEMPERATURE_handle );
+//  BSP_PRESSURE_Sensor_Enable( PRESSURE_handle );
+	
+	
+		ms5607_Init();
+
 #endif
     /* USER CODE END 6 */
 }
