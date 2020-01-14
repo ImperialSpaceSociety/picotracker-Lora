@@ -112,11 +112,12 @@ void HW_Init( void )
     
     TraceInit( );
     
+		MX_I2C1_Init();
+
     BSP_sensor_Init( );
             
     BSP_LED_Init( LED1 );
 		
-		MX_I2C1_Init();
 
     McuInitialized = true;
   }

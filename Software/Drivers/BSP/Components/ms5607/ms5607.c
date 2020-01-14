@@ -46,6 +46,7 @@ uint8_t ms5607_Init(void)
 		uint8_t factory_crc;
 
     cmd_reset(); // reset IC
+		HAL_Delay(20);
 
     for (i=0; i<8; i++) {
         C[i]=cmd_prom(i);   // read coefficients

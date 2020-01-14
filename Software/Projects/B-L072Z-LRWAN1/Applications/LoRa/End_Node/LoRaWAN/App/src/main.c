@@ -301,9 +301,6 @@ int main( void )
       LoRaMacProcess( );
     }
 		
-
-
-		
     /*If a flag is set at this point, mcu must not enter low power and must loop*/
     DISABLE_IRQ( );
     
@@ -371,7 +368,7 @@ static void Send( void* context )
 #ifdef CAYENNE_LPP
 	
 	/* Evaluate battery level */
-  //battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
+  battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
   uint8_t cchannel=0;
   temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
   pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
@@ -432,9 +429,7 @@ static void Send( void* context )
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 
   AppData.Buff[i++] = AppLedStateOn;
-  
-	
-  
+    
 #endif  /* REGION_XX915 */
 #else  /* not CAYENNE_LPP */
 

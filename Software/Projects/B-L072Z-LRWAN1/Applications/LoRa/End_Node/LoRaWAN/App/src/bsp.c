@@ -71,24 +71,10 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 
 void  BSP_sensor_Init( void  )
 {
-  /* USER CODE BEGIN 6 */
-
-#if defined(SENSOR_ENABLED) || defined (LRWAN_NS1)
-  /* Initialize sensors */
-//  BSP_HUMIDITY_Init( HTS221_H_0, &HUMIDITY_handle );
-//  BSP_TEMPERATURE_Init( HTS221_T_0, &TEMPERATURE_handle );
-//  BSP_PRESSURE_Init( PRESSURE_SENSORS_AUTO, &PRESSURE_handle );
-//  
-//  /* Enable sensors */
-//  BSP_HUMIDITY_Sensor_Enable( HUMIDITY_handle );
-//  BSP_TEMPERATURE_Sensor_Enable( TEMPERATURE_handle );
-//  BSP_PRESSURE_Sensor_Enable( PRESSURE_handle );
-	
-	
+#if defined(SENSOR_ENABLED)
+  /* Initialize sensors */	
 		ms5607_Init();
-
 #endif
-    /* USER CODE END 6 */
 }
 
 
