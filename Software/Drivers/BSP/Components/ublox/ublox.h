@@ -42,7 +42,8 @@ GPS_UBX_error_bitfield
 	NMEA	125
 */
 #define GPSBUFFER_SIZE			125
-
+#define FIX				100		// attempts to poll UBX-NAV-PVT
+#define SATS				4		// number of satellites required for positional solution
 
 /*
 	CONFIGURATION.
@@ -282,6 +283,7 @@ extern uint32_t GPS_NMEA_longitude_dec_L;						// LAST valid value (in case of l
 
 extern uint8_t ack; // 1 is ack, 0 is nak
 
+extern uint32_t fixAttemptCount;
 
 /* I2C related*/
 extern I2C_HandleTypeDef hi2c1;
@@ -309,6 +311,6 @@ uint32_t UBLOX_get_version(uint8_t *buffer);
 uint8_t setup_GPS(void);
 uint8_t Backup_GPS(void);
 uint8_t Wakeup_GPS(void);
-
+uint8_t get_location_fix(void);
 
 #endif // UBLOX_H

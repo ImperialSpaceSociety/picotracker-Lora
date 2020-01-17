@@ -11,7 +11,8 @@
 #include <stdio.h>
 #include "stm32l0xx_hal.h"
 #include "main.h"
-
+#include <string.h>
+#include "hw.h"
 
 
 /* 
@@ -34,6 +35,8 @@ uint8_t Wakeup_GPS(){
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
 	HAL_Delay(1000);                                                          // wait for things to be setup
 	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode
+	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
+
 	HAL_Delay(1000);                                                          // wait for things to be setup
 	
 	return 0;
@@ -49,13 +52,70 @@ uint8_t setup_GPS(){
 	
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
 	HAL_Delay(1000);                                                              // Wait for things to be setup
+	
+	UBLOX_send_message(restore_default_config, sizeof(restore_default_config));	  // reset default gps config
+
 	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
-	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
+	//UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
-	UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
+	//UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
 	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
 	return 0;
 }
+
+
+uint8_t get_location_fix(){
+	// GET GPS FIX
+	fixAttemptCount = 0;
+	
+	setup_GPS();
+	Wakeup_GPS();
+
+
+	while(1)				// poll UBX-NAV-PVT until the module has fix
+	{
+
+		GPSfix_type = 0;
+		GPSfix_OK = 0;
+		GPSsats = 0;
+
+
+		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);           // get fix info UBX-NAV-PVT
+
+		if(GPSfix_type == 3 && GPSfix_OK == 1 && GPSsats >= SATS)           // check if we have a good fix
+		{ 
+			//Backup_GPS();
+			return 1;
+		}       
+
+		fixAttemptCount++;
+		PRINTF("%d",GPSsats);
+		PRINTF("\r\n"); 
+
+		HAL_Delay(2000);
+
+
+		/* If fix taking too long, reset and re-initialize GPS module. 
+		 * It does a forced hardware reset and recovers from a warm start
+		 * Reset only after 70 tries
+		 */
+		if(fixAttemptCount > FIX)														
+		{
+			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module. warm start
+			setup_GPS();                                                    // configure gps module again
+			GPSfix_type = 0;
+			GPSfix_OK = 0;
+			GPSsats = 0;
+			
+			//Backup_GPS();
+			return 0;
+
+		}
+	}
+
+}
+
+
 
 
 /*

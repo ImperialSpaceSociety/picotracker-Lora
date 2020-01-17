@@ -24,7 +24,7 @@
 #include "timeServer.h"
 #include "bsp.h"
 #include "ms5607.h"
-
+#include "ublox.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,12 +51,24 @@ void BSP_sensor_Read( sensor_t *sensor_data)
   /* USER CODE BEGIN 5 */
 
 	MS5607_get_temp_pressure();
+	get_location_fix();
 	
+	PRINTF("Just read sensor values");
+	PRINTF("\r\n"); 
 	PRINTF("Temperature degrees C: "); 
 	PRINTF("%lf", TEMPERATURE_Value); 
 	PRINTF("\r\n"); 
 	PRINTF("Pressure mBar: "); 
 	PRINTF("%lf", PRESSURE_Value); 
+	PRINTF("\r\n");
+	PRINTF("Longitude: "); 
+	PRINTF("%lf", GPS_UBX_longitude_Float); 
+	PRINTF("\r\n"); 
+	PRINTF("Latitude: "); 
+	PRINTF("%lf", GPS_UBX_latitude_Float); 
+	PRINTF("\r\n");
+	PRINTF("Latitude: "); 
+	PRINTF("%lf", GPSaltitude_L	); 
 	PRINTF("\r\n");
 	
 	
@@ -74,6 +86,11 @@ void  BSP_sensor_Init( void  )
 #if defined(SENSOR_ENABLED)
   /* Initialize sensors */	
 		ms5607_Init();
+	
+	 //GPS SETUP
+	 setup_GPS();
+	 // GPS INITIAL BACKUP
+	 //Backup_GPS();
 #endif
 }
 

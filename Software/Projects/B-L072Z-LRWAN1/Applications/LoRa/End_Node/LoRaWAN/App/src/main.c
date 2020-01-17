@@ -43,8 +43,6 @@
 #define SOLAR				0		// mV
 #define BATTERY				2500	// mV
 #define BATTERY_ON			3.0		// mV
-#define FIX					90		// attempts to poll UBX-NAV-PVT
-#define SATS				4		// number of satellites required for positional solution
 
 /*!
  * CAYENNE_LPP is myDevices Application server.
@@ -250,18 +248,18 @@ int main( void )
 	
 	
 	// set LED pin high
-	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+	//HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
 
 	
 	// Setup pressure and temperature sensor
 	//ms5607_Init(); // Now initialised in bsp.c . Need to verify if it works
 
-	// GPS SETUP
-	setup_GPS();
-	
+//	// GPS SETUP
+	//setup_GPS();
+//	
 
-	// GPS INITIAL BACKUP
-	Backup_GPS();
+//	// GPS INITIAL BACKUP
+	//Backup_GPS();
 
 	
   /* USER CODE END 1 */
