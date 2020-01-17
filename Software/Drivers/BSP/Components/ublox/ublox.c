@@ -53,12 +53,12 @@ uint8_t setup_GPS(){
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
 	HAL_Delay(1000);                                                              // Wait for things to be setup
 	
-	UBLOX_send_message(restore_default_config, sizeof(restore_default_config));	  // reset default gps config
+	//UBLOX_send_message(restore_default_config, sizeof(restore_default_config));	  // reset default gps config
 
 	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
-	//UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
+	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
-	//UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
+	UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
 	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
 	return 0;
 }
@@ -84,7 +84,7 @@ uint8_t get_location_fix(){
 
 		if(GPSfix_type == 3 && GPSfix_OK == 1 && GPSsats >= SATS)           // check if we have a good fix
 		{ 
-			//Backup_GPS();
+			Backup_GPS();
 			return 1;
 		}       
 
@@ -107,7 +107,7 @@ uint8_t get_location_fix(){
 			GPSfix_OK = 0;
 			GPSsats = 0;
 			
-			//Backup_GPS();
+			Backup_GPS();
 			return 0;
 
 		}
