@@ -15,6 +15,10 @@
 #include "hw.h"
 
 
+extern uint8_t	buffer_0xB5[1];
+extern uint8_t	buffer_0x62[1];
+extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
+
 /* 
  * GPS backup. 
  */
@@ -68,8 +72,8 @@ uint8_t get_location_fix(){
 	// GET GPS FIX
 	fixAttemptCount = 0;
 	
-	setup_GPS();
 	Wakeup_GPS();
+	setup_GPS();
 
 
 	while(1)				// poll UBX-NAV-PVT until the module has fix
@@ -82,9 +86,9 @@ uint8_t get_location_fix(){
 
 		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);           // get fix info UBX-NAV-PVT
 
-		if(GPSfix_type == 3 && GPSfix_OK == 1 && GPSsats >= SATS)           // check if we have a good fix
+		if(GPSfix_OK == 1 )           // check if we have a good fix
 		{ 
-			Backup_GPS();
+			//Backup_GPS();
 			return 1;
 		}       
 
@@ -107,7 +111,7 @@ uint8_t get_location_fix(){
 			GPSfix_OK = 0;
 			GPSsats = 0;
 			
-			Backup_GPS();
+			//Backup_GPS();
 			return 0;
 
 		}
@@ -244,15 +248,43 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
     i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
-		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), GPSbuffer, expectlen, 10000); // copy the response from I2C1_RX_buffer to GPSbuffe
+	
+		//i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), GPSbuffer, expectlen, 10000); // copy the response from I2C1_RX_buffer to GPSbuffe
 		
-		if (i2c_status != HAL_OK)
+		memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
+	
+		/* Init tickstart for timeout management*/
+	  uint32_t tickstart = 0U;
+    tickstart = HAL_GetTick();
+
+		/* set a time out for receiving a ubx message back from the GPS */
+    while ((HAL_GetTick() - tickstart) < UBX_TIMEOUT)
 		{
-			return 0;
+			/* listen for the first header char */
+			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 0xff);
+			if (buffer_0xB5[0] == 0xb5){
+				  /* now listen for the second header char */
+					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 0xff);
+					
+				  if (buffer_0x62[0] == 0x62){
+						
+						/* now that the header has been received, parse the rest of message */
+						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 0xff);
+					
+					  /* now fill GPS buffer with header+body of ubx message  */
+						GPSbuffer[0] = 0xB5;
+						GPSbuffer[1] = 0x62;
+						for (uint8_t i=0; i<115; i++) {
+								GPSbuffer[i+2]=buffer_ubx_packet_wo_header[i];
+						}
+						
+						parse_success  = parse(GPSbuffer);          // parse the response to appropriate variables
+						return parse_success;                       // 1 for successful parsing
+				}
+			}
 		}
 	
-    parse_success  = parse(GPSbuffer);          // parse the response to appropriate variables
-    return parse_success;
+		return 0;
 }
 
 
@@ -512,7 +544,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPS_UBX_latitude = (int32_t)buffer[34] | (int32_t)buffer[35] << 8 | (int32_t)buffer[36] << 16 | (int32_t)buffer[37] << 24;
             GPS_UBX_latitude_Float = (float)GPS_UBX_latitude / 10000000.0;
             
-            GPSaltitude = (int32_t)buffer[42] | (int32_t)buffer[43] << 8 | (int32_t)buffer[44] << 16 | (int32_t)buffer[45] << 24;
+            GPSaltitude = (int32_t)buffer[38] | (int32_t)buffer[39] << 8 | (int32_t)buffer[40] << 16 | (int32_t)buffer[41] << 24;
             GPSaltitude /= 1000;
             
             // GROUND SPEED, HEADING

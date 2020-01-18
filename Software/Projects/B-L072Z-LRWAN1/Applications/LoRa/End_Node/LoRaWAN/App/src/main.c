@@ -217,6 +217,10 @@ uint32_t GEOFENCE_no_tx										= 0;
 uint8_t	i2c_buffer[2];
 HAL_StatusTypeDef i2c_status;
 
+uint8_t	buffer_0xB5[1];
+uint8_t	buffer_0x62[1];
+uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
+
 
 // Battery/Solar voltage
 uint32_t VCC_ADC												= 0;
@@ -248,7 +252,7 @@ int main( void )
 	
 	
 	// set LED pin high
-	//HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
 
 	
 	// Setup pressure and temperature sensor
@@ -403,9 +407,11 @@ static void Send( void* context )
   AppData.Buff[i++] = ( GPS_UBX_latitude >> 24 ) & 0xFF; 
   AppData.Buff[i++] = ( GPS_UBX_latitude >> 16 ) & 0xFF;
   AppData.Buff[i++] = ( GPS_UBX_latitude >> 8 ) & 0xFF;
+	
   AppData.Buff[i++] = ( GPS_UBX_longitude >> 24 ) & 0xFF;
   AppData.Buff[i++] = ( GPS_UBX_longitude >> 16 ) & 0xFF;
   AppData.Buff[i++] = ( GPS_UBX_longitude >> 8) & 0xFF;
+	
   AppData.Buff[i++] = ( GPSaltitude >> 16 ) & 0xFF; 
   AppData.Buff[i++] = ( GPSaltitude >> 8 ) & 0xFF;
   AppData.Buff[i++] = GPSaltitude & 0xFF;

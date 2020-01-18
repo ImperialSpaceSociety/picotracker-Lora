@@ -44,6 +44,7 @@ GPS_UBX_error_bitfield
 #define GPSBUFFER_SIZE			125
 #define FIX				100		// attempts to poll UBX-NAV-PVT
 #define SATS				4		// number of satellites required for positional solution
+#define UBX_TIMEOUT  10000 // in milliseconds
 
 /*
 	CONFIGURATION.
@@ -80,6 +81,10 @@ static uint8_t set_power_save_mode[] =  {0xB5 ,0x62 ,0x06 ,0x11 ,0x02 ,0x00 ,0x0
 	REQUESTS.
 	Response to these messages is message specific.
 */
+	
+/* Header for every UBX message */
+static uint8_t UBX_header[2]	 = {0xB5, 0x62};
+
 
 /* NAVIGATION ENGINE					response 44 bytes */
 static uint8_t request0624[8]			= {0xB5, 0x62, 0x06, 0x24, 0x00, 0x00, 0x2A, 0x84};

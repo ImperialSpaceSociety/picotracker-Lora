@@ -67,8 +67,8 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	PRINTF("Latitude: "); 
 	PRINTF("%lf", GPS_UBX_latitude_Float); 
 	PRINTF("\r\n");
-	PRINTF("Latitude: "); 
-	PRINTF("%lf", GPSaltitude_L	); 
+	PRINTF("altitude: "); 
+	PRINTF("%lf", GPSaltitude	); 
 	PRINTF("\r\n");
 	
 	
