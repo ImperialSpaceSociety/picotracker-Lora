@@ -29,9 +29,6 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define STSOP_LATTITUDE ((float) 43.618622 )
-#define STSOP_LONGITUDE ((float) 7.051415  )
-#define MAX_GPS_POS ((int32_t) 8388607  ) // 2^23 - 1
 #define BATTERY_ADC_CHANNEL             ADC_CHANNEL_5
 
 /* Private macro -------------------------------------------------------------*/
@@ -68,16 +65,14 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	PRINTF("%lf", GPS_UBX_latitude_Float); 
 	PRINTF("\r\n");
 	PRINTF("altitude: "); 
-	PRINTF("%lf", GPSaltitude	); 
+	PRINTF("%ld", GPSaltitude	); 
 	PRINTF("\r\n");
 	
 	
   sensor_data->humidity    = 34;
   sensor_data->temperature = TEMPERATURE_Value;
   sensor_data->pressure    = PRESSURE_Value;
-  
-  sensor_data->latitude  = (int32_t) ((STSOP_LATTITUDE  * MAX_GPS_POS) /90);
-  sensor_data->longitude = (int32_t) ((STSOP_LONGITUDE  * MAX_GPS_POS )/180);
+
   /* USER CODE END 5 */
 }
 
@@ -90,7 +85,7 @@ void  BSP_sensor_Init( void  )
 	 //GPS SETUP
 	 setup_GPS();
 	 // GPS INITIAL BACKUP
-	 //Backup_GPS();
+	 Backup_GPS();
 #endif
 }
 
@@ -113,10 +108,9 @@ uint16_t BSP_GetBatteryLevel16( void )
   
 
   measuredLevel = HW_AdcReadChannel( BATTERY_ADC_CHANNEL ); 
-
-
-  
   nVrefIntLevel = HW_AdcReadChannel( ADC_CHANNEL_VREFINT ); 
+	
+	
   nVddValue = (( (uint32_t) VDDA_VREFINT_CAL * (*VREFINT_CAL ) )/ nVrefIntLevel);
   
   batteryVoltage =  ((( (float)(measuredLevel) * nVddValue/*3300*/) / 4096) * RESITOR_DIVIDER);

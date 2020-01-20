@@ -578,11 +578,6 @@
               <FilePath>..\LoRaWAN\App\src\hw_spi.c</FilePath>
             </File>
             <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LoRaWAN\App\src\main.c</FilePath>
-            </File>
-            <File>
               <FileName>vcom.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\vcom.c</FilePath>
@@ -677,6 +672,11 @@
         <Group>
           <GroupName>Middlewares/LoRaWAN/Mac/Regions</GroupName>
           <Files>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\main.c</FilePath>
+            </File>
             <File>
               <FileName>Region.c</FileName>
               <FileType>1</FileType>

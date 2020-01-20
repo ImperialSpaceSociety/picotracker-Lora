@@ -373,6 +373,33 @@ uint8_t HW_GetBatteryLevel( void )
   return batteryLevel;
 }
 
+
+/**
+  * @brief This function return the battery level
+  * @param none
+  * @retval the battery level  in mV
+  */
+uint16_t HW_GetBatteryLevelmV( void ) 
+{
+  uint8_t batteryLevel = 0;
+  uint16_t measuredLevel = 0;
+  uint32_t batteryLevelmV;
+
+  measuredLevel = HW_AdcReadChannel( ADC_CHANNEL_VREFINT ); 
+
+  if (measuredLevel == 0)
+  {
+    batteryLevelmV = 0;
+  }
+  else
+  {
+    batteryLevelmV= (( (uint32_t) VDDA_VREFINT_CAL * (*VREFINT_CAL ) )/ measuredLevel);
+  }
+
+  return batteryLevelmV;
+}
+
+
 /**
   * @brief This function initializes the ADC
   * @param none

@@ -45,6 +45,15 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   return HAL_OK;
 }
 
+
+/**
+  * @brief Over riding HAL_GetTick to use RTC?
+  * @brief  https://community.st.com/s/question/0D50X0000B45rDQSQY/halgettick-doesnt-works-in-examples-provided-for-bl072z-lora-board
+  */
+//uint32_t HAL_GetTick(void){
+//	return HW_RTC_Tick2ms(HW_RTC_GetTimerValue());
+//}
+
 /**
   * @brief This function provides delay (in ms)
   * @param Delay: specifies the delay time length, in milliseconds.

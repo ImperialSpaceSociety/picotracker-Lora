@@ -38,11 +38,6 @@
  *  GPS related defines
 */
 
-#define SHORT_CYCLE			46		// value / 0.83 = ~duration of one main loop in seconds (Normal mode)
-#define LONG_CYCLE			96		// value / 0.83 = ~duration of one main loop in seconds (Power Saving mode)
-#define SOLAR				0		// mV
-#define BATTERY				2500	// mV
-#define BATTERY_ON			3.0		// mV
 
 /*!
  * CAYENNE_LPP is myDevices Application server.
@@ -61,7 +56,7 @@
 /*!
  * Defines the application data transmission duty cycle. 5s, value in [ms].
  */
-#define APP_TX_DUTYCYCLE                            20000
+#define APP_TX_DUTYCYCLE                           10000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -255,16 +250,6 @@ int main( void )
 	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
 
 	
-	// Setup pressure and temperature sensor
-	//ms5607_Init(); // Now initialised in bsp.c . Need to verify if it works
-
-//	// GPS SETUP
-	//setup_GPS();
-//	
-
-//	// GPS INITIAL BACKUP
-	//Backup_GPS();
-
 	
   /* USER CODE END 1 */
   
@@ -341,14 +326,15 @@ static void LORA_HasJoined( void )
 static void Send( void* context )
 {
   /* USER CODE BEGIN 3 */
-  uint16_t pressure = 0;
-  int16_t temperature = 0;
-  uint16_t humidity = 0;
+	uint16_t battery_level16 = 0;
+	uint16_t battery_level_vdd = 0;
+  uint16_t cayenne_pressure = 0;
+  int16_t cayenne_temperature = 0;
+  //uint16_t cayenne_humidity = 0;
   sensor_t sensor_data;
-  //int32_t latitude=0, longitude = 0, altitudeGps=0;
+  int32_t cayenne_latitude=0, cayenne_longitude = 0, cayenne_altitudeGps=0;
   //int32_t epoch_value =0;
-  uint16_t battery_level16;
-  uint16_t battery_voltage;
+  uint16_t cayenne_battery_voltage;
 
   if ( LORA_JoinStatus () != LORA_SET)
   {
@@ -370,51 +356,59 @@ static void Send( void* context )
 #ifdef CAYENNE_LPP
 	
 	/* Evaluate battery level */
-  battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
   uint8_t cchannel=0;
-  temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
-  pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
-  humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
-  battery_voltage = (uint16_t) (battery_level16/10);               /* Battery level expressed in hundreds of mV */
+	battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
+	battery_level_vdd = (uint16_t)HW_GetBatteryLevelmV();
 
+  cayenne_temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
+  cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
+  //cayenne_humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
+  cayenne_battery_voltage = ( uint16_t )battery_level16/10;               /* Battery level expressed in hundreds of mV */
+	//cayenne_battery_voltage = ( uint16_t )battery_level_vdd*100;               /* Battery level expressed in hundreds of mV */
+
+	cayenne_altitudeGps = GPSaltitude*100;
+	cayenne_latitude = GPS_UBX_latitude_Float * 10000;
+	cayenne_longitude = GPS_UBX_longitude_Float * 10000;
+	
 	uint32_t i = 0;
-
-
   
   AppData.Port = LPP_APP_PORT;
   
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_BAROMETER;
-  AppData.Buff[i++] = ( pressure >> 8 ) & 0xFF;
-  AppData.Buff[i++] = pressure & 0xFF;
+  AppData.Buff[i++] = ( cayenne_pressure >> 8 ) & 0xFF;
+  AppData.Buff[i++] = cayenne_pressure & 0xFF;
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_TEMPERATURE; 
-  AppData.Buff[i++] = ( temperature >> 8 ) & 0xFF;
-  AppData.Buff[i++] = temperature & 0xFF;
+  AppData.Buff[i++] = ( cayenne_temperature >> 8 ) & 0xFF;
+  AppData.Buff[i++] = cayenne_temperature & 0xFF;
 	
 	// TO be uncommented if humidity value is recorded
 //  AppData.Buff[i++] = cchannel++;
 //  AppData.Buff[i++] = LPP_DATATYPE_HUMIDITY;
-//  AppData.Buff[i++] = humidity & 0xFF;
+//  AppData.Buff[i++] = cayenne_humidity & 0xFF;
 
   
 #if defined( REGION_US915 ) || defined ( REGION_AU915 )
   if(PlatformStatus.s.LORA_DR > DR_3)
   {
 #endif //defined( REGION_US915 ) || defined ( REGION_AU915 )
-  AppData.Buff[i++] = cchannel++;
+  
+	// using reference https://github.com/MicrochipTech/Location-Tracking-using-SAMR34-and-UBLOX-GPS-Module/blob/master/src/CayenneLPP/lpp.c
+	AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_GPSLOCATION;
-  AppData.Buff[i++] = ( GPS_UBX_latitude >> 24 ) & 0xFF; 
-  AppData.Buff[i++] = ( GPS_UBX_latitude >> 16 ) & 0xFF;
-  AppData.Buff[i++] = ( GPS_UBX_latitude >> 8 ) & 0xFF;
+  AppData.Buff[i++] = cayenne_latitude >> 16;
+  AppData.Buff[i++] = cayenne_latitude >> 8;
+  AppData.Buff[i++] = cayenne_latitude;
 	
-  AppData.Buff[i++] = ( GPS_UBX_longitude >> 24 ) & 0xFF;
-  AppData.Buff[i++] = ( GPS_UBX_longitude >> 16 ) & 0xFF;
-  AppData.Buff[i++] = ( GPS_UBX_longitude >> 8) & 0xFF;
+  AppData.Buff[i++] = cayenne_longitude >> 16;
+  AppData.Buff[i++] = cayenne_longitude >> 8;
+  AppData.Buff[i++] = cayenne_longitude;
 	
-  AppData.Buff[i++] = ( GPSaltitude >> 16 ) & 0xFF; 
-  AppData.Buff[i++] = ( GPSaltitude >> 8 ) & 0xFF;
-  AppData.Buff[i++] = GPSaltitude & 0xFF;
+	
+  AppData.Buff[i++] = ( cayenne_altitudeGps >> 16 ) & 0xFF; 
+  AppData.Buff[i++] = ( cayenne_altitudeGps >> 8 ) & 0xFF;
+  AppData.Buff[i++] = cayenne_altitudeGps & 0xFF;
 #if defined( REGION_US915 ) || defined ( REGION_AU915 )
   }
 #endif //defined( REGION_US915 ) || defined ( REGION_AU915 )
@@ -427,8 +421,8 @@ static void Send( void* context )
 #else
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_ANALOG_INPUT;
-  AppData.Buff[i++] = ( battery_voltage >> 8 ) & 0xFF; // TODO: read battery ADC
-  AppData.Buff[i++] = battery_voltage & 0xFF;
+  AppData.Buff[i++] = ( cayenne_battery_voltage >> 8 ) & 0xFF; // TODO: read battery ADC
+  AppData.Buff[i++] = cayenne_battery_voltage & 0xFF;
   
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 

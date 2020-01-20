@@ -95,6 +95,16 @@ uint16_t HW_GetTemperatureLevel( void );
  * \retval value  battery level ( 0: very low, 254: fully charged )
  */
 uint8_t HW_GetBatteryLevel( void );
+
+
+/*!
+ * \brief Get the current battery level in voltage
+ *
+ * \retval value  battery level mV
+ */
+uint16_t HW_GetBatteryLevelmV( void );	
+	
+	
 /*!
  * \brief Initializes the boards peripherals.
  */

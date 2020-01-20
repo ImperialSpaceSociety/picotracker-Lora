@@ -39,10 +39,7 @@ uint8_t Wakeup_GPS(){
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
 	HAL_Delay(1000);                                                          // wait for things to be setup
 	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode
-	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
-
-	HAL_Delay(1000);                                                          // wait for things to be setup
-	
+	//UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration	
 	return 0;
 
 }
@@ -63,18 +60,31 @@ uint8_t setup_GPS(){
 	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
 	UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
-	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
+	//UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
 	return 0;
 }
 
 
 uint8_t get_location_fix(){
-	// GET GPS FIX
-	fixAttemptCount = 0;
 	
-	Wakeup_GPS();
-	setup_GPS();
+	// GET GPS FIX
 
+	// wakeup gps
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
+	HAL_Delay(1000);
+	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode	
+	
+	// Check if we are in airbourne mode
+	GPSnavigation = 0;
+	
+	UBLOX_request_UBX(request0624, 8, 44, UBLOX_parse_0624);
+	
+	if(GPSnavigation != 6)														// verify Dynamic Model: airborne with <1g acceleration
+	{
+		UBLOX_request_UBX(setNAVmode, 44, 10, UBLOX_parse_ACK);					// if not, set it
+	}
+
+	fixAttemptCount = 0;
 
 	while(1)				// poll UBX-NAV-PVT until the module has fix
 	{
@@ -86,9 +96,9 @@ uint8_t get_location_fix(){
 
 		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);           // get fix info UBX-NAV-PVT
 
-		if(GPSfix_OK == 1 )           // check if we have a good fix
+		if(GPSfix_OK == 1 && GPSfix_type == 3 && GPSsats >= SATS )           // check if we have a good fix
 		{ 
-			//Backup_GPS();
+			Backup_GPS();
 			return 1;
 		}       
 
@@ -96,7 +106,6 @@ uint8_t get_location_fix(){
 		PRINTF("%d",GPSsats);
 		PRINTF("\r\n"); 
 
-		HAL_Delay(2000);
 
 
 		/* If fix taking too long, reset and re-initialize GPS module. 
@@ -106,12 +115,18 @@ uint8_t get_location_fix(){
 		if(fixAttemptCount > FIX)														
 		{
 			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module. warm start
-			setup_GPS();                                                    // configure gps module again
+			UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+			UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
+			UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
+			UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
+			//UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
+
+			// configure gps module again
 			GPSfix_type = 0;
 			GPSfix_OK = 0;
 			GPSsats = 0;
 			
-			//Backup_GPS();
+			Backup_GPS();
 			return 0;
 
 		}
@@ -247,29 +262,29 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
+	  /* Init tickstart for timeout management*/
+		uint32_t tickstart_j = 0;
+    tickstart_j = HAL_GetTick();
+
+
     i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
-	
-		//i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), GPSbuffer, expectlen, 10000); // copy the response from I2C1_RX_buffer to GPSbuffe
-		
+			
 		memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
-	
-		/* Init tickstart for timeout management*/
-	  uint32_t tickstart = 0U;
-    tickstart = HAL_GetTick();
+
 
 		/* set a time out for receiving a ubx message back from the GPS */
-    while ((HAL_GetTick() - tickstart) < UBX_TIMEOUT)
+    while ((HAL_GetTick() - tickstart_j) < UBX_TIMEOUT)
 		{
 			/* listen for the first header char */
-			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 0xff);
+			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 5);
 			if (buffer_0xB5[0] == 0xb5){
 				  /* now listen for the second header char */
-					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 0xff);
+					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 5);
 					
 				  if (buffer_0x62[0] == 0x62){
 						
 						/* now that the header has been received, parse the rest of message */
-						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 0xff);
+						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 5);
 					
 					  /* now fill GPS buffer with header+body of ubx message  */
 						GPSbuffer[0] = 0xB5;
