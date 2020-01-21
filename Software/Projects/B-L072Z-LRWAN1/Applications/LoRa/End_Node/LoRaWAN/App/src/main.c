@@ -335,6 +335,7 @@ static void Send( void* context )
   int32_t cayenne_latitude=0, cayenne_longitude = 0, cayenne_altitudeGps=0;
   //int32_t epoch_value =0;
   uint16_t cayenne_battery_voltage;
+	uint8_t cayenne_GPS_sats;
 
   if ( LORA_JoinStatus () != LORA_SET)
   {
@@ -344,16 +345,11 @@ static void Send( void* context )
   }
   
   TVL1(PRINTF("SEND REQUEST\n\r");)
-#ifndef CAYENNE_LPP
-  int32_t latitude, longitude = 0;
-  uint16_t altitudeGps = 0;
-#endif
-  
+ 
 
 
   BSP_sensor_Read( &sensor_data );
 
-#ifdef CAYENNE_LPP
 	
 	/* Evaluate battery level */
   uint8_t cchannel=0;
@@ -369,6 +365,7 @@ static void Send( void* context )
 	cayenne_altitudeGps = GPSaltitude*100;
 	cayenne_latitude = GPS_UBX_latitude_Float * 10000;
 	cayenne_longitude = GPS_UBX_longitude_Float * 10000;
+	cayenne_GPS_sats = GPSsats;
 	
 	uint32_t i = 0;
   
@@ -426,11 +423,10 @@ static void Send( void* context )
   
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 
-  AppData.Buff[i++] = AppLedStateOn;
+  AppData.Buff[i++] = cayenne_GPS_sats;
     
 #endif  /* REGION_XX915 */
 
-#endif  /* CAYENNE_LPP */
   AppData.BuffSize = i;
   
   LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
