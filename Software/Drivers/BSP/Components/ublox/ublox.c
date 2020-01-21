@@ -24,7 +24,7 @@ extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include
  */
 uint8_t Backup_GPS(){
 	
-	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode and save config. No response expected
+	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode. No response expected
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
 
 	return 0;
@@ -72,7 +72,7 @@ uint8_t get_location_fix(){
 	// wakeup gps
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
 	HAL_Delay(1000);
-	//UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode	
+	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode	
 	
 	// Check if we are in airbourne mode
 	GPSnavigation = 0;
