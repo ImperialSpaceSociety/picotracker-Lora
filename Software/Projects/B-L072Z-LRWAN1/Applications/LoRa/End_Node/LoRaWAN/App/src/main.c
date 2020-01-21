@@ -429,55 +429,12 @@ static void Send( void* context )
   AppData.Buff[i++] = AppLedStateOn;
     
 #endif  /* REGION_XX915 */
-#else  /* not CAYENNE_LPP */
 
-  temperature = ( int16_t )( sensor_data.temperature * 100 );     /* in °C * 100 */
-  pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
-  humidity    = ( uint16_t )( sensor_data.humidity * 10 );        /* in %*10     */
-  latitude = sensor_data.latitude;
-  longitude= sensor_data.longitude;
-  uint32_t i = 0;
-
-  batteryLevel = HW_GetBatteryLevel( );                     /* 1 (very low) to 254 (fully charged) */
-
-  AppData.Port = LORAWAN_APP_PORT;
-
-#if defined( REGION_US915 ) || defined ( REGION_AU915 )
-  AppData.Buff[i++] = AppLedStateOn;
-  AppData.Buff[i++] = ( pressure >> 8 ) & 0xFF;
-  AppData.Buff[i++] = pressure & 0xFF;
-  AppData.Buff[i++] = ( temperature >> 8 ) & 0xFF;
-  AppData.Buff[i++] = temperature & 0xFF;
-  AppData.Buff[i++] = ( humidity >> 8 ) & 0xFF;
-  AppData.Buff[i++] = humidity & 0xFF;
-  AppData.Buff[i++] = batteryLevel;
-  AppData.Buff[i++] = 0;
-  AppData.Buff[i++] = 0;
-  AppData.Buff[i++] = 0;
-#else  /* not REGION_XX915 */
-  AppData.Buff[i++] = AppLedStateOn;
-  AppData.Buff[i++] = ( pressure >> 8 ) & 0xFF;
-  AppData.Buff[i++] = pressure & 0xFF;
-  AppData.Buff[i++] = ( temperature >> 8 ) & 0xFF;
-  AppData.Buff[i++] = temperature & 0xFF;
-  AppData.Buff[i++] = ( humidity >> 8 ) & 0xFF;
-  AppData.Buff[i++] = humidity & 0xFF;
-  AppData.Buff[i++] = batteryLevel;
-  AppData.Buff[i++] = ( latitude >> 16 ) & 0xFF;
-  AppData.Buff[i++] = ( latitude >> 8 ) & 0xFF;
-  AppData.Buff[i++] = latitude & 0xFF;
-  AppData.Buff[i++] = ( longitude >> 16 ) & 0xFF;
-  AppData.Buff[i++] = ( longitude >> 8 ) & 0xFF;
-  AppData.Buff[i++] = longitude & 0xFF;
-  AppData.Buff[i++] = ( altitudeGps >> 8 ) & 0xFF;
-  AppData.Buff[i++] = altitudeGps & 0xFF;
-#endif  /* REGION_XX915 */
 #endif  /* CAYENNE_LPP */
   AppData.BuffSize = i;
   
   LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
   
-  /* USER CODE END 3 */
 }
 
 

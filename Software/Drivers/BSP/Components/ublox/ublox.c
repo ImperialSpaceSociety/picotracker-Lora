@@ -72,7 +72,7 @@ uint8_t get_location_fix(){
 	// wakeup gps
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
 	HAL_Delay(1000);
-	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode	
+	//UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode	
 	
 	// Check if we are in airbourne mode
 	GPSnavigation = 0;
@@ -276,15 +276,15 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
     while ((HAL_GetTick() - tickstart_j) < UBX_TIMEOUT)
 		{
 			/* listen for the first header char */
-			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 5);
+			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 100);
 			if (buffer_0xB5[0] == 0xb5){
 				  /* now listen for the second header char */
-					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 5);
+					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 100);
 					
 				  if (buffer_0x62[0] == 0x62){
 						
 						/* now that the header has been received, parse the rest of message */
-						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 5);
+						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 100);
 					
 					  /* now fill GPS buffer with header+body of ubx message  */
 						GPSbuffer[0] = 0xB5;
