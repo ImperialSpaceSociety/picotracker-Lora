@@ -40,6 +40,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "ICSS_LoraTracker_V1.1a.h"
 #include <stdlib.h>
+#include "main.h"
 
 /** @addtogroup BSP
   * @{
@@ -95,6 +96,28 @@ const uint8_t BUTTON_IRQn[BUTTONn] = {KEY_BUTTON_EXTI_IRQn };
   * @}
   */ 
   
+
+
+
+void GPS_INT_GPIO_Init(void)
+{
+
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = GPS_INT_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPS_INT_GPIO_Port, &GPIO_InitStruct);
+
+}
+
+
 
 /** @defgroup ICSS LoraTracker V1.1a_LOW_LEVEL_Private_Functions
   * @{

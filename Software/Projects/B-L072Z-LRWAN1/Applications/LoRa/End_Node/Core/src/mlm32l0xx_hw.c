@@ -118,6 +118,8 @@ void HW_Init( void )
             
     BSP_LED_Init( LED1 );
 		
+		GPS_INT_GPIO_Init();
+
 
     McuInitialized = true;
   }
