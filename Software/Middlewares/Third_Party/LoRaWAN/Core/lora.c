@@ -474,6 +474,9 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
         LoRaMacCallbacks.GetBatteryLevel = LoRaMainCallbacks->BoardGetBatteryLevel;
         LoRaMacCallbacks.GetTemperatureLevel = LoRaMainCallbacks->BoardGetTemperatureLevel;
         LoRaMacCallbacks.MacProcessNotify = LoRaMainCallbacks->MacProcessNotify;
+				
+// MEDAD: I think we can call these intialisation functions when we change regions. because this init function sets up the loramac context(region, restrictions etc)
+				
 #if defined( REGION_AS923 )
         LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_AS923 );
 #elif defined( REGION_AU915 )
@@ -484,10 +487,10 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
         LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_CN779 );
 #elif defined( REGION_EU433 )
         LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_EU433 );
- #elif defined( REGION_IN865 )
+#elif defined( REGION_IN865 )
         LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_IN865 );
 #elif defined( REGION_EU868 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_EU868 );
+        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_EU868 ); 
 #elif defined( REGION_KR920 )
         LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_KR920 );
 #elif defined( REGION_US915 )

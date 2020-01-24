@@ -25,7 +25,7 @@ extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include
 uint8_t Backup_GPS(){
 	
 	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode. No response expected
-	//HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
 
 	return 0;
 }
