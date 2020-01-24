@@ -84,6 +84,8 @@ void  BSP_sensor_Init( void  )
 	
 	 //GPS SETUP
 	 setup_GPS();
+	 // GET intial location fix to set LORA region
+	 get_location_fix();
 	 // GPS INITIAL BACKUP
 	 Backup_GPS();
 #endif

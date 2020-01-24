@@ -28,6 +28,7 @@
 #include "ublox.h"
 #include "geofence.h"
 #include "ms5607.h"
+#include "LoRaMac.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +57,7 @@
 /*!
  * Defines the application data transmission duty cycle. 5s, value in [ms].
  */
-#define APP_TX_DUTYCYCLE                           10000
+#define APP_TX_DUTYCYCLE                           60000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -151,16 +152,15 @@ static  LoRaParam_t LoRaParamInit= {LORAWAN_ADR_STATE,
                                     LORAWAN_PUBLIC_NETWORK};	
 																		
 // Radio variables
-uint32_t LoRa_tx_frequency									= 144800000; // needs to be changed to Lora TX frequency. 
-uint8_t TXLoRa                              = 1;
+uint8_t CURRENT_LORA_REGION               = 1;
 
 // UBLOX variables
 uint8_t GPS_UBX_error_bitfield						= 0;
 
 int32_t GPS_UBX_latitude									= 0;
 int32_t GPS_UBX_longitude									= 0;
-float GPS_UBX_latitude_Float							= 1.499827; // temp dummy for testing geofencing
-float GPS_UBX_longitude_Float							= 103.813151;  // temp dummy for testing geofencing
+float GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
+float GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
 
 
 int32_t GPSaltitude												= 0;
@@ -203,8 +203,7 @@ double PRESSURE_Value; // compensated pressure value
 double TEMPERATURE_Value; // compensated temperature value
 
 // GEOFENCE variables
-uint32_t GEOFENCE_LoRa_frequency					= 0;
-uint32_t GEOFENCE_no_tx										= 0;
+extern  LoRaMacCtx_t MacCtx;
 
 
 
@@ -243,15 +242,8 @@ int main( void )
   /* Configure the hardware*/
   HW_Init();
   
-  /* USER CODE BEGIN 1 */
+	/* Find out which region of world we are in */
 	
-	
-	// set LED pin high
-	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
-
-	
-	
-  /* USER CODE END 1 */
   
   /*Disbale Stand-by mode*/
   LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
@@ -259,7 +251,7 @@ int main( void )
   PRINTF("VERSION: %X\n\r", VERSION);
   
   /* Configure the Lora Stack*/
-  LORA_Init( &LoRaMainCallbacks, &LoRaParamInit);
+  LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); //TODO: set up the region here based on gps info
   
   LORA_Join();
   
@@ -385,9 +377,10 @@ static void Send( void* context )
 //  AppData.Buff[i++] = LPP_DATATYPE_HUMIDITY;
 //  AppData.Buff[i++] = cayenne_humidity & 0xFF;
 
-  
+  /* The maximum payload size does not allow to send more data for lowest DRs */
+
 #if defined( REGION_US915 ) || defined ( REGION_AU915 )
-  if(PlatformStatus.s.LORA_DR > DR_3)
+  if(MacCtx.NvmCtx->MacParams.ChannelsDatarate > DR_3)
   {
 #endif //defined( REGION_US915 ) || defined ( REGION_AU915 )
   
@@ -406,17 +399,9 @@ static void Send( void* context )
   AppData.Buff[i++] = ( cayenne_altitudeGps >> 16 ) & 0xFF; 
   AppData.Buff[i++] = ( cayenne_altitudeGps >> 8 ) & 0xFF;
   AppData.Buff[i++] = cayenne_altitudeGps & 0xFF;
-#if defined( REGION_US915 ) || defined ( REGION_AU915 )
-  }
-#endif //defined( REGION_US915 ) || defined ( REGION_AU915 )
-  
-	
-	
-#if defined( REGION_US915 ) || defined ( REGION_AU915 )
-  /* The maximum payload size does not allow to send more data for lowest DRs */
-	UNUSED(battery_voltage);
-#else
-  AppData.Buff[i++] = cchannel++;
+		
+		
+	AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_ANALOG_INPUT;
   AppData.Buff[i++] = ( cayenne_battery_voltage >> 8 ) & 0xFF; // TODO: read battery ADC
   AppData.Buff[i++] = cayenne_battery_voltage & 0xFF;
@@ -425,7 +410,12 @@ static void Send( void* context )
   AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 
   AppData.Buff[i++] = cayenne_GPS_sats;
     
-#endif  /* REGION_XX915 */
+#if defined( REGION_US915 ) || defined ( REGION_AU915 )
+  }
+#endif //defined( REGION_US915 ) || defined ( REGION_AU915 )
+  
+	
+
 
   AppData.BuffSize = i;
   

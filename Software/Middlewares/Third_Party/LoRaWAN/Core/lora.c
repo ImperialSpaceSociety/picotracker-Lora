@@ -475,7 +475,8 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
         LoRaMacCallbacks.GetTemperatureLevel = LoRaMainCallbacks->BoardGetTemperatureLevel;
         LoRaMacCallbacks.MacProcessNotify = LoRaMainCallbacks->MacProcessNotify;
 				
-// MEDAD: I think we can call these intialisation functions when we change regions. because this init function sets up the loramac context(region, restrictions etc)
+// MEDAD: I think we can call these intialisation functions when we change regions.
+// because this init function sets up the loramac context(region, restrictions etc)
 				
 #if defined( REGION_AS923 )
         LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_AS923 );

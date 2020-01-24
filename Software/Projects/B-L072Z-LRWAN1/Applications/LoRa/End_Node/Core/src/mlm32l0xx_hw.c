@@ -113,12 +113,13 @@ void HW_Init( void )
     TraceInit( );
     
 		MX_I2C1_Init();
+		
+		GPS_INT_GPIO_Init();
 
     BSP_sensor_Init( );
             
     BSP_LED_Init( LED1 );
 		
-		GPS_INT_GPIO_Init();
 
 
     McuInitialized = true;
