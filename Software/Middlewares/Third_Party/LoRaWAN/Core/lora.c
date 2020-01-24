@@ -822,12 +822,12 @@ static void TraceUpLinkFrame(McpsConfirm_t *mcpsConfirm)
 
         for( uint8_t i = 0; i < 1; i++)
 
-#elif defined( REGION_AU915 ) || defined( REGION_US915 ) || defined( REGION_CN470 )
+//#elif defined( REGION_AU915 ) || defined( REGION_US915 ) || defined( REGION_CN470 )
 
-        for( uint8_t i = 0; i < 5; i++)
-#else
+//        for( uint8_t i = 0; i < 5; i++)
+//#else
 
-#error "Please define a region in the compiler options."
+//#error "Please define a region in the compiler options."
 
 #endif
         {
