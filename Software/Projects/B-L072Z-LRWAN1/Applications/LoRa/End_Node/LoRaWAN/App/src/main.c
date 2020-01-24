@@ -53,7 +53,7 @@
 /*!
  * Defines the application data transmission duty cycle. 5s, value in [ms].
  */
-#define APP_TX_DUTYCYCLE                           60000
+#define APP_TX_DUTYCYCLE                           10000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -242,12 +242,14 @@ int main( void )
   
 	
 	/* GET intial location fix to set LORA region */
-	 get_location_fix();
+	get_location_fix();
 	
 	/* Find out which region of world we are in */
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
-
-  
+	
+ 
+	PRINTF("My location polygon : %d\n\r", (int)Current_GEOFENCE_Region);  
+	
   /*Disbale Stand-by mode*/
   LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
   
@@ -419,8 +421,21 @@ static void Send( void* context )
 
 
   AppData.BuffSize = i;
-  
-  LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
+	
+	// indicat that we are sending
+  HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+	HAL_Delay(50);
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+	HAL_Delay(50);
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+	HAL_Delay(200);
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+
+	LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
   
 }
 

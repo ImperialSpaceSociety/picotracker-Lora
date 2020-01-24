@@ -23,10 +23,10 @@ extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include
  * GPS backup. 
  */
 uint8_t Backup_GPS(){
+  UBLOX_request_UBX(set_power_save_mode, sizeof(set_power_save_mode), 10, UBLOX_parse_ACK);				// switch GPS module to powersave mode. No response expected
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
 	
-	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode. No response expected
-	//HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
-
+	HAL_Delay(500);
 	return 0;
 }
 
@@ -71,7 +71,7 @@ uint8_t get_location_fix(){
 
 	// wakeup gps
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
-	HAL_Delay(1000);
+	HAL_Delay(3000);
 	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode	
 	
 	// Check if we are in airbourne mode
@@ -99,10 +99,25 @@ uint8_t get_location_fix(){
 		if(GPSfix_OK == 1 && GPSfix_type == 3 && GPSsats >= SATS )           // check if we have a good fix
 		{ 
 			Backup_GPS();
+			
+			// indicate that fix has been found
+			for(uint8_t i = 0; i < 20; i++)
+      {
+				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+				HAL_Delay(50);
+				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+        HAL_Delay(50);
+      }
+
+			
 			return 1;
 		}       
 
 		fixAttemptCount++;
+		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+		HAL_Delay(100);
+	  HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+
 		PRINTF("%d",GPSsats);
 		PRINTF("\r\n"); 
 
