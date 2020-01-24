@@ -23,6 +23,8 @@
 #include "lora.h"
 #include "lora-test.h"
 
+extern LoRaMacRegion_t Current_GEOFENCE_Region;
+
 /*!
  *  Select either Device_Time_req or Beacon_Time_Req following LoRaWAN version 
  *  - Device_Time_req   Available for V1.0.3 or later                          
@@ -478,39 +480,9 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
 // MEDAD: I think we can call these intialisation functions when we change regions.
 // because this init function sets up the loramac context(region, restrictions etc)
 				
-#if defined( REGION_AS923 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_AS923 );
-#elif defined( REGION_AU915 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_AU915 );
-#elif defined( REGION_CN470 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_CN470 );
-#elif defined( REGION_CN779 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_CN779 );
-#elif defined( REGION_EU433 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_EU433 );
-#elif defined( REGION_IN865 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_IN865 );
-#elif defined( REGION_EU868 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_EU868 ); 
-#elif defined( REGION_KR920 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_KR920 );
-#elif defined( REGION_US915 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_US915 );
+      /* Initialise LoRa to Geofence region */
+			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, Current_GEOFENCE_Region );
 
-#if defined( HYBRID )
-                uint16_t channelMask[] = { 0x00FF, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000};
-                mibReq.Type = MIB_CHANNELS_MASK;
-                mibReq.Param.ChannelsMask = channelMask;
-                LoRaMacMibSetRequestConfirm( &mibReq );
-                mibReq.Type = MIB_CHANNELS_DEFAULT_MASK;
-                mibReq.Param.ChannelsDefaultMask = channelMask;
-                LoRaMacMibSetRequestConfirm( &mibReq );
-#endif
-#elif defined( REGION_RU864 )
-        LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, LORAMAC_REGION_RU864 );
-#else
-    #error "Please define a region in the compiler options."
-#endif
       
       mibReq.Type = MIB_ADR;
       mibReq.Param.AdrEnable = LoRaParamInit->AdrEnable;

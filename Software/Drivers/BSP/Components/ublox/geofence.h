@@ -342,24 +342,10 @@ static float EU863870_4F[76] = {
  * to try all
  */
 
-typedef enum
-{
-  EU863870    = 0x01,
-  AU915928    = 0x02,
-  US902928    = 0x03,
-  KR920923    = 0x04,
-	IN865867    = 0x05,
-	AS920923		= 0x06,
-	CN470510		= 0x07,
-	AS923925		= 0x08,
-	RU864870    = 0x09,
-	NONEFREQUENCY = 0x09
-	
-} LoRa_FREQUENCIES;
+
 
 
 // VARIABLES
-extern uint32_t GEOFENCE_LoRa_frequency; 
 extern uint32_t GEOFENCE_no_tx;
 
 
@@ -369,7 +355,6 @@ int32_t pointInPolygon(int32_t polyCorners, int32_t * polygon, int32_t latitude,
 int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, float longitude);
 void GEOFENCE_position(float latitude, float longitude);
 
-void doit(void); // dummy function to force the compiler to compile all the polygons to see their memory footprint
 
 
 #endif 
