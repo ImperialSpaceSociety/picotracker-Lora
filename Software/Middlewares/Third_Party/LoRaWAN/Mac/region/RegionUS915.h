@@ -47,7 +47,7 @@
 /*!
  * Minimal datarate that can be used by the node
  */
-#define US915_TX_MIN_DATARATE                       DR_0
+#define US915_TX_MIN_DATARATE                       DR_3
 
 /*!
  * Maximal datarate that can be used by the node
