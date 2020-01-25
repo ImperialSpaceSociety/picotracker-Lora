@@ -58,7 +58,7 @@
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
  */
-#define LORAWAN_ADR_STATE LORAWAN_ADR_ON
+#define LORAWAN_ADR_STATE LORAWAN_ADR_OFF
 /*!
  * LoRaWAN Default data Rate Data Rate
  * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
