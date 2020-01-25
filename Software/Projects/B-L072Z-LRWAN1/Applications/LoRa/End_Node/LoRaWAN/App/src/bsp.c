@@ -84,6 +84,7 @@ void  BSP_sensor_Init( void  )
 	
 	 //GPS SETUP
 	 setup_GPS();
+
 	 // GPS INITIAL BACKUP
 	 Backup_GPS();
 #endif

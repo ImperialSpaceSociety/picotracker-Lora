@@ -51,5 +51,5 @@ for i in results:
 # print c code for geofence.c
 for i in fences:
     line = 	"else if(pointInPolygonF({2}, {0}_{1}F, latitude, longitude) == 1) {{GEOFENCE_no_tx = 0; " \
-              "GEOFENCE_LoRa_frequency = {0};}}".format(i[0],i[1],i[2])
+              "GEOFENCE_Region = {0};}}".format(i[0],i[1],i[2])
     print(line)
