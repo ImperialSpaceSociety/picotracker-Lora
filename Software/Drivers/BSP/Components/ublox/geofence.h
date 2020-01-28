@@ -336,12 +336,78 @@ static float EU863870_4F[76] = {
 
 
 
-
-/* Defining the frequencies to transmit on. Currently holding dummy values
- * I think there has to be a list of frequencies instead, because it has 
- * to try all
+/*!
+ * Polygon region enumeration
  */
+typedef enum polygon_t {
+	EU863870_1F_polygon,
+	EU863870_2F_polygon,
+	EU863870_3F_polygon,
+	US902928_1F_polygon,
+	AS923925_1F_polygon,
+	AS923925_2F_polygon,
+	AS923925_3F_polygon,
+	AS923925_4F_polygon,
+	US902928_2F_polygon,
+	AU915928_1F_polygon,
+	AU915928_2F_polygon,
+	CN470510_1F_polygon,
+	IN865867_1F_polygon,
+	AS920923_1F_polygon,
+	KR920923_1F_polygon,
+	AS920923_2F_polygon,
+	AU915928_3F_polygon,
+	RU864870_1F_polygon,
+	EU863870_4F_polygon,
+	OUTSIDE_POLYGONS,
+}Polygon_t;
 
+///*!
+// * LoRaMAC region enumeration
+// */
+//typedef enum eLoRaMacRegion_t
+//{
+//    /*!
+//     * AS band on 923MHz
+//     */
+//    LORAMAC_REGION_AS923,
+//    /*!
+//     * Australian band on 915MHz
+//     */
+//    LORAMAC_REGION_AU915,
+//    /*!
+//     * Chinese band on 470MHz
+//     */
+//    LORAMAC_REGION_CN470,
+//    /*!
+//     * Chinese band on 779MHz
+//     */
+//    LORAMAC_REGION_CN779,
+//    /*!
+//     * European band on 433MHz
+//     */
+//    LORAMAC_REGION_EU433,
+//    /*!
+//     * European band on 868MHz
+//     */
+//    LORAMAC_REGION_EU868,
+//    /*!
+//     * South korean band on 920MHz
+//     */
+//    LORAMAC_REGION_KR920,
+//    /*!
+//     * India band on 865MHz
+//     */
+//    LORAMAC_REGION_IN865,
+//    /*!
+//     * North american band on 915MHz
+//     */
+//    LORAMAC_REGION_US915,
+//    /*!
+//     * Russia band on 864MHz
+//     */
+//    LORAMAC_REGION_RU864,
+//}LoRaMacRegion_t;
 
 
 

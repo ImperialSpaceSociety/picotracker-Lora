@@ -54,7 +54,7 @@
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           300000 
+#define APP_TX_DUTYCYCLE                           10000 
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -200,10 +200,22 @@ uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 double PRESSURE_Value; // compensated pressure value
 double TEMPERATURE_Value; // compensated temperature value
 
+
 // GEOFENCE variables
+/* The world is split into polygons e.g. EU863870_4F_polygon. 
+ * Multiple polygons can have the same LoRa region settings. E.g. LORAMAC_REGION_EU868.
+ * Keeps track of which polygon the tracker is in, and if it changes to another polygon,
+ * all LoRa settings are reinitialised.
+ * 
+ */
 int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings are correct for region we are flying over
-LoRaMacRegion_t Current_GEOFENCE_Region = LORAMAC_REGION_EU868;
-LoRaMacRegion_t Old_GEOFENCE_Region = LORAMAC_REGION_EU868;
+
+LoRaMacRegion_t Current_LoRa_Region_Settings   = LORAMAC_REGION_EU868;
+LoRaMacRegion_t Previous_LoRa_Region_Settings  = LORAMAC_REGION_EU868;
+
+Polygon_t current_polygon_region  = EU863870_4F_polygon;
+Polygon_t previous_polygon_region = EU863870_4F_polygon;
+
 uint32_t GEOFENCE_no_tx;
 
 
@@ -242,14 +254,16 @@ int main( void )
   HW_Init();
   
 	
+	#if defined (GPS_ENABLED)
 	/* GET intial location fix to set LORA region */
 	get_location_fix();
+	#endif
 	
 	/* Find out which region of world we are in */
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
  
-	PRINTF("My location polygon : %d\n\r", (int)Current_GEOFENCE_Region);  
+	PRINTF("My location polygon : %d\n\r", (int)current_polygon_region);  
 	
   /*Disbale Stand-by mode*/
   LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
@@ -268,10 +282,7 @@ int main( void )
   while( 1 )
   {
 		
-		/* reinit everything if it enters another LoRaWAN region */
-		if (!REGIONAL_LORA_SETTINGS_CORRECT){
-			break;
-		}
+
 		
     if (AppProcessRequest==LORA_SET)
     {
@@ -281,10 +292,18 @@ int main( void )
       AppProcessRequest=LORA_RESET;
 			
 
+
 	    /*Send*/
       Send( NULL ); // Here lies the function to read sensor and GPS, parse and send it
+			
+			/* if the tracker moves into another region, break out of main loop and reinit everything including radio */
+			if (!REGIONAL_LORA_SETTINGS_CORRECT){
+				break;
+			}
+		
     }
-	if (LoraMacProcessRequest==LORA_SET)
+		
+		if (LoraMacProcessRequest==LORA_SET)
     {
       /*reset notification flag*/
       LoraMacProcessRequest=LORA_RESET;
@@ -353,6 +372,13 @@ static void Send( void* context )
 
   BSP_sensor_Read( &sensor_data );
 
+	/* Find out which region of world we are in */
+	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+	
+	/* reinit everything if it enters another LoRaWAN region. Dont tx when over regions where we are not supposed to tx */
+	if ((!REGIONAL_LORA_SETTINGS_CORRECT) || (GEOFENCE_no_tx) ){
+		return;
+	}
 	
 	/* Evaluate battery level */
   uint8_t cchannel=0;
