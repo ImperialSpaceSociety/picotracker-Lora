@@ -34,6 +34,10 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
+// comment out these defines to disable sensor or GPS
+#define SENSOR_ENABLED
+//#define GPS_ENABLED
+//#define RADIO_ENABLED
 
 
 /*!
@@ -273,7 +277,9 @@ int main( void )
   /* Configure the Lora Stack*/
   LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
   
+	#if defined (RADIO_ENABLED)
   LORA_Join();
+	#endif
   
   LoraStartTx( TX_ON_TIMER) ;
   
@@ -359,12 +365,14 @@ static void Send( void* context )
   uint16_t cayenne_battery_voltage;
 	uint8_t cayenne_GPS_sats;
 
+#if defined (RADIO_ENABLED)
   if ( LORA_JoinStatus () != LORA_SET)
   {
     /*Not joined, try again later*/
     LORA_Join();
     return;
   }
+#endif
   
   TVL1(PRINTF("SEND REQUEST\n\r");)
  
@@ -395,6 +403,30 @@ static void Send( void* context )
 	cayenne_latitude = GPS_UBX_latitude_Float * 10000;
 	cayenne_longitude = GPS_UBX_longitude_Float * 10000;
 	cayenne_GPS_sats = GPSsats;
+	
+	
+	
+	PRINTF("Just read sensor values");
+	PRINTF("\r\n"); 
+	PRINTF("Temperature degrees C: "); 
+	PRINTF("%lf", TEMPERATURE_Value); 
+	PRINTF("\r\n"); 
+	PRINTF("Pressure mBar: "); 
+	PRINTF("%lf", PRESSURE_Value); 
+	PRINTF("\r\n");
+	PRINTF("Longitude: "); 
+	PRINTF("%lf", GPS_UBX_longitude_Float); 
+	PRINTF("\r\n"); 
+	PRINTF("Latitude: "); 
+	PRINTF("%lf", GPS_UBX_latitude_Float); 
+	PRINTF("\r\n");
+	PRINTF("altitude: "); 
+	PRINTF("%ld", GPSaltitude	); 
+	PRINTF("\r\n");
+	PRINTF("Solar voltage: "); 
+	PRINTF("%ld", battery_level16	); 
+	PRINTF("\r\n");
+	
 	
 	uint32_t i = 0;
   
@@ -449,8 +481,9 @@ static void Send( void* context )
 
   AppData.BuffSize = i;
 	
-		
+	#if defined (RADIO_ENABLED)
 	LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
+	#endif
   
 }
 

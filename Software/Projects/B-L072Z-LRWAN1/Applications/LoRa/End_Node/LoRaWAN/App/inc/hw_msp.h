@@ -49,6 +49,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define BAT_CR2032               ((uint32_t) 3000)        
 #define VDD_BAT                  BAT_CR2032     
 #define VDD_MIN                  1800
+#define VREFINT_CAL       ((uint16_t*) ((uint32_t) 0x1FF80078))
 
 /* External variables --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/

@@ -98,10 +98,6 @@
 //#define LOW_POWER_DISABLE
 
 /* debug swicthes in bsp.c */
-#define SENSOR_ENABLED
-   
-
-#define GPS_ENABLED
 
    
 /* Exported types ------------------------------------------------------------*/

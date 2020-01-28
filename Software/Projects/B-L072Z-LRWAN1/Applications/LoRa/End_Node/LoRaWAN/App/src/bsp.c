@@ -54,23 +54,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	get_location_fix();
 	#endif
 	
-	PRINTF("Just read sensor values");
-	PRINTF("\r\n"); 
-	PRINTF("Temperature degrees C: "); 
-	PRINTF("%lf", TEMPERATURE_Value); 
-	PRINTF("\r\n"); 
-	PRINTF("Pressure mBar: "); 
-	PRINTF("%lf", PRESSURE_Value); 
-	PRINTF("\r\n");
-	PRINTF("Longitude: "); 
-	PRINTF("%lf", GPS_UBX_longitude_Float); 
-	PRINTF("\r\n"); 
-	PRINTF("Latitude: "); 
-	PRINTF("%lf", GPS_UBX_latitude_Float); 
-	PRINTF("\r\n");
-	PRINTF("altitude: "); 
-	PRINTF("%ld", GPSaltitude	); 
-	PRINTF("\r\n");
+
 	
 	
   sensor_data->humidity    = 34; // hard coded dummy value
@@ -82,7 +66,6 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 
 void  BSP_sensor_Init( void  )
 {
-#if defined(SENSOR_ENABLED)
   /* Initialize sensors */	
 		ms5607_Init();
 	
@@ -91,7 +74,7 @@ void  BSP_sensor_Init( void  )
 
 	 // GPS INITIAL BACKUP
 	 Backup_GPS();
-#endif
+
 }
 
 
@@ -102,8 +85,6 @@ void  BSP_sensor_Init( void  )
   */
 uint16_t BSP_GetBatteryLevel16( void )
 {
-  #define VDDA_VREFINT_CAL            ((uint32_t) 3000)        
-  #define VREFINT_CAL       ((uint16_t*) ((uint32_t) 0x1FF80078))
 
   uint16_t batteryLevel = 0;
   uint16_t measuredLevel = 0;
