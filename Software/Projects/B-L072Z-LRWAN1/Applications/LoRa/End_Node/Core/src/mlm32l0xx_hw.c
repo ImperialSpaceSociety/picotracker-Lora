@@ -37,6 +37,8 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "bsp.h"
 #include "vcom.h"
 
+extern int32_t GPSaltitude;
+
 /*!
  *  \brief Unique Devices IDs register set ( STM32L0xxx )
  */
@@ -113,12 +115,36 @@ void HW_Init( void )
     TraceInit( );
     
 		MX_I2C1_Init();
+		    
+		BSP_LED_Init( LED1 );
+		
+		if (GPSaltitude<1000)
+		{
+			// indicate that fix has been found
+			for(uint8_t i = 0; i < 5; i++)
+			{
+				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+				HAL_Delay(50);
+				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+				HAL_Delay(50);
+			}
+		}
+
 		
 		GPS_INT_GPIO_Init();
+		
+	
+		#if defined( VARIANT_1V1B )
+		/* enable power to the sensors */
+		
+		SENSOR_EN_GPIO_Init();
+
+		#endif
+		
+		
 
     BSP_sensor_Init( );
             
-    BSP_LED_Init( LED1 );
 		
 
 

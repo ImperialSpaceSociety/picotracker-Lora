@@ -99,6 +99,27 @@ const uint8_t BUTTON_IRQn[BUTTONn] = {KEY_BUTTON_EXTI_IRQn };
 
 
 
+void SENSOR_EN_GPIO_Init(void)
+{
+
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = SENSOR_EN_PIN;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SENSOR_EN_GPIO_Port, &GPIO_InitStruct);
+	
+	HAL_GPIO_WritePin(SENSOR_EN_GPIO_Port, SENSOR_EN_PIN, GPIO_PIN_SET); 
+
+
+}
+
 void GPS_INT_GPIO_Init(void)
 {
 
@@ -114,6 +135,9 @@ void GPS_INT_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPS_INT_GPIO_Port, &GPIO_InitStruct);
+	
+	
+
 
 }
 
@@ -156,6 +180,8 @@ void BSP_LED_Init(Led_TypeDef Led)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   
   HAL_GPIO_Init(LED_PORT[Led], &GPIO_InitStruct);
+	
+
 }
 
 /**

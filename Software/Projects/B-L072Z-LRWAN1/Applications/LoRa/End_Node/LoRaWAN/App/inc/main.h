@@ -100,6 +100,10 @@ void Error_Handler(void);
 #define RA_MISO_GPIO_Port GPIOA
 #define BUTTON_Pin GPIO_PIN_3
 #define BUTTON_GPIO_Port GPIOA
+
+
+#define SENSOR_EN_PIN GPIO_PIN_7
+#define SENSOR_EN_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 #define GPS_I2C_ADDRESS 0x42

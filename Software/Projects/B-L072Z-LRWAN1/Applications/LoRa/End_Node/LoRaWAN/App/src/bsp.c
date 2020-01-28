@@ -46,9 +46,13 @@ void *PRESSURE_handle = NULL;
 void BSP_sensor_Read( sensor_t *sensor_data)
 {
   /* USER CODE BEGIN 5 */
-
+	#if defined (SENSOR_ENABLED)
 	MS5607_get_temp_pressure();
+	#endif
+  
+	#if defined (GPS_ENABLED)
 	get_location_fix();
+	#endif
 	
 	PRINTF("Just read sensor values");
 	PRINTF("\r\n"); 
@@ -69,7 +73,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	PRINTF("\r\n");
 	
 	
-  sensor_data->humidity    = 34;
+  sensor_data->humidity    = 34; // hard coded dummy value
   sensor_data->temperature = TEMPERATURE_Value;
   sensor_data->pressure    = PRESSURE_Value;
 
