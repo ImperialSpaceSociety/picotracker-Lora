@@ -20,6 +20,10 @@
 #include <math.h>
 #include "stm32l0xx_hal.h"
 #include "ms5607.h"
+
+
+#include "hw.h"
+
  
 extern I2C_HandleTypeDef hi2c1;
 extern uint8_t	i2c_buffer[2];
@@ -50,11 +54,17 @@ uint8_t ms5607_Init(void)
 
     for (i=0; i<8; i++) {
         C[i]=cmd_prom(i);   // read coefficients
+				//PRINTF("c:%d\n\r",C[i]);
+
     }
 		
 		factory_crc = 0x000F & (C[7]); // the factory calculated crc
+		//PRINTF("factory crc:%d\n\r",factory_crc);
 				
     calculated_crc=crc4(C);
+		
+		//PRINTF("calculated crc:%d\n\r",calculated_crc);
+
     
 		if(calculated_crc==factory_crc)
         return 0;
@@ -79,6 +89,7 @@ uint16_t cmd_prom(uint8_t coef_num){
 
 void cmd_reset(void)
 {
+	HAL_Delay(20); // may have to give it a short time to start up if it had been previously powered off
 	uint8_t i2c_buffer[2]={0};
 	i2c_buffer[0]=CMD_RESET;
 	ms5607_transmit(i2c_buffer,1);
@@ -147,7 +158,7 @@ unsigned long cmd_adc(char cmd)
         break;
 
     case CMD_ADC_1024:
-        HAL_Delay(4);
+        HAL_Delay(10);
         break;
 
     case CMD_ADC_2048:
@@ -177,28 +188,28 @@ unsigned long cmd_adc(char cmd)
 HAL_StatusTypeDef ms5607_transmit( uint8_t *pBuffer, uint16_t Length)
 {
 	  HAL_StatusTypeDef i2c_status = HAL_OK;
-    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length, 100);
-		HAL_Delay(10);
+    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length, 1000);
+		//HAL_Delay(10);
     return i2c_status;
 }
 
 HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length)
 {
 	  HAL_StatusTypeDef i2c_status = HAL_OK;
-    i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length, 100);
-		HAL_Delay(10);
+    i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length, 1000);
+		//HAL_Delay(10);
 
     return i2c_status;
 }
 
 void ms5607_Read_T(void)
 {
-    D2 = cmd_adc(CMD_ADC_D2+CMD_ADC_256); // read D2
+    D2 = cmd_adc(CMD_ADC_D2+CMD_ADC_1024); // read D2
 }
 
 void ms5607_Read_P(void)
 {
-    D1 = cmd_adc(CMD_ADC_D1+CMD_ADC_256); // read D1
+    D1 = cmd_adc(CMD_ADC_D1+CMD_ADC_1024); // read D1
 }
 
 void ms5607_Cal_T_P(void)

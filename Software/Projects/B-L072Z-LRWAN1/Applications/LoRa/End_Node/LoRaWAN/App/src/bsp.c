@@ -25,6 +25,7 @@
 #include "bsp.h"
 #include "ms5607.h"
 #include "ublox.h"
+#include "main.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,14 +67,19 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 
 void  BSP_sensor_Init( void  )
 {
+	#if defined (SENSOR_ENABLED)
   /* Initialize sensors */	
 		ms5607_Init();
+	#endif
 	
+	 #if defined (GPS_ENABLED)
+
 	 //GPS SETUP
 	 setup_GPS();
 
 	 // GPS INITIAL BACKUP
 	 Backup_GPS();
+	#endif
 
 }
 

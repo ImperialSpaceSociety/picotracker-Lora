@@ -109,6 +109,12 @@ void Error_Handler(void);
 #define GPS_I2C_ADDRESS 0x42
 
 
+// comment out these defines to disable sensor or GPS
+#define SENSOR_ENABLED
+//#define GPS_ENABLED
+#define RADIO_ENABLED
+
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

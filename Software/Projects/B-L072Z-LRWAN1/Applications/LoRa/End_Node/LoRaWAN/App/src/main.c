@@ -29,16 +29,13 @@
 #include "geofence.h"
 #include "ms5607.h"
 #include "LoRaMac.h"
+#include "main.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
-// comment out these defines to disable sensor or GPS
-#define SENSOR_ENABLED
-//#define GPS_ENABLED
-#define RADIO_ENABLED
-
+// There are define switches in main.h to use or not use the GPS, sensor and radio
 
 /*!
  * CAYENNE_LPP is myDevices Application server.
@@ -58,7 +55,7 @@
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           10000 
+#define APP_TX_DUTYCYCLE                           10000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -212,7 +209,7 @@ double TEMPERATURE_Value; // compensated temperature value
  * all LoRa settings are reinitialised.
  * 
  */
-int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings are correct for region we are flying over
+int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings are correct for region we are flying over. 1 if correct, 0 if incorrect
 
 LoRaMacRegion_t Current_LoRa_Region_Settings   = LORAMAC_REGION_EU868;
 LoRaMacRegion_t Previous_LoRa_Region_Settings  = LORAMAC_REGION_EU868;
@@ -303,7 +300,7 @@ int main( void )
       Send( NULL ); // Here lies the function to read sensor and GPS, parse and send it
 			
 			/* if the tracker moves into another region, break out of main loop and reinit everything including radio */
-			if (!REGIONAL_LORA_SETTINGS_CORRECT){
+			if (!REGIONAL_LORA_SETTINGS_CORRECT){ 
 				break;
 			}
 		
