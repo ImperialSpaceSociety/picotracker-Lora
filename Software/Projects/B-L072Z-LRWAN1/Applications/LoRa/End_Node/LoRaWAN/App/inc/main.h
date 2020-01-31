@@ -111,9 +111,15 @@ void Error_Handler(void);
 
 // comment out these defines to disable sensor or GPS
 #define SENSOR_ENABLED
-//#define GPS_ENABLED
+#define GPS_ENABLED
 #define RADIO_ENABLED
-#define SPECIAL_MESSAGE
+//#define SPECIAL_MESSAGE
+
+/*!
+ * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
+ */
+
+#define APP_TX_DUTYCYCLE                           300000
 
 #define ICSPACE16
 //#define ICSPACE17
