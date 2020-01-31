@@ -68,10 +68,13 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __LORA_COMMISSIONING_H__
 #define __LORA_COMMISSIONING_H__
-
 #ifdef __cplusplus
  extern "C" {
 #endif
+
+#define ICSPACE16
+	 
+	 
 /*!
  ******************************************************************************
  ********************************** WARNING ***********************************
@@ -103,18 +106,11 @@
  ******************************************************************************
  ******************************************************************************
  */
- 
- /*
- VERSION TO TEST US HANDLER
- 
- */
-
 /*!
  * When set to 1 the application uses the Over-the-Air activation procedure
  * When set to 0 the application uses the Personalization activation procedure
  */
 #define OVER_THE_AIR_ACTIVATION                     1
-
 /*!
  * Indicates if the end-device is to be connected to a private or public network
  */
@@ -132,39 +128,52 @@
  * \remark This is unique to a company or organization
  */
 #define IEEE_OUI                                           0x01, 0x01, 0x01   
-
 /*!
  * Mote device IEEE EUI (big endian)
  *
  * \remark see STATIC_DEVICE_EUI comments
  */
-#define LORAWAN_DEVICE_EUI                                 { 0x00, 0xD5, 0x4E, 0x5E, 0x4C, 0x42, 0x07, 0x6B }
+
+#if defined (ICSPACE16)
+
+#define LORAWAN_DEVICE_EUI                                  { 0x00, 0x26, 0x50, 0x98, 0x31, 0xE3, 0x15, 0xBC }
+
+#elif defined (ICSPACE17)
+
+#define LORAWAN_DEVICE_EUI                                  { 0x00, 0x48, 0x9C, 0x11, 0xF0, 0x99, 0x24, 0x6E }
+
+#endif
+
 /*!
  * App/Join server IEEE EUI (big endian)
  */
-#define LORAWAN_JOIN_EUI                                   { 0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x02, 0x85, 0x57 }   
-
+#define LORAWAN_JOIN_EUI                                   { 0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x02, 0x82, 0x4D }   // not changed usually
 /*!
  * Application root key
  * WARNING: NOT USED FOR 1.0.x DEVICES
  */
-#define LORAWAN_APP_KEY                                    { 0xA7, 0x0B, 0x92, 0x46, 0x8F, 0xCA, 0x37, 0x64, 0xFC, 0x7A, 0xAC, 0xF4, 0xC0, 0xAF, 0xBF, 0x57 }
+
+#if defined (ICSPACE16)
+
+#define LORAWAN_APP_KEY                                    { 0x4E, 0x5B, 0x37, 0xE1, 0x12, 0x23, 0xAC, 0x61, 0x8E, 0x0C, 0x3F, 0x95, 0x02, 0x0E, 0x8E, 0x92 }
+
+#elif defined(ICSPACE17)
+
+#define LORAWAN_APP_KEY                                    { 0xC0, 0x08, 0xD3, 0x1E, 0x02, 0x85, 0x0C, 0xFC, 0x47, 0x97, 0x83, 0x3A, 0xCB, 0xC3, 0x74, 0x8F }
+
+#endif
 
 /*!
  * Network root key
  * WARNING: FOR 1.0.x DEVICES IT IS THE \ref LORAWAN_APP_KEY
  */
-#define LORAWAN_NWK_KEY                                    { 0xA7, 0x0B, 0x92, 0x46, 0x8F, 0xCA, 0x37, 0x64, 0xFC, 0x7A, 0xAC, 0xF4, 0xC0, 0xAF, 0xBF, 0x57 }
-
-
+#define LORAWAN_NWK_KEY                                     LORAWAN_APP_KEY
 
 #if( OVER_THE_AIR_ACTIVATION == 0 )
-
 /*!
  * Current network ID
  */
 #define LORAWAN_NETWORK_ID                                 ( uint32_t )0
-
 /*!
  * When set to 1 DevAdd is LORAWAN_DEVICE_ADDRESS
  * When set to 0 DevAdd is automatically generated using
@@ -178,35 +187,27 @@
  * \remark see STATIC_DEVICE_ADDRESS comments
  */
 #define LORAWAN_DEVICE_ADDRESS                      ( uint32_t )0x0100000a
-
 /*!
  * Forwarding Network session integrity key
  * WARNING: NWK_S_KEY FOR 1.0.x DEVICES
  */
 #define LORAWAN_F_NWK_S_INT_KEY                            { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
-
 /*!
  * Serving Network session integrity key
  * WARNING: NOT USED FOR 1.0.x DEVICES. MUST BE THE SAME AS \ref LORAWAN_F_NWK_S_INT_KEY
  */
 #define LORAWAN_S_NWK_S_INT_KEY                            { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
-
 /*!
  * Network session encryption key
  * WARNING: NOT USED FOR 1.0.x DEVICES. MUST BE THE SAME AS \ref LORAWAN_F_NWK_S_INT_KEY
  */
 #define LORAWAN_NWK_S_ENC_KEY                              { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
-
 /*!
  * Application session key
  */
 #define LORAWAN_APP_S_KEY                                  { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
-
 #endif /* OVER_THE_AIR_ACTIVATION == 0 */
-
-
 #ifdef __cplusplus
 }
 #endif
-
 #endif /* __LORA_COMMISSIONING_H__ */

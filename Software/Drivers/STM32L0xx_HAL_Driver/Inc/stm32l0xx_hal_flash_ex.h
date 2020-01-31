@@ -809,6 +809,9 @@ void              HAL_FLASHEx_DATAEEPROM_DisableFixedTimeProgram(void);
 /**
   * @}
   */ 
+uint8_t            FLASH_OB_GetBOR(void);
+HAL_StatusTypeDef  FLASH_OB_BORConfig(uint8_t OB_BOR);
+
 
 /**
   * @}

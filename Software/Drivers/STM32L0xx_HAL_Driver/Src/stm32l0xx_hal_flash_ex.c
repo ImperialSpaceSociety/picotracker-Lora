@@ -120,10 +120,9 @@ static HAL_StatusTypeDef  FLASH_OB_BootConfig(uint8_t OB_BOOT);
 #endif /* FLASH_OPTR_BFB2 */
 static HAL_StatusTypeDef  FLASH_OB_RDPConfig(uint8_t OB_RDP);
 static HAL_StatusTypeDef  FLASH_OB_UserConfig(uint8_t OB_IWDG, uint8_t OB_STOP, uint8_t OB_STDBY);
-static HAL_StatusTypeDef  FLASH_OB_BORConfig(uint8_t OB_BOR);
 static uint8_t            FLASH_OB_GetRDP(void);
 static uint8_t            FLASH_OB_GetUser(void);
-static uint8_t            FLASH_OB_GetBOR(void);
+//static uint8_t            FLASH_OB_GetBOR(void);
 static uint8_t            FLASH_OB_GetBOOTBit1(void);
 static HAL_StatusTypeDef  FLASH_OB_BOOTBit1Config(uint8_t OB_BootBit1);
 #if defined(STM32L071xx) || defined(STM32L072xx) || defined(STM32L073xx) || defined(STM32L081xx) || defined(STM32L082xx) || defined(STM32L083xx)  
@@ -878,7 +877,7 @@ static HAL_StatusTypeDef FLASH_OB_RDPConfig(uint8_t OB_RDP)
   *     @arg @ref OB_BOR_LEVEL5 BOR Reset threshold levels for 2.8V - 2.9V VDD power supply
   * @retval HAL status
   */
-static HAL_StatusTypeDef FLASH_OB_BORConfig(uint8_t OB_BOR)
+HAL_StatusTypeDef FLASH_OB_BORConfig(uint8_t OB_BOR)
 {
   HAL_StatusTypeDef status = HAL_OK;
   uint32_t tmp = 0, tmp1 = 0;
@@ -978,7 +977,7 @@ static uint8_t FLASH_OB_GetRDP(void)
   * @brief  Returns the FLASH BOR level.
   * @retval The BOR level Option Bytes.
   */
-static uint8_t FLASH_OB_GetBOR(void)
+uint8_t FLASH_OB_GetBOR(void)
 {
   /* Return the BOR level */
   return (uint8_t)((FLASH->OPTR & (uint32_t)FLASH_OPTR_BOR_LEV) >> 16U);

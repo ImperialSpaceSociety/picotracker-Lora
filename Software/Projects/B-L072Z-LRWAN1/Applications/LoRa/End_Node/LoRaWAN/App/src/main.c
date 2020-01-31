@@ -30,6 +30,9 @@
 #include "ms5607.h"
 #include "LoRaMac.h"
 #include "main.h"
+#include "stm32l0xx_hal_flash.h"
+#include "stm32l0xx_hal_flash_ex.h"
+#include "stm32l0xx_hal.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +58,7 @@
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           10000
+#define APP_TX_DUTYCYCLE                           60000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -232,6 +235,14 @@ uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0x
 // Battery/Solar voltage
 uint32_t VCC_ADC												= 0;
 
+// Set up brown out reset voltage above the level of the GPS
+void set_brownout_level( void );
+
+
+
+
+
+
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -250,6 +261,9 @@ int main( void )
   
   /* Configure the debug mode*/
   DBG_Init();
+	
+	/* Set Brown out reset level voltage to 2.8V, above the 2.7V threshold of the GPS */
+	set_brownout_level();
   
   /* Configure the hardware*/
   HW_Init();
@@ -338,6 +352,8 @@ void LoraMacProcessNotify(void)
 {
   LoraMacProcessRequest=LORA_SET;
 }
+
+
 
 
 static void LORA_HasJoined( void )
@@ -606,6 +622,26 @@ static void LORA_TxNeeded ( void )
   
   LORA_send( &AppData, LORAWAN_UNCONFIRMED_MSG);
 }
+
+void set_brownout_level( void )
+{ /*!< BOR Reset threshold levels for 2.8V - 2.9V VDD power supply    */
+	if ((FLASH_OB_GetBOR() & 0x0F) != OB_BOR_LEVEL5){
+		HAL_FLASH_Unlock();
+		/* Unlocks the option bytes block access */
+		HAL_FLASH_OB_Unlock();
+		/* Clears the FLASH pending flags */
+		__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR |
+		FLASH_FLAG_PGAERR | FLASH_FLAG_SIZERR | FLASH_FLAG_OPTVERR);
+		/* Select The Desired V(BOR) Level------------------------*/
+		FLASH_OB_BORConfig(OB_BOR_LEVEL5);
+		/* Launch the option byte loading and generate a System Reset */
+		HAL_FLASH_OB_Launch();
+		
+		HAL_FLASH_Lock();
+	}
+}
+
+
 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
