@@ -111,9 +111,9 @@ void Error_Handler(void);
 
 // comment out these defines to disable sensor or GPS
 #define SENSOR_ENABLED
-#define GPS_ENABLED
+//#define GPS_ENABLED
 #define RADIO_ENABLED
-
+#define SPECIAL_MESSAGE
 
 #define ICSPACE16
 //#define ICSPACE17

@@ -58,7 +58,7 @@
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           60000
+#define APP_TX_DUTYCYCLE                           10000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -198,6 +198,15 @@ uint32_t fixAttemptCount                  = 0;
 uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 
 
+
+// Special message info
+uint8_t message_counter                   = 0;
+char special_message[] =
+	{0x49 ,0x6e ,0x74 ,0x65 ,0x72 ,0x6e ,0x73 ,0x68 ,0x69 ,0x70 ,0x20 ,0x77 ,0x61 ,0x6e ,0x74 ,0x65 ,0x64 ,0x21 ,0x20 ,0x48 ,0x69 ,0x72 ,0x65 ,0x20 ,0x6d ,0x65 ,0x21 ,0x20 ,0x6d ,0x72 ,0x6e ,0x33 ,0x33 ,0x31 ,0x37 ,0x40 ,0x69 ,0x63 ,0x2e ,0x61 ,0x63 ,0x2e ,0x75 ,0x6b
+};
+	
+
+// Internship wanted! Hire me! mrn3317@ic.ac.uk
 
 
 // Temp pressure
@@ -389,6 +398,36 @@ static void Send( void* context )
   
   TVL1(PRINTF("SEND REQUEST\n\r");)
  
+	
+	/* The special message routine */
+	#if defined( SPECIAL_MESSAGE)
+	// we send down the special message every once is 2 messages
+	
+	// reset the message counter. 
+	if (message_counter>=1)
+	{
+		message_counter = 0;
+
+	}
+	else
+	{
+		message_counter++;
+
+		AppData.Port = LPP_APP_PORT;		
+		AppData.BuffSize = sizeof(special_message); // make sure it does not count the /n
+		
+		for (uint8_t i=0; i<sizeof(special_message); i++) {
+				AppData.Buff[i] = special_message[i];
+		}
+		
+		#if defined (RADIO_ENABLED)
+		LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
+		#endif
+
+		return;
+	}
+	
+	#endif
 
 
   BSP_sensor_Read( &sensor_data );
