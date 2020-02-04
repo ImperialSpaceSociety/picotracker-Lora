@@ -38,7 +38,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
-// There are define switches in main.h to use or not use the GPS, sensor and radio
+// There are define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 
 /*!
  * CAYENNE_LPP is myDevices Application server.

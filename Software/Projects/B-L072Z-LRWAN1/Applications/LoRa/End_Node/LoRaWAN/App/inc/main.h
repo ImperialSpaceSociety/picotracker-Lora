@@ -109,6 +109,8 @@ void Error_Handler(void);
 #define GPS_I2C_ADDRESS 0x42
 
 
+
+// PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor or GPS
 #define SENSOR_ENABLED
 #define GPS_ENABLED
@@ -119,10 +121,12 @@ void Error_Handler(void);
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           300000
+#define APP_TX_DUTYCYCLE                           60000
 
-#define ICSPACE16
+//#define ICSPACE16
 //#define ICSPACE17
+#define ICSPACE18
+
 
 /* USER CODE END Private defines */
 
