@@ -1,5 +1,6 @@
 EESchema Schematic File Version 4
-EELAYER 30 0
+LIBS:circuit board design-cache
+EELAYER 29 0
 EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
@@ -1177,7 +1178,7 @@ F 3 "" H 8600 5950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	8600 5350 8600 5950
+	8600 5350 8600 5600
 $Comp
 L circuit-board-design-rescue:R-Device R8
 U 1 1 5E4D040B
@@ -1213,4 +1214,18 @@ F 4 "https://uk.rs-online.com/web/p/mosfets/0301322/" H 13250 5800 50  0001 C CN
 	1    13250 5800
 	1    0    0    1   
 $EndComp
+$Comp
+L circuit-board-design-rescue:Conn_01x01-Connector_Generic J6
+U 1 1 5E3B5A9B
+P 8800 5600
+F 0 "J6" H 8880 5642 50  0000 L CNN
+F 1 "Conn_01x01" H 8880 5551 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 8800 5600 50  0001 C CNN
+F 3 "~" H 8800 5600 50  0001 C CNN
+	1    8800 5600
+	1    0    0    -1  
+$EndComp
+Connection ~ 8600 5600
+Wire Wire Line
+	8600 5600 8600 5950
 $EndSCHEMATC
