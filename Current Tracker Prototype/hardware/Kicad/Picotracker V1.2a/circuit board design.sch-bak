@@ -1,5 +1,6 @@
 EESchema Schematic File Version 4
-EELAYER 30 0
+LIBS:circuit board design-cache
+EELAYER 29 0
 EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
@@ -14,7 +15,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC84019
 P 6250 5750
 AR Path="/5D5B15F7/5DC84019" Ref="#PWR?"  Part="1" 
@@ -33,7 +34,7 @@ Wire Wire Line
 Wire Wire Line
 	5000 5200 5000 5300
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC84030
 P 5000 5750
 AR Path="/5D5B15F7/5DC84030" Ref="#PWR?"  Part="1" 
@@ -81,7 +82,7 @@ Connection ~ 4550 4300
 Wire Wire Line
 	4550 4300 4000 4300
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC84068
 P 4550 4900
 AR Path="/5D5B15F7/5DC84068" Ref="#PWR?"  Part="1" 
@@ -123,7 +124,7 @@ Connection ~ 7900 1350
 Wire Wire Line
 	7900 1350 7900 1450
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DC8408D
 P 7900 1050
 AR Path="/5D5B15F7/5DC8408D" Ref="#PWR?"  Part="1" 
@@ -142,7 +143,7 @@ Wire Wire Line
 Wire Wire Line
 	7900 1650 7900 1700
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC840A2
 P 7900 1850
 AR Path="/5D5B15F7/5DC840A2" Ref="#PWR?"  Part="1" 
@@ -160,7 +161,7 @@ Connection ~ 7900 1700
 Wire Wire Line
 	7150 3400 7800 3400
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC840FF
 P 14650 3850
 AR Path="/5D5B1586/5DC840FF" Ref="#PWR?"  Part="1" 
@@ -174,7 +175,7 @@ F 3 "" H 14650 3850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC84105
 P 14050 3850
 AR Path="/5D5B1586/5DC84105" Ref="#PWR?"  Part="1" 
@@ -198,7 +199,7 @@ Wire Wire Line
 Wire Wire Line
 	14250 3400 13950 3400
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC84110
 P 15100 3000
 AR Path="/5D5B1586/5DC84110" Ref="#PWR?"  Part="1" 
@@ -228,7 +229,7 @@ Wire Wire Line
 	14150 2750 14650 2750
 NoConn ~ 14250 3200
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DC84121
 P 14650 2700
 AR Path="/5D5B1586/5DC84121" Ref="#PWR?"  Part="1" 
@@ -256,7 +257,7 @@ Connection ~ 13000 2200
 Wire Wire Line
 	13000 2200 13950 2200
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DC84141
 P 12700 1050
 AR Path="/5D5B1586/5DC84141" Ref="#PWR?"  Part="1" 
@@ -270,7 +271,7 @@ F 3 "" H 12700 1050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DC84147
 P 13000 1050
 AR Path="/5D5B1586/5DC84147" Ref="#PWR?"  Part="1" 
@@ -292,7 +293,7 @@ Wire Wire Line
 Wire Wire Line
 	12000 2100 12700 2100
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC84165
 P 13550 8350
 AR Path="/5D5B165E/5DC84165" Ref="#PWR?"  Part="1" 
@@ -306,7 +307,7 @@ F 3 "" H 13550 8350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DC841BA
 P 13350 5200
 AR Path="/5D5B165E/5DC841BA" Ref="#PWR?"  Part="1" 
@@ -330,7 +331,7 @@ Wire Wire Line
 Wire Wire Line
 	12800 6100 12800 6200
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC841DF
 P 12800 6600
 AR Path="/5D5B17D8/5DC841DF" Ref="#PWR?"  Part="1" 
@@ -376,7 +377,7 @@ I2C1_SDA
 Text Label 12250 7500 0    50   ~ 0
 I2C1_SCL
 $Comp
-L circuit-board-design-rescue:GND-power #PWR0102
+L power:GND #PWR0102
 U 1 1 5DEE121A
 P 1450 9550
 F 0 "#PWR0102" H 1450 9300 50  0001 C CNN
@@ -389,7 +390,7 @@ $EndComp
 Wire Wire Line
 	5400 8350 5400 7850
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR0120
+L power:+3.3V #PWR0120
 U 1 1 5DEE8C89
 P 5400 7850
 F 0 "#PWR0120" H 5400 7700 50  0001 C CNN
@@ -418,7 +419,7 @@ Wire Wire Line
 Wire Wire Line
 	11750 7900 11750 7500
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DFABE1F
 P 11750 7500
 AR Path="/5D5B165E/5DFABE1F" Ref="#PWR?"  Part="1" 
@@ -489,7 +490,7 @@ Wire Notes Line
 Text Notes 3050 6550 0    50   ~ 0
 Main Microcontroller + Lora tranceiver\n
 $Comp
-L circuit-board-design-rescue:MAX-M8C-RF_GPS U1
+L RF_GPS:MAX-M8C U1
 U 1 1 5DDCC018
 P 13550 7500
 F 0 "U1" H 13150 6700 50  0000 C CNN
@@ -500,7 +501,7 @@ F 3 "https://www.u-blox.com/sites/default/files/MAX-M8-FW3_DataSheet_%28UBX-1503
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:CMWX1ZZABZ-078-RF_Module U?
+L RF_Module:CMWX1ZZABZ-078 U?
 U 1 1 5DC84013
 P 6250 3900
 AR Path="/5D5B15F7/5DC84013" Ref="U?"  Part="1" 
@@ -513,7 +514,7 @@ F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 8700 2400 50  0001 C C
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:Antenna-Device AE1
+L Device:Antenna AE1
 U 1 1 5DE442FF
 P 8600 4850
 F 0 "AE1" H 8680 4839 50  0000 L CNN
@@ -535,7 +536,7 @@ F 3 "~" H 14800 7150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:C_Small-Device C?
+L Device:C_Small C?
 U 1 1 5DC841D3
 P 13150 6300
 AR Path="/5D5B17D8/5DC841D3" Ref="C?"  Part="1" 
@@ -553,7 +554,7 @@ F 6 "100" H 13150 6300 50  0001 C CNN "min_quantity"
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:C_Small-Device C?
+L Device:C_Small C?
 U 1 1 5DC841CA
 P 12800 6300
 AR Path="/5D5B17D8/5DC841CA" Ref="C?"  Part="1" 
@@ -571,7 +572,7 @@ F 6 "50" H 12800 6300 50  0001 C CNN "min_quantity"
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:R-Device R?
+L Device:R R?
 U 1 1 5DC8415A
 P 13000 1550
 AR Path="/5D5B1586/5DC8415A" Ref="R?"  Part="1" 
@@ -588,7 +589,7 @@ F 6 "50" H 13000 1550 50  0001 C CNN "min_quantity"
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:R-Device R?
+L Device:R R?
 U 1 1 5DC84150
 P 12700 1550
 AR Path="/5D5B1586/5DC84150" Ref="R?"  Part="1" 
@@ -605,7 +606,7 @@ F 6 "50" H 12700 1550 50  0001 C CNN "min_quantity"
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:C_Small-Device C?
+L Device:C_Small C?
 U 1 1 5DC84133
 P 15100 2850
 AR Path="/5D5B1586/5DC84133" Ref="C?"  Part="1" 
@@ -622,7 +623,7 @@ F 6 "50" H 15100 2850 50  0001 C CNN "min_quantity"
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:MS5607-02BA-Sensor_Pressure U?
+L Sensor_Pressure:MS5607-02BA U?
 U 1 1 5DC8412A
 P 14650 3300
 AR Path="/5D5B1586/5DC8412A" Ref="U?"  Part="1" 
@@ -639,7 +640,7 @@ F 6 "1" H 14650 3300 50  0001 C CNN "min_quantity"
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:C_Small-Device C?
+L Device:C_Small C?
 U 1 1 5DC8409B
 P 7900 1550
 AR Path="/5D5B15F7/5DC8409B" Ref="C?"  Part="1" 
@@ -652,7 +653,7 @@ F 3 "~" H 7900 1550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:C_Small-Device C?
+L Device:C_Small C?
 U 1 1 5DC84094
 P 7200 1550
 AR Path="/5D5B15F7/5DC84094" Ref="C?"  Part="1" 
@@ -665,7 +666,7 @@ F 3 "~" H 7200 1550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:C_Small-Device C?
+L Device:C_Small C?
 U 1 1 5DC84080
 P 6450 1550
 AR Path="/5D5B15F7/5DC84080" Ref="C?"  Part="1" 
@@ -678,7 +679,7 @@ F 3 "~" H 6450 1550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:C_Small-Device C?
+L Device:C_Small C?
 U 1 1 5DC8406E
 P 4550 4650
 AR Path="/5D5B15F7/5DC8406E" Ref="C?"  Part="1" 
@@ -691,7 +692,7 @@ F 3 "~" H 4550 4650 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:R-Device R?
+L Device:R R?
 U 1 1 5DC84036
 P 5000 5450
 AR Path="/5D5B15F7/5DC84036" Ref="R?"  Part="1" 
@@ -710,7 +711,7 @@ Wire Wire Line
 Wire Wire Line
 	13350 6100 13150 6100
 $Comp
-L circuit-board-design-rescue:PWR_FLAG-power #FLG0101
+L power:PWR_FLAG #FLG0101
 U 1 1 5DBC451E
 P 5200 8350
 F 0 "#FLG0101" H 5200 8425 50  0001 C CNN
@@ -727,7 +728,7 @@ SWDIO
 Wire Wire Line
 	6050 1350 6050 2400
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DC840B0
 P 4750 1050
 AR Path="/5D5B15F7/5DC840B0" Ref="#PWR?"  Part="1" 
@@ -742,7 +743,7 @@ $EndComp
 Wire Wire Line
 	4750 1350 4750 1050
 $Comp
-L circuit-board-design-rescue:Conn_01x01-Connector_Generic J3
+L Connector_Generic:Conn_01x01 J3
 U 1 1 5DC8A70A
 P 5900 8350
 F 0 "J3" H 5980 8392 50  0000 L CNN
@@ -753,7 +754,7 @@ F 3 "~" H 5900 8350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:Conn_01x01-Connector_Generic J2
+L Connector_Generic:Conn_01x01 J2
 U 1 1 5DC8B635
 P 1050 8350
 F 0 "J2" H 968 8125 50  0000 C CNN
@@ -768,7 +769,7 @@ Wire Wire Line
 Wire Wire Line
 	1250 8350 1450 8350
 $Comp
-L circuit-board-design-rescue:Conn_01x01-Connector_Generic SolarCellMount1
+L Connector_Generic:Conn_01x01 SolarCellMount1
 U 1 1 5DCBAB7A
 P 9150 7650
 F 0 "SolarCellMount1" H 9230 7692 50  0000 L CNN
@@ -782,7 +783,7 @@ Wire Wire Line
 	5400 8350 5400 8700
 Connection ~ 5400 8350
 $Comp
-L circuit-board-design-rescue:GND-power #PWR01
+L power:GND #PWR01
 U 1 1 5DCCDF86
 P 5400 9600
 F 0 "#PWR01" H 5400 9350 50  0001 C CNN
@@ -793,7 +794,7 @@ F 3 "" H 5400 9600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:R-Device R1
+L Device:R R1
 U 1 1 5DCCF4D3
 P 5400 8850
 F 0 "R1" H 5470 8896 50  0000 L CNN
@@ -806,7 +807,7 @@ $EndComp
 Wire Wire Line
 	5400 9000 5400 9100
 $Comp
-L circuit-board-design-rescue:R-Device R2
+L Device:R R2
 U 1 1 5DCD0192
 P 5400 9350
 F 0 "R2" H 5470 9396 50  0000 L CNN
@@ -837,7 +838,7 @@ Wire Wire Line
 Wire Wire Line
 	10850 3900 10850 4250
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DBBC44F
 P 10850 4250
 AR Path="/5D5B15F7/5DBBC44F" Ref="#PWR?"  Part="1" 
@@ -850,7 +851,7 @@ F 3 "" H 10850 4250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:LED-Device D1
+L Device:LED D1
 U 1 1 5DBC4B62
 P 10450 3900
 F 0 "D1" H 10443 3645 50  0000 C CNN
@@ -863,7 +864,7 @@ $EndComp
 Wire Wire Line
 	10600 3900 10850 3900
 $Comp
-L circuit-board-design-rescue:R-Device R6
+L Device:R R6
 U 1 1 5DBC5657
 P 10150 3900
 F 0 "R6" V 9943 3900 50  0000 C CNN
@@ -889,7 +890,7 @@ Connection ~ 9900 5850
 Wire Wire Line
 	9900 5850 9500 5850
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DC040B5
 P 9900 6400
 AR Path="/5D5B15F7/5DC040B5" Ref="#PWR?"  Part="1" 
@@ -902,7 +903,7 @@ F 3 "" H 9900 6400 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:SW_Push-Switch SW1
+L Switch:SW_Push SW1
 U 1 1 5DC04C37
 P 10350 5850
 F 0 "SW1" H 10350 6135 50  0000 C CNN
@@ -915,7 +916,7 @@ $EndComp
 Wire Wire Line
 	10550 5850 10750 5850
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DC0A475
 P 10750 5300
 AR Path="/5D5B165E/5DC0A475" Ref="#PWR?"  Part="1" 
@@ -929,7 +930,7 @@ F 3 "" H 10750 5300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:R-Device R7
+L Device:R R7
 U 1 1 5DC0F569
 P 9900 6150
 F 0 "R7" H 9970 6196 50  0000 L CNN
@@ -958,7 +959,7 @@ Wire Notes Line
 Text Notes 9700 4700 0    50   ~ 0
 LED indicator\n
 $Comp
-L circuit-board-design-rescue:Conn_01x01-Connector_Generic StringHole1
+L Connector_Generic:Conn_01x01 StringHole1
 U 1 1 5DB85E84
 P 9150 8150
 F 0 "StringHole1" H 9230 8192 50  0000 L CNN
@@ -983,7 +984,7 @@ TCXO_EN
 Wire Wire Line
 	5350 3900 4450 3900
 $Comp
-L circuit-board-design-rescue:Conn_01x01-Connector_Generic J4
+L Connector_Generic:Conn_01x01 J4
 U 1 1 5DBBDDA8
 P 14000 9550
 F 0 "J4" H 14080 9592 50  0000 L CNN
@@ -1024,7 +1025,7 @@ BOOT0
 Wire Wire Line
 	1350 2050 1650 2050
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DDA80AF
 P 1800 1650
 AR Path="/5D5B15F7/5DDA80AF" Ref="#PWR?"  Part="1" 
@@ -1059,7 +1060,7 @@ Wire Wire Line
 Wire Wire Line
 	2050 1350 2050 1250
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DE093CE
 P 2050 1250
 AR Path="/5D5B15F7/5DE093CE" Ref="#PWR?"  Part="1" 
@@ -1072,7 +1073,7 @@ F 3 "" H 2050 1250 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:Conn_01x10-Connector_Generic J1
+L Connector_Generic:Conn_01x10 J1
 U 1 1 5DDA3148
 P 1150 1550
 F 0 "J1" H 1068 2167 50  0000 C CNN
@@ -1083,7 +1084,7 @@ F 3 "~" H 1150 1550 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5DE45B73
 P 2350 1250
 AR Path="/5D5B15F7/5DE45B73" Ref="#PWR?"  Part="1" 
@@ -1096,7 +1097,7 @@ F 3 "" H 2350 1250 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5DE4BDB5
 P 2050 1450
 AR Path="/5D5B15F7/5DE4BDB5" Ref="#PWR?"  Part="1" 
@@ -1123,7 +1124,7 @@ Wire Wire Line
 NoConn ~ 7150 3100
 NoConn ~ 14150 7300
 $Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
+L power:+3.3V #PWR?
 U 1 1 5E3AF5DA
 P 6350 2100
 AR Path="/5D5B15F7/5E3AF5DA" Ref="#PWR?"  Part="1" 
@@ -1153,7 +1154,7 @@ GPS_MOSFET_GATE
 Wire Wire Line
 	5350 3800 4450 3800
 $Comp
-L circuit-board-design-rescue:Conn_01x01-Connector_Generic J5
+L Connector_Generic:Conn_01x01 J5
 U 1 1 5E49A628
 P 8800 5350
 F 0 "J5" H 8880 5392 50  0000 L CNN
@@ -1164,7 +1165,7 @@ F 3 "~" H 8800 5350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:GND-power #PWR?
+L power:GND #PWR?
 U 1 1 5E4A7592
 P 8600 5950
 AR Path="/5D5B15F7/5E4A7592" Ref="#PWR?"  Part="1" 
@@ -1179,7 +1180,19 @@ $EndComp
 Wire Wire Line
 	8600 5350 8600 5950
 $Comp
-L circuit-board-design-rescue:R-Device R8
+L Transistor_FET:IRLML6402 Q1
+U 1 1 5E4BFDEA
+P 13250 5800
+F 0 "Q1" H 13456 5846 50  0000 L CNN
+F 1 "IRLML6402" H 13456 5755 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 13450 5725 50  0001 L CIN
+F 3 "https://www.infineon.com/dgdl/irlml6402pbf.pdf?fileId=5546d462533600a401535668d5c2263c" H 13250 5800 50  0001 L CNN
+F 4 "https://uk.rs-online.com/web/p/mosfets/0301322/" H 13250 5800 50  0001 C CNN "Purchase link"
+	1    13250 5800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R8
 U 1 1 5E4D040B
 P 12850 5550
 F 0 "R8" H 12920 5596 50  0000 L CNN
@@ -1201,16 +1214,4 @@ Wire Wire Line
 Connection ~ 12850 5800
 Wire Wire Line
 	12850 5800 13050 5800
-$Comp
-L circuit-board-design-rescue:IRLML6402-Transistor_FET Q1
-U 1 1 5E4BFDEA
-P 13250 5800
-F 0 "Q1" H 13456 5846 50  0000 L CNN
-F 1 "IRLML6402" H 13456 5755 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 13450 5725 50  0001 L CIN
-F 3 "https://www.infineon.com/dgdl/irlml6402pbf.pdf?fileId=5546d462533600a401535668d5c2263c" H 13250 5800 50  0001 L CNN
-F 4 "https://uk.rs-online.com/web/p/mosfets/0301322/" H 13250 5800 50  0001 C CNN "Purchase link"
-	1    13250 5800
-	1    0    0    1   
-$EndComp
 $EndSCHEMATC
