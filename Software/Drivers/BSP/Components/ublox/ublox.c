@@ -19,6 +19,8 @@ extern uint8_t	buffer_0xB5[1];
 extern uint8_t	buffer_0x62[1];
 extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
 
+
+
 /* 
  * GPS backup. 
  */
@@ -239,17 +241,41 @@ uint8_t UBLOX_verify_checksum(volatile uint8_t *buffer, uint8_t len)
     Waits for the I2C1_RX_buffer[] to be filled with an expected number of bytes
     and then empties the buffer to a desired buffer for further processing.
 */
-uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len)
+uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
 {
+		 /* Init tickstart for timeout management*/
+		uint32_t tickstart_j = 0;
+    tickstart_j = HAL_GetTick();
 
-		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1),  buffer, len, 0xFF);
-		if (i2c_status == HAL_OK)
+
+		/* set a time out for receiving a ubx message back from the GPS */
+    while ((HAL_GetTick() - tickstart_j) < timeout)
 		{
-			return 1;
-		}else
-		{
-			return 0;
+			/* listen for the first header char */
+			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 100);
+			if (buffer_0xB5[0] == 0xb5){
+				  /* now listen for the second header char */
+					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 100);
+					
+				  if (buffer_0x62[0] == 0x62){
+						
+						/* now that the header has been received, parse the rest of message */
+						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 100);
+					
+					  /* now fill GPS buffer with header+body of ubx message  */
+						GPSbuffer[0] = 0xB5;
+						GPSbuffer[1] = 0x62;
+						for (uint8_t i=0; i<len-2; i++) {
+								GPSbuffer[i+2]=buffer_ubx_packet_wo_header[i];
+						}
+					 
+						return 1; // ubx message received and GPSbuffer filled with data
+
+				}
+			}
 		}
+		
+		return 0; // no ubx message received
 }
 
 
@@ -279,44 +305,16 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
-	  /* Init tickstart for timeout management*/
-		uint32_t tickstart_j = 0;
-    tickstart_j = HAL_GetTick();
 
-
-    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
+		// Transmit the request
+    HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 1000);
 			
 		memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
+		// Receive the request
+		UBLOX_receive_UBX(GPSbuffer, expectlen, 10000);
 
+		return  parse(GPSbuffer);          // parse the response to appropriate variables, 1 for successful parsing
 
-		/* set a time out for receiving a ubx message back from the GPS */
-    while ((HAL_GetTick() - tickstart_j) < UBX_TIMEOUT)
-		{
-			/* listen for the first header char */
-			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 100);
-			if (buffer_0xB5[0] == 0xb5){
-				  /* now listen for the second header char */
-					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 100);
-					
-				  if (buffer_0x62[0] == 0x62){
-						
-						/* now that the header has been received, parse the rest of message */
-						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 100);
-					
-					  /* now fill GPS buffer with header+body of ubx message  */
-						GPSbuffer[0] = 0xB5;
-						GPSbuffer[1] = 0x62;
-						for (uint8_t i=0; i<115; i++) {
-								GPSbuffer[i+2]=buffer_ubx_packet_wo_header[i];
-						}
-						
-						parse_success  = parse(GPSbuffer);          // parse the response to appropriate variables
-						return parse_success;                       // 1 for successful parsing
-				}
-			}
-		}
-	
-		return 0;
 }
 
 
@@ -640,9 +638,6 @@ uint8_t UBLOX_parse_empty(void)
 
 
 
-
-
-
 /*
     Function to prepare the module and enter the chosen POWER SAVING mode.
     First it turns off periodic messages, then it turns of GLONASS (required for POWER SAVE mode), sets up the desired mode
@@ -655,43 +650,5 @@ void UBLOX_powersave_mode_init(uint8_t * mode)
     UBLOX_request_UBX(setGPSonly, 28, 10, UBLOX_parse_ACK);                             // turn off GLONASS (needs to be done for POWERSAVE mode)
     UBLOX_request_UBX(mode, 52, 10, UBLOX_parse_ACK);                                   // set up the desired UBX-CFG-PM2 (0x06 0x3B) settings
     UBLOX_request_UBX(setPowerSaveMode, 10, 10, UBLOX_parse_ACK);                       // switch to POWERSAVE mode
-}
-
-
-/*
-    Fills a buffer with ASCII characters returned after polling UBX-MON-VER. Individual bits of information are 0x00 delimited.
-*/
-uint32_t UBLOX_get_version(uint8_t *buffer)
-{
-    UBLOX_send_message(request0A04, 8);                                                 // request UBX-MON-VER
-    
-    UBLOX_receive_UBX(GPSbuffer, 104);                                              // copy the response from I2C1_RX_buffer to GPSbuffer
-    
-    if(GPSbuffer[0] == 0xB5 && GPSbuffer[1] == 0x62 && GPSbuffer[2] == 0x0A && GPSbuffer[3] == 0x04)
-    {
-        uint8_t sequence = 0;
-        uint8_t zeroFlag = 0;
-        uint32_t msglen = (GPSbuffer[5] << 8) | GPSbuffer[4];
-        msglen -= 4;
-        
-        for(uint32_t i = 0; i < msglen; i++)
-        {
-            if(GPSbuffer[6 + i] != 0)
-            {
-                buffer[sequence++] = (GPSbuffer[6 + i]);
-                zeroFlag = 0;
-            }else{
-                if(!zeroFlag)
-                {
-                    buffer[sequence++] = 0;
-                    zeroFlag = 1;
-                }
-            }
-        }
-        
-        return sequence;
-    }else{
-        return 0;
-    }
 }
 
