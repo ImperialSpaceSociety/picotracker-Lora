@@ -120,7 +120,7 @@ void HW_Init( void )
 		
 		if (GPSaltitude<1000)
 		{
-			// indicate that fix has been found
+			// Indicate that we are alive!
 			for(uint8_t i = 0; i < 5; i++)
 			{
 				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
