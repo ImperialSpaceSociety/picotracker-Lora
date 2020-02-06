@@ -265,6 +265,8 @@ static uint8_t setGNSSstopped[16]						= {0xB5, 0x62, 0x06, 0x57, 0x08, 0x00, 0x
 
 // VARIABLES
 static  uint8_t GPSbuffer[GPSBUFFER_SIZE];
+static  uint8_t Bin_buffer[GPSBUFFER_SIZE];
+
 
 volatile static  uint8_t GPS_UBX_ack_error = 0;
 volatile static  uint8_t GPS_UBX_checksum_error = 0;

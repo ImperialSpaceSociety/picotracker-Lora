@@ -55,6 +55,8 @@ uint8_t setup_GPS(){
 	HAL_Delay(1000);                                                              // Wait for things to be setup
 	
 	//UBLOX_send_message(restore_default_config, sizeof(restore_default_config));	  // reset default gps config
+	
+	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module. warm start
 
 	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
@@ -263,10 +265,10 @@ uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
 						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 100);
 					
 					  /* now fill GPS buffer with header+body of ubx message  */
-						GPSbuffer[0] = 0xB5;
-						GPSbuffer[1] = 0x62;
+						buffer[0] = 0xB5;
+						buffer[1] = 0x62;
 						for (uint8_t i=0; i<len-2; i++) {
-								GPSbuffer[i+2]=buffer_ubx_packet_wo_header[i];
+								buffer[i+2]=buffer_ubx_packet_wo_header[i];
 						}
 					 
 						return 1; // ubx message received and GPSbuffer filled with data
@@ -305,6 +307,9 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
+		// Clear Ublox I2C buffer if it is unexpectedly filled with something else. Do not do anything with the data
+    // TODO: maybe do something if there is an ubx message here. A GPS/MCU reset?
+		UBLOX_receive_UBX(GPSbuffer, 125, 1000);
 
 		// Transmit the request
     HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 1000);
