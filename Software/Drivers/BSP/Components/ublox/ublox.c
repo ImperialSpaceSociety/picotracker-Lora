@@ -19,6 +19,7 @@ extern uint8_t	buffer_0xB5[1];
 extern uint8_t	buffer_0x62[1];
 extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
 
+static uint8_t flush_buffer[500];
 
 
 /* 
@@ -51,18 +52,15 @@ uint8_t Wakeup_GPS(){
  */
 uint8_t setup_GPS(){
 	
+	// wake up gps in case it is in Lower Power mode
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
-	HAL_Delay(1000);                                                              // Wait for things to be setup
-	
-	//UBLOX_send_message(restore_default_config, sizeof(restore_default_config));	  // reset default gps config
-	
-	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module. warm start
+	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				              // reset GPS module. warm start
+	HAL_Delay(1000);                                                              // Wait for things to be setup	
 
 	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
 	UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
-	//UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
 	return 0;
 }
 
@@ -73,7 +71,7 @@ uint8_t get_location_fix(){
 
 	// wakeup gps
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
-	HAL_Delay(3000);
+	HAL_Delay(500);
 	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode	
 	
 	// Check if we are in airbourne mode
@@ -119,13 +117,15 @@ uint8_t get_location_fix(){
 		}       
 
 		fixAttemptCount++;
+		
+		// Indicator led to indicate that still searching
 		if (GPSaltitude<1000){
 			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
 			HAL_Delay(100);
 			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
 		}
 
-		PRINTF("%d",GPSsats);
+		PRINTF("%d GPS SATS in FIX",GPSsats);
 		PRINTF("\r\n"); 
 
 
@@ -151,6 +151,8 @@ uint8_t get_location_fix(){
 			return 0;
 
 		}
+		
+		HAL_Delay(500);		
 	}
 
 }
@@ -302,21 +304,38 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 
 
 /*
+   Flush I2C buffer. Fill the flush buffer with number of bytes defined by len
+*/
+uint8_t UBLOX_flush_I2C_buffer( uint16_t len)
+{
+		HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1),flush_buffer , len, 100);
+		
+		if (i2c_status == HAL_OK)
+		{
+			return 1;
+		}else
+		{
+			return 0;
+		}	
+}
+
+
+/*
     Function polling desired GPS data. It first sends the set UBX request.
     Then waits for the data and calls the appropriate parsing function.
 */
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
-		// Clear Ublox I2C buffer if it is unexpectedly filled with something else. Do not do anything with the data
+		// Flush Ublox I2C buffer if it is unexpectedly filled with something else. Do not do anything with the data
     // TODO: maybe do something if there is an ubx message here. A GPS/MCU reset?
-		UBLOX_receive_UBX(GPSbuffer, 125, 1000);
+		UBLOX_flush_I2C_buffer(500);
 
 		// Transmit the request
     HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 1000);
 			
 		memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
 		// Receive the request
-		UBLOX_receive_UBX(GPSbuffer, expectlen, 10000);
+		UBLOX_receive_UBX(GPSbuffer, expectlen, 5000);
 
 		return  parse(GPSbuffer);          // parse the response to appropriate variables, 1 for successful parsing
 

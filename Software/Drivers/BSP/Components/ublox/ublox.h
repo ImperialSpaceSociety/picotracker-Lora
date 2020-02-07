@@ -117,7 +117,7 @@ static uint8_t request0107[8]			= {0xB5, 0x62, 0x01, 0x07, 0x00, 0x00, 0x08, 0x1
 /* VERSION								response 48 + 30 * N bytes */
 static uint8_t request0A04[8]			= {0xB5, 0x62, 0x0A, 0x04, 0x00, 0x00, 0x0E, 0x34};
 
-/* HARDWARE RESET warm start			no response */
+/* HARDWARE RESET warm restart, Hardware reset immediately watchdog			no response */
 static uint8_t resetReceiver[12]		= {0xB5 ,0x62 ,0x06 ,0x04 ,0x04 ,0x00 ,0x01 ,0x00 ,0x00 ,0x00 ,0x0F ,0x68};
 
 /* SAVE CURRENT CONFIGURATION CFG-CFG			no response */
@@ -362,5 +362,6 @@ uint8_t setup_GPS(void);
 uint8_t Backup_GPS(void);
 uint8_t Wakeup_GPS(void);
 uint8_t get_location_fix(void);
+uint8_t UBLOX_flush_I2C_buffer( uint16_t len);
 
 #endif // UBLOX_H

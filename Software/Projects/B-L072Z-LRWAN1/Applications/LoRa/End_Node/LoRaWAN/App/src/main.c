@@ -38,7 +38,6 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
-// There are define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 
 /*!
  * CAYENNE_LPP is myDevices Application server.
@@ -54,6 +53,9 @@
 #define LPP_DATATYPE_ACCELEROMETER  0x71
 #define LPP_DATATYPE_GPSTIME        0x85
 #define LPP_APP_PORT 99
+
+// IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
+
 
 /*!
  * LoRaWAN Adaptive Data Rate
@@ -148,8 +150,7 @@ static  LoRaParam_t LoRaParamInit= {LORAWAN_ADR_STATE,
                                     LORAWAN_DEFAULT_DATA_RATE,  
                                     LORAWAN_PUBLIC_NETWORK};	
 																		
-// Radio variables
-uint8_t CURRENT_LORA_REGION               = 1;
+
 
 // UBLOX variables
 uint8_t GPS_UBX_error_bitfield						= 0;
