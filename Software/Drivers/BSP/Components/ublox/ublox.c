@@ -268,15 +268,15 @@ uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
     while ((HAL_GetTick() - tickstart_j) < timeout)
 		{
 			/* listen for the first header char */
-			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 100);
+			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 10000);
 			if (buffer_0xB5[0] == 0xb5){
 				  /* now listen for the second header char */
-					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 100);
+					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 10000);
 					
 				  if (buffer_0x62[0] == 0x62){
 						
 						/* now that the header has been received, parse the rest of message */
-						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 100);
+						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 10000);
 					
 					  /* now fill GPS buffer with header+body of ubx message  */
 						buffer[0] = 0xB5;
@@ -303,7 +303,7 @@ uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
 uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 	
 {
-		i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), message, len, 0xff);	
+		i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), message, len, 10000);	
 		
 		if (i2c_status == HAL_OK)
 		{
@@ -320,7 +320,7 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_flush_I2C_buffer( uint16_t len)
 {
-		HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1),flush_buffer , len, 100);
+		HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1),flush_buffer , len, 10000);
 		
 		if (i2c_status == HAL_OK)
 		{
@@ -343,11 +343,11 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 		UBLOX_flush_I2C_buffer(500);
 
 		// Transmit the request
-    HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 1000);
+    HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
 			
-		memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
+		//memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
 		// Receive the request
-		UBLOX_receive_UBX(GPSbuffer, expectlen, 5000);
+		UBLOX_receive_UBX(GPSbuffer, expectlen, 10000);
 
 		return  parse(GPSbuffer);          // parse the response to appropriate variables, 1 for successful parsing
 
