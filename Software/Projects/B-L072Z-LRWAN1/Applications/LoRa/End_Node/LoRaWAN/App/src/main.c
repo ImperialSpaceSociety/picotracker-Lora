@@ -270,10 +270,24 @@ int main( void )
 	
 	/* Set Brown out reset level voltage to 2.8V, above the 2.7V threshold of the GPS */
 	set_brownout_level();
-  
+	
+
   /* Configure the hardware*/
   HW_Init();
-  
+	
+
+	if (GPSaltitude<1000)
+	{
+		// Indicate that we are alive!
+		for(uint8_t i = 0; i < 10; i++)
+		{
+			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+			HAL_Delay(70); 
+			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+			HAL_Delay(50);
+		}
+	}
+
 	
 	#if defined (GPS_ENABLED)
 	/* GET intial location fix to set LORA region */

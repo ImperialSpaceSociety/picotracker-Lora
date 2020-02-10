@@ -16,17 +16,45 @@ Maintainer: Miguel Luis and Gregory Cristian
   ******************************************************************************
   * @file    hw_rtc.h
   * @author  MCD Application Team
+  * @version V1.2.0
+  * @date    10-July-2018
   * @brief   Header for driver hw_rtc.c module
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * Redistribution and use in source and binary forms, with or without 
+  * modification, are permitted, provided that the following conditions are met:
+  *
+  * 1. Redistribution of source code must retain the above copyright notice, 
+  *    this list of conditions and the following disclaimer.
+  * 2. Redistributions in binary form must reproduce the above copyright notice,
+  *    this list of conditions and the following disclaimer in the documentation
+  *    and/or other materials provided with the distribution.
+  * 3. Neither the name of STMicroelectronics nor the names of other 
+  *    contributors to this software may be used to endorse or promote products 
+  *    derived from this software without specific written permission.
+  * 4. This software, including modifications and/or derivative works of this 
+  *    software, must execute solely and exclusively on microcontroller or
+  *    microprocessor devices manufactured by or for STMicroelectronics.
+  * 5. Redistribution and use of this software other than as permitted under 
+  *    this license is void and will automatically terminate your rights under 
+  *    this license. 
+  *
+  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
   */
@@ -40,6 +68,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 /* Includes ------------------------------------------------------------------*/
 #include "utilities.h"
+#include <stdbool.h>
    
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -69,10 +98,10 @@ Maintainer: Miguel Luis and Gregory Cristian
 /*!
  * @brief Initializes the RTC timer
  * @note The timer is based on the RTC
- * @param none
+ * @param Request to update the calendar
  * @retval none
  */
-void HW_RTC_Init( void );
+void HW_RTC_Init(bool CalendarUpdate);
 
 /*!
  * @brief Stop the Alarm
@@ -163,41 +192,33 @@ uint32_t HW_RTC_ms2Tick( TimerTime_t timeMilliSec );
 TimerTime_t HW_RTC_Tick2ms( uint32_t tick );
 
 /*!
- * \brief Computes the temperature compensation for a period of time on a
+ * @brief Computes the temperature compensation for a period of time on a
  *        specific temperature.
- *
- * \param [IN] period Time period to compensate
- * \param [IN] temperature Current temperature
- *
- * \retval Compensated time period
+ * @param [IN] period Time period to compensate
+ * @param [IN] temperature Current temperature
+ * @retval Compensated time period
  */
 TimerTime_t RtcTempCompensation( TimerTime_t period, float temperature );
 
 /*!
- * \brief Get system time
- * \param [IN]   subSeconds in ms
- *               
- * \uint32_t     seconds 
+ * @brief Get system time
+ * @param [IN]   subSeconds in ms
+ * @retval Number of seconds 
  */
 uint32_t HW_RTC_GetCalendarTime( uint16_t *subSeconds );
 
-/*!
- * \brief Read from backup registers
- * \param [IN]  Data 0
- * \param [IN]  Data 1
- *               
- */
+
 void HW_RTC_BKUPRead( uint32_t *Data0, uint32_t *Data1);
-
-/*!
- * \brief Write in backup registers
- * \param [IN]  Data 0
- * \param [IN]  Data 1
- *               
- */
-
 void HW_RTC_BKUPWrite( uint32_t Data0, uint32_t Data1);
+void HW_RTC_SetTimeValue(RTC_TimeTypeDef* pRTC_TimeStruct);
+void HW_RTC_GetTimeValue(RTC_TimeTypeDef* pRTC_TimeStruct);
+void HW_RTC_SetDateValue(RTC_DateTypeDef* pRTC_DateStruct);
+void HW_RTC_GetDateValue(RTC_DateTypeDef* pRTC_DateStruct);
 
+const char* BSP_RTC_GetWeekDayName(int week);
+const char* BSP_RTC_GetMonthName(int month);
+
+      
 #ifdef __cplusplus
 }
 #endif
