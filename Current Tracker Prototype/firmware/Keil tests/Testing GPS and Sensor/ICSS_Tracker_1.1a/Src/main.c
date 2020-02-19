@@ -22,7 +22,6 @@
 #include "main.h"
 #include "adc.h"
 #include "i2c.h"
-#include "iwdg.h"
 #include "rtc.h"
 #include "spi.h"
 #include "usart.h"
@@ -201,7 +200,6 @@ int main(void)
   MX_RTC_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
-  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
 	
 	// keep checking if vcc voltage is high enough to carry on. NOT SURE IF NEEDED!. I think I should use inbuilt voltage measuremnt function

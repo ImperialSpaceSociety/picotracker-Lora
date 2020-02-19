@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L072xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;      ../Drivers/STM32L0xx_HAL_Driver/Inc;      ../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;      ../Drivers/CMSIS/Device/ST/STM32L0xx/Include;      ../Drivers/CMSIS/Include;      ..\MDK-ARM</IncludePath>
+              <IncludePath>../Inc;       ../Drivers/STM32L0xx_HAL_Driver/Inc;       ../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;       ../Drivers/CMSIS/Device/ST/STM32L0xx/Include;       ../Drivers/CMSIS/Include;       ..\MDK-ARM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -497,11 +497,6 @@
               <FilePath>../Src/i2c.c</FilePath>
             </File>
             <File>
-              <FileName>iwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Src/iwdg.c</FilePath>
-            </File>
-            <File>
               <FileName>rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/rtc.c</FilePath>
@@ -536,6 +531,11 @@
         <Group>
           <GroupName>Drivers/STM32L0xx_HAL_Driver</GroupName>
           <Files>
+            <File>
+              <FileName>stm32l0xx_hal_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_iwdg.c</FilePath>
+            </File>
             <File>
               <FileName>stm32l0xx_hal_adc.c</FileName>
               <FileType>1</FileType>
@@ -610,11 +610,6 @@
               <FileName>stm32l0xx_hal_cortex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32l0xx_hal_iwdg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_iwdg.c</FilePath>
             </File>
             <File>
               <FileName>stm32l0xx_hal_rtc.c</FileName>
