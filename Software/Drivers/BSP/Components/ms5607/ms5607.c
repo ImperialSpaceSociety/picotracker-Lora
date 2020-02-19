@@ -59,11 +59,11 @@ uint8_t ms5607_Init(void)
     }
 		
 		factory_crc = 0x000F & (C[7]); // the factory calculated crc
-		//PRINTF("factory crc:%d\n\r",factory_crc);
+		PRINTF("factory crc:%d\n\r",factory_crc);
 				
     calculated_crc=crc4(C);
 		
-		//PRINTF("calculated crc:%d\n\r",calculated_crc);
+		PRINTF("calculated crc:%d\n\r",calculated_crc);
 
     
 		if(calculated_crc==factory_crc)

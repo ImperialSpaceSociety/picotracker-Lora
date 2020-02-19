@@ -1,37 +1,76 @@
 /**
-  ******************************************************************************
+  ****************************************************************************
   * @file    mlm32l0xx_hal_msp.c
   * @author  MCD Application Team
+  * @version V1.2.0
+  * @date    10-July-2018
   * @brief   msp file for HAL
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * Redistribution and use in source and binary forms, with or without 
+  * modification, are permitted, provided that the following conditions are met:
+  *
+  * 1. Redistribution of source code must retain the above copyright notice, 
+  *    this list of conditions and the following disclaimer.
+  * 2. Redistributions in binary form must reproduce the above copyright notice,
+  *    this list of conditions and the following disclaimer in the documentation
+  *    and/or other materials provided with the distribution.
+  * 3. Neither the name of STMicroelectronics nor the names of other 
+  *    contributors to this software may be used to endorse or promote products 
+  *    derived from this software without specific written permission.
+  * 4. This software, including modifications and/or derivative works of this 
+  *    software, must execute solely and exclusively on microcontroller or
+  *    microprocessor devices manufactured by or for STMicroelectronics.
+  * 5. Redistribution and use of this software other than as permitted under 
+  *    this license is void and will automatically terminate your rights under 
+  *    this license. 
+  *
+  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
 #include "hw.h"
+#include "vcom.h"
 #include "timeServer.h"
+
 /* when fast wake up is enabled, the mcu wakes up in ~20us  * and 
  * does not wait for the VREFINT to be settled. THis is ok for 
  * most of the case except when adc must be used in this case before 
  *starting the adc, you must make sure VREFINT is settled*/
 #define ENABLE_FAST_WAKEUP
 
+  
+  
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+
+
 /* Private function prototypes -----------------------------------------------*/
+
 /* Private functions ---------------------------------------------------------*/
+
+/** @addtogroup Core_Exported_Functions Core Exported Functions
+  * @{
+ */
 
 /**
   * @brief This function configures the source of the time base.
@@ -45,15 +84,6 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   return HAL_OK;
 }
 
-
-/**
-  * @brief Over riding HAL_GetTick to use RTC?
-  * @brief  https://community.st.com/s/question/0D50X0000B45rDQSQY/halgettick-doesnt-works-in-examples-provided-for-bl072z-lora-board
-  */
-uint32_t HAL_GetTick(void){
-	return HW_RTC_Tick2ms(HW_RTC_GetTimerValue());
-}
-
 /**
   * @brief This function provides delay (in ms)
   * @param Delay: specifies the delay time length, in milliseconds.
@@ -62,6 +92,15 @@ uint32_t HAL_GetTick(void){
 void HAL_Delay(__IO uint32_t Delay)
 {
   HW_RTC_DelayMs( Delay ); /* based on RTC */
+}
+
+/**
+  * @brief Provides a tick value in millisecond.
+  * @retval tick value
+  */
+uint32_t HAL_GetTick(void)
+{
+  return HW_RTC_GetTimerValue();
 }
 
 /**
@@ -122,7 +161,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
     Error_Handler();
   }
 
-  /* -b- Select LSI as RTC clock source */
+  /* -b- Select LSE as RTC clock source */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
   PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
   if(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -135,7 +174,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
   __HAL_RCC_RTC_ENABLE();
   
   /*##-3- Configure the NVIC for RTC Alarm ###################################*/
-  HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0x0, 0);
+  HAL_NVIC_SetPriority(RTC_Alarm_IRQn, RTC_Alarm_IRQ_PP, RTC_Alarm_IRQ_SP);
   HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
 }
 
@@ -161,16 +200,6 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef *hrtc)
 void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 {
   TimerIrqHandler( );
-}
-
-/**
-  * @brief  EXTI line detection callbacks.
-  * @param  GPIO_Pin: Specifies the pins connected to the EXTI line.
-  * @retval None
-  */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-  HW_GPIO_IrqHandler( GPIO_Pin );
 }
 
 /**

@@ -56,6 +56,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
+#define LED_Pin GPIO_PIN_2
 
 /*!
  * Defines the application data transmission duty cycle. 5s, value in [ms].
@@ -168,6 +169,8 @@ int main( void )
   
   /* USER CODE BEGIN 1 */
   ENABLE_IRQ();
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+
 	/* USER CODE END 1 */
   
   /*Disbale Stand-by mode*/
