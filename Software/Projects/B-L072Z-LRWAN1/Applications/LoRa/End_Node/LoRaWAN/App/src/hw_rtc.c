@@ -38,6 +38,10 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "low_power_manager.h"
 #include "systime.h"
 
+/** @addtogroup STEVAL-STRKT01_RTC_Private_Typedef RTC Private Typedef
+  * @{
+ */
+
 /* Private typedef -----------------------------------------------------------*/
 typedef struct
 {
@@ -48,6 +52,10 @@ typedef struct
   RTC_DateTypeDef RTC_Calndr_Date; /* Reference date in calendar format */
   
 } RtcTimerContext_t;
+
+/**
+  * @}
+  */
 
 /* Private define ------------------------------------------------------------*/
 
@@ -85,9 +93,37 @@ typedef struct
 
 #define  DAYS_IN_MONTH_CORRECTION_NORM     ((uint32_t) 0x99AAA0 )
 #define  DAYS_IN_MONTH_CORRECTION_LEAP     ((uint32_t) 0x445550 )
+/* Calculates ceiling(X/N) */
+#define DIVC(X,N)   ( ( (X) + (N) -1 ) / (N) )
 
-#define DIVC( X, N )                                ( ( ( X ) + ( N ) -1 ) / ( N ) )
 /* Private macro -------------------------------------------------------------*/
+
+
+/* Private constants ---------------------------------------------------------*/
+/**
+ * @brief Week and months names
+ * 
+ */
+static const char weekDayNames[7][10] = {"Monday", 
+                                     "Tuesday", 
+                                     "Wednesday", 
+                                     "Thursday", 
+                                     "Friday", 
+                                     "Saturday", 
+                                     "Sunday"};         /*!< Day Name Array */
+
+static const char monthsNames[12][10] = {"January",
+                                    "February", 
+                                    "March", 
+                                    "April", 
+                                    "May", 
+                                    "June", 
+                                    "July", 
+                                    "August", 
+                                    "September", 
+                                    "October", 
+                                    "November", 
+                                    "December"};        /*!< Months Name Array */
 /* Private variables ---------------------------------------------------------*/
 /*!
  * \brief Indicates if the RTC is already Initalized or not
@@ -129,6 +165,8 @@ static RtcTimerContext_t RtcTimerContext;
 
 /* Private function prototypes -----------------------------------------------*/
 
+static void HW_RTC_SetTimerContextAsDefault( void );
+
 static void HW_RTC_SetConfig( void );
 
 static void HW_RTC_SetAlarmConfig( void );
@@ -146,15 +184,46 @@ static uint64_t HW_RTC_GetCalendarValue(  RTC_DateTypeDef* RTC_DateStruct, RTC_T
  * @param none
  * @retval none
  */
-void HW_RTC_Init( void )
+void HW_RTC_Init(bool CalendarDefault)
 {
   if( HW_RTC_Initalized == false )
   {
-    HW_RTC_SetConfig( );
+    HW_RTC_SetConfig();
+    HW_RTC_SetConfig();
+    if (CalendarDefault)
+    {
+      HW_RTC_SetTimerContextAsDefault();
+      HW_RTC_SetTimeValue(&RtcTimerContext.RTC_Calndr_Time);
+      HW_RTC_SetDateValue(&RtcTimerContext.RTC_Calndr_Date);
+    }
     HW_RTC_SetAlarmConfig( );
     HW_RTC_SetTimerContext( );
     HW_RTC_Initalized = true;
   }
+}
+/*!
+ * @brief Configures the RTC timer
+ * @note The timer is based on the RTC
+ * @param none
+ * @retval none
+ */
+static void HW_RTC_SetTimerContextAsDefault( void )
+{
+  /*Monday 1st January 2016*/
+  RtcTimerContext.RTC_Calndr_Date.Year = 0;
+  RtcTimerContext.RTC_Calndr_Date.Month = RTC_MONTH_JANUARY;
+  RtcTimerContext.RTC_Calndr_Date.Date = 1;
+  RtcTimerContext.RTC_Calndr_Date.WeekDay = RTC_WEEKDAY_MONDAY;
+  
+  /*at 0:0:0*/
+  RtcTimerContext.RTC_Calndr_Time.Hours = 0;
+  RtcTimerContext.RTC_Calndr_Time.Minutes = 0;
+
+  RtcTimerContext.RTC_Calndr_Time.Seconds = 0;
+  RtcTimerContext.RTC_Calndr_Time.TimeFormat = 0;
+  RtcTimerContext.RTC_Calndr_Time.SubSeconds = 0;
+  RtcTimerContext.RTC_Calndr_Time.StoreOperation = RTC_DAYLIGHTSAVING_NONE;
+  RtcTimerContext.RTC_Calndr_Time.DayLightSaving = RTC_STOREOPERATION_RESET;  
 }
 
 /*!
@@ -165,8 +234,8 @@ void HW_RTC_Init( void )
  */
 static void HW_RTC_SetConfig( void )
 {
-  RTC_TimeTypeDef RTC_TimeStruct;
-  RTC_DateTypeDef RTC_DateStruct;
+  //RTC_TimeTypeDef RTC_TimeStruct;
+  //RTC_DateTypeDef RTC_DateStruct;
 
   RtcHandle.Instance = RTC;
 
@@ -179,29 +248,9 @@ static void HW_RTC_SetConfig( void )
 
   HAL_RTC_Init( &RtcHandle );
   
-  /*Monday 1st January 2016*/
-  RTC_DateStruct.Year = 0;
-  RTC_DateStruct.Month = RTC_MONTH_JANUARY;
-  RTC_DateStruct.Date = 1;
-  RTC_DateStruct.WeekDay = RTC_WEEKDAY_MONDAY;
-  HAL_RTC_SetDate(&RtcHandle , &RTC_DateStruct, RTC_FORMAT_BIN);
-  
-  /*at 0:0:0*/
-  RTC_TimeStruct.Hours = 0;
-  RTC_TimeStruct.Minutes = 0;
-
-  RTC_TimeStruct.Seconds = 0;
-  RTC_TimeStruct.TimeFormat = 0;
-  RTC_TimeStruct.SubSeconds = 0;
-  RTC_TimeStruct.StoreOperation = RTC_DAYLIGHTSAVING_NONE;
-  RTC_TimeStruct.DayLightSaving = RTC_STOREOPERATION_RESET;
-  
-  HAL_RTC_SetTime(&RtcHandle , &RTC_TimeStruct, RTC_FORMAT_BIN);
-  
- /*Enable Direct Read of the calendar registers (not through Shadow) */
-  HAL_RTCEx_EnableBypassShadow(&RtcHandle);
-}
-
+  /*Enable Direct Read of the calendar registers (not through Shadow) */
+  HAL_RTCEx_EnableBypassShadow(&RtcHandle);  
+}  
 
 /*!
  * @brief calculates the wake up time between wake up and mcu start
@@ -271,7 +320,7 @@ TimerTime_t HW_RTC_Tick2ms( uint32_t tick )
 {
 /*return( ( timeMicroSec * RTC_ALARM_TIME_BASE ) ); */
   uint32_t seconds = tick>>N_PREDIV_S;
-  tick = tick&PREDIV_S;  
+  tick = tick&PREDIV_S;
   return  ( ( seconds*1000 ) + ((tick*1000)>>N_PREDIV_S) );
 }
 
@@ -384,7 +433,8 @@ void HW_RTC_DelayMs( uint32_t delay )
 {
   TimerTime_t delayValue = 0;
   TimerTime_t timeout = 0;
-
+  if(!HW_RTC_Initalized)return;
+    
   delayValue = HW_RTC_ms2Tick( delay );
 
   /* Wait delay ms */
@@ -403,7 +453,7 @@ void HW_RTC_DelayMs( uint32_t delay )
 uint32_t HW_RTC_SetTimerContext( void )
 {
   RtcTimerContext.Rtc_Time = ( uint32_t ) HW_RTC_GetCalendarValue( &RtcTimerContext.RTC_Calndr_Date, &RtcTimerContext.RTC_Calndr_Time );
-  return ( uint32_t ) RtcTimerContext.Rtc_Time;
+  return RtcTimerContext.Rtc_Time;
 }
 
 /*!
@@ -413,7 +463,7 @@ uint32_t HW_RTC_SetTimerContext( void )
  */
 uint32_t HW_RTC_GetTimerContext( void )
 {
-  return RtcTimerContext.Rtc_Time;
+  return (uint32_t) RtcTimerContext.Rtc_Time;
 }
 /* Private functions ---------------------------------------------------------*/
 
@@ -584,10 +634,88 @@ static uint64_t HW_RTC_GetCalendarValue( RTC_DateTypeDef* RTC_DateStruct, RTC_Ti
 }
 
 /*!
- * \brief Get system time
- * \param [IN]   pointer to ms 
- *               
- * \return uint32_t seconds 
+ * @brief Set current time in calendar
+ * @param pointer to RTC_TimeStruct
+ * @retval none
+ */
+void HW_RTC_SetTimeValue( RTC_TimeTypeDef* pRTC_TimeStruct )
+{
+  /* Set RTC current time */
+  HAL_RTC_SetTime(&RtcHandle , pRTC_TimeStruct, RTC_FORMAT_BIN);
+  
+  /* Wait until the RTC Time and Date registers (RTC_TR and RTC_DR) are synchronized with RTC APB clock */
+  HAL_RTC_WaitForSynchro(&RtcHandle);
+}
+
+
+/*!
+ * @brief Get current time in calendar
+ * @param pointer to RTC_TimeStruct
+ * @retval none
+ */
+void HW_RTC_GetTimeValue( RTC_TimeTypeDef* pRTC_TimeStruct )
+{
+  HAL_RTC_GetTime(&RtcHandle , pRTC_TimeStruct, RTC_FORMAT_BIN);
+}
+
+
+/*!
+ * @brief Set current date in calendar
+ * @param pointer to RTC_DateStruct
+ * @retval none
+ */
+void HW_RTC_SetDateValue( RTC_DateTypeDef* pRTC_DateStruct )
+{
+  /* Set RTC current date */
+  HAL_RTC_SetDate(&RtcHandle , pRTC_DateStruct, RTC_FORMAT_BIN);
+  
+  /* Wait until the RTC Time and Date registers (RTC_TR and RTC_DR) are synchronized with RTC APB clock */
+  HAL_RTC_WaitForSynchro(&RtcHandle);
+}
+
+
+/*!
+ * @brief Get current date in calendar
+ * @param pointer to RTC_DateStruct
+ * @retval none
+ */
+void HW_RTC_GetDateValue( RTC_DateTypeDef* pRTC_DateStruct )
+{
+  HAL_RTC_GetDate(&RtcHandle , pRTC_DateStruct, RTC_FORMAT_BIN);
+}
+
+
+/*!
+  * @brief It returns week day name
+  * @param week day number [1..7]
+  * @retval weekDayNames string if week day number is in [1..7] range. NULL otherwise
+  */
+const char* BSP_RTC_GetWeekDayName(int week)
+{
+  if(week < 1 || week > 7)
+    return " ";
+	
+  return weekDayNames[week-1];
+}
+
+/*!
+  * @brief It returns month day name
+  * @param month day number [1..12]
+  * @retval monthsNames string if month day number is in [1..12] range. NULL otherwise
+  */
+const char* BSP_RTC_GetMonthName(int month)
+{
+  if(month < 1 || month > 12)
+    return " ";
+  
+  return monthsNames[month-1];
+}
+
+
+/*!
+ * @brief Get system time
+ * @param [IN]   pointer to ms 
+ * @retval uint32_t seconds 
  */
 uint32_t HW_RTC_GetCalendarTime( uint16_t *mSeconds)
 {
@@ -605,6 +733,12 @@ uint32_t HW_RTC_GetCalendarTime( uint16_t *mSeconds)
   
   return seconds;
 }
+/*!
+ * @brief Write in backup registers
+ * @param [IN]  Data 0
+ * @param [IN]  Data 1
+ * @retval None            
+ */
 
 void HW_RTC_BKUPWrite( uint32_t Data0, uint32_t Data1)
 {
@@ -612,6 +746,13 @@ void HW_RTC_BKUPWrite( uint32_t Data0, uint32_t Data1)
   HAL_RTCEx_BKUPWrite(&RtcHandle, RTC_BKP_DR1, Data1);
 }
 
+
+/*!
+ * @brief Read from backup registers
+ * @param [IN]  Data 0
+ * @param [IN]  Data 1
+ * @retval None              
+ */
 void HW_RTC_BKUPRead( uint32_t *Data0, uint32_t *Data1)
 {
   *Data0=HAL_RTCEx_BKUPRead(&RtcHandle, RTC_BKP_DR0);

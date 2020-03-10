@@ -116,6 +116,8 @@ void Error_Handler(void);
 #define GPS_ENABLED
 #define RADIO_ENABLED
 //#define SPECIAL_MESSAGE
+#define USE_LED
+
 
 /*!
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
@@ -125,7 +127,9 @@ void Error_Handler(void);
 
 //#define ICSPACE16
 //#define ICSPACE17
-#define ICSPACE18
+//#define ICSPACE18
+#define ICSPACE19
+#define ICSPACE20
 
 
 /* USER CODE END Private defines */

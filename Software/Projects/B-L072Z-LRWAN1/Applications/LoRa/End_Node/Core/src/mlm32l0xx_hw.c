@@ -110,7 +110,7 @@ void HW_Init( void )
     
     HW_SPI_Init( );
 
-    HW_RTC_Init( );
+    HW_RTC_Init( true );
     
     TraceInit( );
     
@@ -410,7 +410,7 @@ uint8_t HW_GetBatteryLevel( void )
   */
 uint16_t HW_GetBatteryLevelmV( void ) 
 {
-  uint8_t batteryLevel = 0;
+  //uint8_t batteryLevel = 0;
   uint16_t measuredLevel = 0;
   uint32_t batteryLevelmV;
 

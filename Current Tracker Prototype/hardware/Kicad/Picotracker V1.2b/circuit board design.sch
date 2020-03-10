@@ -1459,31 +1459,20 @@ Wire Wire Line
 	4550 8650 4550 8950
 NoConn ~ 3900 9350
 $Comp
-L Connector_Generic:Conn_01x01 J4
+L Connector_Generic:Conn_01x02 J4
 U 1 1 5E1C29C2
 P 9800 10100
 F 0 "J4" H 9880 10142 50  0000 L CNN
-F 1 "BATT_V+" H 9880 10051 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 9800 10100 50  0001 C CNN
+F 1 "Batt connection" H 9880 10051 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9800 10100 50  0001 C CNN
 F 3 "~" H 9800 10100 50  0001 C CNN
 	1    9800 10100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	9250 10100 9550 10100
-$Comp
-L Connector_Generic:Conn_01x01 J5
-U 1 1 5E1F6946
-P 9800 10300
-F 0 "J5" H 9880 10342 50  0000 L CNN
-F 1 "BATT_GND" H 9880 10251 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 9800 10300 50  0001 C CNN
-F 3 "~" H 9800 10300 50  0001 C CNN
-	1    9800 10300
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
-	9250 10300 9600 10300
+	9250 10200 9600 10200
 $Comp
 L Device:L L3
 U 1 1 5E24769B
@@ -1716,7 +1705,7 @@ F 3 "" H 9250 10550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9250 10300 9250 10550
+	9250 10200 9250 10550
 $Comp
 L pecanpico:+BATT #PWR0107
 U 1 1 5DF19021
