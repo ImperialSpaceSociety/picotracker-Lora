@@ -116,6 +116,9 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define RTC_OUTPUT       DBG_RTC_OUTPUT
 
 #define RTC_Alarm_IRQn              RTC_IRQn
+#define RTC_Alarm_IRQ_PP            2 //1
+#define RTC_Alarm_IRQ_SP            0
+   
 /* --------------------------- USART HW definition -------------------------------*/
 #define USARTx                           USART1
 #define USARTx_CLK_ENABLE()              __USART1_CLK_ENABLE();

@@ -40,6 +40,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 /* Includes ------------------------------------------------------------------*/
 #include "utilities.h"
+#include <stdbool.h>
    
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -69,10 +70,10 @@ Maintainer: Miguel Luis and Gregory Cristian
 /*!
  * @brief Initializes the RTC timer
  * @note The timer is based on the RTC
- * @param none
+ * @param Request to update the calendar
  * @retval none
  */
-void HW_RTC_Init( void );
+void HW_RTC_Init(bool CalendarUpdate);
 
 /*!
  * @brief Stop the Alarm
@@ -163,21 +164,18 @@ uint32_t HW_RTC_ms2Tick( TimerTime_t timeMilliSec );
 TimerTime_t HW_RTC_Tick2ms( uint32_t tick );
 
 /*!
- * \brief Computes the temperature compensation for a period of time on a
+ * @brief Computes the temperature compensation for a period of time on a
  *        specific temperature.
- *
- * \param [IN] period Time period to compensate
- * \param [IN] temperature Current temperature
- *
- * \retval Compensated time period
+ * @param [IN] period Time period to compensate
+ * @param [IN] temperature Current temperature
+ * @retval Compensated time period
  */
 TimerTime_t RtcTempCompensation( TimerTime_t period, float temperature );
 
 /*!
- * \brief Get system time
- * \param [IN]   subSeconds in ms
- *               
- * \uint32_t     seconds 
+ * @brief Get system time
+ * @param [IN]   subSeconds in ms
+ * @retval Number of seconds 
  */
 uint32_t HW_RTC_GetCalendarTime( uint16_t *subSeconds );
 
@@ -188,16 +186,16 @@ uint32_t HW_RTC_GetCalendarTime( uint16_t *subSeconds );
  *               
  */
 void HW_RTC_BKUPRead( uint32_t *Data0, uint32_t *Data1);
-
-/*!
- * \brief Write in backup registers
- * \param [IN]  Data 0
- * \param [IN]  Data 1
- *               
- */
-
 void HW_RTC_BKUPWrite( uint32_t Data0, uint32_t Data1);
+void HW_RTC_SetTimeValue(RTC_TimeTypeDef* pRTC_TimeStruct);
+void HW_RTC_GetTimeValue(RTC_TimeTypeDef* pRTC_TimeStruct);
+void HW_RTC_SetDateValue(RTC_DateTypeDef* pRTC_DateStruct);
+void HW_RTC_GetDateValue(RTC_DateTypeDef* pRTC_DateStruct);
 
+const char* BSP_RTC_GetWeekDayName(int week);
+const char* BSP_RTC_GetMonthName(int month);
+
+      
 #ifdef __cplusplus
 }
 #endif

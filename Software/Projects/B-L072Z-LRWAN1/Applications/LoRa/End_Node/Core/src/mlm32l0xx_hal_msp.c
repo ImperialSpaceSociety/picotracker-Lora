@@ -46,13 +46,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 }
 
 
-/**
-  * @brief Over riding HAL_GetTick to use RTC?
-  * @brief  https://community.st.com/s/question/0D50X0000B45rDQSQY/halgettick-doesnt-works-in-examples-provided-for-bl072z-lora-board
-  */
-uint32_t HAL_GetTick(void){
-	return HW_RTC_Tick2ms(HW_RTC_GetTimerValue());
-}
+
 
 /**
   * @brief This function provides delay (in ms)
@@ -62,6 +56,15 @@ uint32_t HAL_GetTick(void){
 void HAL_Delay(__IO uint32_t Delay)
 {
   HW_RTC_DelayMs( Delay ); /* based on RTC */
+}
+
+/**
+  * @brief Provides a tick value in millisecond.
+  * @retval tick value
+  */
+uint32_t HAL_GetTick(void)
+{
+  return HW_RTC_GetTimerValue();
 }
 
 /**
@@ -122,7 +125,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
     Error_Handler();
   }
 
-  /* -b- Select LSI as RTC clock source */
+  /* -b- Select LSE as RTC clock source */
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
   PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
   if(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
@@ -135,7 +138,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef *hrtc)
   __HAL_RCC_RTC_ENABLE();
   
   /*##-3- Configure the NVIC for RTC Alarm ###################################*/
-  HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0x0, 0);
+  HAL_NVIC_SetPriority(RTC_Alarm_IRQn, RTC_Alarm_IRQ_PP, RTC_Alarm_IRQ_SP);
   HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
 }
 
