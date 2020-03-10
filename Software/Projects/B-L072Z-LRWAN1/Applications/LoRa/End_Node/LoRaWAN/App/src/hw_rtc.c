@@ -142,6 +142,8 @@ typedef struct
 
 /* Private macro -------------------------------------------------------------*/
 
+
+
 /* Private constants ---------------------------------------------------------*/
 /**
  * @brief Week and months names
@@ -244,8 +246,6 @@ void HW_RTC_Init(bool CalendarDefault)
     HW_RTC_Initalized = true;
   }
 }
-
-
 /*!
  * @brief Configures the RTC timer
  * @note The timer is based on the RTC
@@ -271,6 +271,18 @@ static void HW_RTC_SetTimerContextAsDefault( void )
   RtcTimerContext.RTC_Calndr_Time.DayLightSaving = RTC_STOREOPERATION_RESET;  
 }
 
+
+/*!
+ * @brief Configures the RTC timer
+ * @note The timer is based on the RTC
+ * @param none
+ * @retval none
+ */
+static void HW_RTC_SetTimerContextAsDefault( void )
+{
+
+  //RTC_TimeTypeDef RTC_TimeStruct;
+  //RTC_DateTypeDef RTC_DateStruct;
 
 /*!
  * @brief Configures the RTC timer
@@ -781,6 +793,12 @@ uint32_t HW_RTC_GetCalendarTime( uint16_t *mSeconds)
   
   return seconds;
 }
+/*!
+ * @brief Write in backup registers
+ * @param [IN]  Data 0
+ * @param [IN]  Data 1
+ * @retval None            
+ */
 
 /*!
  * @brief Write in backup registers

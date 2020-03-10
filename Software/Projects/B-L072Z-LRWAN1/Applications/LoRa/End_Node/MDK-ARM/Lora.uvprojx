@@ -563,6 +563,11 @@
           <GroupName>Projects/End_Node</GroupName>
           <Files>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\main.c</FilePath>
+            </File>
+            <File>
               <FileName>bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\bsp.c</FilePath>
@@ -682,11 +687,6 @@
         <Group>
           <GroupName>Middlewares/LoRaWAN/Mac/Regions</GroupName>
           <Files>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LoRaWAN\App\src\main.c</FilePath>
-            </File>
             <File>
               <FileName>Region.c</FileName>
               <FileType>1</FileType>
@@ -1363,6 +1363,11 @@
           <GroupName>Projects/End_Node</GroupName>
           <Files>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\main.c</FilePath>
+            </File>
+            <File>
               <FileName>bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\bsp.c</FilePath>
@@ -1482,11 +1487,6 @@
         <Group>
           <GroupName>Middlewares/LoRaWAN/Mac/Regions</GroupName>
           <Files>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LoRaWAN\App\src\main.c</FilePath>
-            </File>
             <File>
               <FileName>Region.c</FileName>
               <FileType>1</FileType>

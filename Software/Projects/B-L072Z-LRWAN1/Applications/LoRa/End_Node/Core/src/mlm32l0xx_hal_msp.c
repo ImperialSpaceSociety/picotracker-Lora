@@ -84,6 +84,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   return HAL_OK;
 }
 
+
 /**
   * @brief This function provides delay (in ms)
   * @param Delay: specifies the delay time length, in milliseconds.

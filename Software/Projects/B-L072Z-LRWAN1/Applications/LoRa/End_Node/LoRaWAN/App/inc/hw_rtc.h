@@ -208,6 +208,12 @@ TimerTime_t RtcTempCompensation( TimerTime_t period, float temperature );
 uint32_t HW_RTC_GetCalendarTime( uint16_t *subSeconds );
 
 
+/*!
+ * \brief Read from backup registers
+ * \param [IN]  Data 0
+ * \param [IN]  Data 1
+ *               
+ */
 void HW_RTC_BKUPRead( uint32_t *Data0, uint32_t *Data1);
 void HW_RTC_BKUPWrite( uint32_t Data0, uint32_t Data1);
 void HW_RTC_SetTimeValue(RTC_TimeTypeDef* pRTC_TimeStruct);

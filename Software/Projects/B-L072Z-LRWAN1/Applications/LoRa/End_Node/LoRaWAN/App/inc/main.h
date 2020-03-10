@@ -127,7 +127,9 @@ void Error_Handler(void);
 
 //#define ICSPACE16
 //#define ICSPACE17
-#define ICSPACE18
+//#define ICSPACE18
+#define ICSPACE19
+#define ICSPACE20
 
 
 /* USER CODE END Private defines */
