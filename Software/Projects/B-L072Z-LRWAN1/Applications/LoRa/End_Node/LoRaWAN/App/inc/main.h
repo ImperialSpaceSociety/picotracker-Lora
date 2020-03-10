@@ -113,7 +113,7 @@ void Error_Handler(void);
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor or GPS
 #define SENSOR_ENABLED
-//#define GPS_ENABLED
+#define GPS_ENABLED
 #define RADIO_ENABLED
 //#define SPECIAL_MESSAGE
 #define USE_LED
@@ -127,7 +127,8 @@ void Error_Handler(void);
 
 //#define ICSPACE16
 //#define ICSPACE17
-#define ICSPACE18
+//#define ICSPACE18
+#define ICSPACE19
 
 
 /* USER CODE END Private defines */

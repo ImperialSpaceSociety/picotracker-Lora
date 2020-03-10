@@ -234,8 +234,8 @@ static void HW_RTC_SetTimerContextAsDefault( void )
  */
 static void HW_RTC_SetConfig( void )
 {
-  RTC_TimeTypeDef RTC_TimeStruct;
-  RTC_DateTypeDef RTC_DateStruct;
+  //RTC_TimeTypeDef RTC_TimeStruct;
+  //RTC_DateTypeDef RTC_DateStruct;
 
   RtcHandle.Instance = RTC;
 

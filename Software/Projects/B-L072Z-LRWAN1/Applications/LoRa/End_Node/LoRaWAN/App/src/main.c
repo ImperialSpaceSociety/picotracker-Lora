@@ -374,7 +374,6 @@ static void Send( void* context )
 {
   /* USER CODE BEGIN 3 */
 	uint16_t battery_level16 = 0;
-	uint16_t battery_level_vdd = 0;
   uint16_t cayenne_pressure = 0;
   int16_t cayenne_temperature = 0;
   //uint16_t cayenne_humidity = 0;
@@ -440,7 +439,6 @@ static void Send( void* context )
 	/* Evaluate battery level */
   uint8_t cchannel=0;
 	battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
-	battery_level_vdd = (uint16_t)HW_GetBatteryLevelmV();
 
   cayenne_temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
   cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
