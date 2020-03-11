@@ -300,11 +300,11 @@ int main( void )
 		 * given the long duration between the timer triggering, it is likely that the initialisation
 		 * will be completed by then.
 		 */
-		//if (!timer_started){
+		if (!timer_started){
 		/* Init and start the tx interval timer */
 			LoraStartTx( TX_ON_TIMER) ;
 			timer_started = 1;
-		//}
+		}
 		
 		
 	  /* Keep transmiting data packets every period defined by APP_TX_DUTYCYCLE */
