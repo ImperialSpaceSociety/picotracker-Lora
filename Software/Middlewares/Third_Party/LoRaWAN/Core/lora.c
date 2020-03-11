@@ -23,7 +23,7 @@
 #include "lora.h"
 #include "lora-test.h"
 
-extern LoRaMacRegion_t Current_LoRa_Region_Settings;
+extern LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS;
 
 /*!
  *  Select either Device_Time_req or Beacon_Time_Req following LoRaWAN version 
@@ -481,7 +481,7 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
 // because this init function sets up the loramac context(region, restrictions etc)
 				
       /* Initialise LoRa to Geofence region */
-			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, Current_LoRa_Region_Settings );
+			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, CURRENT_LORA_REGION_SETTINGS );
 
       
       mibReq.Type = MIB_ADR;

@@ -220,11 +220,11 @@ double TEMPERATURE_Value; // compensated temperature value
  */
 int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings are correct for region we are flying over. 1 if correct, 0 if incorrect
 
-LoRaMacRegion_t Current_LoRa_Region_Settings   = LORAMAC_REGION_EU868;
-LoRaMacRegion_t Previous_LoRa_Region_Settings  = LORAMAC_REGION_EU868;
+LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS   = LORAMAC_REGION_EU868;
+LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS  = LORAMAC_REGION_EU868;
 
-Polygon_t current_polygon_region  = EU863870_4F_polygon;
-Polygon_t previous_polygon_region = EU863870_4F_polygon;
+Polygon_t CURRENT_POLYGON_REGION  = EU863870_4F_polygon;
+Polygon_t PREVIOUS_POLYGON_REGION = EU863870_4F_polygon;
 
 uint32_t GEOFENCE_no_tx;
 
@@ -288,7 +288,7 @@ int main( void )
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	
-	PRINTF("My location polygon : %d\n\r", (int)current_polygon_region);  
+	PRINTF("My location polygon : %d\n\r", (int)CURRENT_POLYGON_REGION);  
 	
 	/*Disbale Stand-by mode*/
 	LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
