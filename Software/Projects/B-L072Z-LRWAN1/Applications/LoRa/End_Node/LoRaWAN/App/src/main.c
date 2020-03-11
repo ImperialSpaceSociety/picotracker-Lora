@@ -223,8 +223,8 @@ int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings 
 LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS   = LORAMAC_REGION_EU868;
 LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS  = LORAMAC_REGION_EU868;
 
-Polygon_t CURRENT_POLYGON_REGION  = EU863870_4F_polygon;
-Polygon_t PREVIOUS_POLYGON_REGION = EU863870_4F_polygon;
+Polygon_t CURRENT_POLYGON_REGION  = EU863870_4F_polygon; // London is in this polygon
+Polygon_t PREVIOUS_POLYGON_REGION = EU863870_4F_polygon; // London is in this polygon
 
 uint32_t GEOFENCE_no_tx;
 
@@ -303,11 +303,21 @@ int main( void )
 		LORA_Join();
 		#endif
 		
-		if (!timer_started){
+		
+		/* Don't restart another timer everytime we reinit LoRa settings 
+		 * Not sure if we have to deinit this timer while reinitialising LoRa settings.
+		 * Update: no real need to deinit the timer while reinitialising LoRa settings because
+		 * given the long duration between the timer triggering, it is likely that the initialisation
+		 * will be completed by then.
+		 */
+		//if (!timer_started){
+		/* Init and start the tx interval timer */
 			LoraStartTx( TX_ON_TIMER) ;
 			timer_started = 1;
-		}
+		//}
 		
+		
+	  /* Keep transmiting data packets every period defined by APP_TX_DUTYCYCLE */
 		while( 1 )
 		{
 					
@@ -316,13 +326,16 @@ int main( void )
 				/*reset notification flag*/
 				AppProcessRequest=LORA_RESET;
 
-				/*Send*/
-				Send( NULL ); // Here lies the function to read sensor and GPS, parse and send it
+				/*Here lies the function to read sensor and GPS, parse and send it*/
+				Send( NULL );
 				
 				/* if the tracker moves into another region, break out of main loop and reinit everything including radio */
 				if (!REGIONAL_LORA_SETTINGS_CORRECT){ 
+					
 					PRINTF("Breaking out of main loop to reinit LoRa regional settings\n\r");
-					// TODO: put a lora deinit function here.
+					
+					/* stop the timer that indicates that we need to transmit again */
+					TimerStop(&TxTimer);
 					break;
 				}
 			}
@@ -584,7 +597,14 @@ static void LORA_RxData( lora_AppData_t *AppData )
 
 static void OnTxTimerEvent( void* context )
 {
-  /*Wait for next tx slot*/
+  /* Wait for next tx slot. 
+	 * An interrupt service routine
+	 * The timer, &TxTimer, calls this function after the elapsed time of length defined
+	 * by APP_TX_DUTYCYCLE. Then this function tells the tracker that it is safe to transmit
+   * now by setting AppProcessRequest.
+	 * This function also restarts the timer so that it can get called again after
+	 * the elapsed period.
+	 */
   TimerStart( &TxTimer);
   
   AppProcessRequest=LORA_SET;
