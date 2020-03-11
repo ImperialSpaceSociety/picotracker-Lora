@@ -38,7 +38,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
-
+//#define LOW_POWER_DISABLE
 /*!
  * CAYENNE_LPP is myDevices Application server.
  */
@@ -66,7 +66,7 @@
  * LoRaWAN Default data Rate Data Rate
  * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
  */
-#define LORAWAN_DEFAULT_DATA_RATE DR_0
+#define LORAWAN_DEFAULT_DATA_RATE DR_5
 /*!
  * LoRaWAN application port
  * @note do not use 224. It is reserved for certification
@@ -245,7 +245,7 @@ uint32_t VCC_ADC												= 0;
 void set_brownout_level( void );
 
 
-
+uint8_t timer_started = 0;
 
 
 
@@ -259,98 +259,100 @@ void set_brownout_level( void );
   */
 int main( void )
 {
-  /* STM32 HAL library initialization*/
-  HAL_Init();
-  
-  /* Configure the system clock*/
-  SystemClock_Config();
-  
-  /* Configure the debug mode*/
-  DBG_Init();
+		
+	/* STM32 HAL library initialization*/
+	HAL_Init();
+	
+	/* Configure the system clock*/
+	SystemClock_Config();
+	
+	/* Configure the debug mode*/
+	DBG_Init();
 	
 	/* Set Brown out reset level voltage to 2.8V, above the 2.7V threshold of the GPS */
 	set_brownout_level();
-  
-  /* Configure the hardware*/
-  HW_Init();
-  
+	
+	/* Configure the hardware*/
+	HW_Init();
+	
 	
 	#if defined (GPS_ENABLED)
 	/* GET intial location fix to set LORA region */
 	get_location_fix();
 	#endif
 	
-	/* Find out which region of world we are in */
+	//GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
+	//GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
+	
+	/* Find out which region of world we are in and update region parm*/
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
- 
+	
 	PRINTF("My location polygon : %d\n\r", (int)current_polygon_region);  
 	
-  /*Disbale Stand-by mode*/
-  LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
-  
-  PRINTF("VERSION: %X\n\r", VERSION);
-  
-  /* Configure the Lora Stack*/
-  LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
-  
-	#if defined (RADIO_ENABLED)
-  LORA_Join();
-	#endif
-  
-  LoraStartTx( TX_ON_TIMER) ;
-  
+	/*Disbale Stand-by mode*/
+	LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
 	
-	// Infinite loop
-  while( 1 )
-  {
+	PRINTF("VERSION: %X\n\r", VERSION);
+	while( 1 ){
+
+		/* Configure the Lora Stack*/
+		LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
 		
-
+		#if defined (RADIO_ENABLED)
+		LORA_Join();
+		#endif
 		
-    if (AppProcessRequest==LORA_SET)
-    {
-			
-			
-      /*reset notification flag*/
-      AppProcessRequest=LORA_RESET;
-			
+		if (!timer_started){
+			LoraStartTx( TX_ON_TIMER) ;
+			timer_started = 1;
+		}
+		
+		while( 1 )
+		{
+					
+			if (AppProcessRequest==LORA_SET)
+			{
+				/*reset notification flag*/
+				AppProcessRequest=LORA_RESET;
 
-
-	    /*Send*/
-      Send( NULL ); // Here lies the function to read sensor and GPS, parse and send it
-			
-			/* if the tracker moves into another region, break out of main loop and reinit everything including radio */
-			if (!REGIONAL_LORA_SETTINGS_CORRECT){ 
-				break;
+				/*Send*/
+				Send( NULL ); // Here lies the function to read sensor and GPS, parse and send it
+				
+				/* if the tracker moves into another region, break out of main loop and reinit everything including radio */
+				if (!REGIONAL_LORA_SETTINGS_CORRECT){ 
+					PRINTF("Breaking out of main loop to reinit LoRa regional settings\n\r");
+					// TODO: put a lora deinit function here.
+					break;
+				}
 			}
-		
-    }
-		
-		if (LoraMacProcessRequest==LORA_SET)
-    {
-      /*reset notification flag*/
-      LoraMacProcessRequest=LORA_RESET;
-      LoRaMacProcess( );
-    }
-		
-    /*If a flag is set at this point, mcu must not enter low power and must loop*/
-    DISABLE_IRQ( );
-    
-    /* if an interrupt has occurred after DISABLE_IRQ, it is kept pending 
-     * and cortex will not enter low power anyway  */
-    if ((LoraMacProcessRequest!=LORA_SET) && (AppProcessRequest!=LORA_SET))
-    {
+			
+			if (LoraMacProcessRequest==LORA_SET)
+			{
+				/*reset notification flag*/
+				LoraMacProcessRequest=LORA_RESET;
+				LoRaMacProcess( );
+			}
+			
+			/*If a flag is set at this point, mcu must not enter low power and must loop*/
+			DISABLE_IRQ( );
+			
+			/* if an interrupt has occurred after DISABLE_IRQ, it is kept pending 
+			 * and cortex will not enter low power anyway  */
+			if ((LoraMacProcessRequest!=LORA_SET) && (AppProcessRequest!=LORA_SET))
+			{
 #ifndef LOW_POWER_DISABLE
-      LPM_EnterLowPower( );
+			LPM_EnterLowPower( );
 #endif
-    }
+			}
 
-    ENABLE_IRQ();
-    
-    /* USER CODE BEGIN 2 */
+			ENABLE_IRQ();
+			
+			/* USER CODE BEGIN 2 */
 
-    /* USER CODE END 2 */
-  }
+			/* USER CODE END 2 */
+		}
+	}
 } // END main()
 
 
@@ -372,14 +374,12 @@ static void LORA_HasJoined( void )
 
 static void Send( void* context )
 {
-  /* USER CODE BEGIN 3 */
 	uint16_t battery_level16 = 0;
   uint16_t cayenne_pressure = 0;
   int16_t cayenne_temperature = 0;
   //uint16_t cayenne_humidity = 0;
   sensor_t sensor_data;
   int32_t cayenne_latitude=0, cayenne_longitude = 0, cayenne_altitudeGps=0;
-  //int32_t epoch_value =0;
   uint16_t cayenne_battery_voltage;
 	uint8_t cayenne_GPS_sats;
 
@@ -394,45 +394,21 @@ static void Send( void* context )
   
   TVL1(PRINTF("SEND REQUEST\n\r");)
  
-	
-	/* The special message routine */
-	#if defined( SPECIAL_MESSAGE)
-	// we send down the special message every once is 2 messages
-	
-	// reset the message counter. 
-	if (message_counter>=1)
-	{
-		message_counter = 0;
-
-	}
-	else
-	{
-		message_counter++;
-
-		AppData.Port = LPP_APP_PORT;		
-		AppData.BuffSize = sizeof(special_message); // make sure it does not count the /n
-		
-		for (uint8_t i=0; i<sizeof(special_message); i++) {
-				AppData.Buff[i] = special_message[i];
-		}
-		
-		#if defined (RADIO_ENABLED)
-		LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
-		#endif
-
-		return;
-	}
-	
-	#endif
-
 
   BSP_sensor_Read( &sensor_data );
 
 	/* Find out which region of world we are in */
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
-	/* reinit everything if it enters another LoRaWAN region. Dont tx when over regions where we are not supposed to tx */
-	if ((!REGIONAL_LORA_SETTINGS_CORRECT) || (GEOFENCE_no_tx) ){
+	/* reinit everything if it enters another LoRaWAN region. */
+	if ((!REGIONAL_LORA_SETTINGS_CORRECT) ){
+		TVL1(PRINTF("LoRa Regional settings incorrect. Data send terminated\n\r");)
+		return;
+	}
+	
+	/* Dont tx when over regions where we are not supposed to tx */
+	if (GEOFENCE_no_tx){
+		TVL1(PRINTF(" Entered no tx region. Data send terminated\n\r");)
 		return;
 	}
 	

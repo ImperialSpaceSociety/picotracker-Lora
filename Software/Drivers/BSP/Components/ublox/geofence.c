@@ -137,6 +137,10 @@ void GEOFENCE_position(float latitude, float longitude)
 		if (previous_polygon_region != current_polygon_region){
 			REGIONAL_LORA_SETTINGS_CORRECT = 0;
 		}
+		else	
+		{
+			REGIONAL_LORA_SETTINGS_CORRECT = 1;
+		}
 }
 	
 	

@@ -170,7 +170,7 @@ int main( void )
   ENABLE_IRQ();
 	/* USER CODE END 1 */
   
-  /*Disbale Stand-by mode*/
+  /*Disable Stand-by mode*/
   LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
   
   PRINTF("VERSION: %X\n\r", VERSION);
