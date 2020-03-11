@@ -329,7 +329,9 @@ int main( void )
 				/*Here lies the function to read sensor and GPS, parse and send it*/
 				Send( NULL );
 				
-				/* if the tracker moves into another region, break out of main loop and reinit everything including radio */
+				/* if the tracker moves into another region, break out of main loop and 
+				 * reinit LoRa radio regional params
+ 				*/
 				if (!REGIONAL_LORA_SETTINGS_CORRECT){ 
 					
 					PRINTF("Breaking out of main loop to reinit LoRa regional settings\n\r");
