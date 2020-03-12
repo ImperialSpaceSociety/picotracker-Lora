@@ -292,8 +292,14 @@ int main( void )
 		/* Configure the Lora Stack*/
 		LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
 		
+		/* update global variable that indicates that LoRa regional parameters are correct 
+		 * TODO: clean up this implementation
+		 */
+		REGIONAL_LORA_SETTINGS_CORRECT = 1;
+		PREVIOUS_POLYGON_REGION = CURRENT_POLYGON_REGION;
+
+		/* Send a join request */
 		#if defined (RADIO_ENABLED)
-		//TVL1(PRINTF("SENDING JOIN REQUEST\n\r");)
 		LORA_Join();
 		
 		/* Init and start the tx interval timer */
@@ -383,7 +389,15 @@ static void Send( void* context )
   uint16_t cayenne_battery_voltage;
 	uint8_t cayenne_GPS_sats;
 
-
+	#if defined (RADIO_ENABLED)
+  if ( LORA_JoinStatus () != LORA_SET)
+  {
+    /* Go ahead and join */
+		//TVL1(PRINTF("SENDING JOIN REQUEST\n\r");)
+    LORA_Join();
+    return;
+  }
+	#endif
   
   //TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
  
@@ -411,15 +425,7 @@ static void Send( void* context )
 	}
 	
 	/* now join if not yet joined. The radio params will be correct for this region */
-	#if defined (RADIO_ENABLED)
-  if ( LORA_JoinStatus () != LORA_SET)
-  {
-    /* Go ahead and join */
-		//TVL1(PRINTF("SENDING JOIN REQUEST\n\r");)
-    LORA_Join();
-    return;
-  }
-	#endif
+
 	
 	/* Evaluate battery level */
   uint8_t cchannel=0;

@@ -115,20 +115,19 @@ void Error_Handler(void);
 #define SENSOR_ENABLED
 #define GPS_ENABLED
 #define RADIO_ENABLED
-//#define SPECIAL_MESSAGE
 #define USE_LED
 
 
 
 /* For geofence testing */
-#define DUMMY_GPS_COORDS
+//#define DUMMY_GPS_COORDS
 
 
 /*!
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           10000
+#define APP_TX_DUTYCYCLE                           120000
 
 //#define ICSPACE16
 //#define ICSPACE17

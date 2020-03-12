@@ -132,7 +132,7 @@ uint8_t get_location_fix(){
 		
 		#endif
 
-		//PRINTF("GPS Fix Attempt count : %d (%d:%d:%d since start)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
+		PRINTF("GPS Fix Attempt count : %d (%dh:%dm:%ds since start)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
 
 
 		/* If fix taking too long, reset and re-initialize GPS module. 
@@ -141,7 +141,7 @@ uint8_t get_location_fix(){
 		 */
 		if(fixAttemptCount > FIX)														
 		{
-			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module. warm start
+			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module.
 			UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 			UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 			UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
