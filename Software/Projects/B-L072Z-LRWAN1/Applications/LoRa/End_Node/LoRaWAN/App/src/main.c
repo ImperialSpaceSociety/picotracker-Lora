@@ -271,8 +271,8 @@ int main( void )
 	get_location_fix();
 	#endif
 	
-	//GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
-	//GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
+	GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
+	GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
 	
 	/* Find out which region of world we are in and update region parm*/
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
@@ -326,8 +326,6 @@ int main( void )
 					
 					PRINTF("Breaking out of main loop to reinit LoRa regional settings\n\r");
 					
-					/* stop the timer that indicates that we need to transmit again */
-					TimerStop(&TxTimer);
 					break;
 				}
 			}
