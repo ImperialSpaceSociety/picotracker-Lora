@@ -271,12 +271,12 @@ int main( void )
 	get_location_fix();
 	#endif
 	
-	//GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
-	//GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
 	
-	GPS_UBX_latitude_Float							= 0; // temp dummy for testing geofencing
-	GPS_UBX_longitude_Float							= 0;  // temp dummy for testing geofencing
-	
+	#if defined (DUMMY_GPS_COORDS)
+	GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
+	GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
+	#endif
+
 	/* Find out which region of world we are in and update region parm*/
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
@@ -389,6 +389,11 @@ static void Send( void* context )
  
 	/* reading sensors and GPS */
   BSP_sensor_Read( &sensor_data );
+	
+	#if defined (DUMMY_GPS_COORDS)
+	GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
+	GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
+	#endif
 
 	/* Find out which region of world we are in */
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
@@ -401,7 +406,7 @@ static void Send( void* context )
 	
 	/* Don't tx when over regions where we are not supposed to tx */
 	if (GEOFENCE_no_tx){
-		TVL1(PRINTF(" Entered no tx region. Data send terminated\n\r");)
+		TVL1(PRINTF("Entered NO tx region. Data send terminated\n\r");)
 		return;
 	}
 	

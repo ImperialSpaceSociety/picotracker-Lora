@@ -119,6 +119,11 @@ void Error_Handler(void);
 #define USE_LED
 
 
+
+/* For geofence testing */
+#define DUMMY_GPS_COORDS
+
+
 /*!
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
