@@ -271,8 +271,11 @@ int main( void )
 	get_location_fix();
 	#endif
 	
-	GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
-	GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
+	//GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
+	//GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
+	
+	GPS_UBX_latitude_Float							= 0; // temp dummy for testing geofencing
+	GPS_UBX_longitude_Float							= 0;  // temp dummy for testing geofencing
 	
 	/* Find out which region of world we are in and update region parm*/
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
@@ -290,6 +293,7 @@ int main( void )
 		LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
 		
 		#if defined (RADIO_ENABLED)
+		//TVL1(PRINTF("SENDING JOIN REQUEST\n\r");)
 		LORA_Join();
 		#endif
 		
@@ -300,11 +304,10 @@ int main( void )
 		 * given the long duration between the timer triggering, it is likely that the initialisation
 		 * will be completed by then.
 		 */
-		if (!timer_started){
+
 		/* Init and start the tx interval timer */
-			LoraStartTx( TX_ON_TIMER) ;
-			timer_started = 1;
-		}
+		LoraStartTx( TX_ON_TIMER) ;
+
 		
 		
 	  /* Keep transmiting data packets every period defined by APP_TX_DUTYCYCLE */
@@ -318,16 +321,17 @@ int main( void )
 
 				/*Here lies the function to read sensor and GPS, parse and send it*/
 				Send( NULL );
-				
 				/* if the tracker moves into another region, break out of main loop and 
-				 * reinit LoRa radio regional params
- 				*/
+				* reinit LoRa radio regional params
+				*/
 				if (!REGIONAL_LORA_SETTINGS_CORRECT){ 
-					
+
 					PRINTF("Breaking out of main loop to reinit LoRa regional settings\n\r");
-					
+					TimerStop( &TxTimer);
+	
 					break;
 				}
+				
 			}
 			
 			if (LoraMacProcessRequest==LORA_SET)
@@ -352,6 +356,7 @@ int main( void )
 			ENABLE_IRQ();
 			
 			/* USER CODE BEGIN 2 */
+				
 
 			/* USER CODE END 2 */
 		}
@@ -386,18 +391,11 @@ static void Send( void* context )
   uint16_t cayenne_battery_voltage;
 	uint8_t cayenne_GPS_sats;
 
-#if defined (RADIO_ENABLED)
-  if ( LORA_JoinStatus () != LORA_SET)
-  {
-    /*Not joined, try again later*/
-    LORA_Join();
-    return;
-  }
-#endif
-  
-  TVL1(PRINTF("SEND REQUEST\n\r");)
- 
 
+  
+  TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
+ 
+	/* reading sensors and GPS */
   BSP_sensor_Read( &sensor_data );
 
 	/* Find out which region of world we are in */
@@ -409,11 +407,22 @@ static void Send( void* context )
 		return;
 	}
 	
-	/* Dont tx when over regions where we are not supposed to tx */
+	/* Don't tx when over regions where we are not supposed to tx */
 	if (GEOFENCE_no_tx){
 		TVL1(PRINTF(" Entered no tx region. Data send terminated\n\r");)
 		return;
 	}
+	
+	/* now join if not yet joined. The radio params will be correct for this region */
+	#if defined (RADIO_ENABLED)
+  if ( LORA_JoinStatus () != LORA_SET)
+  {
+    /* Go ahead and join */
+		//TVL1(PRINTF("SENDING JOIN REQUEST\n\r");)
+    LORA_Join();
+    return;
+  }
+	#endif
 	
 	/* Evaluate battery level */
   uint8_t cchannel=0;
@@ -431,9 +440,11 @@ static void Send( void* context )
 	cayenne_GPS_sats = GPSsats;
 	
 	
-	
-	PRINTF("Just read sensor values");
+	PRINTF("================================================================\r\n");
+	PRINTF("SENSOR AND GPS VALUES");
 	PRINTF("\r\n"); 
+	PRINTF("================================================================\r\n");
+
 	PRINTF("Temperature degrees C: "); 
 	PRINTF("%lf", TEMPERATURE_Value); 
 	PRINTF("\r\n"); 
@@ -452,7 +463,8 @@ static void Send( void* context )
 	PRINTF("Solar voltage: "); 
 	PRINTF("%ld", battery_level16	); 
 	PRINTF("\r\n");
-	
+	PRINTF("================================================================\r\n");
+
 	
 	uint32_t i = 0;
   
