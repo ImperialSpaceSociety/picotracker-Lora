@@ -295,20 +295,12 @@ int main( void )
 		#if defined (RADIO_ENABLED)
 		//TVL1(PRINTF("SENDING JOIN REQUEST\n\r");)
 		LORA_Join();
-		#endif
 		
-		
-		/* Don't restart another timer everytime we reinit LoRa settings 
-		 * Not sure if we have to deinit this timer while reinitialising LoRa settings.
-		 * Update: no real need to deinit the timer while reinitialising LoRa settings because
-		 * given the long duration between the timer triggering, it is likely that the initialisation
-		 * will be completed by then.
-		 */
-
 		/* Init and start the tx interval timer */
 		LoraStartTx( TX_ON_TIMER) ;
 
-		
+		#endif
+
 		
 	  /* Keep transmiting data packets every period defined by APP_TX_DUTYCYCLE */
 		while( 1 )
@@ -393,7 +385,7 @@ static void Send( void* context )
 
 
   
-  TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
+  //TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
  
 	/* reading sensors and GPS */
   BSP_sensor_Read( &sensor_data );

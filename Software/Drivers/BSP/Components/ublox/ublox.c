@@ -132,14 +132,7 @@ uint8_t get_location_fix(){
 		
 		#endif
 
-		PRINTF("GPS Fix Attempt count : %d (%d:%d:%d since start)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
-//		PRINTF("\r\n"); 
-//		PRINTF("%d GPS time Seconds", GPSsecond);
-//		PRINTF("\r\n"); 
-//		PRINTF("%d GPS time Minutes", GPSminute);
-//		PRINTF("\r\n"); 
-//		PRINTF("\r\n"); 
-
+		//PRINTF("GPS Fix Attempt count : %d (%d:%d:%d since start)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
 
 
 		/* If fix taking too long, reset and re-initialize GPS module. 
