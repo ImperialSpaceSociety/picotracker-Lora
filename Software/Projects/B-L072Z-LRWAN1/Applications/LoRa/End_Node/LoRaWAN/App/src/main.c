@@ -393,17 +393,23 @@ static void Send( void* context )
   if ( LORA_JoinStatus () != LORA_SET)
   {
     /* Go ahead and join */
-		//TVL1(PRINTF("SENDING JOIN REQUEST\n\r");)
     LORA_Join();
     return;
   }
 	#endif
   
-  //TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
  
+	/* Temporarily stop tx interval timer until GPS gets a lock */
+	TimerStop( &TxTimer);
+
+	TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
+
 	/* reading sensors and GPS */
   BSP_sensor_Read( &sensor_data );
 	
+	/* Restart tx interval timer */
+	TimerStart( &TxTimer);
+
 	#if defined (DUMMY_GPS_COORDS)
 	GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
 	GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
