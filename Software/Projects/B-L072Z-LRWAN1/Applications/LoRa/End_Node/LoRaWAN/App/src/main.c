@@ -665,7 +665,7 @@ static void LORA_TxNeeded ( void )
 }
 
 void set_brownout_level( void )
-{ /*!< BOR Reset threshold levels for 2.8V - 2.9V VDD power supply    */
+{ /*  BOR Reset threshold levels for 1.7V - 1.8V VDD power supply */
 	if ((FLASH_OB_GetBOR() & 0x0F) != OB_BOR_LEVEL5){
 		HAL_FLASH_Unlock();
 		/* Unlocks the option bytes block access */
@@ -674,7 +674,7 @@ void set_brownout_level( void )
 		__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR |
 		FLASH_FLAG_PGAERR | FLASH_FLAG_SIZERR | FLASH_FLAG_OPTVERR);
 		/* Select The Desired V(BOR) Level------------------------*/
-		FLASH_OB_BORConfig(OB_BOR_LEVEL5);
+		FLASH_OB_BORConfig(OB_BOR_LEVEL1); 
 		/* Launch the option byte loading and generate a System Reset */
 		HAL_FLASH_OB_Launch();
 		
