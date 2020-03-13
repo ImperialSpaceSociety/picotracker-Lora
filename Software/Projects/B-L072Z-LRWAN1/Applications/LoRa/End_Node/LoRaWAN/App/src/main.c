@@ -66,7 +66,7 @@
  * LoRaWAN Default data Rate Data Rate
  * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
  */
-#define LORAWAN_DEFAULT_DATA_RATE DR_5
+#define LORAWAN_DEFAULT_DATA_RATE DR_1
 /*!
  * LoRaWAN application port
  * @note do not use 224. It is reserved for certification
