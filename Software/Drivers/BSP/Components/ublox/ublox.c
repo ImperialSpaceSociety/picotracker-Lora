@@ -141,7 +141,8 @@ uint8_t get_location_fix(){
 		 */
 		if(fixAttemptCount > FIX)														
 		{
-			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module.
+			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));			              	// reset GPS module.
+			HAL_Delay(1000);                                                              // wait for GPS module to be ready
 			UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 			UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 			UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
