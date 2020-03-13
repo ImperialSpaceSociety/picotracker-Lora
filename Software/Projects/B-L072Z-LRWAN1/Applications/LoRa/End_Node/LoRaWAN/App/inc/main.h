@@ -127,13 +127,13 @@ void Error_Handler(void);
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           120000
+#define APP_TX_DUTYCYCLE                           15000
 
 //#define ICSPACE16
 //#define ICSPACE17
 //#define ICSPACE18
 #define ICSPACE19
-#define ICSPACE20
+//#define ICSPACE20
 
 
 /* USER CODE END Private defines */
