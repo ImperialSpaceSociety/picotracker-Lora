@@ -42,7 +42,6 @@ GPS_UBX_error_bitfield
 	NMEA	125
 */
 #define GPSBUFFER_SIZE			125 // bigger than max size of ubx message
-#define FIX				250		// attempts to poll UBX-NAV-PVT
 #define SATS				4		// number of satellites required for positional solution
 #define UBX_TIMEOUT  5000 // in milliseconds
 

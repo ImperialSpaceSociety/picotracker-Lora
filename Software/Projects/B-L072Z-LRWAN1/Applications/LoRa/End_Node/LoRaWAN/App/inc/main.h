@@ -111,23 +111,45 @@ void Error_Handler(void);
 
 
 // PRELAUNCH IMPORTANT!
-// comment out these defines to disable sensor or GPS
+// comment out these defines to disable sensor, Radio, GPS or LED
 #define SENSOR_ENABLED
 #define GPS_ENABLED
 #define RADIO_ENABLED
 #define USE_LED
 
 
+/* GPS RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
+
+#define FIX				250		// attempts to poll UBX-NAV-PVT
 
 /* For geofence testing */
-//#define DUMMY_GPS_COORDS
+#define DUMMY_GPS_COORDS
 
+
+/* LORAWAN RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
 
 /*!
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
 #define APP_TX_DUTYCYCLE                           120000
+/*!
+ * LoRaWAN Adaptive Data Rate
+ * @note Please note that when ADR is enabled the end-device should be static
+ */
+#define LORAWAN_ADR_STATE LORAWAN_ADR_OFF
+/*!
+ * LoRaWAN Default data Rate Data Rate
+ * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
+ */
+#define LORAWAN_DEFAULT_DATA_RATE DR_3
+
+
+
+
+/* CALL SIGN */
 
 //#define ICSPACE16
 //#define ICSPACE17

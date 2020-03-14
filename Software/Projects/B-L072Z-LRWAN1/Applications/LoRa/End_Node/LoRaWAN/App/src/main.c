@@ -57,16 +57,7 @@
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 
 
-/*!
- * LoRaWAN Adaptive Data Rate
- * @note Please note that when ADR is enabled the end-device should be static
- */
-#define LORAWAN_ADR_STATE LORAWAN_ADR_OFF
-/*!
- * LoRaWAN Default data Rate Data Rate
- * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
- */
-#define LORAWAN_DEFAULT_DATA_RATE DR_3
+
 /*!
  * LoRaWAN application port
  * @note do not use 224. It is reserved for certification
@@ -271,11 +262,6 @@ int main( void )
 	get_location_fix();
 	#endif
 	
-	
-	#if defined (DUMMY_GPS_COORDS)
-	GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
-	GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
-	#endif
 
 	/* Find out which region of world we are in and update region parm*/
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
@@ -410,10 +396,7 @@ static void Send( void* context )
 	/* Restart tx interval timer */
 	TimerStart( &TxTimer);
 
-	#if defined (DUMMY_GPS_COORDS)
-	GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
-	GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
-	#endif
+
 
 	/* Find out which region of world we are in */
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
