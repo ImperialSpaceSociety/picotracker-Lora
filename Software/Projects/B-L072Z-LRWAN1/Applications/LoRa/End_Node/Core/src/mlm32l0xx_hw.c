@@ -118,8 +118,8 @@ void HW_Init( void )
 		    
 		BSP_LED_Init( LED1 );
 		
-		if (GPSaltitude<1000)
-		{
+		//if (GPSaltitude<1000)
+		//{
 			// Indicate that we are alive!
 			for(uint8_t i = 0; i < 5; i++)
 			{
@@ -128,7 +128,7 @@ void HW_Init( void )
 				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
 				HAL_Delay(50);
 			}
-		}
+		//}
 
 		
 		GPS_INT_GPIO_Init();

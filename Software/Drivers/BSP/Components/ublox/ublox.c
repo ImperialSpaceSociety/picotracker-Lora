@@ -158,18 +158,14 @@ uint8_t get_location_fix(){
 			Backup_GPS();
 			
 			#ifdef USE_LED
-
-			if (GPSaltitude<1000)
+			// indicate that fix has been found
+			for(uint8_t i = 0; i < 20; i++)
 			{
-			  // indicate that fix has been found
-				for(uint8_t i = 0; i < 20; i++)
-				{
-					HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
-					HAL_Delay(50);
-					HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
-					HAL_Delay(50);
-				}
-		  }
+				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+				HAL_Delay(50);
+				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+				HAL_Delay(50);
+			}
 		 #endif
 
 			
@@ -181,12 +177,10 @@ uint8_t get_location_fix(){
 		#ifdef USE_LED
 		
 		// Indicator led to indicate that still searching
-		if (GPSaltitude<1000){
-			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
-			HAL_Delay(100);
-			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
-		}
-		
+		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+		HAL_Delay(100);
+		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+	
 		#endif
 
 		PRINTF("GPS Fix Attempt count : %d (%dh:%dm:%ds since start)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
