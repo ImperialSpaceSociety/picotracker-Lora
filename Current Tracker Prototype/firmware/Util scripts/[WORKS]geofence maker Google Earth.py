@@ -4,6 +4,14 @@
 from bs4 import BeautifulSoup
 
 
+class fence:
+    def __init__(self,fence_name,frequency_band,coordinates_count,all_coords_str):
+        self.fence_name = fence_name
+        self.frequency_band = frequency_band
+        self.coordinates_count = coordinates_count
+        self.all_coords_str = all_coords_str
+
+
 def process_coords(raw):
     raw = raw.strip()
     raw  = raw.split(" ")
@@ -39,31 +47,26 @@ polygon_region_lookup_table = {"EU863870": "LORAMAC_REGION_EU868",
 results = soup.find_all('Placemark')
 
 fences = []
-region_counter = {}
 
 # print c code for geofence.h
 print("// GEOFENCE ARRAYS (longitude, latitude)")
 for i in results:
     fence_name = i.find("name").get_text().replace("-", "")
-
-    if fence_name not in region_counter.keys():
-        region_counter[fence_name] = 1
-    else:
-        region_counter[fence_name]+=1
+    frequency_band = fence_name.split("_")[0]
+    country = fence_name.split("_")[-1]
 
     all_coords_str, coordinates_count = process_coords(i.find("coordinates").get_text())
-    print("static float " + fence_name + "_" + str(region_counter[fence_name]) + "F[{0}] = {{ ".format(coordinates_count * 2))
+    print("static float " + fence_name + "_" + "F[{0}] = {{ ".format(coordinates_count * 2))
 
     print(all_coords_str)
     print("};")
     print("")
-    fences.append([fence_name,region_counter[fence_name],coordinates_count])
+    fences.append(fence(fence_name,frequency_band,coordinates_count,all_coords_str))
 
 
 # print c code for geofence.c
 for i in fences:
-    line = 	"else if(pointInPolygonF({2}, {0}_{1}F, latitude, longitude) == 1) {{GEOFENCE_no_tx = 0; " \
-              "Current_LoRa_Region_Settings = {3}; current_polygon_region = {0}_{1}F_polygon; }}".format(i[0],i[1],i[2],polygon_region_lookup_table[i[0]])
+    line = 	"else if(pointInPolygonF({0}, {3}_F, latitude, longitude) == 1) {{GEOFENCE_no_tx = 0; CURRENT_LORA_REGION_SETTINGS = {2}; CURRENT_POLYGON_REGION = {3}_polygon; }}".format(i.coordinates_count,i.frequency_band,polygon_region_lookup_table[i.frequency_band],i.fence_name)
     print(line)
 
 
@@ -76,7 +79,7 @@ print()
 
 print("typedef enum polygon_t {")
 for i in fences:
-    line = 	"{0}_{1}F_polygon,".format(i[0],i[1],i[2])
+    line = 	"{0}_polygon,".format(i.fence_name)
     print(line)
 
 print("}Polygon_t;")
