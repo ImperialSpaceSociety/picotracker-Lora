@@ -42,6 +42,25 @@ The moto: KEEP IT SIMPLE
 * Helium Filled
 
 
+# Flights
+* ICSPACE15: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/01/long-range-lora-balloon-tracker-launch-from-london/)
+* ICSPACE16: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/02/balloon-flights-to-austria-and-slovakia/)
+* ICSPACE17: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/02/balloon-flights-to-austria-and-slovakia/)
+* ICSPACE18: Was lost after launch
+* ICSPACE19: Pure solar tracker to be launched 16/3/20
+
+
+# Design Files
+The PCBs are designed with Kicad and the latest designs can be found in the [hardware folder]("Current%20Tracker%20Prototype/hardware/Kicad/"). We have two designs, the V1.2a and the V1.2b. V1.2a is a fully solar powered tracker with no power storage. The solar cells are directly wired to VCC and GND to power all components. V1.2b has a 50mAh lipo on board for power storage. The MPPT IC on board, the SPV1040, extracts maximum current from the cells to charge the battery.
+
+
+# Software
+We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free of charge for the STM32L0 series of microcontrollers. You will be able to download Keil from [here](https://www2.keil.com/stmicroelectronics-stm32/mdk). Make sure you activate it so that you can compile files greater than 30kb of flash.
+
+The software on the latest tracker can be found in the [Software folder](Software). You need to navigate to Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/ and you can open the KEIL project by clicking ``Lora.uvprojx``
+
+
+
 
 ## License
 
