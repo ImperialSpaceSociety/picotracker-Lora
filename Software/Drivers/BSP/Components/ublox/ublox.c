@@ -27,9 +27,48 @@ uint8_t dummy_coord_n = 28;
 
 /*dummy Coords ARRAYS (longitude, latitude) */
 static float dummy_coords_array[48] = { 
-	
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+//	-64.6166, 18.4166, //British Virgin Islands
+
 	13.4000,52.5167,  // Germany
-	2.3333,48.8667,  // France
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+	13.4000,52.5167,  // Germany
+//	2.3333,48.8667,  // France
 //	13.4000,52.5167,  // Germany
 //	-4.4833,54.1500,  // Isle of Man
 //	13.4000,52.5167,  // Germany
@@ -40,17 +79,17 @@ static float dummy_coords_array[48] = {
 //  	3.0500,36.7500,  // Algeria
 //  	3.0500,36.7500,  // Algeria
 
-  	35.2333,31.7667,  // Palestine
-	  35.2333,31.7667,  // Palestine
-	  35.2333,31.7667,  // Palestine
+//  	35.2333,31.7667,  // Palestine
+//	  35.2333,31.7667,  // Palestine
+//	  35.2333,31.7667,  // Palestine
 
-  	19.8167,41.3167,  // Albania
-	  19.8167,41.3167,  // Albania
-  	19.8167,41.3167,  // Albania
+//  	19.8167,41.3167,  // Albania
+//	  19.8167,41.3167,  // Albania
+//  	19.8167,41.3167,  // Albania
 
-		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
-		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
-		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+//		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+//		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+//		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
 
 //	149.1333,-35.2667,  // Australia
 //	-88.7667,17.2500,  // Belize
