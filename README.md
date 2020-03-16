@@ -60,11 +60,12 @@ We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free
 The software on the latest tracker can be found in the [Software folder](Software). You need to navigate to ``Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/`` and you can open the KEIL project by clicking ``Lora.uvprojx``
 
 # Photos
+These are photos of ICSPACE19 before launch, during testing in the sun. It is a 1.1a variant, with no power storage.
 
-![In the sun](/Photos/20200316_124231.jpg)
-
-
-
+![In the sun](/Photos/20200316_124231.jpg "In the sun")
+![In the sun](/Photos/20200316_124347.jpg "In the sun")
+![In the sun](/Photos/20200316_125523.jpg "In the sun")
+![In the sun](/Photos/20200316_130210.jpg "In the sun")
 
 
 ## License
@@ -84,30 +85,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
