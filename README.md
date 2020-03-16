@@ -57,7 +57,12 @@ The PCBs are designed with Kicad and the latest designs can be found in the [har
 # Software
 We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free of charge for the STM32L0 series of microcontrollers. You will be able to download Keil from [here](https://www2.keil.com/stmicroelectronics-stm32/mdk). Make sure you activate it so that you can compile files greater than 30kb of flash.
 
-The software on the latest tracker can be found in the [Software folder](Software). You need to navigate to Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/ and you can open the KEIL project by clicking ``Lora.uvprojx``
+The software on the latest tracker can be found in the [Software folder](Software). You need to navigate to ``Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/`` and you can open the KEIL project by clicking ``Lora.uvprojx``
+
+# Photos
+
+![In the sun](/Photos/20200316_124231.jpg)
+
 
 
 
