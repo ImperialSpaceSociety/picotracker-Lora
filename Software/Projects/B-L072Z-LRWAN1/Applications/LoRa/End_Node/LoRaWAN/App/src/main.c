@@ -377,6 +377,8 @@ static void Send( void* context )
   uint16_t cayenne_battery_voltage;
 	uint8_t cayenne_GPS_sats;
 
+
+  /* now join if not yet joined. */	
 	#if defined (RADIO_ENABLED)
   if ( LORA_JoinStatus () != LORA_SET)
   {
@@ -385,7 +387,6 @@ static void Send( void* context )
     return;
   }
 	#endif
-  
  
 	/* Temporarily stop tx interval timer until GPS gets a lock */
 	TimerStop( &TxTimer);
@@ -408,13 +409,16 @@ static void Send( void* context )
 		return;
 	}
 	
-	/* Don't tx when over regions where we are not supposed to tx */
+	/* Don't tx when over regions where we are not supposed to tx
+   * There is currenly no region defined in geofence.h that prohibits tx.
+   */
 	if (GEOFENCE_no_tx){
 		TVL1(PRINTF("Entered NO tx region. Data send terminated\n\r");)
 		return;
 	}
 	
-	/* now join if not yet joined. The radio params will be correct for this region */
+	
+	
 
 	
 	/* Evaluate battery level */

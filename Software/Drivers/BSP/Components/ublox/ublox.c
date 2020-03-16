@@ -36,15 +36,22 @@ static float dummy_coords_array[48] = {
 //	2.3333,48.8667,  // France
 //	24.7167,59.4333,  // Estonia
 
-  	25.9000,-24.6333,  // Botswana
-  	3.0500,36.7500,  // Algeria
-  	3.0500,36.7500,  // Algeria
+//  	25.9000,-24.6333,  // Botswana
+//  	3.0500,36.7500,  // Algeria
+//  	3.0500,36.7500,  // Algeria
 
   	35.2333,31.7667,  // Palestine
 	  35.2333,31.7667,  // Palestine
 	  35.2333,31.7667,  // Palestine
 
   	19.8167,41.3167,  // Albania
+	  19.8167,41.3167,  // Albania
+  	19.8167,41.3167,  // Albania
+
+		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+
 //	149.1333,-35.2667,  // Australia
 //	-88.7667,17.2500,  // Belize
 //	89.6333,27.4667,  // Bhutan

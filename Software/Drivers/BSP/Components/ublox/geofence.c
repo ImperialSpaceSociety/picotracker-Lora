@@ -132,7 +132,7 @@ void GEOFENCE_position(float latitude, float longitude)
 
 
 	  // Over the sea or areas where there is no frequency declared.
-	  else {GEOFENCE_no_tx = 1; CURRENT_LORA_REGION_SETTINGS = LORAMAC_REGION_EU868; CURRENT_POLYGON_REGION = OUTSIDE_polygon; }
+	  else {GEOFENCE_no_tx = 0; CURRENT_LORA_REGION_SETTINGS = LORAMAC_REGION_EU868; CURRENT_POLYGON_REGION = OUTSIDE_polygon; }
 		
 		/* now check if we have moved into a different geofence region */
 		if (PREVIOUS_POLYGON_REGION != CURRENT_POLYGON_REGION){
