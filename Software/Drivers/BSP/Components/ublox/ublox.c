@@ -21,6 +21,56 @@ extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include
 
 static uint8_t flush_buffer[500];
 
+#if defined (DUMMY_GPS_COORDS)
+uint8_t dummy_coord_counter  = 0;
+uint8_t dummy_coord_n = 28;
+
+/*dummy Coords ARRAYS (longitude, latitude) */
+static float dummy_coords_array[48] = { 
+	
+	13.4000,52.5167,  // Germany
+	2.3333,48.8667,  // France
+//	13.4000,52.5167,  // Germany
+//	-4.4833,54.1500,  // Isle of Man
+//	13.4000,52.5167,  // Germany
+//	2.3333,48.8667,  // France
+//	24.7167,59.4333,  // Estonia
+
+  	25.9000,-24.6333,  // Botswana
+  	3.0500,36.7500,  // Algeria
+  	3.0500,36.7500,  // Algeria
+
+  	35.2333,31.7667,  // Palestine
+	  35.2333,31.7667,  // Palestine
+	  35.2333,31.7667,  // Palestine
+
+  	19.8167,41.3167,  // Albania
+//	149.1333,-35.2667,  // Australia
+//	-88.7667,17.2500,  // Belize
+//	89.6333,27.4667,  // Bhutan
+//	104.9167,11.5500,  // Cambodia
+//	15.2833,-4.2500,  // Republic of Congo
+//	-5.2667,6.8167,  // Cote d'Ivoire
+//	-16.5667,13.4500,  // The Gambia
+//	44.8333,41.6833,  // Georgia
+//	-51.7500,64.1833,  // Greenland
+//	-61.7500,12.0500,  // Grenada
+//	-4.4833,54.1500,  // Isle of Man
+//	35.2333,31.7667,  // Israel
+//	12.4833,41.9000,  // Italy
+//	126.9833,37.5500,  // South Korea
+//	13.1667,32.8833,  // Libya
+//	101.7000,3.1667,  // Malaysia
+//	7.4167,43.7333,  // Monaco
+};
+
+#endif
+
+
+
+
+
+
 
 /* 
  * GPS backup. 
@@ -612,6 +662,23 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPSheading = (int32_t)buffer[70] | (int32_t)buffer[71] << 8 | (int32_t)buffer[72] << 16 | (int32_t)buffer[73] << 24;;
             
             GPS_UBX_error_bitfield &= ~(1 << 2);
+						
+						
+		
+						#if defined (DUMMY_GPS_COORDS)
+						
+						/* strictly for testing if the geofencing works when GPS gives dummy values.*/
+						GPSsats = 6;
+            GPSfix_type = 3;             // GNSSfix Type
+					  GPSfix_OK = 1; // Fix status flags: gnssFixOK
+						
+            GPS_UBX_longitude_Float = (float)dummy_coords_array[dummy_coord_counter * 2];
+						GPS_UBX_latitude_Float = (float)dummy_coords_array[dummy_coord_counter * 2 + 1];
+						dummy_coord_counter++;
+						#endif
+
+						
+						
         }else{
             GPS_UBX_checksum_error++;
             

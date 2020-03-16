@@ -16,7 +16,7 @@
  */
 
 // GEOFENCE ARRAYS (longitude, latitude)
-static float EU863870_1F[36] = { 
+static float EU863870_AFRICA_F[36] = { 
 -21.22329,5.69349,
 6.37369,-16.48638,
 6.23787,-23.43953,
@@ -38,17 +38,7 @@ static float EU863870_1F[36] = {
 
 };
 
-static float EU863870_2F[12] = { 
-50.44803,26.34159,
-50.34092,26.03351,
-50.54142,25.70977,
-50.73643,26.01623,
-50.71603,26.35878,
-50.44803,26.34159,
-
-};
-
-static float EU863870_3F[14] = { 
+static float EU863870_PHILIPPINES_F[14] = { 
 119.35326,19.47621,
 115.48607,9.96808,
 118.25462,7.10011,
@@ -59,7 +49,7 @@ static float EU863870_3F[14] = {
 
 };
 
-static float US902928_1F[32] = { 
+static float US902928_NAMERICA_F[32] = { 
 -168.70273,73.32477,
 -173.14487,55.59241,
 -158.37536,-15.94766,
@@ -79,7 +69,7 @@ static float US902928_1F[32] = {
 
 };
 
-static float AS923925_1F[12] = { 
+static float AS923925_BRUNEI_F[12] = { 
 114.06400,4.89831,
 114.52543,3.95084,
 115.46751,4.26588,
@@ -89,7 +79,7 @@ static float AS923925_1F[12] = {
 
 };
 
-static float AS923925_2F[14] = { 
+static float AS923925_TAIWAN_F[14] = { 
 111.72826,21.97293,
 115.44164,19.27934,
 122.73656,20.74515,
@@ -100,7 +90,7 @@ static float AS923925_2F[14] = {
 
 };
 
-static float AS923925_3F[28] = { 
+static float AS923925_INDONESIA_F[28] = { 
 92.01692,5.86666,
 103.00325,-10.41292,
 120.58137,-11.62069,
@@ -118,8 +108,8 @@ static float AS923925_3F[28] = {
 
 };
 
-static float AS923925_4F[22] = { 
-98.90643,12.75471,
+static float AS923925_THAILAND_F[22] = { 
+95.86952,12.49757,
 97.08270,7.02099,
 100.15887,6.43181,
 106.24529,5.29523,
@@ -128,12 +118,12 @@ static float AS923925_4F[22] = {
 106.24529,23.34903,
 101.60622,22.81417,
 97.24373,19.18170,
-98.00054,15.84301,
-98.90643,12.75471,
+95.75481,15.85441,
+95.86952,12.49757,
 
 };
 
-static float US902928_2F[20] = { 
+static float US902928_ARGENTINA_F[20] = { 
 -67.49103,-22.91785,
 -70.28316,-31.75017,
 -71.60152,-45.96913,
@@ -147,7 +137,7 @@ static float US902928_2F[20] = {
 
 };
 
-static float AU915928_1F[16] = { 
+static float AU915928_BRAZIL_F[16] = { 
 -68.90764,4.40695,
 -57.68823,-19.31401,
 -57.19000,-30.69796,
@@ -159,7 +149,7 @@ static float AU915928_1F[16] = {
 
 };
 
-static float AU915928_2F[16] = { 
+static float AU915928_CHILE_F[16] = { 
 -70.88094,-17.08505,
 -76.49889,-44.50321,
 -73.01078,-60.51533,
@@ -171,7 +161,7 @@ static float AU915928_2F[16] = {
 
 };
 
-static float CN470510_1F[36] = { 
+static float CN470510_CHINA_F[36] = { 
 82.29205,48.54875,
 67.87798,37.82644,
 82.86334,29.67296,
@@ -193,7 +183,7 @@ static float CN470510_1F[36] = {
 
 };
 
-static float IN865867_1F[16] = { 
+static float IN865867_INDIA_F[16] = { 
 72.96580,34.26699,
 66.72556,23.19668,
 75.16306,4.16647,
@@ -205,7 +195,7 @@ static float IN865867_1F[16] = {
 
 };
 
-static float AS920923_1F[16] = { 
+static float AS920923_JAPAN_F[16] = { 
 139.68654,45.95900,
 139.33497,45.52965,
 133.77174,38.66725,
@@ -217,7 +207,7 @@ static float AS920923_1F[16] = {
 
 };
 
-static float KR920923_1F[12] = { 
+static float KR920923_SKOREA_F[12] = { 
 122.94546,36.60046,
 122.59912,32.47361,
 127.43020,32.04833,
@@ -227,7 +217,7 @@ static float KR920923_1F[12] = {
 
 };
 
-static float AS920923_2F[30] = { 
+static float AS920923_MALAYSIASG_F[30] = { 
 97.26683,6.67666,
 99.27305,3.85647,
 102.22180,1.30487,
@@ -246,7 +236,7 @@ static float AS920923_2F[30] = {
 
 };
 
-static float AU915928_3F[26] = { 
+static float AU915928_AUSTRALIA_F[26] = { 
 119.84993,-43.64813,
 131.06762,-51.28254,
 145.93096,-55.22234,
@@ -263,7 +253,7 @@ static float AU915928_3F[26] = {
 
 };
 
-static float RU864870_1F[50] = { 
+static float RU864870_RUSSIA_F[50] = { 
 114.00630,77.20060,
 27.20759,70.95692,
 31.56924,63.02777,
@@ -292,7 +282,7 @@ static float RU864870_1F[50] = {
 
 };
 
-static float EU863870_4F[76] = { 
+static float EU863870_EUROPE_F[76] = { 
 -71.71870,78.35168,
 -45.13904,53.93611,
 -34.49162,49.45897,
@@ -335,32 +325,31 @@ static float EU863870_4F[76] = {
 };
 
 
-
 /*!
  * Polygon region enumeration
  */
 typedef enum polygon_t {
-	EU863870_1F_polygon,
-	EU863870_2F_polygon,
-	EU863870_3F_polygon,
-	US902928_1F_polygon,
-	AS923925_1F_polygon,
-	AS923925_2F_polygon,
-	AS923925_3F_polygon,
-	AS923925_4F_polygon,
-	US902928_2F_polygon,
-	AU915928_1F_polygon,
-	AU915928_2F_polygon,
-	CN470510_1F_polygon,
-	IN865867_1F_polygon,
-	AS920923_1F_polygon,
-	KR920923_1F_polygon,
-	AS920923_2F_polygon,
-	AU915928_3F_polygon,
-	RU864870_1F_polygon,
-	EU863870_4F_polygon,
-	OUTSIDE_POLYGONS,
+	EU863870_AFRICA_polygon,
+	EU863870_PHILIPPINES_polygon,
+	US902928_NAMERICA_polygon,
+	AS923925_BRUNEI_polygon,
+	AS923925_TAIWAN_polygon,
+	AS923925_INDONESIA_polygon,
+	AS923925_THAILAND_polygon,
+	US902928_ARGENTINA_polygon,
+	AU915928_BRAZIL_polygon,
+	AU915928_CHILE_polygon,
+	CN470510_CHINA_polygon,
+	IN865867_INDIA_polygon,
+	AS920923_JAPAN_polygon,
+	KR920923_SKOREA_polygon,
+	AS920923_MALAYSIASG_polygon,
+	AU915928_AUSTRALIA_polygon,
+	RU864870_RUSSIA_polygon,
+	EU863870_EUROPE_polygon,
+	OUTSIDE_polygon
 }Polygon_t;
+
 
 ///*!
 // * LoRaMAC region enumeration

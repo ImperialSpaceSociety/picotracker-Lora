@@ -121,8 +121,11 @@ void Error_Handler(void);
 /* GPS RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 
-#define FIX				250		// attempts to poll UBX-NAV-PVT
+#define FIX				1		// attempts to poll UBX-NAV-PVT
 
+
+/* GEOFENCE RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
 /* For geofence testing */
 #define DUMMY_GPS_COORDS
 
@@ -134,7 +137,7 @@ void Error_Handler(void);
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           120000
+#define APP_TX_DUTYCYCLE                           10000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -144,7 +147,7 @@ void Error_Handler(void);
  * LoRaWAN Default data Rate Data Rate
  * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
  */
-#define LORAWAN_DEFAULT_DATA_RATE DR_3
+#define LORAWAN_DEFAULT_DATA_RATE DR_5
 
 
 

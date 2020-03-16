@@ -28,6 +28,10 @@
 #include "main.h"
 
 
+extern uint16_t battery_level16;
+
+
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define BATTERY_ADC_CHANNEL             ADC_CHANNEL_5
@@ -46,6 +50,8 @@ void *PRESSURE_handle = NULL;
 
 void BSP_sensor_Read( sensor_t *sensor_data)
 {
+	TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
+
   /* USER CODE BEGIN 5 */
 	#if defined (SENSOR_ENABLED)
 	MS5607_get_temp_pressure();
@@ -55,6 +61,34 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	get_location_fix();
 	#endif
 	
+	battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
+
+	
+	PRINTF("================================================================\r\n");
+	PRINTF("SENSOR AND GPS VALUES");
+	PRINTF("\r\n"); 
+	PRINTF("================================================================\r\n");
+
+	PRINTF("Temperature degrees C: "); 
+	PRINTF("%lf", TEMPERATURE_Value); 
+	PRINTF("\r\n"); 
+	PRINTF("Pressure mBar: "); 
+	PRINTF("%lf", PRESSURE_Value); 
+	PRINTF("\r\n");
+	PRINTF("Longitude: "); 
+	PRINTF("%lf", GPS_UBX_longitude_Float); 
+	PRINTF("\r\n"); 
+	PRINTF("Latitude: "); 
+	PRINTF("%lf", GPS_UBX_latitude_Float); 
+	PRINTF("\r\n");
+	PRINTF("altitude: "); 
+	PRINTF("%ld", GPSaltitude	); 
+	PRINTF("\r\n");
+	PRINTF("Solar voltage: "); 
+	PRINTF("%ld", battery_level16	); 
+	PRINTF("\r\n");
+	PRINTF("================================================================\r\n");
+
 
 	
 	

@@ -191,6 +191,9 @@ uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 double PRESSURE_Value; // compensated pressure value
 double TEMPERATURE_Value; // compensated temperature value
 
+// Battery levels
+uint16_t battery_level16 = 0;
+
 
 // GEOFENCE variables
 /* The world is split into polygons e.g. EU863870_4F_polygon. 
@@ -204,8 +207,8 @@ int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings 
 LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS   = LORAMAC_REGION_EU868;
 LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS  = LORAMAC_REGION_EU868;
 
-Polygon_t CURRENT_POLYGON_REGION  = EU863870_4F_polygon; // London is in this polygon
-Polygon_t PREVIOUS_POLYGON_REGION = EU863870_4F_polygon; // London is in this polygon
+Polygon_t CURRENT_POLYGON_REGION  = EU863870_EUROPE_polygon; // London is in this polygon
+Polygon_t PREVIOUS_POLYGON_REGION = EU863870_EUROPE_polygon; // London is in this polygon
 
 uint32_t GEOFENCE_no_tx;
 
@@ -366,7 +369,6 @@ static void LORA_HasJoined( void )
 
 static void Send( void* context )
 {
-	uint16_t battery_level16 = 0;
   uint16_t cayenne_pressure = 0;
   int16_t cayenne_temperature = 0;
   //uint16_t cayenne_humidity = 0;
@@ -388,7 +390,6 @@ static void Send( void* context )
 	/* Temporarily stop tx interval timer until GPS gets a lock */
 	TimerStop( &TxTimer);
 
-	TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
 
 	/* reading sensors and GPS */
   BSP_sensor_Read( &sensor_data );
@@ -418,7 +419,6 @@ static void Send( void* context )
 	
 	/* Evaluate battery level */
   uint8_t cchannel=0;
-	battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
 
   cayenne_temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
   cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
@@ -432,30 +432,6 @@ static void Send( void* context )
 	cayenne_GPS_sats = GPSsats;
 	
 	
-	PRINTF("================================================================\r\n");
-	PRINTF("SENSOR AND GPS VALUES");
-	PRINTF("\r\n"); 
-	PRINTF("================================================================\r\n");
-
-	PRINTF("Temperature degrees C: "); 
-	PRINTF("%lf", TEMPERATURE_Value); 
-	PRINTF("\r\n"); 
-	PRINTF("Pressure mBar: "); 
-	PRINTF("%lf", PRESSURE_Value); 
-	PRINTF("\r\n");
-	PRINTF("Longitude: "); 
-	PRINTF("%lf", GPS_UBX_longitude_Float); 
-	PRINTF("\r\n"); 
-	PRINTF("Latitude: "); 
-	PRINTF("%lf", GPS_UBX_latitude_Float); 
-	PRINTF("\r\n");
-	PRINTF("altitude: "); 
-	PRINTF("%ld", GPSaltitude	); 
-	PRINTF("\r\n");
-	PRINTF("Solar voltage: "); 
-	PRINTF("%ld", battery_level16	); 
-	PRINTF("\r\n");
-	PRINTF("================================================================\r\n");
 
 	
 	uint32_t i = 0;
