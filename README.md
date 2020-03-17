@@ -51,7 +51,7 @@ The moto: KEEP IT SIMPLE
 
 
 # Design Files
-The PCBs are designed with Kicad and the latest designs can be found in the [hardware folder]("Current%20Tracker%20Prototype/hardware/Kicad/"). We have two designs, the V1.2a and the V1.2b. V1.2a is a fully solar powered tracker with no power storage. The solar cells are directly wired to VCC and GND to power all components. V1.2b has a 50mAh lipo on board for power storage. The MPPT IC on board, the SPV1040, extracts maximum current from the cells to charge the battery.
+The PCBs are designed with Kicad and the latest designs can be found in the [hardware folder](Current%20Tracker%20Prototype/hardware/Kicad/). We have two designs, the V1.2a and the V1.2b. V1.2a is a fully solar powered tracker with no power storage. The solar cells are directly wired to VCC and GND to power all components. V1.2b has a 50mAh lipo on board for power storage. The MPPT IC on board, the SPV1040, extracts maximum current from the cells to charge the battery.
 
 
 # Software
