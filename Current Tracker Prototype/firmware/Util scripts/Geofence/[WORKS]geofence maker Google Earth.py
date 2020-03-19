@@ -26,7 +26,7 @@ def process_coords(raw):
     #raw  = [i+j for i,j,k in raw.split(",")]
     return all_coords_str, coordinates_count
 
-with open("geofence.kml", encoding='utf8') as f:
+with open("Geofence.kml", encoding='utf8') as f:
     soup = BeautifulSoup(f, 'xml')
 
 #print(soup.prettify())
@@ -48,7 +48,7 @@ results = soup.find_all('Placemark')
 
 fences = []
 
-# print c code for geofence.h
+# print c code for Geofence.h
 print("// GEOFENCE ARRAYS (longitude, latitude)")
 for i in results:
     fence_name = i.find("name").get_text().replace("-", "")
@@ -64,7 +64,7 @@ for i in results:
     fences.append(fence(fence_name,frequency_band,coordinates_count,all_coords_str))
 
 
-# print c code for geofence.c
+# print c code for Geofence.c
 for i in fences:
     line = 	"else if(pointInPolygonF({0}, {3}_F, latitude, longitude) == 1) {{GEOFENCE_no_tx = 0; CURRENT_LORA_REGION_SETTINGS = {2}; CURRENT_POLYGON_REGION = {3}_polygon; }}".format(i.coordinates_count,i.frequency_band,polygon_region_lookup_table[i.frequency_band],i.fence_name)
     print(line)
@@ -75,7 +75,7 @@ print()
 print()
 
 
-# code for geofence.h data structure enum
+# code for Geofence.h data structure enum
 
 print("typedef enum polygon_t {")
 for i in fences:
