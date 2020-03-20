@@ -431,7 +431,7 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 			
 		//memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
 		// Receive the request
-		UBLOX_receive_UBX(GPSbuffer, expectlen, 10000);
+		UBLOX_receive_UBX(GPSbuffer, expectlen, 1500);
 
 		return  parse(GPSbuffer);          // parse the response to appropriate variables, 1 for successful parsing
 
