@@ -106,14 +106,14 @@ void  BSP_sensor_Init( void  )
 		ms5607_Init();
 	#endif
 	
-	 //#if defined (GPS_ENABLED)
+	 #if defined (GPS_ENABLED)
 
 	 //GPS SETUP
 	 setup_GPS();
 
 	 // GPS INITIAL BACKUP
 	 Backup_GPS();
-	//#endif
+	#endif
 
 }
 

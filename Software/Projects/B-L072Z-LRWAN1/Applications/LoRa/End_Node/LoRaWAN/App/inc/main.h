@@ -113,7 +113,7 @@ void Error_Handler(void);
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor, Radio, GPS or LED
 #define SENSOR_ENABLED
-#define GPS_ENABLED
+//#define GPS_ENABLED
 #define RADIO_ENABLED
 #define USE_LED
 
@@ -137,7 +137,7 @@ void Error_Handler(void);
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           120000
+#define APP_TX_DUTYCYCLE                           10000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -147,7 +147,7 @@ void Error_Handler(void);
  * LoRaWAN Default data Rate Data Rate
  * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
  */
-#define LORAWAN_DEFAULT_DATA_RATE DR_4
+#define LORAWAN_DEFAULT_DATA_RATE DR_5
 
 
 
@@ -157,8 +157,9 @@ void Error_Handler(void);
 //#define ICSPACE16
 //#define ICSPACE17
 //#define ICSPACE18
-#define ICSPACE19
+//#define ICSPACE19
 //#define ICSPACE20
+#define icspace20_test
 
 
 /* USER CODE END Private defines */

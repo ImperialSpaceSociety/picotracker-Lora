@@ -196,10 +196,10 @@ uint16_t battery_level16 = 0;
 
 
 // GEOFENCE variables
-/* The world is split into polygons e.g. EU863870_4F_polygon. 
+/* The world is split into polygons e.g. EU863870_EUROPE_polygon. 
  * Multiple polygons can have the same LoRa region settings. E.g. LORAMAC_REGION_EU868.
  * Keeps track of which polygon the tracker is in, and if it changes to another polygon,
- * all LoRa settings are reinitialised.
+ * all LoRa settings are reinitialised when the balloon enters another polygon.
  * 
  */
 int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings are correct for region we are flying over. 1 if correct, 0 if incorrect
