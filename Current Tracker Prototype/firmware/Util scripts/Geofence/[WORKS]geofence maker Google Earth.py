@@ -40,7 +40,7 @@ polygon_region_lookup_table = {"EU863870": "LORAMAC_REGION_EU868",
                                "RU864870": "LORAMAC_REGION_RU864",
                                "KR920923": "LORAMAC_REGION_KR920",
                                "IN865867": "LORAMAC_REGION_IN865",
-                               "CN470510": "LORAMAC_REGION_CN779"
+                               "CN779787": "LORAMAC_REGION_CN779"
 
                                }
 
