@@ -231,6 +231,7 @@ uint8_t get_location_fix(){
 		 */
 		if(fixAttemptCount > FIX)														
 		{
+			// configure gps module again
 			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));			              	// reset GPS module.
 			HAL_Delay(1000);                                                              // wait for GPS module to be ready
 			UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
@@ -238,7 +239,6 @@ uint8_t get_location_fix(){
 			UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
 			UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
 
-			// configure gps module again
 			GPSfix_type = 0;
 			GPSfix_OK = 0;
 			GPSsats = 0;

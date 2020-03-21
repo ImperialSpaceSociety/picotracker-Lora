@@ -33,6 +33,8 @@
 #include "stm32l0xx_hal_flash.h"
 #include "stm32l0xx_hal_flash_ex.h"
 #include "stm32l0xx_hal.h"
+#include "stm32l0xx_hal_pwr.h"
+#include "stm32l0xx.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
@@ -185,6 +187,7 @@ int32_t GPSaltitude_L											= 0;
 uint32_t fixAttemptCount                  = 0;
 uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 
+volatile uint8_t GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
 
 
 // Temp pressure
@@ -228,6 +231,10 @@ uint32_t VCC_ADC												= 0;
 // Set up brown out reset voltage above the level of the GPS
 void set_brownout_level( void );
 
+// Configure the Power Voltage Detector (PVD)
+void PVD_Config( void );
+// PCD config type def
+PWR_PVDTypeDef sConfigPVD;
 
 uint8_t timer_started = 0;
 
@@ -253,16 +260,30 @@ int main( void )
 	/* Configure the debug mode*/
 	DBG_Init();
 	
-	/* Set Brown out reset level voltage to 2.8V, above the 2.7V threshold of the GPS */
+	/* Set Brown out reset level voltage to 1.7V */
 	set_brownout_level();
+	
 	
 	/* Configure the hardware*/
 	HW_Init();
 	
+	/*Disbale Stand-by mode*/
+	LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
 	
+	/* Set Power Voltage Detector threshold to 2.9V*/
+	PVD_Config();
+	
+
+	/* Wait for VDD to exceed GPS threshold voltage 2.9V */
+	while(__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO));
+
 	#if defined (GPS_ENABLED)
-	/* GET intial location fix to set LORA region */
-	get_location_fix();
+	/* GET intial location fix to set LORA region 
+	 * The program cannot go on to unless it gets a GPS fix. It is neccessary for it to try forever
+	 * It needs a GPS fix to get the right LoRa params for the region
+	 */
+	while(!get_location_fix());
+
 	#endif
 	
 
@@ -272,9 +293,7 @@ int main( void )
 	
 	PRINTF("My location polygon : %d\n\r", (int)CURRENT_POLYGON_REGION);  
 	
-	/*Disbale Stand-by mode*/
-	LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
-	
+
 	PRINTF("VERSION: %X\n\r", VERSION);
 	while( 1 ){
 
@@ -645,7 +664,43 @@ void set_brownout_level( void )
 	}
 }
 
+/**
+  * @brief  Configures the PVD resources.
+  * @param  None
+  * @retval None
+  */
+static void PVD_Config(void)
+{
+  /*##-1- Enable Power Clock #################################################*/
+  __HAL_RCC_PWR_CLK_ENABLE();
+
+  /*##-2- Configure the NVIC for PVD #########################################*/
+  HAL_NVIC_SetPriority(PVD_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(PVD_IRQn);
+
+  /* Configure the PVD Level to 5 and generate an interrupt on rising and falling
+     edges(PVD detection level set to 2.9V) */
+  sConfigPVD.PVDLevel = PWR_PVDLEVEL_5;  
+  sConfigPVD.Mode = PWR_PVD_MODE_NORMAL;
+  HAL_PWR_ConfigPVD(&sConfigPVD);
+
+  /* Enable the PVD Output */
+  HAL_PWR_EnablePVD();
+}
 
 
+
+/**
+  * @brief  PWR PVD interrupt callback
+  * @param  None
+  * @retval None
+  */
+void HAL_PWR_PVDCallback(void)
+{
+  /* Toggle LED1 */
+  BSP_LED_Toggle(LED1);
+//	GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
+	
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
