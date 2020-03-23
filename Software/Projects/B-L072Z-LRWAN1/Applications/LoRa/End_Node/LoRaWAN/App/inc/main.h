@@ -112,8 +112,8 @@ void Error_Handler(void);
 
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor, Radio, GPS or LED
-#define SENSOR_ENABLED
-#define GPS_ENABLED
+//#define SENSOR_ENABLED
+//#define GPS_ENABLED
 #define RADIO_ENABLED
 #define USE_LED
 
@@ -127,7 +127,7 @@ void Error_Handler(void);
 /* GEOFENCE RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 /* For geofence testing */
-//#define DUMMY_GPS_COORDS
+#define DUMMY_GPS_COORDS
 
 
 /* LORAWAN RELATED DEFINES */
@@ -158,8 +158,7 @@ void Error_Handler(void);
 //#define ICSPACE17
 //#define ICSPACE18
 //#define ICSPACE19
-//#define ICSPACE20
-#define icspace20_test
+#define ICSPACE20
 
 
 /* USER CODE END Private defines */
