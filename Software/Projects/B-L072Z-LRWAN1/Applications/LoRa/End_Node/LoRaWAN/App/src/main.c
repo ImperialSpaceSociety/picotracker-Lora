@@ -262,20 +262,20 @@ int main( void )
 	
 	/* Set Brown out reset level voltage to 1.7V */
 	set_brownout_level();
-	
-	
-	/* Configure the hardware*/
-	HW_Init();
-	
-	/*Disbale Stand-by mode*/
-	LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
-	
+		
 	/* Set Power Voltage Detector threshold to 2.9V*/
 	PVD_Config();
 	
 
 	/* Wait for VDD to exceed GPS threshold voltage 2.9V */
 	while(__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO));
+	
+	/* Configure the hardware*/
+	HW_Init();
+	
+	/*Disbale Stand-by mode*/
+	LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
+
 
 	#if defined (GPS_ENABLED)
 	/* GET intial location fix to set LORA region 
