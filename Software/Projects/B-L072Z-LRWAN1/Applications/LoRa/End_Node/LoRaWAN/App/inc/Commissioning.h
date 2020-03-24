@@ -108,7 +108,7 @@
  * When set to 1 the application uses the Over-the-Air activation procedure
  * When set to 0 the application uses the Personalization activation procedure
  */
-#define OVER_THE_AIR_ACTIVATION                     1
+#define OVER_THE_AIR_ACTIVATION                     0
 /*!
  * Indicates if the end-device is to be connected to a private or public network
  */
@@ -207,32 +207,32 @@
  *         a pseudo random generator seeded with a value derived from
  *         BoardUniqueId value
  */
-#define STATIC_DEVICE_ADDRESS                     0
+#define STATIC_DEVICE_ADDRESS                     1
 /*!
  * Device address on the network (big endian)
  *
  * \remark see STATIC_DEVICE_ADDRESS comments
  */
-#define LORAWAN_DEVICE_ADDRESS                      ( uint32_t )0x0100000a
+#define LORAWAN_DEVICE_ADDRESS                      ( uint32_t )0x26011542
 /*!
  * Forwarding Network session integrity key
  * WARNING: NWK_S_KEY FOR 1.0.x DEVICES
  */
-#define LORAWAN_F_NWK_S_INT_KEY                            { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
+#define LORAWAN_F_NWK_S_INT_KEY                            { 0xCA, 0xC7, 0x9D, 0x3B, 0x57, 0x1E, 0xBF, 0x8C, 0x6C, 0x4B, 0x0A, 0x13, 0xA3, 0xE1, 0x1A, 0x9F }
 /*!
  * Serving Network session integrity key
  * WARNING: NOT USED FOR 1.0.x DEVICES. MUST BE THE SAME AS \ref LORAWAN_F_NWK_S_INT_KEY
  */
-#define LORAWAN_S_NWK_S_INT_KEY                            { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
+#define LORAWAN_S_NWK_S_INT_KEY                            { 0xCA, 0xC7, 0x9D, 0x3B, 0x57, 0x1E, 0xBF, 0x8C, 0x6C, 0x4B, 0x0A, 0x13, 0xA3, 0xE1, 0x1A, 0x9F }
 /*!
  * Network session encryption key
  * WARNING: NOT USED FOR 1.0.x DEVICES. MUST BE THE SAME AS \ref LORAWAN_F_NWK_S_INT_KEY
  */
-#define LORAWAN_NWK_S_ENC_KEY                              { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
+#define LORAWAN_NWK_S_ENC_KEY                              { 0xCA, 0xC7, 0x9D, 0x3B, 0x57, 0x1E, 0xBF, 0x8C, 0x6C, 0x4B, 0x0A, 0x13, 0xA3, 0xE1, 0x1A, 0x9F }
 /*!
  * Application session key
  */
-#define LORAWAN_APP_S_KEY                                  { 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
+#define LORAWAN_APP_S_KEY                                  { 0xD5, 0x3F, 0x04, 0x3E, 0xD2, 0x2D, 0xB4, 0xA8, 0x58, 0x7E, 0xD9, 0x18, 0x9A, 0x0F, 0xEE, 0xE5 }
 #endif /* OVER_THE_AIR_ACTIVATION == 0 */
 #ifdef __cplusplus
 }
