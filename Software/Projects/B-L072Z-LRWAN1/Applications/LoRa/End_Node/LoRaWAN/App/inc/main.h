@@ -150,8 +150,9 @@ void Error_Handler(void);
 #define LORAWAN_DEFAULT_DATA_RATE DR_5
 
 
-
-
+#define SAVE_LORA_KEYS_IN_INTERNAL_EEPROM               1   /* Storing LoRa keys in EEPROM. Allowed values: 0 (default) disabled , 1 enabled */
+#define SAVE_PLATFORM_STATUS_IN_INTERNAL_EEPROM         1   /* Storing platform status in EEPROM. Allowed values: 0 (default) disabled , 1 enabled */
+   
 /* CALL SIGN */
 
 //#define ICSPACE16
