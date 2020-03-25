@@ -190,6 +190,7 @@ uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 volatile uint8_t GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
 
 
+uint32_t fCntUp_global = 0;
 // Temp pressure
 double PRESSURE_Value; // compensated pressure value
 double TEMPERATURE_Value; // compensated temperature value
@@ -277,7 +278,7 @@ int main( void )
 	LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
 
 
-	#if defined (GPS_ENABLED)
+	#if GPS_ENABLED
 	/* GET intial location fix to set LORA region 
 	 * The program cannot go on to unless it gets a GPS fix. It is neccessary for it to try forever
 	 * It needs a GPS fix to get the right LoRa params for the region
@@ -307,7 +308,7 @@ int main( void )
 		PREVIOUS_POLYGON_REGION = CURRENT_POLYGON_REGION;
 
 		/* Send a join request */
-		#if defined (RADIO_ENABLED)
+		#if RADIO_ENABLED
 		LORA_Join();
 		
 		/* Init and start the tx interval timer */
@@ -398,7 +399,7 @@ static void Send( void* context )
 
 
   /* now join if not yet joined. */	
-	#if defined (RADIO_ENABLED)
+	#if RADIO_ENABLED
   if ( LORA_JoinStatus () != LORA_SET)
   {
     /* Go ahead and join */
@@ -510,7 +511,7 @@ static void Send( void* context )
 
   AppData.BuffSize = i;
 	
-	#if defined (RADIO_ENABLED)
+	#if RADIO_ENABLED
 	LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
 	#endif
   
