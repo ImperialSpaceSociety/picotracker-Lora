@@ -190,6 +190,7 @@ uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 volatile uint8_t GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
 
 
+uint32_t fCntUp_global = 0;
 // Temp pressure
 double PRESSURE_Value; // compensated pressure value
 double TEMPERATURE_Value; // compensated temperature value

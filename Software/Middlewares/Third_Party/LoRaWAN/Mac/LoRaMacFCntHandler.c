@@ -272,6 +272,14 @@ LoRaMacFCntHandlerStatus_t LoRaMacGetFCntUp( uint32_t* currentUp )
     }
 
     *currentUp = FCntHandlerNvmCtx.FCntList.FCntUp + 1;
+		
+		//fCntUp_global = *currentUp;
+		
+		#ifdef SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
+
+		WriteInternalEepromBuffer(FRAME_COUNTER_EEPROM_ADDRESS,*currentUp);
+
+		#endif
 
     return LORAMAC_FCNT_HANDLER_SUCCESS;
 }
@@ -287,8 +295,16 @@ LoRaMacFCntHandlerStatus_t LoRaMacSetFCntUp( uint32_t currentUp )
 
 LoRaMacFCntHandlerStatus_t LoRaMacResetFCnts( void )
 {
+        
+#ifdef SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
+	  extern uint32_t fCntUp_global;
+	  LoadFrameCounter();
+	  FCntHandlerNvmCtx.FCntList.FCntUp  = fCntUp_global;
+#else
+	  FCntHandlerNvmCtx.FCntList.FCntUp = 0;
+#endif //SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
 
-    FCntHandlerNvmCtx.FCntList.FCntUp = 0;
+	
     FCntHandlerNvmCtx.FCntList.NFCntDown = FCNT_DOWN_INITAL_VALUE;
     FCntHandlerNvmCtx.FCntList.AFCntDown = FCNT_DOWN_INITAL_VALUE;
     FCntHandlerNvmCtx.FCntList.FCntDown = FCNT_DOWN_INITAL_VALUE;
