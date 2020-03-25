@@ -272,9 +272,7 @@ LoRaMacFCntHandlerStatus_t LoRaMacGetFCntUp( uint32_t* currentUp )
     }
 
     *currentUp = FCntHandlerNvmCtx.FCntList.FCntUp + 1;
-		
-		//fCntUp_global = *currentUp;
-		
+				
 		#ifdef SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
 
 		WriteInternalEepromBuffer(FRAME_COUNTER_EEPROM_ADDRESS,*currentUp);
