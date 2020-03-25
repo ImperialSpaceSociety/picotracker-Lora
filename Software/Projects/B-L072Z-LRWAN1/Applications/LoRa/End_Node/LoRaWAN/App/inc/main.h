@@ -126,7 +126,7 @@ void Error_Handler(void);
 /* GEOFENCE RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 /* For geofence testing */
-#define DUMMY_GPS_COORDS
+#define DUMMY_GPS_COORDS  1        /* Bypass the GPS chip to return dummy GPS values . Allowed values: 0(default) disabled , 1 enabled */
 
 
 /* LORAWAN RELATED DEFINES */
