@@ -21,7 +21,7 @@ extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include
 
 static uint8_t flush_buffer[500];
 
-#if defined (DUMMY_GPS_COORDS)
+#if DUMMY_GPS_COORDS
 uint8_t dummy_coord_counter  = 0;
 uint8_t dummy_coord_n = 28;
 
@@ -196,7 +196,7 @@ uint8_t get_location_fix(){
 		{ 
 			Backup_GPS();
 			
-			#ifdef USE_LED
+			#if USE_LED
 			// indicate that fix has been found
 			for(uint8_t i = 0; i < 20; i++)
 			{
@@ -213,7 +213,7 @@ uint8_t get_location_fix(){
 
 		fixAttemptCount++;
 		
-		#ifdef USE_LED
+		#if USE_LED
 		
 		// Indicator led to indicate that still searching
 		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
@@ -705,7 +705,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
 						
 						
 		
-						#if defined (DUMMY_GPS_COORDS)
+						#if DUMMY_GPS_COORDS
 						
 						/* strictly for testing if the geofencing works when GPS gives dummy values.*/
 						GPSsats = 6;

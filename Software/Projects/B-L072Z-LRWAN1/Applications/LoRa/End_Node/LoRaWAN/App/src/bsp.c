@@ -43,22 +43,18 @@ extern uint32_t fCntUp_global;
 /* Exported functions ---------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
-#if defined(SENSOR_ENABLED) || defined (LRWAN_NS1)
-void *HUMIDITY_handle = NULL;
-void *TEMPERATURE_handle = NULL;
-void *PRESSURE_handle = NULL;
-#endif
+
 
 void BSP_sensor_Read( sensor_t *sensor_data)
 {
 	TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
 
   /* USER CODE BEGIN 5 */
-	#if defined (SENSOR_ENABLED)
+	#if SENSOR_ENABLED
 	MS5607_get_temp_pressure();
 	#endif
   
-	#if defined (GPS_ENABLED)
+	#if GPS_ENABLED
 	get_location_fix();
 	#endif
 	
@@ -102,12 +98,12 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 
 void  BSP_sensor_Init( void  )
 {
-	#if defined (SENSOR_ENABLED)
+	#if SENSOR_ENABLED
   /* Initialize sensors */	
 		ms5607_Init();
 	#endif
 	
-	 #if defined (GPS_ENABLED)
+	 #if GPS_ENABLED
 
 	 //GPS SETUP
 	 setup_GPS();
@@ -228,7 +224,7 @@ uint8_t EepromFrameCounterValidation(void)
   */
 void LoadFrameCounter()
 {
-#if SAVE_LORA_KEYS_IN_INTERNAL_EEPROM
+#if SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
   
   if(EepromFrameCounterValidation() != 0)
   {
@@ -237,7 +233,7 @@ void LoadFrameCounter()
   
   memcpy(&fCntUp_global, (void*)FRAME_COUNTER_EEPROM_ADDRESS, FRAME_COUNTER_EEPROM_LEN);
 
-#endif //SAVE_LORA_KEYS_IN_INTERNAL_EEPROM
+#endif //SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
 }
 
 

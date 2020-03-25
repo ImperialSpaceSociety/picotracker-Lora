@@ -111,11 +111,10 @@ void Error_Handler(void);
 
 
 // PRELAUNCH IMPORTANT!
-// comment out these defines to disable sensor, Radio, GPS or LED
-//#define SENSOR_ENABLED
-//#define GPS_ENABLED
-#define RADIO_ENABLED
-#define USE_LED
+#define SENSOR_ENABLED   0         /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
+#define GPS_ENABLED      0         /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
+#define RADIO_ENABLED    1         /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_LED          1         /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
 
 
 /* GPS RELATED DEFINES */
@@ -150,9 +149,9 @@ void Error_Handler(void);
 #define LORAWAN_DEFAULT_DATA_RATE DR_5
 
 
-#define SAVE_LORA_KEYS_IN_INTERNAL_EEPROM               1   /* Storing LoRa keys in EEPROM. Allowed values: 0 (default) disabled , 1 enabled */
-#define SAVE_PLATFORM_STATUS_IN_INTERNAL_EEPROM         1   /* Storing platform status in EEPROM. Allowed values: 0 (default) disabled , 1 enabled */
-#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM           1   /* Storing frame counter in EEPROM. Allowed values: 0 (default) disabled , 1 enabled */
+
+#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM           1   /* Storing frame counter in EEPROM. Allowed values: 0 disabled , 1 (default) enabled */
+
 /* CALL SIGN */
 
 //#define ICSPACE16
