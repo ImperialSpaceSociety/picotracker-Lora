@@ -21,7 +21,7 @@ extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include
 
 static uint8_t flush_buffer[500];
 
-#if defined (DUMMY_GPS_COORDS)
+#if DUMMY_GPS_COORDS
 uint8_t dummy_coord_counter  = 0;
 uint8_t dummy_coord_n = 28;
 
@@ -196,7 +196,7 @@ uint8_t get_location_fix(){
 		{ 
 			Backup_GPS();
 			
-			#ifdef USE_LED
+			#if USE_LED
 			// indicate that fix has been found
 			for(uint8_t i = 0; i < 20; i++)
 			{
@@ -213,7 +213,7 @@ uint8_t get_location_fix(){
 
 		fixAttemptCount++;
 		
-		#ifdef USE_LED
+		#if USE_LED
 		
 		// Indicator led to indicate that still searching
 		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
@@ -231,6 +231,7 @@ uint8_t get_location_fix(){
 		 */
 		if(fixAttemptCount > FIX)														
 		{
+			// configure gps module again
 			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));			              	// reset GPS module.
 			HAL_Delay(1000);                                                              // wait for GPS module to be ready
 			UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
@@ -238,7 +239,6 @@ uint8_t get_location_fix(){
 			UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
 			UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
 
-			// configure gps module again
 			GPSfix_type = 0;
 			GPSfix_OK = 0;
 			GPSsats = 0;
@@ -431,7 +431,7 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 			
 		//memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
 		// Receive the request
-		UBLOX_receive_UBX(GPSbuffer, expectlen, 10000);
+		UBLOX_receive_UBX(GPSbuffer, expectlen, 1500);
 
 		return  parse(GPSbuffer);          // parse the response to appropriate variables, 1 for successful parsing
 
@@ -705,7 +705,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
 						
 						
 		
-						#if defined (DUMMY_GPS_COORDS)
+						#if DUMMY_GPS_COORDS
 						
 						/* strictly for testing if the geofencing works when GPS gives dummy values.*/
 						GPSsats = 6;

@@ -39,6 +39,8 @@ Maintainer: Miguel Luis and Gregory Cristian
  extern "C" {
 #endif
 /* Includes ------------------------------------------------------------------*/
+#include "hw.h"
+
 /* Exported types ------------------------------------------------------------*/
 
 typedef struct{
@@ -57,7 +59,18 @@ typedef struct{
 
 #define RESITOR_DIVIDER_PROD                    ((100000.0+100000.0)/100000.0)
 #define RESITOR_DIVIDER                         (float)(RESITOR_DIVIDER_PROD)
-	
+
+
+
+// EEPROM related defines
+#define EEPROM_ADDR_START                       0x08080000       /* Start @ of STM32 internal EEPROM area */
+
+#define FRAME_COUNTER_EEPROM_ID                    (1)
+#define FRAME_COUNTER_EEPROM_OFFSET                (0)
+#define FRAME_COUNTER_EEPROM_LEN                   (8)
+#define FRAME_COUNTER_EEPROM_ADDRESS               (uint32_t)(EEPROM_ADDR_START + FRAME_COUNTER_EEPROM_OFFSET)
+
+   
 
 /* Exported constants --------------------------------------------------------*/
 /* External variables --------------------------------------------------------*/
@@ -87,6 +100,13 @@ void BSP_sensor_Read( sensor_t *sensor_data);
   * @retval uint16_t The battery voltage value in mV
   */
 uint16_t BSP_GetBatteryLevel16( void );
+
+
+void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data);
+uint8_t EepromLoraKeysValidation(void);
+void LoadLoraKeys( void );
+void LoadFrameCounter( void );
+uint8_t EepromFrameCounterValidation(void);
 
 #ifdef __cplusplus
 }

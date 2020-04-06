@@ -112,10 +112,10 @@ void Error_Handler(void);
 
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor, Radio, GPS or LED
-#define SENSOR_ENABLED
-#define GPS_ENABLED
-#define RADIO_ENABLED
-#define USE_LED
+#define SENSOR_ENABLED   0         /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
+#define GPS_ENABLED      0         /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
+#define RADIO_ENABLED    1         /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_LED          1         /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
 
 
 /* GPS RELATED DEFINES */
@@ -127,7 +127,7 @@ void Error_Handler(void);
 /* GEOFENCE RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 /* For geofence testing */
-//#define DUMMY_GPS_COORDS
+#define DUMMY_GPS_COORDS  1        /* Bypass the GPS chip to return dummy GPS values . Allowed values: 0(default) disabled , 1 enabled */
 
 
 /* LORAWAN RELATED DEFINES */
@@ -137,7 +137,7 @@ void Error_Handler(void);
  * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           120000
+#define APP_TX_DUTYCYCLE                           10000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -147,9 +147,11 @@ void Error_Handler(void);
  * LoRaWAN Default data Rate Data Rate
  * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
  */
-#define LORAWAN_DEFAULT_DATA_RATE DR_4
+#define LORAWAN_DEFAULT_DATA_RATE DR_5
 
 
+
+#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM           1   /* Storing frame counter in EEPROM. Allowed values: 0 disabled , 1 (default) enabled */
 
 
 /* CALL SIGN */
@@ -157,8 +159,8 @@ void Error_Handler(void);
 //#define ICSPACE16
 //#define ICSPACE17
 //#define ICSPACE18
-#define ICSPACE19
-//#define ICSPACE20
+//#define ICSPACE19
+#define ICSPACE20
 
 
 /* USER CODE END Private defines */
