@@ -118,6 +118,8 @@ void HW_Init( void )
 		    
 		BSP_LED_Init( LED1 );
 		
+		PRINTF("SELFTEST: LED should blink now\n\r");
+		
 		//if (GPSaltitude<1000)
 		//{
 			// Indicate that we are alive!
@@ -141,8 +143,7 @@ void HW_Init( void )
 
 		#endif
 		
-		
-
+		PRINTF("SELFTEST: Now initing sensors\n\r");
     BSP_sensor_Init( );
             
 		

@@ -260,17 +260,24 @@ int main( void )
 	
 	/* Configure the debug mode*/
 	DBG_Init();
+
 	
 	/* Set Brown out reset level voltage to 1.7V */
 	set_brownout_level();
+	
 		
 	/* Set Power Voltage Detector threshold to 2.9V*/
 	PVD_Config();
 	
 
 	/* Wait for VDD to exceed GPS threshold voltage 2.9V */
-	while(__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO));
+	while(__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO)){
+	  PRINTF("SELFTEST: VDD below threshold 2.9V\n\r");
+		HAL_Delay(500);
+	};
 	
+  PRINTF("SELFTEST: Initialising Hardware\n\r");
+
 	/* Configure the hardware*/
 	HW_Init();
 	
@@ -287,15 +294,18 @@ int main( void )
 
 	#endif
 	
+	
+	PRINTF("SELFTEST: Now the radio should transmit\n\r");
+	
 
 	/* Find out which region of world we are in and update region parm*/
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	
-	PRINTF("My location polygon : %d\n\r", (int)CURRENT_POLYGON_REGION);  
-	
+	PRINTF("MY CURRENT LOCATION POLYGON : %d\n\r", (int)CURRENT_POLYGON_REGION);  
+	PRINTF("APP DUTY CYCLE(TX INTERVAL maybe longer depending on message length and datarate) : %d\n\r", APP_TX_DUTYCYCLE);  
 
-	PRINTF("VERSION: %X\n\r", VERSION);
+
 	while( 1 ){
 
 		/* Configure the Lora Stack*/

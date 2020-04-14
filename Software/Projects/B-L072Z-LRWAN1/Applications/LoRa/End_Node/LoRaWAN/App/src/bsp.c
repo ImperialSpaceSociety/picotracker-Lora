@@ -98,12 +98,14 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 
 void  BSP_sensor_Init( void  )
 {
+	PRINTF("SELFTEST: Initialisng ms5607\n\r");
 	#if SENSOR_ENABLED
   /* Initialize sensors */	
 		ms5607_Init();
 	#endif
 	
 	 #if GPS_ENABLED
+	 PRINTF("SELFTEST: Initialising GPS\n\r");
 
 	 //GPS SETUP
 	 setup_GPS();

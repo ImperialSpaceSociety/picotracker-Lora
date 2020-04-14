@@ -153,7 +153,21 @@ uint8_t setup_GPS(){
 	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				              // reset GPS module. warm start
 	HAL_Delay(1000);                                                              // Wait for things to be setup	
 
+	/* For running the self test part of the program */
+	int ack_from_gps;
+	ack_from_gps = UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+  
+	if (ack_from_gps)
+		{
+			PRINTF("SELFTEST: GPS responds. GPS OK...\r\n");
+	}else
+		{
+			PRINTF("SELFTEST: GPS did not respond. GPS error...\r\n");
+	}
+	
+	
 	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+	
 	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
 	UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.

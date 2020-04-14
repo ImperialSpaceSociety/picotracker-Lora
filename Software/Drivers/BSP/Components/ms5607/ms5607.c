@@ -66,10 +66,15 @@ uint8_t ms5607_Init(void)
 		//PRINTF("calculated crc:%d\n\r",calculated_crc);
 
     
-		if(calculated_crc==factory_crc)
+		if(calculated_crc==factory_crc){
+			  PRINTF("SELFTEST: ms5607 checksum matches. ms5607 OK...\n\r");
+
         return 0;
-    else
+		}
+    else{
+			  PRINTF("SELFTEST: ms5607 checksum not matching. Device NOT OK...\n\r");
         return 1;
+		}
 
 }
 
