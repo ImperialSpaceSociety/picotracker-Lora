@@ -104,6 +104,10 @@ void Error_Handler(void);
 
 #define SENSOR_EN_PIN GPIO_PIN_7
 #define SENSOR_EN_GPIO_Port GPIOB
+
+#define GPS_EN_PIN GPIO_PIN_11
+#define GPS_EN_GPIO_Port GPIOA
+
 /* USER CODE BEGIN Private defines */
 
 #define GPS_I2C_ADDRESS 0x42

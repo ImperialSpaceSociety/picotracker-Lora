@@ -172,6 +172,7 @@ void             BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef Button_Mo
 uint32_t         BSP_PB_GetState(Button_TypeDef Button);                
 void             GPS_INT_GPIO_Init(void);
 void             SENSOR_EN_GPIO_Init(void);
+void             GPS_EN_GPIO_Init(void);
 
 
 /**

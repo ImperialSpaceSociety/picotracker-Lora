@@ -98,6 +98,7 @@ const uint8_t BUTTON_IRQn[BUTTONn] = {KEY_BUTTON_EXTI_IRQn };
   
 
 
+#if defined (VARIANT_1V1B)|| defined(VARIANT_1V2B)
 
 void SENSOR_EN_GPIO_Init(void)
 {
@@ -119,6 +120,37 @@ void SENSOR_EN_GPIO_Init(void)
 
 
 }
+
+#endif
+
+
+
+#if defined (VARIANT_1V2A)
+
+void GPS_EN_GPIO_Init(void)
+{
+
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = GPS_EN_PIN;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPS_EN_GPIO_Port, &GPIO_InitStruct);
+	
+	HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPS_EN_PIN, GPIO_PIN_SET); 
+
+
+}
+
+#endif
+
+
 
 void GPS_INT_GPIO_Init(void)
 {

@@ -120,28 +120,30 @@ void HW_Init( void )
 		
 		PRINTF("SELFTEST: LED should blink now\n\r");
 		
-		//if (GPSaltitude<1000)
-		//{
-			// Indicate that we are alive!
-			for(uint8_t i = 0; i < 5; i++)
-			{
-				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
-				HAL_Delay(50);
-				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
-				HAL_Delay(50);
-			}
-		//}
 
-		
+		for(uint8_t i = 0; i < 5; i++)
+		{
+			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+			HAL_Delay(50);
+			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+			HAL_Delay(50);
+		}
+
+
+
 		GPS_INT_GPIO_Init();
 		
 	
 		#if defined( VARIANT_1V1B )
 		/* enable power to the sensors */
-		
 		SENSOR_EN_GPIO_Init();
-
+		
 		#endif
+		
+		#if defined( VARIANT_1V2A)
+		/* enable power to the GPS with mosfet */
+		GPS_EN_GPIO_Init();
+		#endif 
 		
 		PRINTF("SELFTEST: Now initing sensors\n\r");
     BSP_sensor_Init( );
