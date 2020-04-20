@@ -22,75 +22,43 @@ extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include
 static uint8_t flush_buffer[500];
 
 #if DUMMY_GPS_COORDS
+/* IMPORTANT: when defining the list of coordinates, make sure that the number of coordinate pairs
+ * equals or is less than dummy_coord_n. The program will ignore any coorinate pair that comes after the first
+ * dummy_coord_n pairs. It will loop back to returning the first coordinate pair in the array.
+ * Also, undefined behaviour may ensue if you define array size as n and initialise it with more than n elements
+ * 
+ * static float const n  = 2;
+ * float myarray[n] = {1, 2, 4, 5}  <-- intialised with more than 2 values. Constratint violation
+ * 
+ * Compiler should catch it though                             
+ */
+ 
 uint8_t dummy_coord_counter  = 0;
-uint8_t dummy_coord_n = 28;
+static const uint8_t dummy_coord_n = 20;
 
 /*dummy Coords ARRAYS (longitude, latitude) */
-static float dummy_coords_array[48] = { 
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-//	-64.6166, 18.4166, //British Virgin Islands
-
+static float dummy_coords_array[dummy_coord_n*2] = { 
 	13.4000,52.5167,  // Germany
+	2.3333,48.8667,  // France
 	13.4000,52.5167,  // Germany
+	-4.4833,54.1500,  // Isle of Man
 	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-	13.4000,52.5167,  // Germany
-//	2.3333,48.8667,  // France
-//	13.4000,52.5167,  // Germany
-//	-4.4833,54.1500,  // Isle of Man
-//	13.4000,52.5167,  // Germany
-//	2.3333,48.8667,  // France
-//	24.7167,59.4333,  // Estonia
-
-//  	25.9000,-24.6333,  // Botswana
-//  	3.0500,36.7500,  // Algeria
-//  	3.0500,36.7500,  // Algeria
-
-//  	35.2333,31.7667,  // Palestine
-//	  35.2333,31.7667,  // Palestine
-//	  35.2333,31.7667,  // Palestine
-
-//  	19.8167,41.3167,  // Albania
-//	  19.8167,41.3167,  // Albania
-//  	19.8167,41.3167,  // Albania
-
-//		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
-//		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
-//		-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
-
+	2.3333,48.8667,  // France
+	24.7167,59.4333,  // Estonia
+	25.9000,-24.6333,  // Botswana
+	3.0500,36.7500,  // Algeria
+	3.0500,36.7500,  // Algeria
+	35.2333,31.7667,  // Palestine
+	35.2333,31.7667,  // Palestine
+	35.2333,31.7667,  // Palestine
+	19.8167,41.3167,  // Albania
+	19.8167,41.3167,  // Albania
+	19.8167,41.3167,  // Albania
+	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+	
+	
 //	149.1333,-35.2667,  // Australia
 //	-88.7667,17.2500,  // Belize
 //	89.6333,27.4667,  // Bhutan
@@ -203,8 +171,28 @@ uint8_t get_location_fix(){
 		GPSfix_OK = 0;
 		GPSsats = 0;
 
-
+		
+		#if !DUMMY_GPS_COORDS 
 		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);           // get fix info UBX-NAV-PVT
+		#else
+		
+		/* Strictly for testing if the geofencing works when GPS gives dummy values.
+		 * It returns a dummy GPS coordinate instead of the one the actual ublox GPS returns.
+		 */
+		GPSsats = 6;     // dummy GPS sats
+		GPSfix_type = 3; // dummy GNSSfix Type
+		GPSfix_OK = 1;   // dummy Fix status flags: gnssFixOK
+		
+		GPS_UBX_longitude_Float = dummy_coords_array[dummy_coord_counter * 2];    // dummy longitude
+		GPS_UBX_latitude_Float = dummy_coords_array[dummy_coord_counter * 2 + 1]; // dummy latitude
+		
+		if (dummy_coord_counter < dummy_coord_n-1){
+			dummy_coord_counter++;
+		}else{
+			dummy_coord_counter = 0;
+		}
+		
+		#endif
 
 		if(GPSfix_OK == 1 && GPSfix_type == 3 && GPSsats >= SATS )           // check if we have a good fix
 		{ 
@@ -716,22 +704,6 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPSheading = (int32_t)buffer[70] | (int32_t)buffer[71] << 8 | (int32_t)buffer[72] << 16 | (int32_t)buffer[73] << 24;;
             
             GPS_UBX_error_bitfield &= ~(1 << 2);
-						
-						
-		
-						#if DUMMY_GPS_COORDS
-						
-						/* strictly for testing if the geofencing works when GPS gives dummy values.*/
-						GPSsats = 6;
-            GPSfix_type = 3;             // GNSSfix Type
-					  GPSfix_OK = 1; // Fix status flags: gnssFixOK
-						
-            GPS_UBX_longitude_Float = (float)dummy_coords_array[dummy_coord_counter * 2];
-						GPS_UBX_latitude_Float = (float)dummy_coords_array[dummy_coord_counter * 2 + 1];
-						dummy_coord_counter++;
-						#endif
-
-						
 						
         }else{
             GPS_UBX_checksum_error++;
