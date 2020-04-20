@@ -290,7 +290,11 @@ int main( void )
 	 * The program cannot go on to unless it gets a GPS fix. It is neccessary for it to try forever
 	 * It needs a GPS fix to get the right LoRa params for the region
 	 */
-	while(!get_location_fix());
+	while(!get_location_fix()); //
+	/* TODO: maybe it does not have to be blocking. Yes it will tx the wrong freqeuncies over the wrong region if
+	 * it does not get a fix(will tx at frequency at 0,0 coordinates). But if it never gets a fix, we will never 
+	 * ever hear from the tracker. It will be good if it at least tx something on EU frequencies
+	 */
 
 	#endif
 	
