@@ -106,8 +106,8 @@ uint32_t fixAttemptCount                  = 0;
 uint8_t ack			                          = 0; // 1 is ack, 0 is nak
 
 // Temperature Pressure variables
-double Pressure; // compensated pressure value
-double Temperature; // compensated temperature value
+double PRESSURE_Value; // compensated pressure value
+double TEMPERATURE_Value; // compensated temperature value
 
 
 // GEOFENCE variables
@@ -230,15 +230,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		MS5607_get_temp_pressure();
-		
-		printf("Temperature degrees C: "); 
-		printf("%lf", Temperature); 
-		printf("\r\n"); 
-		printf("Pressure mBar: "); 
-		printf("%lf", Pressure); 
-		printf("\r\n");
-		
+
 
 
 	  while(!get_location_fix()); //

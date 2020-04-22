@@ -13,6 +13,8 @@
 #include "main.h"
 #include <string.h>
 
+#include "ms5607.h"
+
 
 extern uint8_t	buffer_0xB5[1];
 extern uint8_t	buffer_0x62[1];
@@ -173,6 +175,15 @@ uint8_t get_location_fix(){
 		
 		#if !DUMMY_GPS_COORDS 
 		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);                 // get fix info UBX-NAV-PVT
+		
+		MS5607_get_temp_pressure();
+		printf("Temperature degrees C: "); 
+		printf("%lf", TEMPERATURE_Value); 
+		printf("\r\n"); 
+		printf("Pressure mBar: "); 
+		printf("%lf", PRESSURE_Value); 
+		printf("\r\n");
+		
 		#else
 		
 		/* Strictly for testing if the geofencing works when GPS gives dummy values.
