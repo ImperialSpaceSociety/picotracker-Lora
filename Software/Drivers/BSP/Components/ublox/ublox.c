@@ -14,6 +14,8 @@
 #include <string.h>
 #include "hw.h"
 
+#include "ms5607.h"
+
 
 extern uint8_t	buffer_0xB5[1];
 extern uint8_t	buffer_0x62[1];
@@ -174,6 +176,16 @@ uint8_t get_location_fix(){
 		
 		#if !DUMMY_GPS_COORDS 
 		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);                 // get fix info UBX-NAV-PVT
+		
+		// temporary 
+		MS5607_get_temp_pressure();
+		PRINTF("Temperature degrees C: "); 
+		PRINTF("%lf", TEMPERATURE_Value); 
+		PRINTF("\r\n"); 
+		PRINTF("Pressure mBar: "); 
+		PRINTF("%lf", PRESSURE_Value); 
+		PRINTF("\r\n");
+		
 		#else
 		
 		/* Strictly for testing if the geofencing works when GPS gives dummy values.
@@ -234,7 +246,7 @@ uint8_t get_location_fix(){
 		{
 			// configure gps module again
 			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));			              	// reset GPS module.
-			HAL_Delay(1000);                                                              // wait for GPS module to be ready
+			//HAL_Delay(1000);                                                              // wait for GPS module to be ready
 			UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 			UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 			UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
@@ -249,7 +261,7 @@ uint8_t get_location_fix(){
 
 		}
 		
-		HAL_Delay(4000);		
+		HAL_Delay(10);		
 	}
 
 }
@@ -425,7 +437,7 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 {
 		// Flush Ublox I2C buffer if it is unexpectedly filled with something else. Do not do anything with the data
     // TODO: maybe do something if there is an ubx message here. A GPS/MCU reset?
-		UBLOX_flush_I2C_buffer(500);
+		//UBLOX_flush_I2C_buffer(500);
 
 		// Transmit the request
     HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);

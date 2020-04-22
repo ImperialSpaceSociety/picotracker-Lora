@@ -365,4 +365,10 @@ uint8_t Wakeup_GPS(void);
 uint8_t get_location_fix(void);
 uint8_t UBLOX_flush_I2C_buffer( uint16_t len);
 
+
+// temp
+
+extern double PRESSURE_Value; // compensated pressure value
+extern double TEMPERATURE_Value; // compensated temperature value
+
 #endif // UBLOX_H
