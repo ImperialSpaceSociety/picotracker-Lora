@@ -45,13 +45,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define SHORT_CYCLE			46		// value / 0.83 = ~duration of one main loop in seconds (Normal mode)
-#define LONG_CYCLE			96		// value / 0.83 = ~duration of one main loop in seconds (Power Saving mode)
-#define SOLAR				0		// mV
-#define BATTERY				2500	// mV
-#define BATTERY_ON			3.0		// mV
-#define FIX					90		// attempts to poll UBX-NAV-PVT
-#define SATS				4		// number of satellites required for positional solution
+
 
 /* USER CODE END PD */
 
@@ -129,6 +123,13 @@ HAL_StatusTypeDef i2c_status;
 // Battery/Solar voltage
 uint32_t VCC_ADC												= 0;
 
+//I2C related
+uint8_t	i2c_buffer[2];
+HAL_StatusTypeDef i2c_status;
+
+uint8_t	buffer_0xB5[1];
+uint8_t	buffer_0x62[1];
+uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
 
 
 /* USER CODE END PV */
@@ -201,7 +202,7 @@ int main(void)
   MX_RTC_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
-  MX_IWDG_Init();
+  //MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
 	
 	// keep checking if vcc voltage is high enough to carry on. NOT SURE IF NEEDED!. I think I should use inbuilt voltage measuremnt function
@@ -237,68 +238,11 @@ int main(void)
 		printf("Pressure mBar: "); 
 		printf("%lf", Pressure); 
 		printf("\r\n");
-
-		check_ADC(); // check solar voltage? not sure if accurate
 		
 
 
-		// GET GPS FIX
-		fixAttemptCount = 0;
-		
-		while(1)				// poll UBX-NAV-PVT until the module has fix
-		{
-			
-			GPSfix_type = 0;
-			GPSfix_OK = 0;
-			GPSsats = 0;
-			
-			Wakeup_GPS();
+	  while(!get_location_fix()); //
 
-			UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);                 // get fix info UBX-NAV-PVT
-
-			if(GPSfix_type == 3 && GPSfix_OK == 1 && GPSsats >= SATS) break;          // check if we have a good fix
-			
-			fixAttemptCount++;
-			HAL_Delay(1000);
-
-			
-			/* If fix taking too long, reset and re-initialize GPS module. 
-			 * It does a forced hardware reset and recovers from a warm start
-			 * Reset only after 70 tries
-			 */
-			if(fixAttemptCount > FIX)														
-			{
-				UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				// reset GPS module. warm start
-				setup_GPS();                                                    // configure gps module again
-				GPSfix_type = 0;
-				GPSfix_OK = 0;
-				GPSsats = 0;
-				break;
-				
-			}
-		}
-		
-		// PUT GPS TO SLEEP
-		Backup_GPS();
-
-
-		
-		// GEOFENCE
-		GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);		// choose the right LoRa frequency based on current location
-		LoRa_tx_frequency = GEOFENCE_LoRa_frequency;
-
-		if(GEOFENCE_no_tx){ 
-			TXLoRa = 0;												                                  // disable LoRa transmission in NO AIRBORNE areas
-		}
-		
-		// TRANSMIT DATA(TODO)
-		
-		// GO TO POWERSAVE MODE(TODO)
-		
-		
-		// TODO: make the watchdog work
-		// TODO: deinit I2C, uart etc to save power
-		
 		HAL_Delay(1000);
 		
     /* USER CODE END WHILE */

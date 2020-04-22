@@ -11,6 +11,77 @@
 #include <stdio.h>
 #include "stm32l0xx_hal.h"
 #include "main.h"
+#include <string.h>
+
+
+extern uint8_t	buffer_0xB5[1];
+extern uint8_t	buffer_0x62[1];
+extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
+
+static uint8_t flush_buffer[500];
+
+#if DUMMY_GPS_COORDS
+/* IMPORTANT: when defining the list of coordinates, make sure that the number of coordinate pairs
+ * equals or is less than dummy_coord_n. The program will ignore any coorinate pair that comes after the first
+ * dummy_coord_n pairs. It will loop back to returning the first coordinate pair in the array.
+ * Also, undefined behaviour may ensue if you define array size as n and initialise it with more than n elements
+ * 
+ * static float const n  = 2;
+ * float myarray[n] = {1, 2, 4, 5}  <-- intialised with more than 2 values. Constratint violation
+ * 
+ * Compiler should catch it though                             
+ */
+ 
+uint8_t dummy_coord_counter  = 0;
+static const uint8_t dummy_coord_n = 20;
+
+/*dummy Coords ARRAYS (longitude, latitude) */
+static float dummy_coords_array[dummy_coord_n*2] = { 
+	13.4000,52.5167,  // Germany
+	2.3333,48.8667,  // France
+	13.4000,52.5167,  // Germany
+	-4.4833,54.1500,  // Isle of Man
+	13.4000,52.5167,  // Germany
+	2.3333,48.8667,  // France
+	24.7167,59.4333,  // Estonia
+	25.9000,-24.6333,  // Botswana
+	3.0500,36.7500,  // Algeria
+	3.0500,36.7500,  // Algeria
+	35.2333,31.7667,  // Palestine
+	35.2333,31.7667,  // Palestine
+	35.2333,31.7667,  // Palestine
+	19.8167,41.3167,  // Albania
+	19.8167,41.3167,  // Albania
+	19.8167,41.3167,  // Albania
+	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
+	
+	
+//	149.1333,-35.2667,  // Australia
+//	-88.7667,17.2500,  // Belize
+//	89.6333,27.4667,  // Bhutan
+//	104.9167,11.5500,  // Cambodia
+//	15.2833,-4.2500,  // Republic of Congo
+//	-5.2667,6.8167,  // Cote d'Ivoire
+//	-16.5667,13.4500,  // The Gambia
+//	44.8333,41.6833,  // Georgia
+//	-51.7500,64.1833,  // Greenland
+//	-61.7500,12.0500,  // Grenada
+//	-4.4833,54.1500,  // Isle of Man
+//	35.2333,31.7667,  // Israel
+//	12.4833,41.9000,  // Italy
+//	126.9833,37.5500,  // South Korea
+//	13.1667,32.8833,  // Libya
+//	101.7000,3.1667,  // Malaysia
+//	7.4167,43.7333,  // Monaco
+};
+
+#endif
+
+
+
+
 
 
 
@@ -18,10 +89,8 @@
  * GPS backup. 
  */
 uint8_t Backup_GPS(){
-	
-	UBLOX_send_message(set_power_save_mode, sizeof(set_power_save_mode));	// switch GPS module to powersave mode and save config. No response expected
+  UBLOX_request_UBX(set_power_save_mode, sizeof(set_power_save_mode), 10, UBLOX_parse_ACK);				// switch GPS module to powersave mode. No response expected
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
-
 	return 0;
 }
 
@@ -34,8 +103,7 @@ uint8_t Wakeup_GPS(){
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
 	HAL_Delay(1000);                                                          // wait for things to be setup
 	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode
-	HAL_Delay(1000);                                                          // wait for things to be setup
-	
+	//UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration	
 	return 0;
 
 }
@@ -47,15 +115,145 @@ uint8_t Wakeup_GPS(){
  */
 uint8_t setup_GPS(){
 	
+	// wake up gps in case it is in Lower Power mode
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
-	HAL_Delay(1000);                                                              // Wait for things to be setup
+	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				              // reset GPS module. warm start
+	HAL_Delay(1000);                                                              // Wait for things to be setup	
+
+	/* For running the self test part of the program */
+	int ack_from_gps;
+	ack_from_gps = UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+  
+	if (ack_from_gps)
+		{
+			printf("SELFTEST: GPS responds. GPS OK...\r\n");
+	}else
+		{
+			printf("SELFTEST: GPS did not respond. GPS error...\r\n");
+	}
+	
+	
 	UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+	
 	UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 	UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
 	UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
-	UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration
 	return 0;
 }
+
+
+uint8_t get_location_fix(){
+	
+	// GET GPS FIX
+
+	// wakeup gps
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
+	HAL_Delay(500);
+	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode	
+	
+	// Check if we are in airbourne mode
+	GPSnavigation = 0;
+	
+	UBLOX_request_UBX(request0624, 8, 44, UBLOX_parse_0624);
+	
+	if(GPSnavigation != 6)														// verify Dynamic Model: airborne with <1g acceleration
+	{
+		UBLOX_request_UBX(setNAVmode, 44, 10, UBLOX_parse_ACK);					// if not, set it
+	}
+
+	fixAttemptCount = 0;
+
+	while(1)				// poll UBX-NAV-PVT until the module has fix
+	{
+
+		GPSfix_type = 0;
+		GPSfix_OK = 0;
+		GPSsats = 0;
+
+		
+		#if !DUMMY_GPS_COORDS 
+		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);                 // get fix info UBX-NAV-PVT
+		#else
+		
+		/* Strictly for testing if the geofencing works when GPS gives dummy values.
+		 * It returns a dummy GPS coordinate instead of the one the actual ublox GPS returns.
+		 */
+		GPSsats = 6;     // dummy GPS sats
+		GPSfix_type = 3; // dummy GNSSfix Type
+		GPSfix_OK = 1;   // dummy Fix status flags: gnssFixOK
+		
+		GPS_UBX_longitude_Float = dummy_coords_array[dummy_coord_counter * 2];    // dummy longitude
+		GPS_UBX_latitude_Float = dummy_coords_array[dummy_coord_counter * 2 + 1]; // dummy latitude
+		
+		if (dummy_coord_counter < dummy_coord_n-1){
+			dummy_coord_counter++;
+		}else{
+			dummy_coord_counter = 0;
+		}
+		#endif
+
+		if(GPSfix_OK == 1 && GPSfix_type == 3 && GPSsats >= SATS )           // check if we have a good fix
+		{ 
+			Backup_GPS();
+			
+			#if USE_LED
+			// indicate that fix has been found
+			for(uint8_t i = 0; i < 20; i++)
+			{
+				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+				HAL_Delay(50);
+				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+				HAL_Delay(50);
+			}
+		 #endif
+
+			
+			return 1;
+		}       
+
+		fixAttemptCount++;
+		
+		#if USE_LED
+		
+		// Indicator led to indicate that still searching
+		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+		HAL_Delay(100);
+		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+	
+		#endif
+
+		printf("GPS Fix Attempt count : %d (%dh:%dm:%ds since start)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
+
+
+		/* If fix taking too long, reset and re-initialize GPS module. 
+		 * It does a forced hardware reset and recovers from a cold start
+		 * Reset only after 70 tries, defined by FIX
+		 */
+		if(fixAttemptCount > FIX)														
+		{
+			// configure gps module again
+			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));			              	// reset GPS module.
+			HAL_Delay(1000);                                                              // wait for GPS module to be ready
+			UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
+			UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
+			UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
+			UBLOX_request_UBX(powersave_config, sizeof(powersave_config) , 10, UBLOX_parse_ACK);	  // Save powersave config to ram. can be activated later.
+
+			GPSfix_type = 0;
+			GPSfix_OK = 0;
+			GPSsats = 0;
+			
+			Backup_GPS();
+			return 0;
+
+		}
+		
+		HAL_Delay(4000);		
+	}
+
+}
+
+
 
 
 /*
@@ -143,17 +341,41 @@ uint8_t UBLOX_verify_checksum(volatile uint8_t *buffer, uint8_t len)
     Waits for the I2C1_RX_buffer[] to be filled with an expected number of bytes
     and then empties the buffer to a desired buffer for further processing.
 */
-uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len)
+uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
 {
+		 /* Init tickstart for timeout management*/
+		uint32_t tickstart_j = 0;
+    tickstart_j = HAL_GetTick();
 
-		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1),  buffer, len, 0xFF);
-		if (i2c_status == HAL_OK)
+
+		/* set a time out for receiving a ubx message back from the GPS */
+    while ((HAL_GetTick() - tickstart_j) < timeout)
 		{
-			return 1;
-		}else
-		{
-			return 0;
+			/* listen for the first header char */
+			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 10000);
+			if (buffer_0xB5[0] == 0xb5){
+				  /* now listen for the second header char */
+					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 10000);
+					
+				  if (buffer_0x62[0] == 0x62){
+						
+						/* now that the header has been received, parse the rest of message */
+						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 10000);
+					
+					  /* now fill GPS buffer with header+body of ubx message  */
+						buffer[0] = 0xB5;
+						buffer[1] = 0x62;
+						for (uint8_t i=0; i<len-2; i++) {
+								buffer[i+2]=buffer_ubx_packet_wo_header[i];
+						}
+					 
+						return 1; // ubx message received and GPSbuffer filled with data
+
+				}
+			}
 		}
+		
+		return 0; // no ubx message received
 }
 
 
@@ -165,7 +387,24 @@ uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len)
 uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 	
 {
-		i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), message, len, 0xff);	
+		i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), message, len, 10000);	
+		
+		if (i2c_status == HAL_OK)
+		{
+			return 1;
+		}else
+		{
+			return 0;
+		}	
+}
+
+
+/*
+   Flush I2C buffer. Fill the flush buffer with number of bytes defined by len
+*/
+uint8_t UBLOX_flush_I2C_buffer( uint16_t len)
+{
+		HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1),flush_buffer , len, 10000);
 		
 		if (i2c_status == HAL_OK)
 		{
@@ -183,16 +422,19 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*))
 {
-    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
-		i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), GPSbuffer, expectlen, 10000); // copy the response from I2C1_RX_buffer to GPSbuffe
-		
-		if (i2c_status != HAL_OK)
-		{
-			return 0;
-		}
-	
-    parse_success  = parse(GPSbuffer);          // parse the response to appropriate variables
-    return parse_success;
+		// Flush Ublox I2C buffer if it is unexpectedly filled with something else. Do not do anything with the data
+    // TODO: maybe do something if there is an ubx message here. A GPS/MCU reset?
+		UBLOX_flush_I2C_buffer(500);
+
+		// Transmit the request
+    HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
+			
+		//memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
+		// Receive the request
+		UBLOX_receive_UBX(GPSbuffer, expectlen, 1500);
+
+		return  parse(GPSbuffer);          // parse the response to appropriate variables, 1 for successful parsing
+
 }
 
 
@@ -422,8 +664,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
     {
         if(UBLOX_verify_checksum(buffer, 92) || UBLOX_verify_checksum(buffer, 100))
         {
-					
-					// TODO: calculate time since epoch in milliseconds. ITOW. It is the first 4 bytes of this message
+											
             // YEAR, MONTH, DAY
             GPSyear = (uint16_t)buffer[10] | (uint16_t)buffer[11] << 8;
             GPSmonth = buffer[12];
@@ -453,7 +694,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPS_UBX_latitude = (int32_t)buffer[34] | (int32_t)buffer[35] << 8 | (int32_t)buffer[36] << 16 | (int32_t)buffer[37] << 24;
             GPS_UBX_latitude_Float = (float)GPS_UBX_latitude / 10000000.0;
             
-            GPSaltitude = (int32_t)buffer[42] | (int32_t)buffer[43] << 8 | (int32_t)buffer[44] << 16 | (int32_t)buffer[45] << 24;
+            GPSaltitude = (int32_t)buffer[38] | (int32_t)buffer[39] << 8 | (int32_t)buffer[40] << 16 | (int32_t)buffer[41] << 24;
             GPSaltitude /= 1000;
             
             // GROUND SPEED, HEADING
@@ -461,6 +702,7 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPSheading = (int32_t)buffer[70] | (int32_t)buffer[71] << 8 | (int32_t)buffer[72] << 16 | (int32_t)buffer[73] << 24;;
             
             GPS_UBX_error_bitfield &= ~(1 << 2);
+						
         }else{
             GPS_UBX_checksum_error++;
             
@@ -517,9 +759,6 @@ uint8_t UBLOX_parse_empty(void)
 
 
 
-
-
-
 /*
     Function to prepare the module and enter the chosen POWER SAVING mode.
     First it turns off periodic messages, then it turns of GLONASS (required for POWER SAVE mode), sets up the desired mode
@@ -532,43 +771,5 @@ void UBLOX_powersave_mode_init(uint8_t * mode)
     UBLOX_request_UBX(setGPSonly, 28, 10, UBLOX_parse_ACK);                             // turn off GLONASS (needs to be done for POWERSAVE mode)
     UBLOX_request_UBX(mode, 52, 10, UBLOX_parse_ACK);                                   // set up the desired UBX-CFG-PM2 (0x06 0x3B) settings
     UBLOX_request_UBX(setPowerSaveMode, 10, 10, UBLOX_parse_ACK);                       // switch to POWERSAVE mode
-}
-
-
-/*
-    Fills a buffer with ASCII characters returned after polling UBX-MON-VER. Individual bits of information are 0x00 delimited.
-*/
-uint32_t UBLOX_get_version(uint8_t *buffer)
-{
-    UBLOX_send_message(request0A04, 8);                                                 // request UBX-MON-VER
-    
-    UBLOX_receive_UBX(GPSbuffer, 104);                                              // copy the response from I2C1_RX_buffer to GPSbuffer
-    
-    if(GPSbuffer[0] == 0xB5 && GPSbuffer[1] == 0x62 && GPSbuffer[2] == 0x0A && GPSbuffer[3] == 0x04)
-    {
-        uint8_t sequence = 0;
-        uint8_t zeroFlag = 0;
-        uint32_t msglen = (GPSbuffer[5] << 8) | GPSbuffer[4];
-        msglen -= 4;
-        
-        for(uint32_t i = 0; i < msglen; i++)
-        {
-            if(GPSbuffer[6 + i] != 0)
-            {
-                buffer[sequence++] = (GPSbuffer[6 + i]);
-                zeroFlag = 0;
-            }else{
-                if(!zeroFlag)
-                {
-                    buffer[sequence++] = 0;
-                    zeroFlag = 1;
-                }
-            }
-        }
-        
-        return sequence;
-    }else{
-        return 0;
-    }
 }
 

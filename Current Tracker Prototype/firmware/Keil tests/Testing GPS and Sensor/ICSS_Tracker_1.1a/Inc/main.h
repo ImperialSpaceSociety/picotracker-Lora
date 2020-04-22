@@ -105,6 +105,9 @@ void Error_Handler(void);
 
 #define GPS_I2C_ADDRESS 0x42
 
+#define FIX				60		// attempts to poll UBX-NAV-PVT
+
+
 
 /* USER CODE END Private defines */
 
