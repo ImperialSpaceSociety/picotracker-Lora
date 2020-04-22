@@ -347,6 +347,7 @@ void Coords_DEGtoDEC(uint32_t lat_INT, uint32_t lat_DEC, uint32_t lon_INT, uint3
 
 uint8_t UBLOX_verify_checksum(volatile uint8_t *buffer, uint8_t len);
 uint8_t UBLOX_send_message(uint8_t *message, uint8_t len);
+uint8_t UBLOX_receive_message(uint8_t *message, uint8_t len);
 uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*));
 uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout);
 uint8_t UBLOX_parse_0102(volatile uint8_t *buffer);

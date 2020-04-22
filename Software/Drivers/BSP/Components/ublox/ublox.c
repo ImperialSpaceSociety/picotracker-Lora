@@ -173,7 +173,8 @@ uint8_t get_location_fix(){
 
 		
 		#if !DUMMY_GPS_COORDS 
-		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);           // get fix info UBX-NAV-PVT
+		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);                 // get fix info UBX-NAV-PVT
+		
 		#else
 		
 		/* Strictly for testing if the geofencing works when GPS gives dummy values.
@@ -191,7 +192,6 @@ uint8_t get_location_fix(){
 		}else{
 			dummy_coord_counter = 0;
 		}
-		
 		#endif
 
 		if(GPSfix_OK == 1 && GPSfix_type == 3 && GPSsats >= SATS )           // check if we have a good fix
@@ -223,13 +223,13 @@ uint8_t get_location_fix(){
 		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
 	
 		#endif
-
-		PRINTF("GPS Fix Attempt count : %d (%dh:%dm:%ds since start)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
+		PRINTNOW();
+		PRINTF("GPS Fix Attempt count : %d (%dh:%dm:%ds is GPS time)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
 
 
 		/* If fix taking too long, reset and re-initialize GPS module. 
-		 * It does a forced hardware reset and recovers from a warm start
-		 * Reset only after 70 tries
+		 * It does a forced hardware reset and recovers from a cold start
+		 * Reset only after 70 tries, defined by FIX
 		 */
 		if(fixAttemptCount > FIX)														
 		{
@@ -250,7 +250,7 @@ uint8_t get_location_fix(){
 
 		}
 		
-		HAL_Delay(500);		
+		HAL_Delay(45);		
 	}
 
 }
@@ -354,16 +354,17 @@ uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
     while ((HAL_GetTick() - tickstart_j) < timeout)
 		{
 			/* listen for the first header char */
-			HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0xB5, 1, 10000);
+			UBLOX_receive_message(buffer_0xB5, 1);
+			
 			if (buffer_0xB5[0] == 0xb5){
 				  /* now listen for the second header char */
-					HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_0x62, 1, 10000);
-					
+					UBLOX_receive_message(buffer_0x62, 1);
+
 				  if (buffer_0x62[0] == 0x62){
 						
 						/* now that the header has been received, parse the rest of message */
-						HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), buffer_ubx_packet_wo_header, 120, 10000);
-					
+						UBLOX_receive_message(buffer_ubx_packet_wo_header, 120);
+
 					  /* now fill GPS buffer with header+body of ubx message  */
 						buffer[0] = 0xB5;
 						buffer[1] = 0x62;
@@ -387,18 +388,73 @@ uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
     Transmits a desired UBX message across I2C1.
 */
 uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
+{
+
+	
+		do
+    {
+      if(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), message, len)!= HAL_OK)
+      {
+        /* Error_Handler() function is called when error occurs. */
+        Error_Handler();
+      }
+
+      /*  Before starting a new communication transfer, you need to check the current   
+          state of the peripheral; if it's busy you need to wait for the end of current
+          transfer before starting a new one.
+          For simplicity reasons, this example is just waiting till the end of the 
+          transfer, but application may perform other tasks while transfer operation
+          is ongoing. */  
+      while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+      {
+      } 
+
+      /* When Acknowledge failure occurs (Slave don't acknowledge it's address)
+         Master restarts communication */
+    }
+    while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+		
+		
+		return 1; // TODO: make this makse sense
+
+}
+
+
+/*
+    Transmits a desired UBX message across I2C1.
+*/
+uint8_t UBLOX_receive_message(uint8_t *message, uint8_t len)
 	
 {
-		i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), message, len, 10000);	
-		
-		if (i2c_status == HAL_OK)
-		{
-			return 1;
-		}else
-		{
-			return 0;
-		}	
+	
+    do
+    {
+      if(HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), message, len)!= HAL_OK)
+      {
+        /* Error_Handler() function is called when error occurs. */
+        Error_Handler();
+      }
+
+      /*  Before starting a new communication transfer, you need to check the current   
+          state of the peripheral; if it's busy you need to wait for the end of current
+          transfer before starting a new one.
+          For simplicity reasons, this example is just waiting till the end of the 
+          transfer, but application may perform other tasks while transfer operation
+          is ongoing. */  
+      while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+      {
+      } 
+
+      /* When Acknowledge failure occurs (Slave don't acknowledge it's address)
+         Master restarts communication */
+    }
+    while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);		
+
+		return 1;  // TODO: make this makse sense
+
+
 }
+
 
 
 /*
@@ -406,15 +462,32 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_flush_I2C_buffer( uint16_t len)
 {
-		HAL_I2C_Master_Receive(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1),flush_buffer , len, 10000);
-		
-		if (i2c_status == HAL_OK)
+	
+	do
+	{
+		if(HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), flush_buffer, len)!= HAL_OK)
 		{
-			return 1;
-		}else
+			/* Error_Handler() function is called when error occurs. */
+			Error_Handler();
+		}
+
+		/*  Before starting a new communication transfer, you need to check the current   
+				state of the peripheral; if it's busy you need to wait for the end of current
+				transfer before starting a new one.
+				For simplicity reasons, this example is just waiting till the end of the 
+				transfer, but application may perform other tasks while transfer operation
+				is ongoing. */  
+		while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
 		{
-			return 0;
-		}	
+		} 
+
+		/* When Acknowledge failure occurs (Slave don't acknowledge it's address)
+			 Master restarts communication */
+	}
+	while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);		
+
+	return 1;  // TODO: make this makse sense
+
 }
 
 
@@ -429,7 +502,8 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 		UBLOX_flush_I2C_buffer(500);
 
 		// Transmit the request
-    HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
+    //HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
+	  UBLOX_send_message(request, len);
 			
 		//memset(GPSbuffer, 0, sizeof(GPSbuffer)); // reset the buffer to all 0s. not sure if needed
 		// Receive the request

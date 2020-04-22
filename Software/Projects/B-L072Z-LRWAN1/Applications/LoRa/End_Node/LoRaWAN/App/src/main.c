@@ -290,6 +290,7 @@ int main( void )
 	 * The program cannot go on to unless it gets a GPS fix. It is neccessary for it to try forever
 	 * It needs a GPS fix to get the right LoRa params for the region
 	 */
+	PRINTF("SELFTEST: Attempting to get a GPS fix\n\r");
 	while(!get_location_fix());
 
 	#endif

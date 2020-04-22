@@ -47,7 +47,7 @@ The moto: KEEP IT SIMPLE
 * ICSPACE16: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/02/balloon-flights-to-austria-and-slovakia/)
 * ICSPACE17: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/02/balloon-flights-to-austria-and-slovakia/)
 * ICSPACE18: Was lost after launch
-* ICSPACE19: Pure solar tracker to be launched 16/3/20
+* ICSPACE19: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/03/launch-of-icspace19/)
 
 
 # Design Files

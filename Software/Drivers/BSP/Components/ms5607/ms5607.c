@@ -20,9 +20,9 @@
 #include <math.h>
 #include "stm32l0xx_hal.h"
 #include "ms5607.h"
-
-
+#include "main.h"
 #include "hw.h"
+
 
  
 extern I2C_HandleTypeDef hi2c1;
@@ -54,9 +54,16 @@ uint8_t ms5607_Init(void)
 
     for (i=0; i<8; i++) {
         C[i]=cmd_prom(i);   // read coefficients
-				//PRINTF("c:%d\n\r",C[i]);
+	//			PRINTF("c:%d\n\r",C[i]);
 
     }
+				
+		/* Check if the received values are all zero. if they are, communication error */
+		if (!(C[0] && C[1] && C[2] && C[3] && C[4] && C[5] && C[6] && C[7])){
+				PRINTF("SELFTEST: ms5607 not returning values. ms5607 NOT OK...\n\r");
+        return 1;
+		} 
+		
 		
 		factory_crc = 0x000F & (C[7]); // the factory calculated crc
 		//PRINTF("factory crc:%d\n\r",factory_crc);
@@ -193,18 +200,68 @@ unsigned long cmd_adc(char cmd)
 HAL_StatusTypeDef ms5607_transmit( uint8_t *pBuffer, uint16_t Length)
 {
 	  HAL_StatusTypeDef i2c_status = HAL_OK;
-    i2c_status = HAL_I2C_Master_Transmit(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length, 1000);
-		//HAL_Delay(10);
+    //i2c_status = HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length);
+
+    /*##-5- Master sends read request for slave ##############################*/
+    do
+    {
+      if(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)ADDR_W, pBuffer, Length)!= HAL_OK)
+      {
+        /* Error_Handler() function is called when error occurs. */
+        Error_Handler();
+      }
+
+      /*  Before starting a new communication transfer, you need to check the current   
+          state of the peripheral; if it�s busy you need to wait for the end of current
+          transfer before starting a new one.
+          For simplicity reasons, this example is just waiting till the end of the 
+          transfer, but application may perform other tasks while transfer operation
+          is ongoing. */  
+      while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+      {
+      } 
+
+      /* When Acknowledge failure occurs (Slave don't acknowledge it's address)
+         Master restarts communication */
+    }
+    while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+
     return i2c_status;
 }
 
 HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length)
 {
-	  HAL_StatusTypeDef i2c_status = HAL_OK;
-    i2c_status = HAL_I2C_Master_Receive(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length, 1000);
-		//HAL_Delay(10);
+	
+		  HAL_StatusTypeDef i2c_status = HAL_OK;
+
+    //i2c_status = HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length);
+	
+	   /*##-7- Master receives aRxBuffer from slave #############################*/
+    do
+    {
+      if(HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)ADDR_R, pBuffer, Length)!= HAL_OK)
+      {
+        /* Error_Handler() function is called when error occurs. */
+        Error_Handler();
+      }
+
+      /*  Before starting a new communication transfer, you need to check the current   
+          state of the peripheral; if it�s busy you need to wait for the end of current
+          transfer before starting a new one.
+          For simplicity reasons, this example is just waiting till the end of the 
+          transfer, but application may perform other tasks while transfer operation
+          is ongoing. */  
+      while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+      {
+      } 
+
+      /* When Acknowledge failure occurs (Slave don't acknowledge it's address)
+         Master restarts communication */
+    }
+    while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
 
     return i2c_status;
+
 }
 
 void ms5607_Read_T(void)

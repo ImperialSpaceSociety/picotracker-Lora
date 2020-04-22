@@ -134,7 +134,7 @@ void HW_Init( void )
 		GPS_INT_GPIO_Init();
 		
 	
-		#if defined( VARIANT_1V1B )
+		#if defined( VARIANT_1V1B )  || defined ( VARIANT_1V2B )
 		/* enable power to the sensors */
 		SENSOR_EN_GPIO_Init();
 		
