@@ -174,11 +174,7 @@ uint8_t GPSpowersavemodestate							= 0;
 int32_t GPSgroundspeed										= 0;
 int32_t GPSheading												= 0;
 
-uint16_t AD3data													= 0;
-uint16_t AD9data													= 0;
-uint16_t AD15data													= 0;
-uint32_t telemCount												= 0;
-uint32_t telemetry_len										= 0;
+
 
 int32_t GPS_UBX_latitude_L								= 0;
 int32_t GPS_UBX_longitude_L								= 0;
@@ -261,22 +257,22 @@ int main( void )
 	/* Configure the debug mode*/
 	DBG_Init();
 
-	
-	/* Set Brown out reset level voltage to 1.7V */
-	set_brownout_level();
-	
-		
-	/* Set Power Voltage Detector threshold to 2.9V*/
-	PVD_Config();
-	
+//	
+//	/* Set Brown out reset level voltage to 1.7V */
+//	set_brownout_level();
+//	
+//		
+//	/* Set Power Voltage Detector threshold to 2.9V*/
+//  PVD_Config();
+//	
 
-	/* Wait for VDD to exceed GPS threshold voltage 2.9V */
-	while(__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO)){
-	  PRINTF("SELFTEST: VDD below threshold 2.9V\n\r");
-		HAL_Delay(500);
-	};
-	
-  PRINTF("SELFTEST: Initialising Hardware\n\r");
+//	/* Wait for VDD to exceed GPS threshold voltage 2.9V */
+//	while(__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO)){
+//	  PRINTF("SELFTEST: VDD below threshold 2.9V\n\r");
+//		HAL_Delay(500);
+//	};
+//	
+//  PRINTF("SELFTEST: Initialising Hardware\n\r");
 
 	/* Configure the hardware*/
 	HW_Init();
