@@ -84,7 +84,7 @@ void Error_Handler(void);
 
 
 // PRELAUNCH IMPORTANT!
-// comment out these defines to disable sensor, Radio, GPS or LED
+// Enable or disable sensor, Radio, GPS or LED
 #define SENSOR_ENABLED   1         /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
 #define GPS_ENABLED      1         /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
 #define RADIO_ENABLED    1         /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
@@ -94,13 +94,13 @@ void Error_Handler(void);
 /* GPS RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 
-#define FIX				250		// attempts to poll UBX-NAV-PVT
+#define FIX				60		// attempts to poll UBX-NAV-PVT
 
 
 /* GEOFENCE RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 /* For geofence testing */
-#define DUMMY_GPS_COORDS  1        /* Bypass the GPS chip to return dummy GPS values . Allowed values: 0(default) disabled , 1 enabled */
+#define DUMMY_GPS_COORDS  0        /* Bypass the GPS chip to return dummy GPS values . Allowed values: 0(default) disabled , 1 enabled */
 
 
 /* LORAWAN RELATED DEFINES */
