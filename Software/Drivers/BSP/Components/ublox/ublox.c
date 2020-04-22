@@ -173,7 +173,7 @@ uint8_t get_location_fix(){
 
 		
 		#if !DUMMY_GPS_COORDS 
-		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);           // get fix info UBX-NAV-PVT
+		UBLOX_request_UBX(request0107, 8, 100, UBLOX_parse_0107);                 // get fix info UBX-NAV-PVT
 		#else
 		
 		/* Strictly for testing if the geofencing works when GPS gives dummy values.
@@ -191,7 +191,6 @@ uint8_t get_location_fix(){
 		}else{
 			dummy_coord_counter = 0;
 		}
-		
 		#endif
 
 		if(GPSfix_OK == 1 && GPSfix_type == 3 && GPSsats >= SATS )           // check if we have a good fix
@@ -228,8 +227,8 @@ uint8_t get_location_fix(){
 
 
 		/* If fix taking too long, reset and re-initialize GPS module. 
-		 * It does a forced hardware reset and recovers from a warm start
-		 * Reset only after 70 tries
+		 * It does a forced hardware reset and recovers from a cold start
+		 * Reset only after 70 tries, defined by FIX
 		 */
 		if(fixAttemptCount > FIX)														
 		{
@@ -250,7 +249,7 @@ uint8_t get_location_fix(){
 
 		}
 		
-		HAL_Delay(500);		
+		HAL_Delay(4000);		
 	}
 
 }
