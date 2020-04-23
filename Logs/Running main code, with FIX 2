@@ -1,0 +1,425 @@
+21:49:30.486 -> SELFTEST: LED should blink now
+21:49:30.486 -> 
+SELFTEST: Now initing sensors
+21:49:30.997 -> 
+SELFTEST: Initialisng ms5607
+21:49:30.997 -> 
+SELFTEST: ms5607 checksum matches. ms5607 OK...
+21:49:31.065 -> 
+SELFTEST: Initialising GPS
+21:49:31.065 -> 
+SELFTEST: GPS responds. GPS OK...
+21:49:33.325 -> Temperature degrees C: 28.973072
+21:49:33.325 -> Pressure mBar: 1013.864143
+21:49:33.430 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:49:38.331 -> Temperature degrees C: 28.920244
+21:49:38.331 -> Pressure mBar: 1013.867640
+21:49:38.436 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:49:43.334 -> Temperature degrees C: 28.940319
+21:49:43.334 -> Pressure mBar: 1013.888167
+21:49:43.438 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:49:45.623 -> Temperature degrees C: 28.954054
+21:49:45.623 -> Pressure mBar: 1013.858121
+21:49:45.727 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:49:50.621 -> Temperature degrees C: 28.992090
+21:49:50.621 -> Pressure mBar: 1013.809455
+21:49:50.725 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:49:55.635 -> Temperature degrees C: 29.016391
+21:49:55.635 -> Pressure mBar: 1013.802972
+21:49:55.740 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:49:57.932 -> Temperature degrees C: 29.020617
+21:49:57.932 -> Pressure mBar: 1013.824545
+21:49:58.036 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:50:02.934 -> Temperature degrees C: 29.049144
+21:50:02.934 -> Pressure mBar: 1013.876058
+21:50:03.038 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:50:07.943 -> Temperature degrees C: 29.059710
+21:50:07.943 -> Pressure mBar: 1013.887491
+21:50:08.047 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:50:10.242 -> Temperature degrees C: 29.064992
+21:50:10.242 -> Pressure mBar: 1013.814274
+21:50:10.345 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:50:15.239 -> Temperature degrees C: 29.079784
+21:50:15.239 -> Pressure mBar: 1013.871565
+21:50:15.342 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:50:20.245 -> Temperature degrees C: 29.096689
+21:50:20.245 -> Pressure mBar: 1013.848562
+21:50:20.350 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:50:22.576 -> Temperature degrees C: 29.101972
+21:50:22.576 -> Pressure mBar: 1013.666037
+21:50:22.646 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:50:27.575 -> Temperature degrees C: 29.110424
+21:50:27.575 -> Pressure mBar: 1013.903496
+21:50:27.645 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:50:32.571 -> Temperature degrees C: 29.114651
+21:50:32.571 -> Pressure mBar: 1013.767188
+21:50:32.676 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:50:34.860 -> Temperature degrees C: 29.116764
+21:50:34.860 -> Pressure mBar: 1013.832626
+21:50:34.965 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:50:39.867 -> Temperature degrees C: 29.141064
+21:50:39.867 -> Pressure mBar: 1013.801822
+21:50:39.972 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:50:44.871 -> Temperature degrees C: 29.132612
+21:50:44.871 -> Pressure mBar: 1013.892274
+21:50:44.976 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:50:47.201 -> Temperature degrees C: 29.150573
+21:50:47.201 -> Pressure mBar: 1013.835180
+21:50:47.271 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:50:51.161 -> Temperature degrees C: 29.160082
+21:50:51.161 -> Pressure mBar: 1013.747078
+21:50:51.266 -> GPS Fix Attempt count : 2 (0h:0m:5s since start)
+21:50:56.169 -> Temperature degrees C: 29.169591
+21:50:56.169 -> Pressure mBar: 1013.816874
+21:50:56.273 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:50:57.730 -> Temperature degrees C: 29.163252
+21:50:57.730 -> Pressure mBar: 1013.912048
+21:50:57.834 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:51:02.730 -> Temperature degrees C: 29.167478
+21:51:02.730 -> Pressure mBar: 1013.763575
+21:51:02.834 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:51:07.728 -> Temperature degrees C: 29.173818
+21:51:07.728 -> Pressure mBar: 1013.874887
+21:51:07.832 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:51:10.049 -> Temperature degrees C: 29.165365
+21:51:10.049 -> Pressure mBar: 1013.698131
+21:51:10.154 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:51:15.051 -> Temperature degrees C: 29.179100
+21:51:15.051 -> Pressure mBar: 1013.923112
+21:51:15.154 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:51:20.058 -> Temperature degrees C: 29.201288
+21:51:20.058 -> Pressure mBar: 1013.814696
+21:51:20.128 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:51:22.350 -> Temperature degrees C: 29.186496
+21:51:22.350 -> Pressure mBar: 1013.769556
+21:51:22.454 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:51:27.349 -> Temperature degrees C: 29.205514
+21:51:27.349 -> Pressure mBar: 1013.884859
+21:51:27.454 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:51:32.352 -> Temperature degrees C: 29.191779
+21:51:32.352 -> Pressure mBar: 1013.781339
+21:51:32.456 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:51:33.710 -> Temperature degrees C: 29.204458
+21:51:33.745 -> Pressure mBar: 1013.858208
+21:51:33.814 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:51:38.737 -> Temperature degrees C: 29.202345
+21:51:38.737 -> Pressure mBar: 1013.804905
+21:51:38.842 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:51:43.724 -> Temperature degrees C: 29.213967
+21:51:43.724 -> Pressure mBar: 1013.879419
+21:51:43.828 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:51:46.052 -> Temperature degrees C: 29.218193
+21:51:46.052 -> Pressure mBar: 1013.730926
+21:51:46.157 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:51:51.047 -> Temperature degrees C: 29.224532
+21:51:51.047 -> Pressure mBar: 1013.830099
+21:51:51.151 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:51:55.028 -> Temperature degrees C: 29.227702
+21:51:55.028 -> Pressure mBar: 1013.812873
+21:51:55.132 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:51:57.358 -> Temperature degrees C: 29.220306
+21:51:57.358 -> Pressure mBar: 1013.930002
+21:51:57.461 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:52:02.359 -> Temperature degrees C: 29.243550
+21:52:02.359 -> Pressure mBar: 1013.933259
+21:52:02.463 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:52:06.353 -> Temperature degrees C: 29.240381
+21:52:06.353 -> Pressure mBar: 1013.816855
+21:52:06.458 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:52:08.680 -> Temperature degrees C: 29.237211
+21:52:08.680 -> Pressure mBar: 1013.700452
+21:52:08.750 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:52:13.676 -> Temperature degrees C: 29.241437
+21:52:13.676 -> Pressure mBar: 1013.807063
+21:52:13.746 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:52:18.675 -> Temperature degrees C: 29.241437
+21:52:18.675 -> Pressure mBar: 1013.685580
+21:52:18.744 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:52:20.966 -> Temperature degrees C: 29.252003
+21:52:20.966 -> Pressure mBar: 1013.964261
+21:52:21.071 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:52:25.971 -> Temperature degrees C: 29.249890
+21:52:25.971 -> Pressure mBar: 1013.753023
+21:52:26.075 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:52:30.979 -> Temperature degrees C: 29.249890
+21:52:30.979 -> Pressure mBar: 1013.801617
+21:52:31.082 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:52:32.716 -> Temperature degrees C: 29.264682
+21:52:32.716 -> Pressure mBar: 1013.725267
+21:52:32.821 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:52:37.728 -> Temperature degrees C: 29.258342
+21:52:37.728 -> Pressure mBar: 1013.771873
+21:52:37.833 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:52:42.740 -> Temperature degrees C: 29.256229
+21:52:42.740 -> Pressure mBar: 1013.767161
+21:52:42.810 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:52:45.033 -> Temperature degrees C: 29.257286
+21:52:45.033 -> Pressure mBar: 1013.866707
+21:52:45.138 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:52:49.040 -> Temperature degrees C: 29.273134
+21:52:49.040 -> Pressure mBar: 1013.817010
+21:52:49.145 -> GPS Fix Attempt count : 2 (0h:0m:5s since start)
+21:52:54.037 -> Temperature degrees C: 29.276304
+21:52:54.037 -> Pressure mBar: 1013.872676
+21:52:54.140 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:52:56.360 -> Temperature degrees C: 29.278417
+21:52:56.360 -> Pressure mBar: 1013.877389
+21:52:56.430 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:53:01.339 -> Temperature degrees C: 29.283700
+21:53:01.339 -> Pressure mBar: 1013.889171
+21:53:01.444 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:53:06.344 -> Temperature degrees C: 29.278417
+21:53:06.344 -> Pressure mBar: 1013.986732
+21:53:06.448 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:53:08.666 -> Temperature degrees C: 29.290039
+21:53:08.666 -> Pressure mBar: 1013.879010
+21:53:08.770 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:53:13.675 -> Temperature degrees C: 29.288982
+21:53:13.675 -> Pressure mBar: 1013.864504
+21:53:13.745 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:53:18.649 -> Temperature degrees C: 29.295322
+21:53:18.649 -> Pressure mBar: 1013.805744
+21:53:18.754 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:53:20.981 -> Temperature degrees C: 29.299548
+21:53:20.981 -> Pressure mBar: 1013.827318
+21:53:21.051 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:53:25.958 -> Temperature degrees C: 29.304831
+21:53:25.958 -> Pressure mBar: 1013.948449
+21:53:26.062 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:53:30.957 -> Temperature degrees C: 29.308000
+21:53:30.957 -> Pressure mBar: 1013.797567
+21:53:31.062 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:53:33.288 -> Temperature degrees C: 29.317509
+21:53:33.288 -> Pressure mBar: 1013.806622
+21:53:33.392 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:53:38.265 -> Temperature degrees C: 29.324905
+21:53:38.265 -> Pressure mBar: 1013.871716
+21:53:38.370 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:53:42.259 -> Temperature degrees C: 29.312227
+21:53:42.294 -> Pressure mBar: 1013.879893
+21:53:42.363 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:53:44.588 -> Temperature degrees C: 29.313283
+21:53:44.588 -> Pressure mBar: 1013.882249
+21:53:44.692 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:53:49.590 -> Temperature degrees C: 29.318566
+21:53:49.590 -> Pressure mBar: 1013.796827
+21:53:49.693 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:53:54.600 -> Temperature degrees C: 29.325962
+21:53:54.600 -> Pressure mBar: 1013.910524
+21:53:54.670 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:53:56.895 -> Temperature degrees C: 29.317509
+21:53:56.895 -> Pressure mBar: 1013.843073
+21:53:56.999 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:54:01.898 -> Temperature degrees C: 29.338641
+21:54:01.898 -> Pressure mBar: 1013.756535
+21:54:02.003 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:54:06.896 -> Temperature degrees C: 29.331245
+21:54:06.896 -> Pressure mBar: 1013.873702
+21:54:06.999 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:54:09.222 -> Temperature degrees C: 29.332301
+21:54:09.222 -> Pressure mBar: 1013.851757
+21:54:09.292 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:54:14.199 -> Temperature degrees C: 29.355545
+21:54:14.199 -> Pressure mBar: 1013.903590
+21:54:14.303 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:54:19.209 -> Temperature degrees C: 29.338641
+21:54:19.209 -> Pressure mBar: 1013.926648
+21:54:19.314 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:54:21.506 -> Temperature degrees C: 29.355545
+21:54:21.506 -> Pressure mBar: 1013.988650
+21:54:21.610 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:54:26.513 -> Temperature degrees C: 29.355545
+21:54:26.513 -> Pressure mBar: 1013.782076
+21:54:26.617 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:54:31.519 -> Temperature degrees C: 29.347093
+21:54:31.519 -> Pressure mBar: 1013.933346
+21:54:31.623 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:54:33.844 -> Temperature degrees C: 29.354489
+21:54:33.844 -> Pressure mBar: 1013.901234
+21:54:33.914 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:54:38.820 -> Temperature degrees C: 29.362941
+21:54:38.820 -> Pressure mBar: 1013.822870
+21:54:38.925 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:54:43.816 -> Temperature degrees C: 29.344980
+21:54:43.816 -> Pressure mBar: 1013.843576
+21:54:43.921 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:54:46.144 -> Temperature degrees C: 29.357659
+21:54:46.144 -> Pressure mBar: 1013.896151
+21:54:46.249 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:54:51.133 -> Temperature degrees C: 29.370337
+21:54:51.133 -> Pressure mBar: 1013.717843
+21:54:51.235 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:54:56.125 -> Temperature degrees C: 29.361885
+21:54:56.125 -> Pressure mBar: 1013.893423
+21:54:56.229 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:54:58.451 -> Temperature degrees C: 29.368224
+21:54:58.451 -> Pressure mBar: 1013.786042
+21:54:58.555 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:55:03.449 -> Temperature degrees C: 29.389355
+21:55:03.449 -> Pressure mBar: 1013.978984
+21:55:03.554 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:55:08.447 -> Temperature degrees C: 29.383016
+21:55:08.447 -> Pressure mBar: 1013.758262
+21:55:08.551 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:55:10.773 -> Temperature degrees C: 29.386186
+21:55:10.773 -> Pressure mBar: 1013.838242
+21:55:10.843 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:55:15.742 -> Temperature degrees C: 29.392525
+21:55:15.742 -> Pressure mBar: 1013.888833
+21:55:15.846 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:55:20.744 -> Temperature degrees C: 29.385129
+21:55:20.744 -> Pressure mBar: 1013.884495
+21:55:20.847 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:55:22.727 -> Temperature degrees C: 29.379846
+21:55:22.727 -> Pressure mBar: 1013.739043
+21:55:22.832 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:55:27.722 -> Temperature degrees C: 29.391468
+21:55:27.722 -> Pressure mBar: 1013.874325
+21:55:27.824 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:55:31.719 -> Temperature degrees C: 29.397808
+21:55:31.719 -> Pressure mBar: 1013.924918
+21:55:31.823 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:55:34.014 -> Temperature degrees C: 29.398864
+21:55:34.014 -> Pressure mBar: 1014.024494
+21:55:34.118 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:55:39.014 -> Temperature degrees C: 29.399921
+21:55:39.014 -> Pressure mBar: 1013.929629
+21:55:39.118 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:55:43.013 -> Temperature degrees C: 29.391468
+21:55:43.013 -> Pressure mBar: 1013.983696
+21:55:43.117 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:55:45.338 -> Temperature degrees C: 29.404147
+21:55:45.338 -> Pressure mBar: 1014.024122
+21:55:45.443 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:55:49.338 -> Temperature degrees C: 29.414713
+21:55:49.338 -> Pressure mBar: 1013.853235
+21:55:49.443 -> GPS Fix Attempt count : 2 (0h:0m:5s since start)
+21:55:54.353 -> Temperature degrees C: 29.416826
+21:55:54.353 -> Pressure mBar: 1013.845793
+21:55:54.422 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:55:56.646 -> Temperature degrees C: 29.399921
+21:55:56.646 -> Pressure mBar: 1013.795951
+21:55:56.750 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:56:01.657 -> Temperature degrees C: 29.424222
+21:56:01.657 -> Pressure mBar: 1013.837976
+21:56:01.761 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:56:06.657 -> Temperature degrees C: 29.417882
+21:56:06.657 -> Pressure mBar: 1013.872455
+21:56:06.762 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:56:08.948 -> Temperature degrees C: 29.422109
+21:56:08.948 -> Pressure mBar: 1013.906184
+21:56:09.053 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:56:12.941 -> Temperature degrees C: 29.414713
+21:56:12.941 -> Pressure mBar: 1013.914000
+21:56:13.046 -> GPS Fix Attempt count : 2 (0h:0m:5s since start)
+21:56:17.975 -> Temperature degrees C: 29.416826
+21:56:17.975 -> Pressure mBar: 1013.930865
+21:56:18.045 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:56:20.267 -> Temperature degrees C: 29.429504
+21:56:20.267 -> Pressure mBar: 1013.825447
+21:56:20.372 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:56:25.270 -> Temperature degrees C: 29.434787
+21:56:25.270 -> Pressure mBar: 1013.873685
+21:56:25.375 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:56:30.263 -> Temperature degrees C: 29.431618
+21:56:30.263 -> Pressure mBar: 1013.927386
+21:56:30.368 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:56:32.597 -> Temperature degrees C: 29.442183
+21:56:32.597 -> Pressure mBar: 1013.987404
+21:56:32.667 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:56:37.570 -> Temperature degrees C: 29.446409
+21:56:37.570 -> Pressure mBar: 1013.960366
+21:56:37.675 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:56:42.548 -> Temperature degrees C: 29.427391
+21:56:42.548 -> Pressure mBar: 1013.759970
+21:56:42.616 -> GPS Fix Attempt count : 3 (0h:0m:6s since start)
+21:56:44.850 -> Temperature degrees C: 29.443240
+21:56:44.850 -> Pressure mBar: 1013.977606
+21:56:44.954 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:56:49.853 -> Temperature degrees C: 29.453805
+21:56:49.853 -> Pressure mBar: 1013.940394
+21:56:49.923 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:56:54.858 -> Temperature degrees C: 29.453805
+21:56:54.858 -> Pressure mBar: 1013.843161
+21:56:54.928 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:56:57.159 -> Temperature degrees C: 29.446409
+21:56:57.159 -> Pressure mBar: 1013.790212
+21:56:57.264 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:57:02.137 -> Temperature degrees C: 29.456975
+21:57:02.137 -> Pressure mBar: 1013.825919
+21:57:02.242 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:57:07.145 -> Temperature degrees C: 29.461201
+21:57:07.145 -> Pressure mBar: 1013.859649
+21:57:07.248 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:57:09.445 -> Temperature degrees C: 29.464371
+21:57:09.445 -> Pressure mBar: 1013.915333
+21:57:09.549 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:57:14.461 -> Temperature degrees C: 29.469654
+21:57:14.461 -> Pressure mBar: 1013.927110
+21:57:14.565 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:57:19.464 -> Temperature degrees C: 29.471767
+21:57:19.464 -> Pressure mBar: 1013.931821
+21:57:19.566 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:57:21.755 -> Temperature degrees C: 29.471767
+21:57:21.755 -> Pressure mBar: 1013.810276
+21:57:21.859 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:57:26.784 -> Temperature degrees C: 29.471767
+21:57:26.784 -> Pressure mBar: 1014.004748
+21:57:26.853 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:57:30.748 -> Temperature degrees C: 29.468597
+21:57:30.782 -> Pressure mBar: 1013.863983
+21:57:30.851 -> GPS Fix Attempt count : 3 (0h:0m:10s since start)
+21:57:33.075 -> Temperature degrees C: 29.469654
+21:57:33.075 -> Pressure mBar: 1013.854184
+21:57:33.179 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:57:38.074 -> Temperature degrees C: 29.480219
+21:57:38.074 -> Pressure mBar: 1014.011439
+21:57:38.179 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:57:43.080 -> Temperature degrees C: 29.473880
+21:57:43.080 -> Pressure mBar: 1013.997305
+21:57:43.184 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:57:45.375 -> Temperature degrees C: 29.474936
+21:57:45.375 -> Pressure mBar: 1013.768724
+21:57:45.480 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:57:50.377 -> Temperature degrees C: 29.490785
+21:57:50.377 -> Pressure mBar: 1013.937756
+21:57:50.481 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:57:55.384 -> Temperature degrees C: 29.493954
+21:57:55.384 -> Pressure mBar: 1013.835426
+21:57:55.487 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:57:57.712 -> Temperature degrees C: 29.487615
+21:57:57.712 -> Pressure mBar: 1013.967154
+21:57:57.781 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:58:02.687 -> Temperature degrees C: 29.504520
+21:58:02.687 -> Pressure mBar: 1013.956221
+21:58:02.791 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:58:07.695 -> Temperature degrees C: 29.496067
+21:58:07.695 -> Pressure mBar: 1013.937378
+21:58:07.799 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:58:10.020 -> Temperature degrees C: 29.500294
+21:58:10.020 -> Pressure mBar: 1013.971110
+21:58:10.089 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:58:15.024 -> Temperature degrees C: 29.504520
+21:58:15.024 -> Pressure mBar: 1013.822512
+21:58:15.092 -> GPS Fix Attempt count : 2 (0h:0m:6s since start)
+21:58:20.001 -> Temperature degrees C: 29.506633
+21:58:20.001 -> Pressure mBar: 1013.960932
+21:58:20.106 -> GPS Fix Attempt count : 3 (0h:0m:11s since start)
+21:58:22.331 -> Temperature degrees C: 29.500294
+21:58:22.331 -> Pressure mBar: 1013.922489
+21:58:22.401 -> GPS Fix Attempt count : 1 (0h:0m:1s since start)
+21:58:26.304 -> Temperature degrees C: 29.506633
+21:58:26.304 -> Pressure mBar: 1013.887999
+21:58:26.409 -> GPS Fix Attempt count : 2 (0h:0m:5s since start)
+21:58:32.102 -> Temperature degrees C: -260.477768
+21:58:32.102 -> Pressure mBar: -554.739847
+21:58:32.206 -> GPS Fix Attempt count : 3 (0h:0m:5s since start)
+21:58:46.134 -> Temperature degrees C: -260.477768
+21:58:46.134 -> Pressure mBar: -554.739847
+21:58:46.238 -> GPS Fix Attempt count : 1 (0h:0m:5s since start)
+21:58:51.947 -> Temperature degrees C: -260.477768
+21:58:51.947 -> Pressure mBar: -554.739847
+21:58:52.051 -> GPS Fix Attempt count : 2 (0h:0m:5s since start)
+21:58:57.727 -> Temperature degrees C: -260.477768
+21:58:57.727 -> Pressure mBar: -554.739847
+21:58:57.830 -> GPS Fix Attempt count : 3 (0h:0m:5s since start)
