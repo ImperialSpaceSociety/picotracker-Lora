@@ -94,7 +94,7 @@ void Error_Handler(void);
 /* GPS RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 
-#define FIX				60		// attempts to poll UBX-NAV-PVT
+#define FIX				250		// attempts to poll UBX-NAV-PVT
 
 
 /* GEOFENCE RELATED DEFINES */

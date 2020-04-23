@@ -246,7 +246,7 @@ uint8_t get_location_fix(){
 		{
 			// configure gps module again
 			UBLOX_send_message(resetReceiver, sizeof(resetReceiver));			              	// reset GPS module.
-			//HAL_Delay(1000);                                                              // wait for GPS module to be ready
+			HAL_Delay(1000);                                                              // wait for GPS module to be ready
 			UBLOX_request_UBX(setNMEAoff, sizeof(setNMEAoff), 10, UBLOX_parse_ACK);				// turn off periodic NMEA output
 			UBLOX_request_UBX(setGPSonly, sizeof(setGPSonly), 10, UBLOX_parse_ACK);				// !! must verify if this is a good config: turn off all constellations except gps: UBX-CFG-GNSS 
 			UBLOX_request_UBX(setNAVmode, sizeof(setNAVmode), 10, UBLOX_parse_ACK);				// set to airbourne mode
@@ -261,7 +261,7 @@ uint8_t get_location_fix(){
 
 		}
 		
-		HAL_Delay(10);		
+		HAL_Delay(1000);		
 	}
 
 }
@@ -437,7 +437,7 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 {
 		// Flush Ublox I2C buffer if it is unexpectedly filled with something else. Do not do anything with the data
     // TODO: maybe do something if there is an ubx message here. A GPS/MCU reset?
-		//UBLOX_flush_I2C_buffer(500);
+		UBLOX_flush_I2C_buffer(500);
 
 		// Transmit the request
     HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (GPS_I2C_ADDRESS << 1), request, len, 10000);
