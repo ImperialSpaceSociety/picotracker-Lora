@@ -269,6 +269,15 @@ int main( void )
 	/* Set Power Voltage Detector threshold to 2.9V*/
 	PVD_Config();
 	
+	/* Initialise serial debug interface */
+	TraceInit( );
+
+	
+	PRINTF("\r\n\r\n");
+	PRINTF("************************************ \r\n");
+	PRINTF("* Picotracker Lora                 * \r\n");
+	PRINTF("* Imperial College Space Society   * \r\n");
+	PRINTF("************************************ \r\n\r\n");
 
 	/* Wait for VDD to exceed GPS threshold voltage 2.9V */
 	while(__HAL_PWR_GET_FLAG(PWR_FLAG_PVDO)){

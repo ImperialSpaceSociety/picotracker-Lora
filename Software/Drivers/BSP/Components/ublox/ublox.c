@@ -229,7 +229,7 @@ uint8_t get_location_fix(){
 
 		/* If fix taking too long, reset and re-initialize GPS module. 
 		 * It does a forced hardware reset and recovers from a cold start
-		 * Reset only after 70 tries, defined by FIX
+		 * Reset only after 250 tries, defined by FIX
 		 */
 		if(fixAttemptCount > FIX)														
 		{
@@ -250,7 +250,7 @@ uint8_t get_location_fix(){
 
 		}
 		
-		HAL_Delay(45);		
+		HAL_Delay(1000);		
 	}
 
 }

@@ -111,9 +111,7 @@ void HW_Init( void )
     HW_SPI_Init( );
 
     HW_RTC_Init( true );
-    
-    TraceInit( );
-    
+        
 		MX_I2C1_Init();
 		    
 		BSP_LED_Init( LED1 );

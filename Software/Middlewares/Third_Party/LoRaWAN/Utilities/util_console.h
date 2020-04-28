@@ -35,7 +35,7 @@ extern "C"
 #define PRINTF(...)     do{  TraceSend(__VA_ARGS__); }while(0)
 #define PRINTNOW()      do{                                                           \
                           SysTime_t stime  =SysTimeGetMcuTime();                      \
-                          TraceSend("%3ds%03d: ",stime.Seconds, stime.SubSeconds); \
+                          TraceSend("%3ds%03dms: ",stime.Seconds, stime.SubSeconds); \
                          }while(0) 
 
 #define TVL1(X)    do{ if(VERBOSE_LEVEL>=VERBOSE_LEVEL_1) { X } }while(0);

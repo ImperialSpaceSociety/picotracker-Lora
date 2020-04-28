@@ -161,22 +161,6 @@ void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data)
   HAL_FLASH_Lock();
 }
 
-///**
-//  * @brief Check LoRa Keys saved in EEPROM
-//  * @param none
-//  * @retval BC_ChargeStatusTypeDef Battery charging status
-//  */
-//uint8_t EepromLoraKeysValidation(void)
-//{
-//  uint8_t retval = 0;
-//  /* DevEui validation */
-//  if((*(uint64_t*)DEVICE_EUI_EEPROM_ADDRESS) == 0)
-//  {
-//    retval |= DEVICE_EUI_EEPROM_ID;
-//  }
-//  return retval;
-//}
-
 /**
   * @brief Check Frame Counter value saved in EEPROM
   * @param none
@@ -192,31 +176,6 @@ uint8_t EepromFrameCounterValidation(void)
   }
   return retval;
 }
-
-///**
-//  * @brief  Load Lora keys (DevEui, JoinEui, AppKey, NwkKey) from STM32 internal EEPROM
-//  * @param  None
-//  * @retval None
-//  */
-//void LoadLoraKeys()
-//{
-//#if SAVE_LORA_KEYS_IN_INTERNAL_EEPROM
-//  extern uint8_t DevEui[];
-//  extern uint8_t JoinEui[];
-//  extern uint8_t AppKey[];
-//  extern uint8_t NwkKey[];
-//  
-//  if(EepromLoraKeysValidation() != 0)
-//  {
-//    return;
-//  }
-//  
-//  memcpy(DevEui, (void*)DEVICE_EUI_EEPROM_ADDRESS, DEVICE_EUI_EEPROM_LEN);
-//  memcpy(JoinEui, (void*)JOIN_EUI_EEPROM_ADDRESS, JOIN_EUI_EEPROM_LEN);
-//  memcpy(AppKey, (void*)APP_KEY_EEPROM_ADDRESS, APP_KEY_EEPROM_LEN);
-//  memcpy(NwkKey, (void*)NWK_KEY_EEPROM_ADDRESS, NWK_KEY_EEPROM_LEN);
-//#endif //SAVE_LORA_KEYS_IN_INTERNAL_EEPROM
-//}
 
 
 /**
