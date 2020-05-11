@@ -30,18 +30,6 @@ extern uint8_t	i2c_buffer[2];
 extern HAL_StatusTypeDef i2c_status;
 
 
- 
- 
-//char buf0[26]={0,};
-//unsigned long D1; // ADC value of the pressure conversion
-//unsigned long D2; // ADC value of the temperature conversion
-//uint16_t C[8]; // calibration coefficients
-//double dT; // difference between actual and measured temperature
-//double OFF; // offset at actual temperature
-//double SENS; // sensitivity at actual temperature
-//double Pressure; // compensated pressure value
-//double Temperature; // compensated temperature value
-
 
 uint8_t ms5607_Init(void)
 {
@@ -197,70 +185,74 @@ unsigned long cmd_adc(char cmd)
     return temp;
 }
 
-HAL_StatusTypeDef ms5607_transmit( uint8_t *pBuffer, uint16_t Length)
+HAL_StatusTypeDef ms5607_transmit( uint8_t *message, uint16_t len)
 {
-	  HAL_StatusTypeDef i2c_status = HAL_OK;
     //i2c_status = HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length);
 
-    /*##-5- Master sends read request for slave ##############################*/
-    do
-    {
-      if(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)ADDR_W, pBuffer, Length)!= HAL_OK)
+		 /* Init tickstart for timeout management*/
+		uint32_t tickstart_j = HAL_GetTick();
+		while ((HAL_GetTick() - tickstart_j) < MS5607_I2C_TIMEOUT){
+			
+      if(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)ADDR_W, message, len)!= HAL_OK)
       {
         /* Error_Handler() function is called when error occurs. */
         Error_Handler();
       }
 
       /*  Before starting a new communication transfer, you need to check the current   
-          state of the peripheral; if it�s busy you need to wait for the end of current
+          state of the peripheral; if it's busy you need to wait for the end of current
           transfer before starting a new one.
-          For simplicity reasons, this example is just waiting till the end of the 
-          transfer, but application may perform other tasks while transfer operation
-          is ongoing. */  
+			*/  
       while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
       {
       } 
+			
+			/* When Acknowledge failure occurs (Slave don't acknowledge it's address)
+			 Master restarts communication */
 
-      /* When Acknowledge failure occurs (Slave don't acknowledge it's address)
-         Master restarts communication */
-    }
-    while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+			if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF){
+					return HAL_OK;
+			}
 
-    return i2c_status;
+		}
+
+    return HAL_ERROR;
 }
 
-HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length)
+HAL_StatusTypeDef ms5607_receive(uint8_t *message, uint16_t len)
 {
 	
-		  HAL_StatusTypeDef i2c_status = HAL_OK;
 
-    //i2c_status = HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length);
-	
-	   /*##-7- Master receives aRxBuffer from slave #############################*/
-    do
-    {
-      if(HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)ADDR_R, pBuffer, Length)!= HAL_OK)
-      {
-        /* Error_Handler() function is called when error occurs. */
-        Error_Handler();
-      }
+  //i2c_status = HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length);
+	/* Init tickstart for timeout management*/
+	uint32_t tickstart_j = HAL_GetTick();
+	while ((HAL_GetTick() - tickstart_j) < MS5607_I2C_TIMEOUT){
 
-      /*  Before starting a new communication transfer, you need to check the current   
-          state of the peripheral; if it�s busy you need to wait for the end of current
-          transfer before starting a new one.
-          For simplicity reasons, this example is just waiting till the end of the 
-          transfer, but application may perform other tasks while transfer operation
-          is ongoing. */  
-      while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
-      {
-      } 
+		if(HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)ADDR_R, message, len)!= HAL_OK)
+		{
+			/* Error_Handler() function is called when error occurs. */
+			Error_Handler();
+		}
 
-      /* When Acknowledge failure occurs (Slave don't acknowledge it's address)
-         Master restarts communication */
-    }
-    while(HAL_I2C_GetError(&hi2c1) == HAL_I2C_ERROR_AF);
+		/*  Before starting a new communication transfer, you need to check the current   
+				state of the peripheral; if it's busy you need to wait for the end of current
+				transfer before starting a new one.
+				For simplicity reasons, this example is just waiting till the end of the 
+				transfer, but application may perform other tasks while transfer operation
+				is ongoing. */  
+		while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+		{
+		} 
 
-    return i2c_status;
+		/* When Acknowledge failure occurs (Slave don't acknowledge it's address)
+		 Master restarts communication */
+
+		if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF){
+				return HAL_OK; 
+		}
+	}
+
+  return HAL_ERROR;
 
 }
 

@@ -111,6 +111,8 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 #define GPS_I2C_ADDRESS 0x42
+#define GPS_I2C_TIMEOUT 1000
+#define MS5607_I2C_TIMEOUT 1000
 
 
 
@@ -131,7 +133,7 @@ void Error_Handler(void);
 /* GEOFENCE RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 /* For geofence testing */
-#define DUMMY_GPS_COORDS  1        /* Bypass the GPS chip to return dummy GPS values . Allowed values: 0(default) disabled , 1 enabled */
+#define DUMMY_GPS_COORDS  0        /* Bypass the GPS chip to return dummy GPS values . Allowed values: 0(default) disabled , 1 enabled */
 
 
 /* LORAWAN RELATED DEFINES */
