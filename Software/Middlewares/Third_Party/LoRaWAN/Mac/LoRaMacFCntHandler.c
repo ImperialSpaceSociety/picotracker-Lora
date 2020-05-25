@@ -21,11 +21,15 @@ Maintainer: Miguel Luis ( Semtech ), Daniel Jaeckle ( STACKFORCE ), Johannes Bru
 #include <string.h>
 #include "utilities.h"
 #include "LoRaMacFCntHandler.h"
+#include "bsp.h"
 
 /*
  * Initial value of the frame counters
  */
 #define FCNT_DOWN_INITAL_VALUE          0xFFFFFFFF
+
+
+uint32_t fCntUp_global = 0;
 
 
 /*!
@@ -295,8 +299,7 @@ LoRaMacFCntHandlerStatus_t LoRaMacResetFCnts( void )
 {
         
 #if SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
-	  extern uint32_t fCntUp_global;
-	  LoadFrameCounter();
+	  LoadFrameCounter(&fCntUp_global);
 	  FCntHandlerNvmCtx.FCntList.FCntUp  = fCntUp_global;
 #else
 	  FCntHandlerNvmCtx.FCntList.FCntUp = 0;

@@ -58,49 +58,18 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define RA_NSS_Pin GPIO_PIN_15
-#define RA_NSS_GPIO_Port GPIOA
-#define RA_SCK_Pin GPIO_PIN_3
-#define RA_SCK_GPIO_Port GPIOB
-#define TCXO_EN_Pin GPIO_PIN_12
-#define TCXO_EN_GPIO_Port GPIOA
-#define RA_DIO0_Pin GPIO_PIN_4
-#define RA_DIO0_GPIO_Port GPIOB
-#define RA_DIO0_EXTI_IRQn EXTI4_15_IRQn
-#define RA_DIO3_Pin GPIO_PIN_13
-#define RA_DIO3_GPIO_Port GPIOC
-#define RA_DIO3_EXTI_IRQn EXTI4_15_IRQn
-#define UART_RX_Pin GPIO_PIN_10
-#define UART_RX_GPIO_Port GPIOA
-#define ANT_BST_Pin GPIO_PIN_1
-#define ANT_BST_GPIO_Port GPIOC
-#define RA_RES_Pin GPIO_PIN_0
-#define RA_RES_GPIO_Port GPIOC
-#define RA_DIO1_Pin GPIO_PIN_1
-#define RA_DIO1_GPIO_Port GPIOB
-#define RA_DIO1_EXTI_IRQn EXTI0_1_IRQn
-#define UART_TX_Pin GPIO_PIN_9
-#define UART_TX_GPIO_Port GPIOA
-#define ANT_RX_Pin GPIO_PIN_1
-#define ANT_RX_GPIO_Port GPIOA
-#define ANT_TX_Pin GPIO_PIN_2
-#define ANT_TX_GPIO_Port GPIOC
+
+
 #define GPS_PPS_Pin GPIO_PIN_14
 #define GPS_PPS_GPIO_Port GPIOB
 #define GPS_INT_Pin GPIO_PIN_13
 #define GPS_INT_GPIO_Port GPIOB
-#define RA_MOSI_Pin GPIO_PIN_7
-#define RA_MOSI_GPIO_Port GPIOA
+
 #define LED_Pin GPIO_PIN_2
 #define LED_GPIO_Port GPIOA
-#define RA_DIO2_Pin GPIO_PIN_0
-#define RA_DIO2_GPIO_Port GPIOB
-#define RA_DIO2_EXTI_IRQn EXTI0_1_IRQn
-#define RA_MISO_Pin GPIO_PIN_6
-#define RA_MISO_GPIO_Port GPIOA
+
 #define BUTTON_Pin GPIO_PIN_3
 #define BUTTON_GPIO_Port GPIOA
-
 
 #define SENSOR_EN_PIN GPIO_PIN_7
 #define SENSOR_EN_GPIO_Port GPIOB
@@ -109,11 +78,6 @@ void Error_Handler(void);
 #define GPS_EN_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
-
-#define GPS_I2C_ADDRESS 0x42
-#define GPS_I2C_TIMEOUT 1000
-#define MS5607_I2C_TIMEOUT 1000
-
 
 
 // PRELAUNCH IMPORTANT!

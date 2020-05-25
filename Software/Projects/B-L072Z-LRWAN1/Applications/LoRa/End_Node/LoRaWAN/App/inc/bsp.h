@@ -44,17 +44,19 @@ Maintainer: Miguel Luis and Gregory Cristian
 /* Exported types ------------------------------------------------------------*/
 
 typedef struct{
-  float pressure;    /* in mbar */  
-  float temperature; /* in °C   */
-  float humidity;    /* in %    */
-  int32_t latitude;
-  int32_t longitude ;
-  int16_t  altitudeGps;       /* in m */
-  int16_t altitudeBar ;       /* in m * 10 */
+  double pressure;    /* in mbar */  
+  double temperature; /* in °C   */
+  double humidity;    /* in %    */
+  float latitude;
+  float longitude ;
+  uint32_t  altitudeGps;       /* in m */
+	uint16_t battery_level16;
   /**more may be added*/
 } sensor_t;
 
 
+extern uint16_t battery_level16;
+extern uint32_t VCC_ADC;
 
 
 #define RESITOR_DIVIDER_PROD                    ((100000.0+100000.0)/100000.0)
@@ -105,7 +107,7 @@ uint16_t BSP_GetBatteryLevel16( void );
 void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data);
 uint8_t EepromLoraKeysValidation(void);
 void LoadLoraKeys( void );
-void LoadFrameCounter( void );
+void LoadFrameCounter( uint32_t* fcnt );
 uint8_t EepromFrameCounterValidation(void);
 
 #ifdef __cplusplus

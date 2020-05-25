@@ -7,6 +7,7 @@
 
 
 #include "stdint.h"
+#include "LoRaMac.h"
 
 
 /* These are the fence polygons. There are several 
@@ -351,61 +352,20 @@ typedef enum polygon_t {
 }Polygon_t;
 
 
-///*!
-// * LoRaMAC region enumeration
-// */
-//typedef enum eLoRaMacRegion_t
-//{
-//    /*!
-//     * AS band on 923MHz
-//     */
-//    LORAMAC_REGION_AS923,
-//    /*!
-//     * Australian band on 915MHz
-//     */
-//    LORAMAC_REGION_AU915,
-//    /*!
-//     * Chinese band on 470MHz
-//     */
-//    LORAMAC_REGION_CN470,
-//    /*!
-//     * Chinese band on 779MHz
-//     */
-//    LORAMAC_REGION_CN779,
-//    /*!
-//     * European band on 433MHz
-//     */
-//    LORAMAC_REGION_EU433,
-//    /*!
-//     * European band on 868MHz
-//     */
-//    LORAMAC_REGION_EU868,
-//    /*!
-//     * South korean band on 920MHz
-//     */
-//    LORAMAC_REGION_KR920,
-//    /*!
-//     * India band on 865MHz
-//     */
-//    LORAMAC_REGION_IN865,
-//    /*!
-//     * North american band on 915MHz
-//     */
-//    LORAMAC_REGION_US915,
-//    /*!
-//     * Russia band on 864MHz
-//     */
-//    LORAMAC_REGION_RU864,
-//}LoRaMacRegion_t;
 
 
-
-// VARIABLES
+// Externally accessible variables
 extern uint32_t GEOFENCE_no_tx;
+extern LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS;
+extern LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS;
+
+extern Polygon_t CURRENT_POLYGON_REGION;
+extern Polygon_t PREVIOUS_POLYGON_REGION;
+extern int REGIONAL_LORA_SETTINGS_CORRECT; 
 
 
 
-// FUNCTIONS
+// externally accessible functions
 int32_t pointInPolygon(int32_t polyCorners, int32_t * polygon, int32_t latitude, int32_t longitude);
 int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, float longitude);
 void GEOFENCE_position(float latitude, float longitude);

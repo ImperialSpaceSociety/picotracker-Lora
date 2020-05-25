@@ -1,3 +1,35 @@
+/**
+  ******************************************************************************
+  * @file           : ms5607.c
+  * @brief          : Driver file for the ms5607 temperature pressure sensor
+  ******************************************************************************
+  * Imperial College Space Society
+	* Medad Newman, Richard Ibbotson
+  *
+  *
+  ******************************************************************************
+  */
+
+
+/* ==================================================================== */
+/* ========================== include files =========================== */
+/* ==================================================================== */
+
+/* Inclusion of system and local header files goes here */
+
+#include <stdio.h>
+#include <math.h>
+#include "stm32l0xx_hal.h"
+#include "ms5607.h"
+#include "main.h"
+#include "hw.h"
+
+/* ==================================================================== */
+/* ============================ constants ============================= */
+/* ==================================================================== */
+
+/* #define and enum statements go here */
+
 #define ADDR_W        0xEE  // Module address write mode
 #define ADDR_R        0xEF  // Module address read mode
 #define CMD_RESET     0x1E  // ADC reset command
@@ -12,24 +44,56 @@
 #define CMD_ADC_4096  0x08  // ADC OSR=4096
 #define CMD_ADC_8192  0x0a  //ADC OSR=8192
 #define CMD_PROM_RD   0xA0  // Prom read command
-#define I2cxTimeout   3000
+#define MS5607_I2C_TIMEOUT 1000
+
+
+/* ==================================================================== */
+/* ======================== global variables ========================== */
+/* ==================================================================== */
+
+/* Global variables definitions go here */
+
+static unsigned long D1; // ADC value of the pressure conversion
+static unsigned long D2; // ADC value of the temperature conversion
+static uint16_t C[8]; // calibration coefficients
+static double dT; // difference between actual and measured temperature
+static double OFF; // offset at actual temperature
+static double SENS; // sensitivity at actual temperature
 
 
 
-#include <stdio.h>
-#include <math.h>
-#include "stm32l0xx_hal.h"
-#include "ms5607.h"
-#include "main.h"
-#include "hw.h"
+// Temp pressure
+double PRESSURE_Value; // compensated pressure value
+double TEMPERATURE_Value; // compensated temperature value
 
 
- 
-extern I2C_HandleTypeDef hi2c1;
-extern uint8_t	i2c_buffer[2];
-extern HAL_StatusTypeDef i2c_status;
+/* ==================================================================== */
+/* ========================== private data ============================ */
+/* ==================================================================== */
+
+/* Definition of private datatypes go here */
 
 
+
+
+/* ==================================================================== */
+/* ====================== private functions =========================== */
+/* ==================================================================== */
+
+/* Function prototypes for private (static) functions go here */
+
+static HAL_StatusTypeDef ms5607_transmit(uint8_t *pBuffer, uint16_t Length);
+static HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length);
+static void cmd_reset(void);
+static uint8_t crc4(uint16_t n_prom[]); // n_prom defined as 8x unsigned int (n_prom[8])
+static uint16_t cmd_prom(uint8_t coef_num);
+static unsigned long cmd_adc(char cmd);
+
+/* ==================================================================== */
+/* ===================== All functions by section ===================== */
+/* ==================================================================== */
+
+/* Functions definitions go here, organised into sections */
 
 uint8_t ms5607_Init(void)
 {
@@ -274,8 +338,6 @@ void ms5607_Cal_T_P(void)
     SENS = C[1]*pow(2,16)+dT*C[3]/pow(2,7);
     TEMPERATURE_Value =(2000+(dT*C[6])/pow(2,23))/100;
 	  PRESSURE_Value =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
-	  
-
 }
 
 

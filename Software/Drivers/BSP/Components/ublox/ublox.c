@@ -1,10 +1,21 @@
 /*
- * ublox.c
- * modified from TT7's ublox code: https://github.com/TomasTT7/TT7F-Float-Tracker/blob/99133b762c971b24040d007fff3f1a348941d788/Software/ARM_UBLOX.c
- * Author: Tomy2 
+ * ublox.c 
  * Author: Medad Newman 23/12/19
+ * Imperial College Space Society ( Medad Newman, Richard Ibbotson)
+ *
+ * modified from TT7's ublox code: 
+ * https://github.com/TomasTT7/TT7F-Float-Tracker/blob/99133b762c971b24040d007fff3f1a348941d788/Software/ARM_UBLOX.c
+ * Author: Tomy2
  *
  */ 
+
+
+
+/* ==================================================================== */
+/* ========================== include files =========================== */
+/* ==================================================================== */
+
+/* Inclusion of system and local header files goes here */
 
 #include <stdlib.h>
 #include "ublox.h"
@@ -14,12 +25,86 @@
 #include <string.h>
 #include "hw.h"
 
+#include "ublox_ubx_messages.h"
 
-extern uint8_t	buffer_0xB5[1];
-extern uint8_t	buffer_0x62[1];
-extern uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
 
+/* ==================================================================== */
+/* ============================ constants ============================= */
+/* ==================================================================== */
+
+/* #define and enum statements go here */
+
+#define GPS_I2C_ADDRESS 0x42
+#define GPS_I2C_TIMEOUT 1000
+#define GPSBUFFER_SIZE			125 // bigger than max size of ubx message
+#define SATS				4		// number of satellites required for positional solution
+#define UBX_TIMEOUT  5000 // in milliseconds
+
+
+/* ==================================================================== */
+/* ======================== global variables ========================== */
+/* ==================================================================== */
+
+/* Global variables definitions go here */
+
+static uint8_t	buffer_0xB5[1];
+static uint8_t	buffer_0x62[1];
+static uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
 static uint8_t flush_buffer[500];
+
+
+// UBLOX variables
+static uint8_t GPS_UBX_error_bitfield						= 0;
+
+
+
+static int32_t GPS_UBX_latitude                 = 0;								// YYYYYYYYY, +/-
+static int32_t GPS_UBX_longitude                = 0 ;								// XXXXXXXXXX, +/-
+				
+
+static uint8_t GPShour													= 0;
+static uint8_t GPSminute												= 0;
+static uint8_t GPSsecond												= 0;
+//static uint8_t GPSday														= 0;
+//static uint8_t GPSmonth													= 0;
+//static uint16_t GPSyear													= 0;
+
+static uint8_t GPSfix_type											= 0;
+static uint8_t GPSfix_OK												= 0;
+//static uint8_t GPSvalidity											= 0;
+
+static uint8_t GPSnavigation										= 0;
+//static uint8_t GPSpowermode											= 0;
+//static uint8_t GPSpowersavemodestate						= 0;
+//static int32_t GPSgroundspeed										= 0;
+//static int32_t GPSheading												= 0;
+
+//static int32_t GPS_UBX_latitude_L               = 0;								// LAST valid value (in case of lost FIX)
+//static int32_t GPS_UBX_longitude_L              = 0;								// LAST valid value (in case of lost FIX)
+//static int32_t GPSaltitude_L                    = 0;									// LAST valid value (in case of lost FIX)
+
+static uint32_t fixAttemptCount                 = 0;
+
+
+
+float GPS_UBX_latitude_Float							= 51.509865; // YY.YYYYYYY, in +/- DEGREES, temp dummy for testing geofencing
+float GPS_UBX_longitude_Float							= -0.118092;  // XXX.XXXXXXX, in +/- DEGREES, temp dummy for testing geofencingstatic 
+
+
+
+
+int32_t GPSaltitude												= 0;
+uint8_t GPSsats														= 0;
+
+
+static  uint8_t GPSbuffer[GPSBUFFER_SIZE];
+
+
+volatile static  uint8_t GPS_UBX_ack_error = 0;
+volatile static  uint8_t GPS_UBX_checksum_error = 0;
+volatile static  uint8_t GPS_UBX_buffer_error = 0;
+
+
 
 #if DUMMY_GPS_COORDS
 /* IMPORTANT: when defining the list of coordinates, make sure that the number of coordinate pairs
@@ -34,7 +119,7 @@ static uint8_t flush_buffer[500];
  */
  
 uint8_t dummy_coord_counter  = 0;
-static const uint8_t dummy_coord_n = 20;
+static const uint8_t dummy_coord_n = 29;
 
 /*dummy Coords ARRAYS (longitude, latitude) */
 static float dummy_coords_array[dummy_coord_n*2] = { 
@@ -47,35 +132,26 @@ static float dummy_coords_array[dummy_coord_n*2] = {
 	24.7167,59.4333,  // Estonia
 	25.9000,-24.6333,  // Botswana
 	3.0500,36.7500,  // Algeria
-	3.0500,36.7500,  // Algeria
-	35.2333,31.7667,  // Palestine
-	35.2333,31.7667,  // Palestine
 	35.2333,31.7667,  // Palestine
 	19.8167,41.3167,  // Albania
-	19.8167,41.3167,  // Albania
-	19.8167,41.3167,  // Albania
 	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
-	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
-	-14.411667,-7.928611, // Georgetown, Ascension Island over the sea
-	
-	
-//	149.1333,-35.2667,  // Australia
-//	-88.7667,17.2500,  // Belize
-//	89.6333,27.4667,  // Bhutan
-//	104.9167,11.5500,  // Cambodia
-//	15.2833,-4.2500,  // Republic of Congo
-//	-5.2667,6.8167,  // Cote d'Ivoire
-//	-16.5667,13.4500,  // The Gambia
-//	44.8333,41.6833,  // Georgia
-//	-51.7500,64.1833,  // Greenland
-//	-61.7500,12.0500,  // Grenada
-//	-4.4833,54.1500,  // Isle of Man
-//	35.2333,31.7667,  // Israel
-//	12.4833,41.9000,  // Italy
-//	126.9833,37.5500,  // South Korea
-//	13.1667,32.8833,  // Libya
-//	101.7000,3.1667,  // Malaysia
-//	7.4167,43.7333,  // Monaco
+	149.1333,-35.2667,  // Australia
+	-88.7667,17.2500,  // Belize
+	89.6333,27.4667,  // Bhutan
+	104.9167,11.5500,  // Cambodia
+	15.2833,-4.2500,  // Republic of Congo
+	-5.2667,6.8167,  // Cote d'Ivoire
+	-16.5667,13.4500,  // The Gambia
+	44.8333,41.6833,  // Georgia
+	-51.7500,64.1833,  // Greenland
+	-61.7500,12.0500,  // Grenada
+	-4.4833,54.1500,  // Isle of Man
+	35.2333,31.7667,  // Israel
+	12.4833,41.9000,  // Italy
+	126.9833,37.5500,  // South Korea
+	13.1667,32.8833,  // Libya
+	101.7000,3.1667,  // Malaysia
+	7.4167,43.7333,  // Monaco
 };
 
 #endif
@@ -84,6 +160,36 @@ static float dummy_coords_array[dummy_coord_n*2] = {
 
 
 
+/* ==================================================================== */
+/* ========================== private data ============================ */
+/* ==================================================================== */
+
+/* Definition of private datatypes go here */
+
+
+
+
+/* ==================================================================== */
+/* ====================== private functions =========================== */
+/* ==================================================================== */
+
+/* Function prototypes for private (static) functions go here */
+
+static uint8_t UBLOX_verify_checksum(volatile uint8_t *buffer, uint8_t len);
+static uint8_t UBLOX_send_message(uint8_t *message, uint8_t len);
+static uint8_t UBLOX_receive_message(uint8_t *message, uint8_t len);
+static uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint8_t (*parse)(volatile uint8_t*));
+static uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout);
+static uint8_t UBLOX_parse_0624(volatile uint8_t *buffer);
+static uint8_t UBLOX_parse_0107(volatile uint8_t *buffer);
+static uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer);
+static uint8_t UBLOX_flush_I2C_buffer( uint16_t len);
+
+/* ==================================================================== */
+/* ===================== All functions by section ===================== */
+/* ==================================================================== */
+
+/* Functions definitions go here, organised into sections */
 
 
 /* 
@@ -96,18 +202,6 @@ uint8_t Backup_GPS(){
 }
 
 
-/* 
- * GPS Wake up. 
- */
-uint8_t Wakeup_GPS(){
-	
-	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
-	HAL_Delay(1000);                                                          // wait for things to be setup
-	UBLOX_send_message(set_continueous_mode, sizeof(set_continueous_mode));	  // switch GPS module to continueous mode
-	//UBLOX_request_UBX(saveConfiguration, sizeof(saveConfiguration), 10, UBLOX_parse_ACK);		// save current configuration	
-	return 0;
-
-}
 
 
 /* 
@@ -142,11 +236,9 @@ uint8_t setup_GPS(){
 	return 0;
 }
 
-
+/* Get the location fix */
 uint8_t get_location_fix(){
 	
-	// GET GPS FIX
-
 	// wakeup gps
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
 	HAL_Delay(500);
@@ -257,62 +349,6 @@ uint8_t get_location_fix(){
 
 
 
-
-/*
-    Converts GPS coordinates in Degrees and Decimal Minutes (4928.08702) to Decimal Degrees (49.4681170).
-    
-        PARAMETER       INPUT
-        lat_INT         4 digits max
-        lat_DEC         5 digits fixed
-        lon_INT         5 digits max
-        lon_DEC         5 digits fixed
-        latNS           1/0
-        lonEW           1/0
-    
-    The result is saved in global variables APRSLatitude and APRSLongitude.
-*/
-void Coords_DEGtoDEC(uint32_t lat_INT, uint32_t lat_DEC, uint32_t lon_INT, uint32_t lon_DEC, uint8_t latNS, uint8_t lonEW)
-{
-    /*
-        lat_INT     4928    degrees, minutes
-        lat_DEC     08702   minutes decimal value
-        lon_INT     01805   degrees, minutes
-        lon_DEC     46513   minutes decimal value
-        latNS       0/1     S/N
-        lonEW       0/1     W/E
-    */
-    
-    float lat = 0.0;
-    float lon = 0.0;
-    
-    uint32_t deg = lat_INT / 100;                               // 49
-    uint32_t min = lat_INT % 100;                               // 28
-    min = (min * 100000) + lat_DEC;                             // 2808702
-    float minf = min / 100000.0;                                // 28.08702
-    minf = minf * 100 / 60;                                     // 46.8117
-    min = minf * 100000.0;                                      // 4681170
-    lat = (deg * 10000000) + min;                               // 494681170
-    
-    deg = lon_INT / 100;                                        // 18
-    min = lon_INT % 100;                                        // 05
-    min = (min * 100000) + lon_DEC;                             // 546513
-    minf = min / 100000.0;                                      // 5.46513
-    minf = minf * 100 / 60;                                     // 9.10855
-    min = minf * 100000.0;                                      // 910855
-    lon = (deg * 10000000) + min;                               // 180910855
-    
-    
-    if(!latNS) lat = lat * -1.0;
-    if(!lonEW) lon = lon * -1.0;
-    
-    lon_DEC = (labs(lon) % 10000000) / 100;                     // just in case I wanted to save this format to a global variable as well
-    lon_INT = abs(lon / 10000000);                              // just in case I wanted to save this format to a global variable as well
-    lat_DEC = (labs(lat) % 10000000) / 100;                     // just in case I wanted to save this format to a global variable as well
-    lat_INT = abs(lat / 10000000);                              // just in case I wanted to save this format to a global variable as well
-    
-    GPS_UBX_latitude_Float = (float)lat / 10000000.0;           // save to a global variable
-    GPS_UBX_longitude_Float = (float)lon / 10000000.0;          // save to a global variable
-}
 
 
 /*
@@ -458,7 +494,8 @@ uint8_t UBLOX_receive_message(uint8_t *message, uint8_t len)
 
 
 /*
-   Flush I2C buffer. Fill the flush buffer with number of bytes defined by len
+ * Flush I2C buffer. Fill the flush buffer with number of bytes defined by len.
+ * Return 0 for failure. 1 for success
 */
 uint8_t UBLOX_flush_I2C_buffer( uint16_t len)
 {
@@ -486,11 +523,11 @@ uint8_t UBLOX_flush_I2C_buffer( uint16_t len)
 		 Master restarts communication */
 
 		if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF){
-				return 1; // TODO: make this makse sense
+				return 1; 
 		}
 	}
 	
-	return 0;  // TODO: make this makse sense
+	return 0;
 
 }
 
@@ -516,114 +553,9 @@ uint8_t UBLOX_request_UBX(uint8_t *request, uint8_t len, uint8_t expectlen, uint
 }
 
 
-/*
-    UBX 01 02   POSITION
-    
-        GPS_UBX_longitude               494681170       +/-
-        GPS_UBX_latitude                180910855       +/-
-        GPS_UBX_longitude_Float         49.4681170      +/-
-        GPS_UBX_latitude_Float          18.0910855      +/-
-        GPSaltitude                     403             +/-
-        
-    Checks the header and the checksum.
-*/
-uint8_t UBLOX_parse_0102(volatile uint8_t *buffer)
-{
-    GPS_UBX_error_bitfield |= (1 << 2);
-    
-    if(buffer[0] == 0xB5 && buffer[1] == 0x62 && buffer[2] == 0x01 && buffer[3] == 0x02)
-    {
-        if(UBLOX_verify_checksum(buffer, 36))
-        {
-            GPS_UBX_longitude = (int32_t)buffer[10] | (int32_t)buffer[11] << 8 | (int32_t)buffer[12] << 16 | (int32_t)buffer[13] << 24;
-            GPS_UBX_longitude_Float = (float)GPS_UBX_longitude / 10000000.0;
-            
-            GPS_UBX_latitude = (int32_t)buffer[14] | (int32_t)buffer[15] << 8 | (int32_t)buffer[16] << 16 | (int32_t)buffer[17] << 24;
-            GPS_UBX_latitude_Float = (float)GPS_UBX_latitude / 10000000.0;
-            
-            GPSaltitude = (int32_t)buffer[22] | (int32_t)buffer[23] << 8 | (int32_t)buffer[24] << 16 | (int32_t)buffer[25] << 24;
-            GPSaltitude /= 1000;
-            
-            GPS_UBX_error_bitfield &= ~(1 << 2);
-        }else{
-            GPS_UBX_checksum_error++;
-        }
-    }else{
-        GPS_UBX_buffer_error++;
-    }
-   
-	  return 0;
-}
 
 
-/*
-    UBX 01 21   TIME
-        
-        GPShour             9
-        GPSminute           14
-        GPSsecond           55
-        
-    Checks the header and the checksum.
-*/
-uint8_t UBLOX_parse_0121(volatile uint8_t *buffer)
-{
-    GPS_UBX_error_bitfield |= (1 << 3);
-    
-    if(buffer[0] == 0xB5 && buffer[1] == 0x62 && buffer[2] == 0x01 && buffer[3] == 0x21)
-    {
-        if(UBLOX_verify_checksum(buffer, 28))
-        {
-            GPShour = buffer[22];
-            GPSminute = buffer[23];
-            GPSsecond = buffer[24];
-            
-            GPS_UBX_error_bitfield &= ~(1 << 3);
-        }else{
-            GPS_UBX_checksum_error++;
-        }
-    }else{
-        GPS_UBX_buffer_error++;
-    }
-   
-	 return 0;
-}
 
-
-/*
-    UBX 01 06   SATS & FIX
-        
-        GPSsats             7
-        GPSfix_type              0x00        No Fix
-                            0x01        Dead Reckoning only
-                            0x02        2D-Fix
-                            0x03        3D-Fix
-                            0x04        GPS + Dead Reckoning combined
-                            0x05        Time only fix
-        
-    Checks the header and the checksum.
-*/
-uint8_t UBLOX_parse_0106(volatile uint8_t *buffer)
-{
-    if(buffer[0] == 0xB5 && buffer[1] == 0x62 && buffer[2] == 0x01 && buffer[3] == 0x06)
-    {
-        if(UBLOX_verify_checksum(buffer, 60))
-        {
-            GPSfix_type = buffer[16];
-            GPSsats = buffer[53];
-        }else{
-            GPS_UBX_checksum_error++;
-            
-            GPSfix_type = 0;
-            GPSsats = 0;
-        }
-    }else{
-        GPS_UBX_buffer_error++;
-        
-        GPSfix_type = 0;
-        GPSsats = 0;
-    }
-		return 0;
-}
 
 
 /*
@@ -661,41 +593,6 @@ uint8_t UBLOX_parse_0624(volatile uint8_t *buffer)
 	  return 0;
 }
 
-
-/*
-    UBX 06 11   POWER SAVE MODE
-        
-        GPSpowermode        0   Continuous Mode
-                            1   Power Save Mode
-                            4   Continuous Mode
-    
-    Checks the header and the checksum.
-*/
-uint8_t UBLOX_parse_0611(volatile uint8_t *buffer)
-{
-    GPS_UBX_error_bitfield |= (1 << 4);
-    
-    if(buffer[0] == 0xB5 && buffer[1] == 0x62 && buffer[2] == 0x06 && buffer[3] == 0x11)
-    {
-        if(UBLOX_verify_checksum(buffer, 10))
-        {
-            GPSpowermode = buffer[7];
-            
-            GPS_UBX_error_bitfield &= ~(1 << 4);
-        }else{
-            GPS_UBX_checksum_error++;
-            
-            GPSpowermode = 0;
-        }
-    }else{
-        GPS_UBX_buffer_error++;
-        
-        GPSpowermode = 0;
-    }
-		
-		return 0;
-
-}
 
 
 /*
@@ -744,9 +641,9 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
         {
 											
             // YEAR, MONTH, DAY
-            GPSyear = (uint16_t)buffer[10] | (uint16_t)buffer[11] << 8;
-            GPSmonth = buffer[12];
-            GPSday = buffer[13];
+            //GPSyear = (uint16_t)buffer[10] | (uint16_t)buffer[11] << 8;
+            //GPSmonth = buffer[12];
+            //GPSday = buffer[13];
             
             // HOUR, MINUTE, SECONDS
             GPShour = buffer[14];
@@ -757,10 +654,10 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPSfix_type = buffer[26];             // GNSSfix Type
 					
 					  GPSfix_OK = buffer[27] & 0x01; // Fix status flags: gnssFixOK
-            GPSvalidity = buffer[17];        // Validity flags
+            //GPSvalidity = buffer[17];        // Validity flags
             
             // POWER SAVE MODE STATE
-            GPSpowersavemodestate = (buffer[27] >> 2) & 0x07; // Fix status flags: PSM state
+            //GPSpowersavemodestate = (buffer[27] >> 2) & 0x07; // Fix status flags: PSM state
             
             // SATS
             GPSsats = buffer[29];
@@ -776,8 +673,8 @@ uint8_t UBLOX_parse_0107(volatile uint8_t *buffer)
             GPSaltitude /= 1000;
             
             // GROUND SPEED, HEADING
-            GPSgroundspeed = (int32_t)buffer[66] | (int32_t)buffer[67] << 8 | (int32_t)buffer[68] << 16 | (int32_t)buffer[69] << 24;
-            GPSheading = (int32_t)buffer[70] | (int32_t)buffer[71] << 8 | (int32_t)buffer[72] << 16 | (int32_t)buffer[73] << 24;;
+            //GPSgroundspeed = (int32_t)buffer[66] | (int32_t)buffer[67] << 8 | (int32_t)buffer[68] << 16 | (int32_t)buffer[69] << 24;
+            //GPSheading = (int32_t)buffer[70] | (int32_t)buffer[71] << 8 | (int32_t)buffer[72] << 16 | (int32_t)buffer[73] << 24;;
             
             GPS_UBX_error_bitfield &= ~(1 << 2);
 						
@@ -827,27 +724,4 @@ uint8_t UBLOX_parse_ACK(volatile uint8_t *buffer)
 }
 
 
-/*
-    Dummy parse function.
-*/
-uint8_t UBLOX_parse_empty(void)
-{
-   return 0;
-}
-
-
-
-/*
-    Function to prepare the module and enter the chosen POWER SAVING mode.
-    First it turns off periodic messages, then it turns of GLONASS (required for POWER SAVE mode), sets up the desired mode
-    and a wake up period and switches to the POWER SAVE mode.
-*/
-void UBLOX_powersave_mode_init(uint8_t * mode)
-{
-    GPS_UBX_ack_error = 0;
-    UBLOX_request_UBX(setNMEAoff, 28, 10, UBLOX_parse_ACK);                             // turn off the periodic output
-    UBLOX_request_UBX(setGPSonly, 28, 10, UBLOX_parse_ACK);                             // turn off GLONASS (needs to be done for POWERSAVE mode)
-    UBLOX_request_UBX(mode, 52, 10, UBLOX_parse_ACK);                                   // set up the desired UBX-CFG-PM2 (0x06 0x3B) settings
-    UBLOX_request_UBX(setPowerSaveMode, 10, 10, UBLOX_parse_ACK);                       // switch to POWERSAVE mode
-}
 

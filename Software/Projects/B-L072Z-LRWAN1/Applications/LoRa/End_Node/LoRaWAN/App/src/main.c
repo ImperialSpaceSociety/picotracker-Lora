@@ -145,89 +145,9 @@ static  LoRaParam_t LoRaParamInit= {LORAWAN_ADR_STATE,
 																		
 
 
-// UBLOX variables
-uint8_t GPS_UBX_error_bitfield						= 0;
-
-int32_t GPS_UBX_latitude									= 0;
-int32_t GPS_UBX_longitude									= 0;
-float GPS_UBX_latitude_Float							= 51.509865; // temp dummy for testing geofencing
-float GPS_UBX_longitude_Float							= -0.118092;  // temp dummy for testing geofencing
-
-int32_t GPSaltitude												= 0;
-
-uint8_t GPShour														= 0;
-uint8_t GPSminute													= 0;
-uint8_t GPSsecond													= 0;
-uint8_t GPSday														= 0;
-uint8_t GPSmonth													= 0;
-uint16_t GPSyear													= 0;
-
-uint8_t GPSsats														= 0;
-uint8_t GPSfix_type														= 0;
-uint8_t GPSfix_OK												= 0;
-uint8_t GPSvalidity												= 0;
-
-uint8_t GPSnavigation											= 0;
-uint8_t GPSpowermode											= 0;
-uint8_t GPSpowersavemodestate							= 0;
-
-int32_t GPSgroundspeed										= 0;
-int32_t GPSheading												= 0;
-
-uint16_t AD3data													= 0;
-uint16_t AD9data													= 0;
-uint16_t AD15data													= 0;
-uint32_t telemCount												= 0;
-uint32_t telemetry_len										= 0;
-
-int32_t GPS_UBX_latitude_L								= 0;
-int32_t GPS_UBX_longitude_L								= 0;
-int32_t GPSaltitude_L											= 0;
-
-uint32_t fixAttemptCount                  = 0;
-uint8_t ack			                          = 0; // 1 is ack, 0 is nak
-
-volatile uint8_t GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
 
 
-uint32_t fCntUp_global = 0;
-// Temp pressure
-double PRESSURE_Value; // compensated pressure value
-double TEMPERATURE_Value; // compensated temperature value
-
-// Battery levels
-uint16_t battery_level16 = 0;
-
-
-// GEOFENCE variables
-/* The world is split into polygons e.g. EU863870_EUROPE_polygon. 
- * Multiple polygons can have the same LoRa region settings. E.g. LORAMAC_REGION_EU868.
- * Keeps track of which polygon the tracker is in, and if it changes to another polygon,
- * all LoRa settings are reinitialised when the balloon enters another polygon.
- * 
- */
-int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings are correct for region we are flying over. 1 if correct, 0 if incorrect
-
-LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS   = LORAMAC_REGION_EU868;
-LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS  = LORAMAC_REGION_EU868;
-
-Polygon_t CURRENT_POLYGON_REGION  = EU863870_EUROPE_polygon; // London is in this polygon
-Polygon_t PREVIOUS_POLYGON_REGION = EU863870_EUROPE_polygon; // London is in this polygon
-
-uint32_t GEOFENCE_no_tx;
-
-
-//I2C related
-uint8_t	i2c_buffer[2];
-HAL_StatusTypeDef i2c_status;
-
-uint8_t	buffer_0xB5[1];
-uint8_t	buffer_0x62[1];
-uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
-
-
-// Battery/Solar voltage
-uint32_t VCC_ADC												= 0;
+uint8_t GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
 
 // Set up brown out reset voltage above the level of the GPS
 void set_brownout_level( void );
@@ -236,9 +156,6 @@ void set_brownout_level( void );
 void PVD_Config( void );
 // PCD config type def
 PWR_PVDTypeDef sConfigPVD;
-
-uint8_t timer_started = 0;
-
 
 
 
@@ -413,7 +330,9 @@ static void Send( void* context )
   int16_t cayenne_temperature = 0;
   //uint16_t cayenne_humidity = 0;
   sensor_t sensor_data;
-  int32_t cayenne_latitude=0, cayenne_longitude = 0, cayenne_altitudeGps=0;
+  int32_t cayenne_latitude = 0;
+	int32_t cayenne_longitude = 0;
+	int32_t cayenne_altitudeGps = 0;
   uint16_t cayenne_battery_voltage;
 	uint8_t cayenne_GPS_sats;
 
@@ -467,13 +386,12 @@ static void Send( void* context )
   cayenne_temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
   cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
   //cayenne_humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
-  cayenne_battery_voltage = ( uint16_t )battery_level16/10;               /* Battery level expressed in hundreds of mV */
-	//cayenne_battery_voltage = ( uint16_t )battery_level_vdd*100;               /* Battery level expressed in hundreds of mV */
+  cayenne_battery_voltage = ( uint16_t )(sensor_data.battery_level16 / 10);    /* Battery level expressed in hundreds of mV */
 
-	cayenne_altitudeGps = GPSaltitude*100;
-	cayenne_latitude = GPS_UBX_latitude_Float * 10000;
-	cayenne_longitude = GPS_UBX_longitude_Float * 10000;
-	cayenne_GPS_sats = GPSsats;
+	cayenne_altitudeGps = ( int32_t )( sensor_data.altitudeGps * 100 );
+	cayenne_latitude = ( int32_t )( sensor_data.latitude * 10000 );
+	cayenne_longitude = ( int32_t )( sensor_data.longitude * 10000 );
+	cayenne_GPS_sats = ( uint8_t ) GPSsats;
 	
 	
 
@@ -501,7 +419,9 @@ static void Send( void* context )
 	 * than DR3
 	 */
 
-	// using reference https://github.com/MicrochipTech/Location-Tracking-using-SAMR34-and-UBLOX-GPS-Module/blob/master/src/CayenneLPP/lpp.c
+	/* Using cayenne reference 
+	 * https://github.com/MicrochipTech/Location-Tracking-using-SAMR34-and-UBLOX-GPS-Module/blob/master/src/CayenneLPP/lpp.c  
+	 */
 	AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_GPSLOCATION;
   AppData.Buff[i++] = cayenne_latitude >> 16;

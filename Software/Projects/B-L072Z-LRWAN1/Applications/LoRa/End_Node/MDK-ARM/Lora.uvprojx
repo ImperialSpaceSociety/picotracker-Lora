@@ -412,6 +412,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
             </File>
+            <File>
+              <FileName>ublox_ubx_messages.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox_ubx_messages.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1211,6 +1216,11 @@
               <FileName>ms5607.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
+            </File>
+            <File>
+              <FileName>ublox_ubx_messages.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox_ubx_messages.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2012,6 +2022,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
             </File>
+            <File>
+              <FileName>ublox_ubx_messages.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox_ubx_messages.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2811,6 +2826,11 @@
               <FileName>ms5607.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
+            </File>
+            <File>
+              <FileName>ublox_ubx_messages.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox_ubx_messages.c</FilePath>
             </File>
           </Files>
         </Group>

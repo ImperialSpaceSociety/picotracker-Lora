@@ -28,8 +28,13 @@
 #include "main.h"
 
 
-extern uint16_t battery_level16;
-extern uint32_t fCntUp_global;
+
+
+// Battery levels
+uint16_t battery_level16 = 0;
+
+// Battery/Solar voltage
+uint32_t VCC_ADC = 0;
 
 
 
@@ -92,6 +97,10 @@ void BSP_sensor_Read( sensor_t *sensor_data)
   sensor_data->humidity    = 34; // hard coded dummy value
   sensor_data->temperature = TEMPERATURE_Value;
   sensor_data->pressure    = PRESSURE_Value;
+	sensor_data->altitudeGps = GPSaltitude;
+	sensor_data->latitude    = GPS_UBX_latitude_Float;
+	sensor_data->longitude   = GPS_UBX_longitude_Float;
+	sensor_data->battery_level16 = battery_level16;
 
   /* USER CODE END 5 */
 }
@@ -180,10 +189,10 @@ uint8_t EepromFrameCounterValidation(void)
 
 /**
   * @brief  Load Frame counter from STM32 internal EEPROM
-  * @param  None
+  * @param  Pointer to frame count
   * @retval None
   */
-void LoadFrameCounter()
+void LoadFrameCounter(uint32_t* fcnt)
 {
 #if SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
   
@@ -191,8 +200,7 @@ void LoadFrameCounter()
   {
     return;
   }
-  
-  memcpy(&fCntUp_global, (void*)FRAME_COUNTER_EEPROM_ADDRESS, FRAME_COUNTER_EEPROM_LEN);
+  memcpy(fcnt, (void*)FRAME_COUNTER_EEPROM_ADDRESS, FRAME_COUNTER_EEPROM_LEN);
 
 #endif //SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
 }

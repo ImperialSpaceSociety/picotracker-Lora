@@ -11,12 +11,26 @@
 #include <stdio.h>
 #include "LoRaMac.h"
 
-extern LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS;
-extern LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS;
 
-extern Polygon_t CURRENT_POLYGON_REGION;
-extern Polygon_t PREVIOUS_POLYGON_REGION;
-extern int REGIONAL_LORA_SETTINGS_CORRECT; 
+
+// GEOFENCE variables
+/* The world is split into polygons e.g. EU863870_EUROPE_polygon. 
+ * Multiple polygons can have the same LoRa region settings. E.g. LORAMAC_REGION_EU868.
+ * Keeps track of which polygon the tracker is in, and if it changes to another polygon,
+ * all LoRa settings are reinitialised when the balloon enters another polygon.
+ * 
+ */
+int REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings are correct for region we are flying over. 1 if correct, 0 if incorrect
+
+LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS   = LORAMAC_REGION_EU868;
+LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS  = LORAMAC_REGION_EU868;
+
+Polygon_t CURRENT_POLYGON_REGION  = EU863870_EUROPE_polygon; // London is in this polygon
+Polygon_t PREVIOUS_POLYGON_REGION = EU863870_EUROPE_polygon; // London is in this polygon
+
+
+uint32_t GEOFENCE_no_tx;
+
 
 
 // Strategy: check if GPS coordinate is in any of the polygons. If so, look up what transmit frequency it uses.
