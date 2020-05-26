@@ -104,8 +104,8 @@ uint8_t ms5607_Init(void)
     cmd_reset(); // reset IC
 		HAL_Delay(20);
 
-    for (i=0; i<8; i++) {
-        C[i]=cmd_prom(i);   // read coefficients
+    for (i = 0; i<8; i++) {
+        C[i] = cmd_prom(i);   // read coefficients
 	//			PRINTF("c:%d\n\r",C[i]);
 
     }
@@ -120,7 +120,7 @@ uint8_t ms5607_Init(void)
 		factory_crc = 0x000F & (C[7]); // the factory calculated crc
 		//PRINTF("factory crc:%d\n\r",factory_crc);
 				
-    calculated_crc=crc4(C);
+    calculated_crc = crc4(C);
 		
 		//PRINTF("calculated crc:%d\n\r",calculated_crc);
 
@@ -138,15 +138,15 @@ uint8_t ms5607_Init(void)
 }
 
 uint16_t cmd_prom(uint8_t coef_num){
-    uint8_t  temp_date[2]= {0};
-    unsigned int rC=0;
-    uint8_t i2c_buffer[2]={0};
+    uint8_t  temp_date[2] = {0};
+    unsigned int rC = 0;
+    uint8_t i2c_buffer[2] = {0};
     
-		i2c_buffer[0]=CMD_PROM_RD+coef_num*2;           
+		i2c_buffer[0] = CMD_PROM_RD+coef_num*2;           
 
     ms5607_transmit(i2c_buffer,1); // send PROM READ command
     ms5607_receive(temp_date,2);
-    rC=256*temp_date[0]+temp_date[1];
+    rC = 256*temp_date[0]+temp_date[1];
 
     return rC;
 }
@@ -154,8 +154,8 @@ uint16_t cmd_prom(uint8_t coef_num){
 void cmd_reset(void)
 {
 	HAL_Delay(20); // may have to give it a short time to start up if it had been previously powered off
-	uint8_t i2c_buffer[2]={0};
-	i2c_buffer[0]=CMD_RESET;
+	uint8_t i2c_buffer[2] = {0};
+	i2c_buffer[0] = CMD_RESET;
 	ms5607_transmit(i2c_buffer,1);
 }
 
@@ -163,15 +163,15 @@ uint8_t crc4(uint16_t n_prom[]) // n_prom defined as 8x unsigned int (n_prom[8])
 {
 
 	int cnt; // simple counter
-	uint16_t  n_rem=0; // crc reminder
+	uint16_t  n_rem = 0; // crc reminder
 	uint8_t  n_bit;
 
 
-	C[7]=(0xFF00 & (C[7]));  //CRC byte is replaced by 00 before calculating crc
+	C[7] = (0xFF00 & (C[7]));  //CRC byte is replaced by 00 before calculating crc
 
 	for (cnt = 0; cnt < 16; cnt++) // operation is performed on bytes
 	{// choose LSB or MSB
-		if (cnt%2==1)
+		if (cnt % 2 == 1)
 		{ 
 			n_rem ^= (unsigned short) ((n_prom[cnt>>1]) & 0x00FF);
 		}
@@ -201,12 +201,12 @@ uint8_t crc4(uint16_t n_prom[]) // n_prom defined as 8x unsigned int (n_prom[8])
 
 unsigned long cmd_adc(char cmd)
 {
-    uint8_t  temp_date[3]= {0};
+    uint8_t temp_date[3] = {0};
 
-    unsigned long temp=0;
+    unsigned long temp = 0;
 
-    uint8_t i2c_buffer[2]={0};
-    i2c_buffer[0]=CMD_ADC_CONV+cmd;
+    uint8_t i2c_buffer[2] = {0};
+    i2c_buffer[0] = CMD_ADC_CONV+cmd;
 
     ms5607_transmit(i2c_buffer,1); // send conversion command
 
@@ -239,12 +239,12 @@ unsigned long cmd_adc(char cmd)
 
     }
 
-    i2c_buffer[0]=CMD_ADC_READ;
+    i2c_buffer[0] = CMD_ADC_READ;
 
     ms5607_transmit(i2c_buffer,1);
     ms5607_receive(temp_date,3);
 
-    temp=65536*temp_date[0]+256*temp_date[1]+temp_date[2];
+    temp = 65536*temp_date[0]+256*temp_date[1]+temp_date[2];
 		
     return temp;
 }
@@ -336,8 +336,8 @@ void ms5607_Cal_T_P(void)
     dT = D2-C[5]*pow(2,8);
     OFF = C[2]*pow(2,17)+dT*C[4]/pow(2,6);
     SENS = C[1]*pow(2,16)+dT*C[3]/pow(2,7);
-    TEMPERATURE_Value =(2000+(dT*C[6])/pow(2,23))/100;
-	  PRESSURE_Value =(((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
+    TEMPERATURE_Value = (2000+(dT*C[6])/pow(2,23))/100;
+	  PRESSURE_Value = (((D1*SENS)/pow(2,21)-OFF)/pow(2,15))/100;
 }
 
 
