@@ -22,8 +22,8 @@
 #include "LoRaMac.h"
 #include "lora.h"
 #include "lora-test.h"
+#include "geofence.h"
 
-extern LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS;
 
 /*!
  *  Select either Device_Time_req or Beacon_Time_Req following LoRaWAN version 
