@@ -622,6 +622,11 @@
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\hw_i2c.c</FilePath>
             </File>
+            <File>
+              <FileName>i2c_middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1426,6 +1431,11 @@
               <FileName>hw_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\hw_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c_middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2232,6 +2242,11 @@
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\hw_i2c.c</FilePath>
             </File>
+            <File>
+              <FileName>i2c_middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3036,6 +3051,11 @@
               <FileName>hw_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\hw_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c_middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
             </File>
           </Files>
         </Group>
