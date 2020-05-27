@@ -26,7 +26,9 @@ extern "C"
 
 /* Inclusion of system and local header files goes here */
 
-
+#include <stdlib.h>
+#include "stm32l0xx_hal.h"
+#include "debug.h"
 
 /* ==================================================================== */
 /* ============================ constants ============================= */
@@ -43,6 +45,14 @@ extern "C"
 /* Definition of public (external) data types go here */
 
 
+/**
+ * I2C status
+ */
+typedef enum
+{
+  I2C_SUCCSS = 0,
+	I2C_FAIL
+} i2c_middleware_status_t;
 
 
 
@@ -51,6 +61,18 @@ extern "C"
 /* ==================================================================== */
 
 /* Function prototypes for public (external) functions go here */
+
+i2c_middleware_status_t I2C_receive(I2C_HandleTypeDef* hi2c,
+																		uint16_t DevAddress,
+																		uint8_t *pData, 
+																		uint16_t Size, 
+																		uint32_t Timeout );
+																		
+i2c_middleware_status_t I2C_transmit(I2C_HandleTypeDef* hi2c,
+																		 uint16_t DevAddress, 
+																		 uint8_t *pData, 
+																		 uint16_t Size, 
+																		 uint32_t Timeout );
 
 
 #endif // I2C_MIDDLEWARE_H
