@@ -424,7 +424,7 @@ uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
 */
 uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 {
-	I2C_MIDDLEWARE_STATUS_t status = I2C_transmit(&hi2c1, (uint16_t) GPS_I2C_ADDRESS << 1, message, len, 1000U);
+	I2C_MIDDLEWARE_STATUS_t status = I2C_transmit(&hi2c1, (uint16_t) GPS_I2C_ADDRESS << 1, message, len, GPS_I2C_TIMEOUT);
 	
 	if (status == I2C_SUCCSS)
 	{
@@ -441,7 +441,7 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 */
 uint8_t UBLOX_receive_message(uint8_t *message, uint8_t len)
 {
-	I2C_MIDDLEWARE_STATUS_t status = I2C_receive( &hi2c1,(uint16_t) GPS_I2C_ADDRESS << 1, message, len, 1000U);
+	I2C_MIDDLEWARE_STATUS_t status = I2C_receive( &hi2c1,(uint16_t) GPS_I2C_ADDRESS << 1, message, len, GPS_I2C_TIMEOUT);
 
 	if (status == I2C_SUCCSS)
 	{
@@ -462,7 +462,7 @@ uint8_t UBLOX_receive_message(uint8_t *message, uint8_t len)
 uint8_t UBLOX_flush_I2C_buffer( uint16_t len)
 {
 	
-	I2C_MIDDLEWARE_STATUS_t status = I2C_receive(&hi2c1, (uint16_t) GPS_I2C_ADDRESS << 1, flush_buffer, len, 1000U);
+	I2C_MIDDLEWARE_STATUS_t status = I2C_receive(&hi2c1, (uint16_t) GPS_I2C_ADDRESS << 1, flush_buffer, len, GPS_I2C_TIMEOUT);
 	
 	if (status == I2C_SUCCSS)
 	{
