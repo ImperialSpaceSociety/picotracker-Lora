@@ -26,6 +26,7 @@
 #include "hw.h"
 
 #include "ublox_ubx_messages.h"
+#include "i2c_middleware.h"
 
 
 /* ==================================================================== */
@@ -423,33 +424,8 @@ uint8_t UBLOX_receive_UBX(uint8_t *buffer, uint8_t len, uint32_t timeout)
 */
 uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
 {
-	 /* Init tickstart for timeout management*/
-	uint32_t tickstart_j = HAL_GetTick();
-	while ((HAL_GetTick() - tickstart_j) < GPS_I2C_TIMEOUT){
-		
-		if(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), message, len)!= HAL_OK)
-		{
-			/* Error_Handler() function is called when error occurs. */
-			Error_Handler();
-		}
-
-		/*  Before starting a new communication transfer, you need to check the current   
-				state of the peripheral; if it's busy you need to wait for the end of current
-				transfer before starting a new one.
-		*/  
-		while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
-		{
-		} 
-		
-		/* When Acknowledge failure occurs (Slave don't acknowledge it's address)
-		 Master restarts communication */
-
-		if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF){
-				return 1; // TODO: make this makse sense
-		}
-	}
-	
-	return 0;
+	I2C_transmit(&hi2c1, (uint16_t) GPS_I2C_ADDRESS << 1, message, len, 1000U);
+	// put in return statement
 }
 
 
@@ -457,38 +433,9 @@ uint8_t UBLOX_send_message(uint8_t *message, uint8_t len)
     Transmits a desired UBX message across I2C1.
 */
 uint8_t UBLOX_receive_message(uint8_t *message, uint8_t len)
-	
 {
-	/* Init tickstart for timeout management*/
-	uint32_t tickstart_j = HAL_GetTick();
-	while ((HAL_GetTick() - tickstart_j) < GPS_I2C_TIMEOUT){
-
-		if(HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)(GPS_I2C_ADDRESS << 1), message, len)!= HAL_OK)
-		{
-			/* Error_Handler() function is called when error occurs. */
-			Error_Handler();
-		}
-
-		/*  Before starting a new communication transfer, you need to check the current   
-				state of the peripheral; if it's busy you need to wait for the end of current
-				transfer before starting a new one.
-				For simplicity reasons, this example is just waiting till the end of the 
-				transfer, but application may perform other tasks while transfer operation
-				is ongoing. */  
-		while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
-		{
-		} 
-
-		/* When Acknowledge failure occurs (Slave don't acknowledge it's address)
-		 Master restarts communication */
-
-		if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF){
-				return 1; // TODO: make this makse sense
-		}
-	}
-	
-	return 0;
-
+	I2C_receive(&hi2c1, (uint16_t) GPS_I2C_ADDRESS << 1, message, len, 1000U);
+	// put in return statement
 }
 
 

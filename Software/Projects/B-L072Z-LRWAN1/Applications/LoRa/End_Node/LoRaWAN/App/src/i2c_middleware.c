@@ -61,7 +61,7 @@
 
 /* Functions definitions go here, organised into sections */
 
-i2c_middleware_status_t I2C_receive(I2C_HandleTypeDef* hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout )
+I2C_MIDDLEWARE_STATUS_t I2C_receive(I2C_HandleTypeDef* hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout )
 {
 	/* Init tickstart for timeout management*/
 	uint32_t tickstart = HAL_GetTick();
@@ -92,7 +92,7 @@ i2c_middleware_status_t I2C_receive(I2C_HandleTypeDef* hi2c, uint16_t DevAddress
 /*
     Transmits a desired UBX message across I2C1.
 */
-i2c_middleware_status_t I2C_transmit(I2C_HandleTypeDef* hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout )
+I2C_MIDDLEWARE_STATUS_t I2C_transmit(I2C_HandleTypeDef* hi2c, uint16_t DevAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout )
 {
 	/* Init tickstart for timeout management*/
 	uint32_t tickstart = HAL_GetTick();

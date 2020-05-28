@@ -52,7 +52,7 @@ typedef enum
 {
   I2C_SUCCSS = 0,
 	I2C_FAIL
-} i2c_middleware_status_t;
+} I2C_MIDDLEWARE_STATUS_t;
 
 
 
@@ -62,13 +62,13 @@ typedef enum
 
 /* Function prototypes for public (external) functions go here */
 
-i2c_middleware_status_t I2C_receive(I2C_HandleTypeDef* hi2c,
+I2C_MIDDLEWARE_STATUS_t I2C_receive(I2C_HandleTypeDef* hi2c,
 																		uint16_t DevAddress,
 																		uint8_t *pData, 
 																		uint16_t Size, 
 																		uint32_t Timeout );
 																		
-i2c_middleware_status_t I2C_transmit(I2C_HandleTypeDef* hi2c,
+I2C_MIDDLEWARE_STATUS_t I2C_transmit(I2C_HandleTypeDef* hi2c,
 																		 uint16_t DevAddress, 
 																		 uint8_t *pData, 
 																		 uint16_t Size, 
