@@ -23,6 +23,8 @@
 #include "ms5607.h"
 #include "main.h"
 #include "hw.h"
+#include "i2c_middleware.h"
+
 
 /* ==================================================================== */
 /* ============================ constants ============================= */
@@ -82,8 +84,8 @@ double TEMPERATURE_Value; // compensated temperature value
 
 /* Function prototypes for private (static) functions go here */
 
-static HAL_StatusTypeDef ms5607_transmit(uint8_t *pBuffer, uint16_t Length);
-static HAL_StatusTypeDef ms5607_receive(uint8_t *pBuffer, uint16_t Length);
+static uint8_t ms5607_transmit(uint8_t *pBuffer, uint16_t Length);
+static uint8_t ms5607_receive(uint8_t *pBuffer, uint16_t Length);
 static void cmd_reset(void);
 static uint8_t crc4(uint16_t n_prom[]); // n_prom defined as 8x unsigned int (n_prom[8])
 static uint16_t cmd_prom(uint8_t coef_num);
@@ -249,74 +251,34 @@ unsigned long cmd_adc(char cmd)
     return temp;
 }
 
-HAL_StatusTypeDef ms5607_transmit( uint8_t *message, uint16_t len)
+uint8_t ms5607_transmit( uint8_t *message, uint16_t len)
 {
-    //i2c_status = HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)ADDR_W,  pBuffer, Length);
-
-		 /* Init tickstart for timeout management*/
-		uint32_t tickstart_j = HAL_GetTick();
-		while ((HAL_GetTick() - tickstart_j) < MS5607_I2C_TIMEOUT){
-			
-      if(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)ADDR_W, message, len)!= HAL_OK)
-      {
-        /* Error_Handler() function is called when error occurs. */
-        Error_Handler();
-      }
-
-      /*  Before starting a new communication transfer, you need to check the current   
-          state of the peripheral; if it's busy you need to wait for the end of current
-          transfer before starting a new one.
-			*/  
-      while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
-      {
-      } 
-			
-			/* When Acknowledge failure occurs (Slave don't acknowledge it's address)
-			 Master restarts communication */
-
-			if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF){
-					return HAL_OK;
-			}
-
+	
+		I2C_MIDDLEWARE_STATUS_t status = I2C_transmit(&hi2c1, (uint16_t)ADDR_W, message, len, MS5607_I2C_TIMEOUT);
+		
+		if (status == I2C_SUCCSS)
+		{
+			return 1;
+		}else
+		{
+			return 0;	
 		}
 
-    return HAL_ERROR;
 }
 
-HAL_StatusTypeDef ms5607_receive(uint8_t *message, uint16_t len)
+uint8_t ms5607_receive(uint8_t *message, uint16_t len)
 {
 	
 
-  //i2c_status = HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)ADDR_R,  pBuffer, Length);
-	/* Init tickstart for timeout management*/
-	uint32_t tickstart_j = HAL_GetTick();
-	while ((HAL_GetTick() - tickstart_j) < MS5607_I2C_TIMEOUT){
-
-		if(HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)ADDR_R, message, len)!= HAL_OK)
-		{
-			/* Error_Handler() function is called when error occurs. */
-			Error_Handler();
-		}
-
-		/*  Before starting a new communication transfer, you need to check the current   
-				state of the peripheral; if it's busy you need to wait for the end of current
-				transfer before starting a new one.
-				For simplicity reasons, this example is just waiting till the end of the 
-				transfer, but application may perform other tasks while transfer operation
-				is ongoing. */  
-		while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
-		{
-		} 
-
-		/* When Acknowledge failure occurs (Slave don't acknowledge it's address)
-		 Master restarts communication */
-
-		if (HAL_I2C_GetError(&hi2c1) != HAL_I2C_ERROR_AF){
-				return HAL_OK; 
-		}
+	I2C_MIDDLEWARE_STATUS_t status = I2C_receive(&hi2c1, (uint16_t)ADDR_R, message, len, MS5607_I2C_TIMEOUT);
+	
+	if (status == I2C_SUCCSS)
+	{
+		return 1;
+	}else
+	{
+		return 0;	
 	}
-
-  return HAL_ERROR;
 
 }
 
