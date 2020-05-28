@@ -37,7 +37,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #include "bsp.h"
 #include "vcom.h"
 
-extern int32_t GPSaltitude;
+
 
 /*!
  *  \brief Unique Devices IDs register set ( STM32L0xxx )
