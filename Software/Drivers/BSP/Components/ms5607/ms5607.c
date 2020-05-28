@@ -141,7 +141,7 @@ uint8_t ms5607_Init(void)
 
 uint16_t cmd_prom(uint8_t coef_num){
     uint8_t  temp_date[2] = {0};
-    unsigned int rC = 0;
+    uint16_t rC = 0;
     uint8_t i2c_buffer[2] = {0};
     
 		i2c_buffer[0] = CMD_PROM_RD+coef_num*2;           
@@ -164,7 +164,7 @@ void cmd_reset(void)
 uint8_t crc4(uint16_t n_prom[]) // n_prom defined as 8x unsigned int (n_prom[8])
 {
 
-	int cnt; // simple counter
+	uint8_t cnt; // simple counter
 	uint16_t  n_rem = 0; // crc reminder
 	uint8_t  n_bit;
 
@@ -205,7 +205,7 @@ unsigned long cmd_adc(char cmd)
 {
     uint8_t temp_date[3] = {0};
 
-    unsigned long temp = 0;
+    uint32_t temp = 0;
 
     uint8_t i2c_buffer[2] = {0};
     i2c_buffer[0] = CMD_ADC_CONV+cmd;
