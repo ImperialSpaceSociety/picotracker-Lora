@@ -78,11 +78,9 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	PRINTF("%lf", PRESSURE_Value); 
 	PRINTF("\r\n");
 	PRINTF("Longitude: "); 
-	PRINTF("%lf", GPS_UBX_longitude_Float); 
-	PRINTF("\r\n"); 
+	PRINTF("%lf ", GPS_UBX_longitude_Float); 
 	PRINTF("Latitude: "); 
-	PRINTF("%lf", GPS_UBX_latitude_Float); 
-	PRINTF("\r\n");
+	PRINTF("%lf ", GPS_UBX_latitude_Float); 
 	PRINTF("altitude: "); 
 	PRINTF("%ld", GPSaltitude	); 
 	PRINTF("\r\n");
