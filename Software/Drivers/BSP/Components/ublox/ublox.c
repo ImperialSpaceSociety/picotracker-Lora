@@ -108,22 +108,16 @@ volatile static  uint8_t GPS_UBX_buffer_error = 0;
 
 
 #if DUMMY_GPS_COORDS
-/* IMPORTANT: when defining the list of coordinates, make sure that the number of coordinate pairs
- * equals or is less than dummy_coord_n. The program will ignore any coorinate pair that comes after the first
- * dummy_coord_n pairs. It will loop back to returning the first coordinate pair in the array.
- * Also, undefined behaviour may ensue if you define array size as n and initialise it with more than n elements
- * 
- * static float const n  = 2;
- * float myarray[n] = {1, 2, 4, 5}  <-- intialised with more than 2 values. Constratint violation
- * 
- * Compiler should catch it though                             
- */
- 
-uint8_t dummy_coord_counter  = 0;
-static const uint8_t dummy_coord_n = 29;
+
+uint16_t dummy_coord_counter  = 0;
+
 
 /*dummy Coords ARRAYS (longitude, latitude) */
-static float dummy_coords_array[dummy_coord_n*2] = { 
+static float dummy_coords_array[] = { 
+	126.9833,37.5500,  // South Korea
+	126.9833,37.5500,  // South Korea
+	126.9833,37.5500,  // South Korea
+	126.9833,37.5500,  // South Korea
 	13.4000,52.5167,  // Germany
 	2.3333,48.8667,  // France
 	13.4000,52.5167,  // Germany
@@ -154,6 +148,9 @@ static float dummy_coords_array[dummy_coord_n*2] = {
 	101.7000,3.1667,  // Malaysia
 	7.4167,43.7333,  // Monaco
 };
+
+
+const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)* 2);
 
 #endif
 
