@@ -157,12 +157,12 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 
 
 
-
 /* ==================================================================== */
 /* ========================== private data ============================ */
 /* ==================================================================== */
 
 /* Definition of private datatypes go here */
+
 
 
 
@@ -210,7 +210,7 @@ uint8_t setup_GPS(){
 	
 	// wake up gps in case it is in Lower Power mode
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
-	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				              // reset GPS module. warm start
+	UBLOX_send_message(resetReceiver, sizeof(resetReceiver));				              // reset GPS module. cold start forced
 	HAL_Delay(1000);                                                              // Wait for things to be setup	
 
 	/* For running the self test part of the program */
