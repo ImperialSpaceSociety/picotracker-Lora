@@ -232,6 +232,7 @@ int main( void )
 		
 		/* update global variable that indicates that LoRa regional parameters are correct 
 		 * TODO: clean up this implementation
+		 * Call this update geofence
 		 */
 		REGIONAL_LORA_SETTINGS_CORRECT = 1;
 		PREVIOUS_POLYGON_REGION = CURRENT_POLYGON_REGION;
