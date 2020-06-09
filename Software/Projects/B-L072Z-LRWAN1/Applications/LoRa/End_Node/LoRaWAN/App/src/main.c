@@ -221,7 +221,7 @@ int main( void )
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	
-	PRINTF("MY CURRENT LOCATION POLYGON : %d\n\r", (int)curr_poly_region);  
+//	PRINTF("MY CURRENT LOCATION POLYGON : %d\n\r", (int)curr_poly_region);  
 	PRINTF("APP DUTY CYCLE(TX INTERVAL maybe longer depending on message length and datarate) : %d\n\r", APP_TX_DUTYCYCLE);  
 
 
@@ -234,8 +234,8 @@ int main( void )
 		 * TODO: clean up this implementation
 		 * Call this update geofence
 		 */
-		lora_settings_status = 1;
-		prev_poly_region = curr_poly_region;
+		geofence_init();
+
 
 		/* Send a join request */
 		#if RADIO_ENABLED

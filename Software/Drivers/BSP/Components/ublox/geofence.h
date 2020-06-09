@@ -77,10 +77,6 @@ typedef enum polygon_t {
 // Externally accessible variables
 extern uint8_t GEOFENCE_no_tx;
 extern LoRaMacRegion_t current_loramac_region;
-extern LoRaMacRegion_t previous_loramac_region;
-
-extern Polygon_t curr_poly_region;
-extern Polygon_t prev_poly_region;
 extern uint8_t lora_settings_status; 
 
 
@@ -92,6 +88,7 @@ extern uint8_t lora_settings_status;
 /* Function prototypes for public (external) functions go here */
 
 void GEOFENCE_position(float latitude, float longitude);
+void geofence_init(void);
 
 
 
