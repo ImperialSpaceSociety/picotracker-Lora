@@ -643,12 +643,12 @@ void GEOFENCE_position(float latitude, float longitude)
 		prev_poly_region = curr_poly_region;
 	
 		/* get our current polygon */
-	  Polygon_t current_poly = get_polygon(latitude, longitude);
+	  curr_poly_region = get_polygon(latitude, longitude);
 		
 		/* now set the current lora region settings based on 
 	   * new or unchanged polygon we are in.
 	   */
-		set_current_loramac_region(current_poly);
+		set_current_loramac_region(curr_poly_region);
 
 		/* now check if we have moved into a different geofence region */
 		lora_settings_status = (prev_poly_region != curr_poly_region)? 0 : 1;
