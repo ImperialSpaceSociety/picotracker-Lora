@@ -628,11 +628,6 @@ static void set_current_loramac_region(Polygon_t current_poly)
 
 
 
-void geofence_init()
-{
-		lora_settings_status = 1;
-}
-
 void GEOFENCE_position(float latitude, float longitude)
 {		
 		/* store the current geofence region to compare later */

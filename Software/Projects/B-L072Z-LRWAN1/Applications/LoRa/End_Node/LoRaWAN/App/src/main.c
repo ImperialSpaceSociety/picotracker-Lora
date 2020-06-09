@@ -229,13 +229,6 @@ int main( void )
 
 		/* Configure the Lora Stack*/
 		LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
-		
-		/* update global variable that indicates that LoRa regional parameters are correct 
-		 * TODO: clean up this implementation
-		 * Call this update geofence
-		 */
-		geofence_init();
-
 
 		/* Send a join request */
 		#if RADIO_ENABLED
