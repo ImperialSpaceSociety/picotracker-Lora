@@ -66,7 +66,11 @@ for i in results:
 
 # print c code for Geofence.c
 for i in fences:
-    line = 	"else if(pointInPolygonF({0}, {3}_F, latitude, longitude) == 1) {{GEOFENCE_no_tx = 0; CURRENT_LORA_REGION_SETTINGS = {2}; CURRENT_POLYGON_REGION = {3}_polygon; }}".format(i.coordinates_count,i.frequency_band,polygon_region_lookup_table[i.frequency_band],i.fence_name)
+    line = 	"""
+else if(pointInPolygonF({0}, {3}_F, latitude, longitude) == 1)
+{{
+    return {3}_polygon;
+}}""".format(i.coordinates_count,i.frequency_band,polygon_region_lookup_table[i.frequency_band],i.fence_name)
     print(line)
 
 

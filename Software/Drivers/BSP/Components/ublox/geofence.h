@@ -60,7 +60,7 @@ typedef enum polygon_t {
 	US902928_ARGENTINA_polygon,
 	AU915928_BRAZIL_polygon,
 	AU915928_CHILE_polygon,
-	CN470510_CHINA_polygon,
+	CN779787_CHINA_polygon,
 	IN865867_INDIA_polygon,
 	AS920923_JAPAN_polygon,
 	KR920923_SKOREA_polygon,
