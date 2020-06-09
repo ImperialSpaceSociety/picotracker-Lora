@@ -73,6 +73,18 @@ typedef enum polygon_t {
 
 
 
+typedef enum
+{
+	TX_OK = 0,
+	TX_NOT_OK
+}tx_permission_t;
+
+
+typedef enum
+{
+	CORRECT = 0,
+	INCORRECT
+}lora_setting_status_t;
 
 // Externally accessible variables
 extern uint8_t GEOFENCE_no_tx;
