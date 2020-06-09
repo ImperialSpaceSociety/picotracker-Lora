@@ -427,7 +427,7 @@ static void Send( void* context )
 		
 	AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_ANALOG_INPUT;
-  AppData.Buff[i++] = ( cayenne_battery_voltage >> 8 ) & 0xFF; // TODO: read battery ADC
+  AppData.Buff[i++] = ( cayenne_battery_voltage >> 8 ) & 0xFF;
   AppData.Buff[i++] = cayenne_battery_voltage & 0xFF;
   
   AppData.Buff[i++] = cchannel++;
