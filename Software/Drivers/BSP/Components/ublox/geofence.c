@@ -547,79 +547,79 @@ static void set_current_loramac_region(Polygon_t current_poly)
 		switch (current_poly)
 		{
 			case EU863870_AFRICA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_EU868;
 					break;
 			case EU863870_PHILIPPINES_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_EU868;
 					break;
 			case US902928_NAMERICA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_US915;
 					break;
 			case AS923925_BRUNEI_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case AS923925_TAIWAN_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case AS923925_INDONESIA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case AS923925_THAILAND_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case US902928_ARGENTINA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_US915;
 					break;
 			case AU915928_BRAZIL_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AU915;
 					break;
 			case AU915928_CHILE_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AU915;
 					break;
 			case CN779787_CHINA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_CN779;
 					break;
 			case IN865867_INDIA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_IN865;
 					break;
 			case AS920923_JAPAN_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case KR920923_SKOREA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_KR920;
 					break;
 			case AS920923_MALAYSIASG_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case AU915928_AUSTRALIA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_AU915;
 					break;
 			case RU864870_RUSSIA_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_RU864;
 					break;
 			case EU863870_EUROPE_polygon:
-					tx_permission = 0;
+					tx_permission = TX_OK;
 					current_loramac_region = LORAMAC_REGION_EU868;
 					break;
 			case OUTSIDE_polygon:
-					tx_permission = 1;
+					tx_permission = TX_NOT_OK;
 					current_loramac_region = LORAMAC_REGION_EU868;
 		}
 

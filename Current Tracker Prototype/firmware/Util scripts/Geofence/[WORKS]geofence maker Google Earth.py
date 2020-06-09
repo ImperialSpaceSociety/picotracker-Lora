@@ -101,8 +101,8 @@ print(start_switch)
 for i in fences:
     line = 	\
 """case {0}_polygon:
-    GEOFENCE_no_tx = 0;
-    CURRENT_LORA_REGION_SETTINGS = {1};
+    tx_permission = TX_OK;
+    current_loramac_region = {1};
     break;""".format(i.fence_name,polygon_region_lookup_table[i.frequency_band])
     print(line)
 
