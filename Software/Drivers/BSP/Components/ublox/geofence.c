@@ -621,6 +621,7 @@ static void set_current_loramac_region(Polygon_t current_poly)
 			case OUTSIDE_polygon:
 					tx_permission = TX_NOT_OK;
 					current_loramac_region = LORAMAC_REGION_EU868;
+					break;
 		}
 
 }
