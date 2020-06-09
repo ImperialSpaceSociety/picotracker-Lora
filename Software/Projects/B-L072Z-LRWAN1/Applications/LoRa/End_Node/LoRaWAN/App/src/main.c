@@ -218,7 +218,7 @@ int main( void )
 	
 
 	/* Find out which region of world we are in and update region parm*/
-	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+	update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	
 //	PRINTF("MY CURRENT LOCATION POLYGON : %d\n\r", (int)curr_poly_region);  
@@ -347,7 +347,7 @@ static void Send( void* context )
 
 
 	/* Find out which region of world we are in */
-	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+	update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	/* reinit everything if it enters another LoRaWAN region. */
 	if (lora_settings_status == INCORRECT ){

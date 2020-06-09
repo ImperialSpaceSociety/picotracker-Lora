@@ -99,7 +99,7 @@ extern lora_setting_status_t lora_settings_status;
 
 /* Function prototypes for public (external) functions go here */
 
-void GEOFENCE_position(float latitude, float longitude);
+void update_geofence_position(float latitude, float longitude);
 void geofence_init(void);
 
 

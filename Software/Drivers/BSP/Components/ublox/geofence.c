@@ -628,7 +628,7 @@ static void set_current_loramac_region(Polygon_t current_poly)
 
 
 
-void GEOFENCE_position(float latitude, float longitude)
+void update_geofence_position(float latitude, float longitude)
 {		
 		/* store the current geofence region to compare later */
 		Polygon_t prev_poly_region = curr_poly_region;
