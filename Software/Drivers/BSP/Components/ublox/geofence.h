@@ -79,9 +79,9 @@ extern uint8_t GEOFENCE_no_tx;
 extern LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS;
 extern LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS;
 
-extern Polygon_t CURRENT_POLYGON_REGION;
-extern Polygon_t PREVIOUS_POLYGON_REGION;
-extern uint8_t REGIONAL_LORA_SETTINGS_CORRECT; 
+extern Polygon_t curr_poly_region;
+extern Polygon_t prev_poly_region;
+extern uint8_t lora_settings_status; 
 
 
 

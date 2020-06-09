@@ -221,7 +221,7 @@ int main( void )
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	
-	PRINTF("MY CURRENT LOCATION POLYGON : %d\n\r", (int)CURRENT_POLYGON_REGION);  
+	PRINTF("MY CURRENT LOCATION POLYGON : %d\n\r", (int)curr_poly_region);  
 	PRINTF("APP DUTY CYCLE(TX INTERVAL maybe longer depending on message length and datarate) : %d\n\r", APP_TX_DUTYCYCLE);  
 
 
@@ -234,8 +234,8 @@ int main( void )
 		 * TODO: clean up this implementation
 		 * Call this update geofence
 		 */
-		REGIONAL_LORA_SETTINGS_CORRECT = 1;
-		PREVIOUS_POLYGON_REGION = CURRENT_POLYGON_REGION;
+		lora_settings_status = 1;
+		prev_poly_region = curr_poly_region;
 
 		/* Send a join request */
 		#if RADIO_ENABLED
@@ -261,7 +261,7 @@ int main( void )
 				/* if the tracker moves into another region, break out of main loop and 
 				* reinit LoRa radio regional params
 				*/
-				if (!REGIONAL_LORA_SETTINGS_CORRECT){ 
+				if (!lora_settings_status){ 
 
 					PRINTF("Breaking out of main loop to reinit LoRa regional settings\n\r");
 					TimerStop( &TxTimer);
@@ -357,7 +357,7 @@ static void Send( void* context )
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	/* reinit everything if it enters another LoRaWAN region. */
-	if ((!REGIONAL_LORA_SETTINGS_CORRECT) ){
+	if ((!lora_settings_status) ){
 		TVL1(PRINTF("LoRa Regional settings incorrect. Data send terminated\n\r");)
 		return;
 	}

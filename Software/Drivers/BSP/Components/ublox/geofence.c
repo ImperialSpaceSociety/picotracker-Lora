@@ -43,13 +43,13 @@
  * all LoRa settings are reinitialised when the balloon enters another polygon.
  * 
  */
-uint8_t REGIONAL_LORA_SETTINGS_CORRECT = 1; // Flag indicating if geofence settings are correct for region we are flying over. 1 if correct, 0 if incorrect
+uint8_t lora_settings_status = 1; // Flag indicating if geofence settings are correct for region we are flying over. 1 if correct, 0 if incorrect
 
 LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS   = LORAMAC_REGION_EU868;
 LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS  = LORAMAC_REGION_EU868;
 
-Polygon_t CURRENT_POLYGON_REGION  = EU863870_EUROPE_polygon; // London is in this polygon
-Polygon_t PREVIOUS_POLYGON_REGION = EU863870_EUROPE_polygon; // London is in this polygon
+Polygon_t curr_poly_region  = EU863870_EUROPE_polygon; // London is in this polygon
+Polygon_t prev_poly_region = EU863870_EUROPE_polygon; // London is in this polygon
 
 
 uint8_t GEOFENCE_no_tx;
@@ -635,7 +635,7 @@ static void set_current_lora_region_settings(Polygon_t current_poly)
 void GEOFENCE_position(float latitude, float longitude)
 {		
 		/* store the current geofence region to compare later */
-		PREVIOUS_POLYGON_REGION = CURRENT_POLYGON_REGION;
+		prev_poly_region = curr_poly_region;
 	
 		/* get our current polygon */
 	  Polygon_t current_poly = get_polygon(latitude, longitude);
@@ -646,12 +646,12 @@ void GEOFENCE_position(float latitude, float longitude)
 		set_current_lora_region_settings(current_poly);
 
 		/* now check if we have moved into a different geofence region */
-		if (PREVIOUS_POLYGON_REGION != CURRENT_POLYGON_REGION){
-			REGIONAL_LORA_SETTINGS_CORRECT = 0;
+		if (prev_poly_region != curr_poly_region){
+			lora_settings_status = 0;
 		}
 		else	
 		{
-			REGIONAL_LORA_SETTINGS_CORRECT = 1;
+			lora_settings_status = 1;
 		}
 }
 
