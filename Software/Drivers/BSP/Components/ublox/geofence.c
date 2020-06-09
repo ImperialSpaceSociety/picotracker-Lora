@@ -48,7 +48,7 @@ lora_setting_status_t lora_settings_status = CORRECT;
 LoRaMacRegion_t current_loramac_region   = LORAMAC_REGION_EU868;  // Loramac region EU
 Polygon_t curr_poly_region = EU863870_EUROPE_polygon; // London is in this polygon
 
-tx_permission_t GEOFENCE_no_tx = TX_OK;
+tx_permission_t tx_permission = TX_OK;
 
 
 /* These are the fence polygons. There are several 
@@ -428,7 +428,7 @@ int32_t pointInPolygonF(int32_t polyCorners, float* polygon, float latitude, flo
 
 
 /*
-	Changes GEOFENCE_LoRA_frequency and GEOFENCE_no_tx global variables based on the input coordinates.
+	Changes GEOFENCE_LoRA_frequency and tx_permission global variables based on the input coordinates.
 	TODO: documentation must be updated for LoRa frequencies
 	FREQUENCIES:
 						EU863870    = 0x01,
@@ -547,79 +547,79 @@ static void set_current_loramac_region(Polygon_t current_poly)
 		switch (current_poly)
 		{
 			case EU863870_AFRICA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_EU868;
 					break;
 			case EU863870_PHILIPPINES_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_EU868;
 					break;
 			case US902928_NAMERICA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_US915;
 					break;
 			case AS923925_BRUNEI_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case AS923925_TAIWAN_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case AS923925_INDONESIA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case AS923925_THAILAND_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case US902928_ARGENTINA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_US915;
 					break;
 			case AU915928_BRAZIL_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AU915;
 					break;
 			case AU915928_CHILE_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AU915;
 					break;
 			case CN779787_CHINA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_CN779;
 					break;
 			case IN865867_INDIA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_IN865;
 					break;
 			case AS920923_JAPAN_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case KR920923_SKOREA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_KR920;
 					break;
 			case AS920923_MALAYSIASG_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AS923;
 					break;
 			case AU915928_AUSTRALIA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_AU915;
 					break;
 			case RU864870_RUSSIA_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_RU864;
 					break;
 			case EU863870_EUROPE_polygon:
-					GEOFENCE_no_tx = 0;
+					tx_permission = 0;
 					current_loramac_region = LORAMAC_REGION_EU868;
 					break;
 			case OUTSIDE_polygon:
-					GEOFENCE_no_tx = 1;
+					tx_permission = 1;
 					current_loramac_region = LORAMAC_REGION_EU868;
 		}
 

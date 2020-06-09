@@ -358,7 +358,7 @@ static void Send( void* context )
 	/* Don't tx when over regions where we are not supposed to tx
    * There is currenly no region defined in geofence.h that prohibits tx.
    */
-	if (GEOFENCE_no_tx == TX_NOT_OK){
+	if (tx_permission == TX_NOT_OK){
 		TVL1(PRINTF("Entered NO tx region. Data send terminated\n\r");)
 		return;
 	}
