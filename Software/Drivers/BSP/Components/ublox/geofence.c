@@ -646,12 +646,6 @@ void GEOFENCE_position(float latitude, float longitude)
 		set_current_lora_region_settings(current_poly);
 
 		/* now check if we have moved into a different geofence region */
-		if (prev_poly_region != curr_poly_region){
-			lora_settings_status = 0;
-		}
-		else	
-		{
-			lora_settings_status = 1;
-		}
+		lora_settings_status = (prev_poly_region != curr_poly_region)? 0 : 1;
 }
 
