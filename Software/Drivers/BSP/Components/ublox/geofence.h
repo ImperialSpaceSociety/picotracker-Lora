@@ -75,7 +75,7 @@ typedef enum polygon_t {
 
 
 // Externally accessible variables
-extern uint32_t GEOFENCE_no_tx;
+extern uint8_t GEOFENCE_no_tx;
 extern LoRaMacRegion_t CURRENT_LORA_REGION_SETTINGS;
 extern LoRaMacRegion_t PREVIOUS_LORA_REGION_SETTINGS;
 

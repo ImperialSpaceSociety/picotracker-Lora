@@ -52,7 +52,7 @@ Polygon_t CURRENT_POLYGON_REGION  = EU863870_EUROPE_polygon; // London is in thi
 Polygon_t PREVIOUS_POLYGON_REGION = EU863870_EUROPE_polygon; // London is in this polygon
 
 
-uint32_t GEOFENCE_no_tx;
+uint8_t GEOFENCE_no_tx;
 
 
 /* These are the fence polygons. There are several 
