@@ -341,6 +341,7 @@ static void Send( void* context )
 	#endif
  
 	/* Temporarily stop tx interval timer until GPS gets a lock */
+	// TODO: this timerstop MUST be removed.
 	TimerStop( &TxTimer);
 
 
