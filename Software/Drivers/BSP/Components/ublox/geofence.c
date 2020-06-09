@@ -43,13 +43,12 @@
  * all LoRa settings are reinitialised when the balloon enters another polygon.
  * 
  */
-uint8_t lora_settings_status = 1; // Flag indicating if geofence settings are correct for region we are flying over. 
-                                  // 1 if correct, 0 if incorrect
+lora_setting_status_t lora_settings_status = CORRECT; 
 
 LoRaMacRegion_t current_loramac_region   = LORAMAC_REGION_EU868;  // Loramac region EU
 Polygon_t curr_poly_region = EU863870_EUROPE_polygon; // London is in this polygon
 
-uint8_t GEOFENCE_no_tx = 0;
+tx_permission_t GEOFENCE_no_tx = TX_OK;
 
 
 /* These are the fence polygons. There are several 
@@ -642,6 +641,6 @@ void GEOFENCE_position(float latitude, float longitude)
 		set_current_loramac_region(curr_poly_region);
 
 		/* now check if we have moved into a different geofence region */
-		lora_settings_status = (prev_poly_region != curr_poly_region)? 0 : 1;
+		lora_settings_status = (prev_poly_region != curr_poly_region)? INCORRECT : CORRECT;
 }
 

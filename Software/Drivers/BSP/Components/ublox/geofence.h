@@ -87,9 +87,9 @@ typedef enum
 }lora_setting_status_t;
 
 // Externally accessible variables
-extern uint8_t GEOFENCE_no_tx;
+extern tx_permission_t GEOFENCE_no_tx;
 extern LoRaMacRegion_t current_loramac_region;
-extern uint8_t lora_settings_status; 
+extern lora_setting_status_t lora_settings_status; 
 
 
 

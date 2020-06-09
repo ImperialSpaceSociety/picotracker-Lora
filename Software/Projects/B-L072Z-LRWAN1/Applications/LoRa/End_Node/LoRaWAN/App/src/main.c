@@ -254,7 +254,7 @@ int main( void )
 				/* if the tracker moves into another region, break out of main loop and 
 				* reinit LoRa radio regional params
 				*/
-				if (!lora_settings_status){ 
+				if (lora_settings_status == INCORRECT){ 
 
 					PRINTF("Breaking out of main loop to reinit LoRa regional settings\n\r");
 					TimerStop( &TxTimer);
@@ -350,7 +350,7 @@ static void Send( void* context )
 	GEOFENCE_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	/* reinit everything if it enters another LoRaWAN region. */
-	if ((!lora_settings_status) ){
+	if (lora_settings_status == INCORRECT ){
 		TVL1(PRINTF("LoRa Regional settings incorrect. Data send terminated\n\r");)
 		return;
 	}
@@ -358,7 +358,7 @@ static void Send( void* context )
 	/* Don't tx when over regions where we are not supposed to tx
    * There is currenly no region defined in geofence.h that prohibits tx.
    */
-	if (GEOFENCE_no_tx){
+	if (GEOFENCE_no_tx == TX_NOT_OK){
 		TVL1(PRINTF("Entered NO tx region. Data send terminated\n\r");)
 		return;
 	}
