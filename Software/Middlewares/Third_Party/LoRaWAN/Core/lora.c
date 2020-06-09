@@ -481,7 +481,7 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
 // because this init function sets up the loramac context(region, restrictions etc)
 				
       /* Initialise LoRa to Geofence region */
-			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, CURRENT_LORA_REGION_SETTINGS );
+			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, current_loramac_region );
 
       
       mibReq.Type = MIB_ADR;
