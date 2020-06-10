@@ -45,7 +45,7 @@
  */
 lora_setting_status_t lora_settings_status = CORRECT; 
 
-LoRaMacRegion_t current_loramac_region   = LORAMAC_REGION_EU868;  // Loramac region EU
+LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_EU868;  // Loramac region EU
 Polygon_t curr_poly_region = EU863870_EUROPE_polygon; // London is in this polygon
 
 tx_permission_t tx_permission = TX_OK;
