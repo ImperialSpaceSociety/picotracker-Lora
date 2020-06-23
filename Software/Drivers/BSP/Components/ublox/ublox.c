@@ -135,7 +135,7 @@ gps_status_t setup_GPS(){
 	PRINTF("Resetting gps\n");
 	hardReset();
 	
-	HAL_Delay(1000);
+	HAL_Delay(GPS_WAKEUP_TIMEOUT);
 
 
 
@@ -214,7 +214,7 @@ gps_status_t get_location_fix(uint32_t timeout)
 
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);   // pull GPS extint0 pin high to wake gps. Really important
 
-	HAL_Delay(1000);
+	HAL_Delay(GPS_WAKEUP_TIMEOUT);
 
 	if (put_in_continueous_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
