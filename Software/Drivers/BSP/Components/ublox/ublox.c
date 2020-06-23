@@ -284,14 +284,6 @@ uint8_t get_location_fix(){
 	PRINTF(":");
 	PRINTF("%d",getSecond(defaultMaxWait));
 	PRINTF(".");
-	
-	//Pretty print leading zeros
-	uint16_t mseconds = getMillisecond(defaultMaxWait);
-	if (mseconds < 100)
-		PRINTF("0");
-	if (mseconds < 10)
-		PRINTF("0");
-	PRINTF("%d",mseconds);
 
 
 	PRINTF("\n");
