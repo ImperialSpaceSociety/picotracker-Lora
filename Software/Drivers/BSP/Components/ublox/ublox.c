@@ -229,7 +229,7 @@ gps_status_t get_location_fix(uint32_t timeout)
 	while (HAL_GetTick() - startTime < timeout)
 	{
 		char fixType = getFixType(defaultMaxWait);
-		PRINTF(" Fix: ");
+		PRINTF("Fix: ");
 		if(fixType == 0) PRINTF("No fix");
 		else if(fixType == 1) PRINTF("Dead reckoning");
 		else if(fixType == 2) PRINTF("2D");
@@ -237,7 +237,7 @@ gps_status_t get_location_fix(uint32_t timeout)
 		else if(fixType == 4) PRINTF("GNSS+Dead reckoning");
 		
 		
-	  PRINTF("TIME: ");
+	  PRINTF(" TIME: ");
 		PRINTF("%d",getYear(defaultMaxWait));
 		PRINTF("-");
 		PRINTF("%d",getMonth(defaultMaxWait));
