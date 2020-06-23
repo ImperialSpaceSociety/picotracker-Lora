@@ -27,9 +27,8 @@
 #include "version.h"
 #include "ublox.h"
 #include "geofence.h"
-#include "ms5607.h"
-#include "LoRaMac.h"
 #include "main.h"
+
 #include "stm32l0xx_hal_flash.h"
 #include "stm32l0xx_hal_flash_ex.h"
 #include "stm32l0xx_hal.h"

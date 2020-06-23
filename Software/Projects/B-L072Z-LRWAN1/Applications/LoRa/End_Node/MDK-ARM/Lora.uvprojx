@@ -413,9 +413,9 @@
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
             </File>
             <File>
-              <FileName>ublox_ubx_messages.c</FileName>
+              <FileName>SparkFun_Ublox_Arduino_Library.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox_ubx_messages.c</FilePath>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1223,9 +1223,9 @@
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
             </File>
             <File>
-              <FileName>ublox_ubx_messages.c</FileName>
+              <FileName>SparkFun_Ublox_Arduino_Library.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox_ubx_messages.c</FilePath>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2033,9 +2033,9 @@
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
             </File>
             <File>
-              <FileName>ublox_ubx_messages.c</FileName>
+              <FileName>SparkFun_Ublox_Arduino_Library.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox_ubx_messages.c</FilePath>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2843,9 +2843,9 @@
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ms5607\ms5607.c</FilePath>
             </File>
             <File>
-              <FileName>ublox_ubx_messages.c</FileName>
+              <FileName>SparkFun_Ublox_Arduino_Library.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\ublox_ubx_messages.c</FilePath>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
             </File>
           </Files>
         </Group>
