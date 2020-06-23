@@ -34,6 +34,11 @@ extern "C"
 
 /* #define and enum statements go here */
 
+typedef enum
+{
+	GPS_SUCCESS = 0,
+	GPS_FAILURE
+} gps_status_t;
 
 
 /* ==================================================================== */
@@ -55,9 +60,8 @@ extern uint8_t GPSsats;											// for both UBX and NMEA
 
 /* Function prototypes for public (external) functions go here */
 
-uint8_t get_location_fix(void);
-uint8_t setup_GPS(void);
-uint8_t Backup_GPS(void);
+extern gps_status_t get_location_fix(uint32_t timeout);
+extern gps_status_t setup_GPS(void);
 
 #endif
 #ifdef __cplusplus

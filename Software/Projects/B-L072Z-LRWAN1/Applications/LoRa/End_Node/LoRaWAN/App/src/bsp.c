@@ -60,7 +60,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	#endif
   
 	#if GPS_ENABLED
-	get_location_fix();
+	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
 	#endif
 	
 	battery_level16 = (uint16_t) BSP_GetBatteryLevel16();

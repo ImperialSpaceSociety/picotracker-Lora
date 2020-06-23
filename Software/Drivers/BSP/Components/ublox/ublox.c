@@ -33,12 +33,6 @@
 
 /* #define and enum statements go here */
 
-#define GPS_I2C_ADDRESS 0x42
-#define GPS_I2C_TIMEOUT 1000
-#define GPSBUFFER_SIZE			125 // bigger than max size of ubx message
-#define SATS				4		// number of satellites required for positional solution
-#define UBX_TIMEOUT  5000 // in milliseconds
-
 
 /* ==================================================================== */
 /* ======================== global variables ========================== */
@@ -47,22 +41,8 @@
 /* Global variables definitions go here */
 
 
-
-				
-
-
-
-
-static uint32_t fixAttemptCount                 = 0;
-
-
-
 float GPS_UBX_latitude_Float							= 51.509865; // YY.YYYYYYY, in +/- DEGREES, temp dummy for testing geofencing
 float GPS_UBX_longitude_Float							= -0.118092;  // XXX.XXXXXXX, in +/- DEGREES, temp dummy for testing geofencingstatic 
-
-
-
-
 int32_t GPSaltitude												= 0;
 uint8_t GPSsats														= 0;
 
@@ -134,7 +114,8 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 
 /* Function prototypes for private (static) functions go here */
 
-
+gps_status_t get_location_fix(uint32_t timeout);
+gps_status_t setup_GPS(void);
 
 /* ==================================================================== */
 /* ===================== All functions by section ===================== */
@@ -148,13 +129,13 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
  * sets up gps by putting in airbourne mode, setting to use GPS satellites only, turning off NMEA
  * Needs TO BE REFACTORED TO TIME OUT OR EXIT IF NO MESSAGED IS ReCEIVED BACK!
  */
-uint8_t setup_GPS(){
+gps_status_t setup_GPS(){
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);   // pull GPS extint0 pin high to wake gps. Really important
 	
 	PRINTF("Resetting gps\n");
 	hardReset();
 	
-	HAL_Delay(defaultMaxWait);
+	HAL_Delay(1000);
 
 
 
@@ -224,14 +205,16 @@ uint8_t setup_GPS(){
 	uint8_t versionLow = getProtocolVersionLow(defaultMaxWait);
 	PRINTF("%d\n",versionLow);
 	
+	return GPS_SUCCESS;
 }
 
 /* Get the location fix */
-uint8_t get_location_fix(){
+gps_status_t get_location_fix(uint32_t timeout)
+{
 
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);   // pull GPS extint0 pin high to wake gps. Really important
 
-	HAL_Delay(defaultMaxWait);
+	HAL_Delay(1000);
 
 	if (put_in_continueous_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
@@ -242,53 +225,70 @@ uint8_t get_location_fix(){
 		PRINTF("put_in_continueous_mode carried out successfully!\n");
 	}
 
+	unsigned long startTime = HAL_GetTick();
+	while (HAL_GetTick() - startTime < timeout)
+	{
+		char fixType = getFixType(defaultMaxWait);
+		PRINTF(" Fix: ");
+		if(fixType == 0) PRINTF("No fix");
+		else if(fixType == 1) PRINTF("Dead reckoning");
+		else if(fixType == 2) PRINTF("2D");
+		else if(fixType == 3) PRINTF("3D");
+		else if(fixType == 4) PRINTF("GNSS+Dead reckoning");
+		
+		
+	  PRINTF("TIME: ");
+		PRINTF("%d",getYear(defaultMaxWait));
+		PRINTF("-");
+		PRINTF("%d",getMonth(defaultMaxWait));
+		PRINTF("-");
+		PRINTF("%d",getDay(defaultMaxWait));
+		PRINTF(" ");
+		PRINTF("%d",getHour(defaultMaxWait));
+		PRINTF(":");
+		PRINTF("%d",getMinute(defaultMaxWait));
+		PRINTF(":");
+		PRINTF("%d",getSecond(defaultMaxWait));
+		PRINTF("\n");
 
-	long latitude = getLatitude(defaultMaxWait);
-	PRINTF("Lat: ");
-	PRINTF("%ld",latitude);
+		if (fixType == 3)
+		{
+				long latitude = getLatitude(defaultMaxWait);
+				PRINTF("Lat: ");
+				PRINTF("%ld",latitude);
 
-	long longitude = getLongitude(defaultMaxWait);
-	PRINTF(" Long: ");
-	PRINTF("%ld",longitude);
-	PRINTF(" (degrees * 10^-7)");
+				long longitude = getLongitude(defaultMaxWait);
+				PRINTF(" Long: ");
+				PRINTF("%ld",longitude);
+				PRINTF(" (degrees * 10^-7)");
 
-	long altitude = getAltitude(defaultMaxWait);
-	PRINTF(" Alt: ");
-	PRINTF("%ld",altitude);
-	PRINTF(" (mm)");
+				long altitude = getAltitude(defaultMaxWait);
+				PRINTF(" Alt: ");
+				PRINTF("%ld",altitude);
+				PRINTF(" (mm)");
 
-	char SIV = getSIV(defaultMaxWait);
-	PRINTF(" SIV: ");
-	PRINTF("%d",SIV);
+				char SIV = getSIV(defaultMaxWait);
+				PRINTF(" SIV: ");
+				PRINTF("%d",SIV);
+			
+				PRINTF("\n");
+			
+			
+				if (put_in_power_save_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
+				{
+					PRINTF("***!!! Warning: put_in_power_save_mode failed !!!***\n");
+				}
+				else
+				{
+					PRINTF("put_in_power_save_mode carried out successfully!\n");
+				}	
 
+				HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);   // pull GPS extint0 pin low to put gps to sleep. Really important
 
-	char fixType = getFixType(defaultMaxWait);
-	PRINTF(" Fix: ");
-	if(fixType == 0) PRINTF("No fix");
-	else if(fixType == 1) PRINTF("Dead reckoning");
-	else if(fixType == 2) PRINTF("2D");
-	else if(fixType == 3) PRINTF("3D");
-	else if(fixType == 4) PRINTF("GNSS+Dead reckoning");
-
-
-	PRINTF("\n");
-	PRINTF("%d",getYear(defaultMaxWait));
-	PRINTF("-");
-	PRINTF("%d",getMonth(defaultMaxWait));
-	PRINTF("-");
-	PRINTF("%d",getDay(defaultMaxWait));
-	PRINTF(" ");
-	PRINTF("%d",getHour(defaultMaxWait));
-	PRINTF(":");
-	PRINTF("%d",getMinute(defaultMaxWait));
-	PRINTF(":");
-	PRINTF("%d",getSecond(defaultMaxWait));
-	PRINTF(".");
-
-
-	PRINTF("\n");
-
-
+				
+				return GPS_SUCCESS;
+		}
+	}
 
 	if (put_in_power_save_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
@@ -301,10 +301,6 @@ uint8_t get_location_fix(){
 	
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);   // pull GPS extint0 pin low to put gps to sleep. Really important
 
+	return GPS_FAILURE;
 
 }
-
-
-
-
-

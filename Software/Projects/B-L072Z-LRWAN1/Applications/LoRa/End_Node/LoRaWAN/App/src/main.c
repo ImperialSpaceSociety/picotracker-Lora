@@ -208,7 +208,7 @@ int main( void )
 	 * It needs a GPS fix to get the right LoRa params for the region
 	 */
 	PRINTF("SELFTEST: Attempting to get a GPS fix\n\r");
-	while(!get_location_fix());
+	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
 
 	#endif
 	
