@@ -48,35 +48,10 @@
 
 
 
-// UBLOX variables
-static uint8_t GPS_UBX_error_bitfield						= 0;
-
-
-
-static int32_t GPS_UBX_latitude                 = 0;								// YYYYYYYYY, +/-
-static int32_t GPS_UBX_longitude                = 0 ;								// XXXXXXXXXX, +/-
 				
 
-static uint8_t GPShour													= 0;
-static uint8_t GPSminute												= 0;
-static uint8_t GPSsecond												= 0;
-//static uint8_t GPSday														= 0;
-//static uint8_t GPSmonth													= 0;
-//static uint16_t GPSyear													= 0;
 
-static uint8_t GPSfix_type											= 0;
-static uint8_t GPSfix_OK												= 0;
-//static uint8_t GPSvalidity											= 0;
 
-static uint8_t GPSnavigation										= 0;
-//static uint8_t GPSpowermode											= 0;
-//static uint8_t GPSpowersavemodestate						= 0;
-//static int32_t GPSgroundspeed										= 0;
-//static int32_t GPSheading												= 0;
-
-//static int32_t GPS_UBX_latitude_L               = 0;								// LAST valid value (in case of lost FIX)
-//static int32_t GPS_UBX_longitude_L              = 0;								// LAST valid value (in case of lost FIX)
-//static int32_t GPSaltitude_L                    = 0;									// LAST valid value (in case of lost FIX)
 
 static uint32_t fixAttemptCount                 = 0;
 
@@ -90,14 +65,6 @@ float GPS_UBX_longitude_Float							= -0.118092;  // XXX.XXXXXXX, in +/- DEGREES
 
 int32_t GPSaltitude												= 0;
 uint8_t GPSsats														= 0;
-
-
-static  uint8_t GPSbuffer[GPSBUFFER_SIZE];
-
-
-volatile static  uint8_t GPS_UBX_ack_error = 0;
-volatile static  uint8_t GPS_UBX_checksum_error = 0;
-volatile static  uint8_t GPS_UBX_buffer_error = 0;
 
 
 
@@ -184,7 +151,7 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 uint8_t setup_GPS(){
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);   // pull GPS extint0 pin high to wake gps. Really important
 	
-	printf("Resetting gps\n");
+	PRINTF("Resetting gps\n");
 	hardReset();
 	
 	HAL_Delay(defaultMaxWait);
@@ -193,15 +160,15 @@ uint8_t setup_GPS(){
 
 	if (isConnected(defaultMaxWait) == false) //Connect to the Ublox module using Wire port
 	{
-			printf("Ublox GPS not detected at default I2C address. Please check wiring. Freezing.\n");
+			PRINTF("Ublox GPS not detected at default I2C address. Please check wiring. Freezing.\n");
 	}
 	else
 	{
-			printf("Ublox GPS successfully detected. GPS OK...\n");
+			PRINTF("Ublox GPS successfully detected. GPS OK...\n");
 	}
 	
 	// set to using ubx only and via the DDC(I2C) port
-	printf("Setting UBX only via I2C\n");
+	PRINTF("Setting UBX only via I2C\n");
 	setI2COutput(COM_TYPE_UBX,defaultMaxWait); //Set the I2C port to output UBX only (turn off NMEA noise)
 	
 	saveConfiguration(defaultMaxWait); //Save the current settings to flash and BBR
@@ -213,49 +180,49 @@ uint8_t setup_GPS(){
 
 	if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // Set the dynamic model to PORTABLE
 	{
-		printf("***!!! Warning: setDynamicModel failed !!!***\n");
+		PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
 	}
 	else
 	{
-		printf("Dynamic platform model changed successfully!\n");
+		PRINTF("Dynamic platform model changed successfully!\n");
 	}
 
 	// Let's read the new dynamic model to see if it worked
 	uint8_t newDynamicModel = getDynamicModel(defaultMaxWait);
 	if (newDynamicModel == 255)
 	{
-		printf("***!!! Warning: getDynamicModel failed !!!***\n");
+		PRINTF("***!!! Warning: getDynamicModel failed !!!***\n");
 	}
 	else
 	{
-		printf("The new dynamic model is: %d\n",newDynamicModel);
+		PRINTF("The new dynamic model is: %d\n",newDynamicModel);
 	}
 
 	
 	if (setGPS_constellation_only(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
-		printf("***!!! Warning: setGPS_constellation_only failed !!!***\n");
+		PRINTF("***!!! Warning: setGPS_constellation_only failed !!!***\n");
 	}
 	else
 	{
-		printf("set GPS constellation only carried out successfully!\n");
+		PRINTF("set GPS constellation only carried out successfully!\n");
 	}
 
 	if (set_powersave_config(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
-		printf("***!!! Warning: set_powersave_config failed !!!***\n");
+		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
 	}
 	else
 	{
-		printf("set_powersave_config carried out successfully!\n");
+		PRINTF("set_powersave_config carried out successfully!\n");
 	}
 
 	// Printing protocol version
-	printf("\nProtocol Version: ");
+	PRINTF("\nProtocol Version: ");
 	uint8_t versionHigh = getProtocolVersionHigh(defaultMaxWait);
-	printf("%d.",versionHigh);
+	PRINTF("%d.",versionHigh);
 	uint8_t versionLow = getProtocolVersionLow(defaultMaxWait);
-	printf("%d\n",versionLow);
+	PRINTF("%d\n",versionLow);
 	
 }
 
@@ -266,79 +233,76 @@ uint8_t get_location_fix(){
 
 	if (put_in_continueous_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
-		printf("***!!! Warning: put_in_continueous_mode failed !!!***\n");
+		PRINTF("***!!! Warning: put_in_continueous_mode failed !!!***\n");
 	}
 	else
 	{
-		printf("put_in_continueous_mode carried out successfully!\n");
+		PRINTF("put_in_continueous_mode carried out successfully!\n");
 	}
 
 
 	long latitude = getLatitude(defaultMaxWait);
-	printf("Lat: ");
-	printf("%ld",latitude);
+	PRINTF("Lat: ");
+	PRINTF("%ld",latitude);
 
 	long longitude = getLongitude(defaultMaxWait);
-	printf(" Long: ");
-	printf("%ld",longitude);
-	printf(" (degrees * 10^-7)");
+	PRINTF(" Long: ");
+	PRINTF("%ld",longitude);
+	PRINTF(" (degrees * 10^-7)");
 
 	long altitude = getAltitude(defaultMaxWait);
-	printf(" Alt: ");
-	printf("%ld",altitude);
-	printf(" (mm)");
+	PRINTF(" Alt: ");
+	PRINTF("%ld",altitude);
+	PRINTF(" (mm)");
 
 	char SIV = getSIV(defaultMaxWait);
-	printf(" SIV: ");
-	printf("%d",SIV);
+	PRINTF(" SIV: ");
+	PRINTF("%d",SIV);
 
 
 	char fixType = getFixType(defaultMaxWait);
-	printf(" Fix: ");
-	if(fixType == 0) printf("No fix");
-	else if(fixType == 1) printf("Dead reckoning");
-	else if(fixType == 2) printf("2D");
-	else if(fixType == 3) printf("3D");
-	else if(fixType == 4) printf("GNSS+Dead reckoning");
+	PRINTF(" Fix: ");
+	if(fixType == 0) PRINTF("No fix");
+	else if(fixType == 1) PRINTF("Dead reckoning");
+	else if(fixType == 2) PRINTF("2D");
+	else if(fixType == 3) PRINTF("3D");
+	else if(fixType == 4) PRINTF("GNSS+Dead reckoning");
 
 
-	printf("\n");
-	printf("%d",getYear(defaultMaxWait));
-	printf("-");
-	printf("%d",getMonth(defaultMaxWait));
-	printf("-");
-	printf("%d",getDay(defaultMaxWait));
-	printf(" ");
-	printf("%d",getHour(defaultMaxWait));
-	printf(":");
-	printf("%d",getMinute(defaultMaxWait));
-	printf(":");
-	printf("%d",getSecond(defaultMaxWait));
-	printf(".");
+	PRINTF("\n");
+	PRINTF("%d",getYear(defaultMaxWait));
+	PRINTF("-");
+	PRINTF("%d",getMonth(defaultMaxWait));
+	PRINTF("-");
+	PRINTF("%d",getDay(defaultMaxWait));
+	PRINTF(" ");
+	PRINTF("%d",getHour(defaultMaxWait));
+	PRINTF(":");
+	PRINTF("%d",getMinute(defaultMaxWait));
+	PRINTF(":");
+	PRINTF("%d",getSecond(defaultMaxWait));
+	PRINTF(".");
 	
 	//Pretty print leading zeros
 	uint16_t mseconds = getMillisecond(defaultMaxWait);
 	if (mseconds < 100)
-		printf("0");
+		PRINTF("0");
 	if (mseconds < 10)
-		printf("0");
-	printf("%d",mseconds);
-
-	printf(" nanoSeconds: ");
-	printf("%d",getNanosecond(defaultMaxWait));
+		PRINTF("0");
+	PRINTF("%d",mseconds);
 
 
-	printf("\n");
+	PRINTF("\n");
 
 
 
 	if (put_in_power_save_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
-		printf("***!!! Warning: put_in_power_save_mode failed !!!***\n");
+		PRINTF("***!!! Warning: put_in_power_save_mode failed !!!***\n");
 	}
 	else
 	{
-		printf("put_in_power_save_mode carried out successfully!\n");
+		PRINTF("put_in_power_save_mode carried out successfully!\n");
 	}	
 	
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);   // pull GPS extint0 pin low to put gps to sleep. Really important

@@ -43,19 +43,10 @@
 #include "stm32l0xx_hal.h"
 
 #include <hw_i2c.h>
-
-#ifndef PRINTF
-
 #include <stdio.h>
+#include "hw.h" // for PRINTF
 
-//#define printf(...)     printf(...)
 
-
-////#define memcmp_P(s1, s2, n) memcmp((s1), (s2), (n))
-//#else
-//#include "hw.h" // for PRINTF
-
-#endif
 
 
 
@@ -183,7 +174,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 			//I believe this is a Ublox bug. Device should never present an 0xFF.
 			if ((_printDebug == true) || (_printLimitedDebug == true)) // PRINTF this if doing limited debugging
 			{
-				printf("checkUbloxI2C: Ublox bug, length lsb is 0xFF\r\n");
+				PRINTF("checkUbloxI2C: Ublox bug, length lsb is 0xFF\r\n");
 			}
 
 			lastCheck = HAL_GetTick(); //Put off checking to avoid I2C bus traffic
@@ -196,7 +187,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
     {
       if (_printDebug == true)
       {
-        printf("checkUbloxI2C: OK, zero bytes available\r\n");
+        PRINTF("checkUbloxI2C: OK, zero bytes available\r\n");
       }
       lastCheck = HAL_GetTick(); //Put off checking to avoid I2C bus traffic
       return (false);
@@ -212,8 +203,8 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 
       if ((_printDebug == true) || (_printLimitedDebug == true)) // PRINTF this if doing limited debugging
       {
-        printf("checkUbloxI2C: Bytes available error:");
-        printf("%d\r\n",bytesAvailable);
+        PRINTF("checkUbloxI2C: Bytes available error:");
+        PRINTF("%d\r\n",bytesAvailable);
       }
     }
 
@@ -221,18 +212,18 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
     {
       if (_printDebug == true)
       {
-        printf("checkUbloxI2C: Large packet of ");
-        printf("%d",bytesAvailable);
-        printf(" bytes received\r\n");
+        PRINTF("checkUbloxI2C: Large packet of ");
+        PRINTF("%d",bytesAvailable);
+        PRINTF(" bytes received\r\n");
       }
     }
     else
     {
       if (_printDebug == true)
       {
-        printf("checkUbloxI2C: Reading ");
-        printf("%d",bytesAvailable);
-        printf(" bytes\r\n");
+        PRINTF("checkUbloxI2C: Reading ");
+        PRINTF("%d",bytesAvailable);
+        PRINTF(" bytes\r\n");
       }
     }
 
@@ -273,7 +264,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
             {
               if ((_printDebug == true) || (_printLimitedDebug == true)) // PRINTF this if doing limited debugging
               {
-                printf("checkUbloxU2C: Ublox error, module not ready with data");
+                PRINTF("checkUbloxU2C: Ublox error, module not ready with data");
               }
               HAL_Delay(5); //In logic analyzation, the module starting responding after 1.48ms
 
@@ -398,10 +389,10 @@ void process(uint8_t incoming, ubxPacket *incomingUBX, uint8_t requestedClass, u
       {
         if (_printDebug == true)
         {
-          printf("process: ZERO LENGTH packet received: Class: 0x");
-          printf("%02X",packetBuf.cls);
-          printf(" ID: 0x");
-          printf("%02X\r\n",packetBuf.id);
+          PRINTF("process: ZERO LENGTH packet received: Class: 0x");
+          PRINTF("%02X",packetBuf.cls);
+          PRINTF(" ID: 0x");
+          PRINTF("%02X\r\n",packetBuf.id);
         }
         //If length is zero (!) this will be the first byte of the checksum so record it
         packetBuf.checksumA = incoming;
@@ -449,12 +440,12 @@ void process(uint8_t incoming, ubxPacket *incomingUBX, uint8_t requestedClass, u
         {
           if (_printDebug == true)
           {
-            printf("process: ACK received with .len != 2: Class: 0x");
-            printf("%02X ",packetBuf.payload[0]);
-            printf(" ID: 0x");
-            printf("%02X ",packetBuf.payload[1]);
-            printf(" len: ");
-            printf("%02X\r\n",packetBuf.len);
+            PRINTF("process: ACK received with .len != 2: Class: 0x");
+            PRINTF("%02X ",packetBuf.payload[0]);
+            PRINTF(" ID: 0x");
+            PRINTF("%02X ",packetBuf.payload[1]);
+            PRINTF(" len: ");
+            PRINTF("%02X\r\n",packetBuf.len);
           }
         }
       }
@@ -488,7 +479,7 @@ void processNMEA(char incoming)
 {
 //  //If user has assigned an output port then pipe the characters there
 //  if (_nmeaOutputPort != NULL)
-    printf("%c",incoming); //Echo this byte to the serial port
+    PRINTF("%c",incoming); //Echo this byte to the serial port
 }
 
 //We need to be able to identify an RTCM packet and then the length
@@ -545,11 +536,11 @@ void processRTCM(uint8_t incoming)
   //write(incoming); //An example of passing this byte out the serial port
 
   //Debug printing
-  //  printf(" "));
-  //  iincoming < 0x10) printf("0"));
-  //  iincoming < 0x10) printf("0"));
-  //  printf(incoming, HEX);
-  //  irtcmFrameCounter % 16 == 0) printf();
+  //  PRINTF(" "));
+  //  iincoming < 0x10) PRINTF("0"));
+  //  iincoming < 0x10) PRINTF("0"));
+  //  PRINTF(incoming, HEX);
+  //  irtcmFrameCounter % 16 == 0) PRINTF();
 }
 
 //Given a character, file it away into the uxb packet structure
@@ -614,35 +605,35 @@ void processUBX(uint8_t incoming, ubxPacket *incomingUBX, uint8_t requestedClass
         incomingUBX->classAndIDmatch = SFE_UBLOX_PACKET_NOTACKNOWLEDGED; // If we have a match, set the classAndIDmatch flag to NOTACKNOWLEDGED
         if (_printDebug == true)
         {
-          printf("processUBX: NACK received: Requested Class: 0x");
-          printf("%02X ",incomingUBX->payload[0]);
-          printf(" Requested ID: 0x");
-          printf("%02X \r\n",incomingUBX->payload[1]);
+          PRINTF("processUBX: NACK received: Requested Class: 0x");
+          PRINTF("%02X ",incomingUBX->payload[0]);
+          PRINTF(" Requested ID: 0x");
+          PRINTF("%02X \r\n",incomingUBX->payload[1]);
         }
       }
 
       if (_printDebug == true)
       {
-        printf("Incoming: Size: ");
-        printf("%d",incomingUBX->len);
-        printf(" Received: ");
+        PRINTF("Incoming: Size: ");
+        PRINTF("%d",incomingUBX->len);
+        PRINTF(" Received: ");
         printPacket(incomingUBX);
 
         if (incomingUBX->valid == SFE_UBLOX_PACKET_VALIDITY_VALID)
         {
-          printf("packetCfg now valid\r\n");
+          PRINTF("packetCfg now valid\r\n");
         }
         if (packetAck.valid == SFE_UBLOX_PACKET_VALIDITY_VALID)
         {
-          printf("packetAck now valid\r\n");
+          PRINTF("packetAck now valid\r\n");
         }
         if (incomingUBX->classAndIDmatch == SFE_UBLOX_PACKET_VALIDITY_VALID)
         {
-          printf("packetCfg classAndIDmatch\r\n");
+          PRINTF("packetCfg classAndIDmatch\r\n");
         }
         if (packetAck.classAndIDmatch == SFE_UBLOX_PACKET_VALIDITY_VALID)
         {
-          printf("packetAck classAndIDmatch\r\n");
+          PRINTF("packetAck classAndIDmatch\r\n");
         }
       }
 
@@ -674,22 +665,22 @@ void processUBX(uint8_t incoming, ubxPacket *incomingUBX, uint8_t requestedClass
       {
 
 
-        printf("Checksum failed:");
-        printf(" checksumA: ");
-        printf("%d",incomingUBX->checksumA);
-        printf(" checksumB: ");
-        printf("%d",incomingUBX->checksumB);
+        PRINTF("Checksum failed:");
+        PRINTF(" checksumA: ");
+        PRINTF("%d",incomingUBX->checksumA);
+        PRINTF(" checksumB: ");
+        PRINTF("%d",incomingUBX->checksumB);
 
-        printf(" rollingChecksumA: ");
-        printf("%d",rollingChecksumA);
-        printf(" rollingChecksumB: ");
-        printf("%d",rollingChecksumB);
-        printf("\r\n");
+        PRINTF(" rollingChecksumA: ");
+        PRINTF("%d",rollingChecksumA);
+        PRINTF(" rollingChecksumB: ");
+        PRINTF("%d",rollingChecksumB);
+        PRINTF("\r\n");
 
-        printf("Failed  : ");
-        printf("Size: ");
-        printf("%d",incomingUBX->len);
-        printf(" Received: ");
+        PRINTF("Failed  : ");
+        PRINTF("Size: ");
+        PRINTF("%d",incomingUBX->len);
+        PRINTF(" Received: ");
         printPacket(incomingUBX);
       }
     }
@@ -724,7 +715,7 @@ void processUBX(uint8_t incoming, ubxPacket *incomingUBX, uint8_t requestedClass
     currentSentence = NONE; //Reset the sentence to being looking for a new start char
     if (_printDebug == true)
     {
-      printf("processUBX: counter hit MAX_PAYLOAD_SIZE");
+      PRINTF("processUBX: counter hit MAX_PAYLOAD_SIZE");
     }
   }
 }
@@ -816,38 +807,38 @@ void processUBXpacket(ubxPacket *msg)
 
       if (_printDebug == true)
       {
-        printf("Sec: ");
-        printf("%3.5f\n",((float)extractLong(4)) / 1000.0f);
-        printf(" ");
-        printf("LON: ");
-        printf("%3.5f\n",((float)(int32_t)extractLong(8)) / 10000000.0f);
-        printf(" ");
-        printf("LAT: ");
-        printf("%3.5f\n",((float)(int32_t)extractLong(12)) / 10000000.0f);
-        printf(" ");
-        printf("ELI M: ");
-        printf("%3.5f\n",((float)(int32_t)extractLong(16)) / 1000.0f);
-        printf(" ");
-        printf("MSL M: ");
-        printf("%3.5f\n",((float)(int32_t)extractLong(20)) / 1000.0f);
-        printf(" ");
-        printf("LON HP: ");
-        printf("%d\r\n",extractSignedChar(24));
-        printf(" ");
-        printf("LAT HP: ");
-        printf("%d\r\n",extractSignedChar(25));
-        printf(" ");
-        printf("ELI HP: ");
-        printf("%d\r\n",extractSignedChar(26));
-        printf(" ");
-        printf("MSL HP: ");
-        printf("%d\r\n",extractSignedChar(27));
-        printf(" ");
-        printf("HA 2D M: ");
-        printf("%3.5f\n",((float)(int32_t)extractLong(28)) / 10000.0f);
-        printf(" ");
-        printf("VERT M: ");
-        printf("%3.5f\n",((float)(int32_t)extractLong(32)) / 10000.0f);
+        PRINTF("Sec: ");
+        PRINTF("%3.5f\n",((float)extractLong(4)) / 1000.0f);
+        PRINTF(" ");
+        PRINTF("LON: ");
+        PRINTF("%3.5f\n",((float)(int32_t)extractLong(8)) / 10000000.0f);
+        PRINTF(" ");
+        PRINTF("LAT: ");
+        PRINTF("%3.5f\n",((float)(int32_t)extractLong(12)) / 10000000.0f);
+        PRINTF(" ");
+        PRINTF("ELI M: ");
+        PRINTF("%3.5f\n",((float)(int32_t)extractLong(16)) / 1000.0f);
+        PRINTF(" ");
+        PRINTF("MSL M: ");
+        PRINTF("%3.5f\n",((float)(int32_t)extractLong(20)) / 1000.0f);
+        PRINTF(" ");
+        PRINTF("LON HP: ");
+        PRINTF("%d\r\n",extractSignedChar(24));
+        PRINTF(" ");
+        PRINTF("LAT HP: ");
+        PRINTF("%d\r\n",extractSignedChar(25));
+        PRINTF(" ");
+        PRINTF("ELI HP: ");
+        PRINTF("%d\r\n",extractSignedChar(26));
+        PRINTF(" ");
+        PRINTF("MSL HP: ");
+        PRINTF("%d\r\n",extractSignedChar(27));
+        PRINTF(" ");
+        PRINTF("HA 2D M: ");
+        PRINTF("%3.5f\n",((float)(int32_t)extractLong(28)) / 10000.0f);
+        PRINTF(" ");
+        PRINTF("VERT M: ");
+        PRINTF("%3.5f\n",((float)(int32_t)extractLong(32)) / 10000.0f);
       }
     }
     break;
@@ -863,7 +854,7 @@ sfe_ublox_status_e sendCommand(ubxPacket *outgoingUBX, uint16_t maxWait)
 
   if (_printDebug == true)
   {
-    printf("\nSending: ");
+    PRINTF("\nSending: ");
     printPacket(outgoingUBX);
   }
 
@@ -874,7 +865,7 @@ sfe_ublox_status_e sendCommand(ubxPacket *outgoingUBX, uint16_t maxWait)
     {
       if (_printDebug == true)
       {
-        printf("Send I2C Command failed");
+        PRINTF("Send I2C Command failed");
       }
       return retVal;
     }
@@ -887,7 +878,7 @@ sfe_ublox_status_e sendCommand(ubxPacket *outgoingUBX, uint16_t maxWait)
     {
       if (_printDebug == true)
       {
-        printf("sendCommand: Waiting for ACK response\r\n");
+        PRINTF("sendCommand: Waiting for ACK response\r\n");
       }
       retVal = waitForACKResponse(outgoingUBX, outgoingUBX->cls, outgoingUBX->id, maxWait); //Wait for Ack response
     }
@@ -895,7 +886,7 @@ sfe_ublox_status_e sendCommand(ubxPacket *outgoingUBX, uint16_t maxWait)
     {
       if (_printDebug == true)
       {
-        printf("sendCommand: Waiting for No ACK response\r\n");
+        PRINTF("sendCommand: Waiting for No ACK response\r\n");
       }
       retVal = waitForNoACKResponse(outgoingUBX, outgoingUBX->cls, outgoingUBX->id, maxWait); //Wait for Ack response
     }
@@ -984,54 +975,54 @@ void printPacket(ubxPacket *packet)
 {
   if (_printDebug == true)
   {
-    printf("CLS:");
+    PRINTF("CLS:");
     if (packet->cls == UBX_CLASS_NAV) //1
-      printf("NAV");
+      PRINTF("NAV");
     else if (packet->cls == UBX_CLASS_ACK) //5
-      printf("ACK");
+      PRINTF("ACK");
     else if (packet->cls == UBX_CLASS_CFG) //6
-      printf("CFG");
+      PRINTF("CFG");
     else if (packet->cls == UBX_CLASS_MON) //0x0A
-      printf("MON");
+      PRINTF("MON");
     else
     {
-      printf("0x");
-      printf("%d",packet->cls);
+      PRINTF("0x");
+      PRINTF("%d",packet->cls);
     }
 
-    printf(" ID:");
+    PRINTF(" ID:");
     if (packet->cls == UBX_CLASS_NAV && packet->id == UBX_NAV_PVT)
-      printf("PVT");
+      PRINTF("PVT");
     else if (packet->cls == UBX_CLASS_CFG && packet->id == UBX_CFG_RATE)
-      printf("RATE");
+      PRINTF("RATE");
     else if (packet->cls == UBX_CLASS_CFG && packet->id == UBX_CFG_CFG)
-      printf("SAVE");
+      PRINTF("SAVE");
     else
     {
-      printf("0x");
-      printf("%02X",packet->id);
+      PRINTF("0x");
+      PRINTF("%02X",packet->id);
     }
 
-    printf(" Len: 0x");
-    printf("%02X",packet->len);
+    PRINTF(" Len: 0x");
+    PRINTF("%02X",packet->len);
 
     // Only PRINTF the payload is ignoreThisPayload is false otherwise
     // we could be printing gibberish from beyond the end of packetBuf
     if (ignoreThisPayload == false)
     {
-      printf(" Payload:");
+      PRINTF(" Payload:");
 
       for (int x = 0; x < packet->len; x++)
       {
-        printf("0x");
-        printf("%02X ",packet->payload[x]);
+        PRINTF("0x");
+        PRINTF("%02X ",packet->payload[x]);
       }
     }
     else
     {
-      printf(" Payload: IGNORED");
+      PRINTF(" Payload: IGNORED");
     }
-    printf("\r\n");
+    PRINTF("\r\n");
   }
 }
 
@@ -1090,9 +1081,9 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
       {
         if (_printDebug == true)
         {
-          printf("waitForACKResponse: valid data and valid ACK received after ");
-          printf("%d",HAL_GetTick() - startTime);
-          printf(" msec\r\n");
+          PRINTF("waitForACKResponse: valid data and valid ACK received after ");
+          PRINTF("%d",HAL_GetTick() - startTime);
+          PRINTF(" msec\r\n");
         }
         return (SFE_UBLOX_STATUS_DATA_RECEIVED); //We received valid data and a correct ACK!
       }
@@ -1106,9 +1097,9 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
       {
         if (_printDebug == true)
         {
-          printf("waitForACKResponse: no data and valid ACK after ");
-          printf("%d",HAL_GetTick() - startTime);
-          printf(" msec\r\n");
+          PRINTF("waitForACKResponse: no data and valid ACK after ");
+          PRINTF("%d",HAL_GetTick() - startTime);
+          PRINTF(" msec\r\n");
         }
         return (SFE_UBLOX_STATUS_DATA_SENT); //We got an ACK but no data...
       }
@@ -1124,9 +1115,9 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
       {
         if (_printDebug == true)
         {
-          printf("waitForACKResponse: data being OVERWRITTEN after ");
-          printf("%d\r\n",HAL_GetTick() - startTime);
-          printf(" msec");
+          PRINTF("waitForACKResponse: data being OVERWRITTEN after ");
+          PRINTF("%d\r\n",HAL_GetTick() - startTime);
+          PRINTF(" msec");
         }
         return (SFE_UBLOX_STATUS_DATA_OVERWRITTEN); // Data was valid but has been or is being overwritten
       }
@@ -1137,9 +1128,9 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
       {
         if (_printDebug == true)
         {
-          printf("waitForACKResponse: CRC failed after ");
-          printf("%d\r\n",HAL_GetTick() - startTime);
-          printf(" msec");
+          PRINTF("waitForACKResponse: CRC failed after ");
+          PRINTF("%d\r\n",HAL_GetTick() - startTime);
+          PRINTF(" msec");
         }
         return (SFE_UBLOX_STATUS_CRC_FAIL); //Checksum fail
       }
@@ -1155,9 +1146,9 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
       {
         if (_printDebug == true)
         {
-          printf("waitForACKResponse: data was NOTACKNOWLEDGED (NACK) after ");
-          printf("%d\r\n",HAL_GetTick() - startTime);
-          printf(" msec");
+          PRINTF("waitForACKResponse: data was NOTACKNOWLEDGED (NACK) after ");
+          PRINTF("%d\r\n",HAL_GetTick() - startTime);
+          PRINTF(" msec");
         }
         return (SFE_UBLOX_STATUS_COMMAND_NACK); //We received a NACK!
       }
@@ -1169,9 +1160,9 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
       {
         if (_printDebug == true)
         {
-          printf("waitForACKResponse: VALID data and INVALID ACK received after ");
-          printf("%d\r\n",HAL_GetTick() - startTime);
-          printf(" msec");
+          PRINTF("waitForACKResponse: VALID data and INVALID ACK received after ");
+          PRINTF("%d\r\n",HAL_GetTick() - startTime);
+          PRINTF(" msec");
         }
         return (SFE_UBLOX_STATUS_DATA_RECEIVED); //We received valid data and an invalid ACK!
       }
@@ -1182,9 +1173,9 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
       {
         if (_printDebug == true)
         {
-          printf("waitForACKResponse: INVALID data and INVALID ACK received after ");
-          printf("%d",HAL_GetTick() - startTime);
-          printf(" msec\r\n");
+          PRINTF("waitForACKResponse: INVALID data and INVALID ACK received after ");
+          PRINTF("%d",HAL_GetTick() - startTime);
+          PRINTF(" msec\r\n");
         }
         return (SFE_UBLOX_STATUS_FAIL); //We received invalid data and an invalid ACK!
       }
@@ -1195,9 +1186,9 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
       {
         if (_printDebug == true)
         {
-          printf("waitForACKResponse: valid data after ");
-          printf("%d",HAL_GetTick() - startTime);
-          printf(" msec. Waiting for ACK.\r\n");
+          PRINTF("waitForACKResponse: valid data after ");
+          PRINTF("%d",HAL_GetTick() - startTime);
+          PRINTF(" msec. Waiting for ACK.\r\n");
         }
       }
 
@@ -1214,18 +1205,18 @@ sfe_ublox_status_e waitForACKResponse(ubxPacket *outgoingUBX, uint8_t requestedC
   {
     if (_printDebug == true)
     {
-      printf("waitForACKResponse: TIMEOUT with valid data after ");
-      printf("%d",HAL_GetTick() - startTime);
-      printf(" msec. \r\n");
+      PRINTF("waitForACKResponse: TIMEOUT with valid data after ");
+      PRINTF("%d",HAL_GetTick() - startTime);
+      PRINTF(" msec. \r\n");
     }
     return (SFE_UBLOX_STATUS_DATA_RECEIVED); //We received valid data... But no ACK!
   }
 
   if (_printDebug == true)
   {
-    printf("waitForACKResponse: TIMEOUT after ");
-    printf("%d",HAL_GetTick() - startTime);
-    printf(" msec. \r\n");
+    PRINTF("waitForACKResponse: TIMEOUT after ");
+    PRINTF("%d",HAL_GetTick() - startTime);
+    PRINTF(" msec. \r\n");
   }
 
   return (SFE_UBLOX_STATUS_TIMEOUT);
@@ -1259,9 +1250,9 @@ sfe_ublox_status_e waitForNoACKResponse(ubxPacket *outgoingUBX, uint8_t requeste
       {
         if (_printDebug == true)
         {
-          printf("waitForNoACKResponse: valid data with CLS/ID match after ");
-          printf("%d",HAL_GetTick() - startTime);
-          printf(" msec\r\n");
+          PRINTF("waitForNoACKResponse: valid data with CLS/ID match after ");
+          PRINTF("%d",HAL_GetTick() - startTime);
+          PRINTF(" msec\r\n");
         }
         return (SFE_UBLOX_STATUS_DATA_RECEIVED); //We received valid data!
       }
@@ -1277,9 +1268,9 @@ sfe_ublox_status_e waitForNoACKResponse(ubxPacket *outgoingUBX, uint8_t requeste
       {
         if (_printDebug == true)
         {
-          printf("waitForNoACKResponse: data being OVERWRITTEN after ");
-          printf("%d\r\n",HAL_GetTick() - startTime);
-          printf(" msec");
+          PRINTF("waitForNoACKResponse: data being OVERWRITTEN after ");
+          PRINTF("%d\r\n",HAL_GetTick() - startTime);
+          PRINTF(" msec");
         }
         return (SFE_UBLOX_STATUS_DATA_OVERWRITTEN); // Data was valid but has been or is being overwritten
       }
@@ -1290,12 +1281,12 @@ sfe_ublox_status_e waitForNoACKResponse(ubxPacket *outgoingUBX, uint8_t requeste
       {
         if (_printDebug == true)
         {
-          printf("waitForNoACKResponse: valid but UNWANTED data after ");
-          printf("%d\r\n",HAL_GetTick() - startTime);
-          printf(" msec. Class: ");
-          printf("%02X\r\n",outgoingUBX->cls);
-          printf(" ID: ");
-          printf("%02X\r\n",outgoingUBX->id);
+          PRINTF("waitForNoACKResponse: valid but UNWANTED data after ");
+          PRINTF("%d\r\n",HAL_GetTick() - startTime);
+          PRINTF(" msec. Class: ");
+          PRINTF("%02X\r\n",outgoingUBX->cls);
+          PRINTF(" ID: ");
+          PRINTF("%02X\r\n",outgoingUBX->id);
         }
       }
 
@@ -1304,9 +1295,9 @@ sfe_ublox_status_e waitForNoACKResponse(ubxPacket *outgoingUBX, uint8_t requeste
       {
         if (_printDebug == true)
         {
-          printf("waitForNoACKResponse: CLS/ID match but failed CRC after ");
-          printf("%d\r\n",HAL_GetTick() - startTime);
-          printf(" msec");
+          PRINTF("waitForNoACKResponse: CLS/ID match but failed CRC after ");
+          PRINTF("%d\r\n",HAL_GetTick() - startTime);
+          PRINTF(" msec");
         }
         return (SFE_UBLOX_STATUS_CRC_FAIL); //We received invalid data
       }
@@ -1317,9 +1308,9 @@ sfe_ublox_status_e waitForNoACKResponse(ubxPacket *outgoingUBX, uint8_t requeste
 
   if (_printDebug == true)
   {
-    printf("waitForNoACKResponse: TIMEOUT after ");
-    printf("%d",HAL_GetTick() - startTime);
-    printf(" msec. No packet received.\r\n");
+    PRINTF("waitForNoACKResponse: TIMEOUT after ");
+    PRINTF("%d",HAL_GetTick() - startTime);
+    PRINTF(" msec. No packet received.\r\n");
   }
 
   return (SFE_UBLOX_STATUS_TIMEOUT);
@@ -2029,15 +2020,15 @@ bool powerSaveMode(bool power_save, uint16_t maxWait)
   /*
   if (_printDebug == true)
   {
-    printf("Protocol version is ");
-    printf(protVer);
+    PRINTF("Protocol version is ");
+    PRINTF(protVer);
   }
   */
   if (protVer >= 27)
   {
     if (_printDebug == true)
     {
-      printf("powerSaveMode (UBX-CFG-RXM) is not supported by this protocol version");
+      PRINTF("powerSaveMode (UBX-CFG-RXM) is not supported by this protocol version");
     }
     return (false);
   }
@@ -2077,15 +2068,15 @@ uint8_t getPowerSaveMode(uint16_t maxWait)
   /*
   if (_printDebug == true)
   {
-    printf("Protocol version is ");
-    printf(protVer);
+    PRINTF("Protocol version is ");
+    PRINTF(protVer);
   }
   */
   if (protVer >= 27)
   {
     if (_printDebug == true)
     {
-      printf("powerSaveMode (UBX-CFG-RXM) is not supported by this protocol version");
+      PRINTF("powerSaveMode (UBX-CFG-RXM) is not supported by this protocol version");
     }
     return (255);
   }
@@ -2557,7 +2548,7 @@ bool getPVT(uint16_t maxWait)
     //The GPS is automatically reporting, we just check whether we got unread data
     if (_printDebug == true)
     {
-      printf("getPVT: Autoreporting");
+      PRINTF("getPVT: Autoreporting");
     }
     checkUbloxInternal(&packetCfg, UBX_CLASS_NAV, UBX_NAV_PVT);
     return moduleQueried.all;
@@ -2567,7 +2558,7 @@ bool getPVT(uint16_t maxWait)
     //Someone else has to call checkUblox for us...
     if (_printDebug == true)
     {
-      printf("getPVT: Exit immediately");
+      PRINTF("getPVT: Exit immediately");
     }
     return (false);
   }
@@ -2575,7 +2566,7 @@ bool getPVT(uint16_t maxWait)
   {
     if (_printDebug == true)
     {
-      printf("getPVT: Polling");
+      PRINTF("getPVT: Polling");
     }
 
     //The GPS is not automatically reporting navigation position so we have to poll explicitly
@@ -2592,8 +2583,8 @@ bool getPVT(uint16_t maxWait)
 
     if (_printDebug == true)
     {
-      printf("getPVT retVal: ");
-      printf("%s",statusString(retVal));
+      PRINTF("getPVT retVal: ");
+      PRINTF("%s",statusString(retVal));
     }
     return (false);
   }
@@ -2882,14 +2873,14 @@ bool getProtocolVersion(uint16_t maxWait)
 
   // if (_printDebug == true)
   // {
-  //   printf("MON VER Payload:");
+  //   PRINTF("MON VER Payload:");
   //   for (int location = 0; location < packetCfg.len; location++)
   //   {
   //     if (location % 30 == 0)
-  //       printf();
+  //       PRINTF();
   //     write(payloadCfg[location]);
   //   }
-  //   printf();
+  //   PRINTF();
   // }
 
   //We will step through the payload looking at each extension field of 30 bytes
@@ -2904,10 +2895,10 @@ bool getProtocolVersion(uint16_t maxWait)
 
       if (_printDebug == true)
       {
-        printf("Protocol version: ");
-        printf("%d",versionHigh);
-        printf(".");
-        printf("%d\r\n",versionLow);
+        PRINTF("Protocol version: ");
+        PRINTF("%d",versionHigh);
+        PRINTF(".");
+        PRINTF("%d\r\n",versionLow);
       }
       return (true); //Success!
     }
