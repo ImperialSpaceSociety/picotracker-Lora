@@ -91,8 +91,9 @@ void Error_Handler(void);
 /* GPS RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 
-#define FIX				250		// attempts to poll UBX-NAV-PVT
-#define GPS_LOCATION_FIX_TIMEOUT  120000
+#define FIX				                        250		  // attempts to poll UBX-NAV-PVT
+#define GPS_LOCATION_FIX_TIMEOUT          120000
+#define GPS_WAKEUP_TIMEOUT                1000
 
 
 /* GEOFENCE RELATED DEFINES */
