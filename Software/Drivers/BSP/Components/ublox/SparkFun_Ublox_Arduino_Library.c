@@ -159,7 +159,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 		uint8_t buff_rx[2] = {0};
 		
 		//uint16_t return_value = 0;
-		if (HAL_I2C_Mem_Read(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFD,I2C_MEMADD_SIZE_8BIT,buff_rx,2,1000)!= HAL_OK)
+		if (HAL_I2C_Mem_Read(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFD,I2C_MEMADD_SIZE_8BIT,buff_rx,2,defaultMaxWait)!= HAL_OK)
 		{
 			return (false);                          //Sensor did not ACK
 		}
@@ -249,7 +249,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
           //uint8_t incoming = _i2cPort->read(); //Grab the actual character
 					
 					uint8_t buff_rx[2] = {0};
-					if (HAL_I2C_Master_Receive(&hi2c1,(uint16_t) _gpsI2Caddress << 1,buff_rx,1,100)!= HAL_OK)
+					if (HAL_I2C_Mem_Read(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFF,I2C_MEMADD_SIZE_8BIT,buff_rx,1,defaultMaxWait)!= HAL_OK)
 					{
 						return (false);  //Sensor did not ACK
 					}
