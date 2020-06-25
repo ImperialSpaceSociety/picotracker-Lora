@@ -253,24 +253,30 @@ gps_status_t get_location_fix(uint32_t timeout)
 
 		if (fixType == 3)
 		{
+				PRINTF("GPS fix acquired in %d milliseconds\n",HAL_GetTick() - startTime);
+			
 				long latitude = getLatitude(defaultMaxWait);
 				PRINTF("Lat: ");
 				PRINTF("%ld",latitude);
+			  GPS_UBX_latitude_Float = latitude/10000;
 
 				long longitude = getLongitude(defaultMaxWait);
 				PRINTF(" Long: ");
 				PRINTF("%ld",longitude);
 				PRINTF(" (degrees * 10^-7)");
+				GPS_UBX_longitude_Float = longitude/10000;
 
 				long altitude = getAltitude(defaultMaxWait);
 				PRINTF(" Alt: ");
 				PRINTF("%ld",altitude);
 				PRINTF(" (mm)");
+			  GPSaltitude = altitude;
 
 				char SIV = getSIV(defaultMaxWait);
 				PRINTF(" SIV: ");
 				PRINTF("%d",SIV);
-			
+			  GPSsats = SIV;
+				
 				PRINTF("\n");
 			
 			
@@ -289,7 +295,9 @@ gps_status_t get_location_fix(uint32_t timeout)
 				return GPS_SUCCESS;
 		}
 	}
-
+	
+	PRINTF("GPS FIX TIMOUT\n");
+	
 	if (put_in_power_save_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
 		PRINTF("***!!! Warning: put_in_power_save_mode failed !!!***\n");
