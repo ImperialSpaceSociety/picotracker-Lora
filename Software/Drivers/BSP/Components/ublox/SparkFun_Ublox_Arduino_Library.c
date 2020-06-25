@@ -156,6 +156,11 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 //      return (false);                          //Sensor did not ACK
 
 		
+		if (HAL_I2C_IsDeviceReady(&hi2c1,(uint16_t) _gpsI2Caddress << 1,5,defaultMaxWait) != HAL_OK)
+		{
+			return (false);                          //Sensor did not ACK
+		}
+		
 		uint8_t buff_rx[2] = {0};
 		
 		//uint16_t return_value = 0;
@@ -233,7 +238,11 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 //      _i2cPort->write(0xFF);                     //0xFF is the register to read data from
       //if (_i2cPort->endTransmission(false) != 0) //Send a restart command. Do not release bus.
         //return (false);                          //Sensor did not ACK
-
+			if (HAL_I2C_IsDeviceReady(&hi2c1,(uint16_t) _gpsI2Caddress << 1,5,defaultMaxWait) != HAL_OK)
+			{
+				return (false);                          //Sensor did not ACK
+			}
+			
       //Limit to 32 bytes or whatever the buffer limit is for given platform
       uint16_t bytesToRead = bytesAvailable;
       if (bytesToRead > I2C_BUFFER_LENGTH)
