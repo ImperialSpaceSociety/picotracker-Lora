@@ -836,8 +836,8 @@ typedef struct
 	static uint8_t _gpsI2Caddress = 0x42; //Default 7-bit unshifted address of the ublox 6/7/8/M8/F9 series
 	//This can be changed using the ublox configuration software
 
-	static bool _printDebug = true; //Flag to print the serial commands we are sending to the Serial port for debug
-	static bool _printLimitedDebug = true; //Flag to print limited debug messages. Useful for I2C debugging or high navigation rates
+	static bool _printDebug = false; //Flag to print the serial commands we are sending to the Serial port for debug
+	static bool _printLimitedDebug = false; //Flag to print limited debug messages. Useful for I2C debugging or high navigation rates
 
 	//The packet buffers
 	//These are pointed at from within the ubxPacket
