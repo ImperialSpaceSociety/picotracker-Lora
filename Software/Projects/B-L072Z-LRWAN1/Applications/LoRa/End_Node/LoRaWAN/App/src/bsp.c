@@ -162,7 +162,7 @@ uint16_t BSP_GetBatteryLevel16( void )
   */
 void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data)
 {
-	#if 0
+	#if 1
   HAL_FLASH_Unlock();
   __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR );
   
