@@ -237,6 +237,10 @@ gps_status_t get_location_fix(uint32_t timeout)
 		else if(fixType == 4) PRINTF("GNSS+Dead reckoning");
 		
 		
+		char SIV = getSIV(defaultMaxWait);
+		PRINTF(" SIV: ");
+		PRINTF("%d",SIV);
+		
 	  PRINTF(" TIME: ");
 		PRINTF("%d",getYear(defaultMaxWait));
 		PRINTF("-");
@@ -251,7 +255,7 @@ gps_status_t get_location_fix(uint32_t timeout)
 		PRINTF("%d",getSecond(defaultMaxWait));
 		PRINTF("\n");
 
-		if (fixType == 3)
+		if (fixType == 3 && SIV >= 5 )
 		{
 				PRINTF("GPS fix acquired in %d milliseconds\n",HAL_GetTick() - startTime);
 			
@@ -270,13 +274,10 @@ gps_status_t get_location_fix(uint32_t timeout)
 				PRINTF(" Alt: ");
 				PRINTF("%ld",altitude);
 				PRINTF(" (mm)");
-			  GPSaltitude = altitude;
+				GPSaltitude = altitude;
 
-				char SIV = getSIV(defaultMaxWait);
-				PRINTF(" SIV: ");
-				PRINTF("%d",SIV);
-			  GPSsats = SIV;
-				
+				GPSsats = SIV;
+
 				PRINTF("\n");
 			
 			
