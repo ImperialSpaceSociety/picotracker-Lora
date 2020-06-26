@@ -55,6 +55,8 @@
 #define LPP_DATATYPE_GPSTIME        0x85
 #define LPP_APP_PORT 99
 
+
+#define LORAMAC_REGION_EEPROM_ADDR 300
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 
 
@@ -208,19 +210,29 @@ int main( void )
 	 * It needs a GPS fix to get the right LoRa params for the region
 	 */
 	PRINTF("SELFTEST: Attempting to get a GPS fix\n\r");
-	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
+	gps_status_t gps_status = get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
 
 	#endif
 	
 	
 	PRINTF("SELFTEST: Now the radio should transmit\n\r");
 	
+	if (gps_status == GPS_SUCCESS)
+	{
+		/* Find out which region of world we are in and update region parm*/
+		update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+		
+		/* Save current polygon to eeprom only if gps fix was valid */
+		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
+	}else
+	{
+		/* read the eeprom value instead */
+		// TODO: must ensure that eeprom is not filled with garbage. i.e. when the eeprom has never been programed
+		EepromMcuReadBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
+	}
 
-	/* Find out which region of world we are in and update region parm*/
-	update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 	
 	
-//	PRINTF("MY CURRENT LOCATION POLYGON : %d\n\r", (int)curr_poly_region);  
 	PRINTF("APP DUTY CYCLE(TX INTERVAL maybe longer depending on message length and datarate) : %d\n\r", APP_TX_DUTYCYCLE);  
 
 
