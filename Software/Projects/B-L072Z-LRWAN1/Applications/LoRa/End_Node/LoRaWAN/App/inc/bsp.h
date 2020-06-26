@@ -55,8 +55,7 @@ typedef struct{
 } sensor_t;
 
 
-extern uint16_t battery_level16;
-extern uint32_t VCC_ADC;
+
 
 
 #define RESITOR_DIVIDER_PROD                    ((100000.0+100000.0)/100000.0)

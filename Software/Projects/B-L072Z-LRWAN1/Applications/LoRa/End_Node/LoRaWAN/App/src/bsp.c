@@ -30,11 +30,7 @@
 
 
 
-// Battery levels
-uint16_t battery_level16 = 0;
 
-// Battery/Solar voltage
-uint32_t VCC_ADC = 0;
 
 
 
@@ -73,7 +69,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
 	#endif
 	
-	battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
+	uint16_t battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
 
 	
 	PRINTF("================================================================\r\n");
