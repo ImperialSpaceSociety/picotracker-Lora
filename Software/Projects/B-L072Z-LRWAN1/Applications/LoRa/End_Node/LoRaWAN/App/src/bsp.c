@@ -178,7 +178,7 @@ void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data)
 /**
   * @brief Check Frame Counter value saved in EEPROM
   * @param none
-  * @retval BC_ChargeStatusTypeDef Battery charging status
+  * @retval uint8_t Battery charging status
   */
 uint8_t EepromFrameCounterValidation(void)
 {
