@@ -41,6 +41,16 @@ uint32_t VCC_ADC = 0;
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define BATTERY_ADC_CHANNEL             ADC_CHANNEL_5
+/*!
+ * Generic definition
+ */
+#ifndef SUCCESS
+#define SUCCESS                                     1
+#endif
+
+#ifndef FAIL
+#define FAIL                                        0
+#endif
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -201,6 +211,42 @@ void LoadFrameCounter(uint32_t* fcnt)
 }
 
 
+uint8_t EepromMcuWriteBuffer( uint16_t addr, uint8_t *buffer, uint16_t size )
+{
+    uint8_t status = FAIL;
+
+    assert_param( ( DATA_EEPROM_BASE + addr ) >= DATA_EEPROM_BASE );
+    assert_param( buffer != NULL );
+    assert_param( size < ( DATA_EEPROM_BANK2_END - DATA_EEPROM_BASE ) );
+
+    if( HAL_FLASHEx_DATAEEPROM_Unlock( ) == HAL_OK )
+    {
+        for( uint16_t i = 0; i < size; i++ )
+        {
+            if( HAL_FLASHEx_DATAEEPROM_Program( FLASH_TYPEPROGRAMDATA_BYTE,
+                                                ( DATA_EEPROM_BASE + addr + i ),
+                                                  buffer[i] ) != HAL_OK )
+            {
+                // Failed to write EEPROM
+                break;
+            }
+        }
+        status = SUCCESS;
+    }
+
+    HAL_FLASHEx_DATAEEPROM_Lock( );
+    return status;
+}
+
+uint8_t EepromMcuReadBuffer( uint16_t addr, uint8_t *buffer, uint16_t size )
+{
+    assert_param( ( DATA_EEPROM_BASE + addr ) >= DATA_EEPROM_BASE );
+    assert_param( buffer != NULL );
+    assert_param( size < ( DATA_EEPROM_BANK2_END - DATA_EEPROM_BASE ) );
+
+    memcpy1( buffer, ( uint8_t* )( DATA_EEPROM_BASE + addr ), size );
+    return SUCCESS;
+}
 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
