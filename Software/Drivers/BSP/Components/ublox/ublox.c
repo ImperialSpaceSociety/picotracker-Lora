@@ -300,6 +300,8 @@ gps_status_t get_location_fix(uint32_t timeout)
 				latest_gps_status = GPS_SUCCESS;
 				return GPS_SUCCESS;
 		}
+		
+		HAL_Delay(2000);
 	}
 	
 	PRINTF("GPS FIX TIMOUT\n");
