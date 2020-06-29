@@ -46,6 +46,7 @@ float GPS_UBX_longitude_Float							= -0.118092;  // XXX.XXXXXXX, in +/- DEGREES
 int32_t GPSaltitude												= 0;
 uint8_t GPSsats														= 0;
 
+gps_status_t latest_gps_status;
 
 
 #if DUMMY_GPS_COORDS
@@ -116,6 +117,7 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 
 gps_status_t get_location_fix(uint32_t timeout);
 gps_status_t setup_GPS(void);
+gps_status_t get_latest_gps_status(void);
 
 /* ==================================================================== */
 /* ===================== All functions by section ===================== */
@@ -123,7 +125,10 @@ gps_status_t setup_GPS(void);
 
 /* Functions definitions go here, organised into sections */
 
-
+gps_status_t get_latest_gps_status(void)
+{
+	return latest_gps_status;
+}
 
 /* 
  * sets up gps by putting in airbourne mode, setting to use GPS satellites only, turning off NMEA
@@ -292,7 +297,7 @@ gps_status_t get_location_fix(uint32_t timeout)
 
 				HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);   // pull GPS extint0 pin low to put gps to sleep. Really important
 
-				
+				latest_gps_status = GPS_SUCCESS;
 				return GPS_SUCCESS;
 		}
 	}
@@ -310,6 +315,7 @@ gps_status_t get_location_fix(uint32_t timeout)
 	
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);   // pull GPS extint0 pin low to put gps to sleep. Really important
 
+	latest_gps_status = GPS_FAILURE;
 	return GPS_FAILURE;
 
 }

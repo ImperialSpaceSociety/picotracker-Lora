@@ -62,6 +62,8 @@ extern uint8_t GPSsats;											// for both UBX and NMEA
 
 extern gps_status_t get_location_fix(uint32_t timeout);
 extern gps_status_t setup_GPS(void);
+extern gps_status_t get_latest_gps_status(void);
+
 
 #endif
 #ifdef __cplusplus

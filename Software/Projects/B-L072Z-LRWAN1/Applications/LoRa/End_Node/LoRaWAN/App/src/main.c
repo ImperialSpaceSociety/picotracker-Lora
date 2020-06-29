@@ -210,14 +210,9 @@ int main( void )
 	 * It needs a GPS fix to get the right LoRa params for the region
 	 */
 	PRINTF("SELFTEST: Attempting to get a GPS fix\n\r");
-	gps_status_t gps_status = get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
+	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
 
-	#endif
-	
-	
-	PRINTF("SELFTEST: Now the radio should transmit\n\r");
-	
-	if (gps_status == GPS_SUCCESS)
+	if (get_latest_gps_status() == GPS_SUCCESS)
 	{
 		/* Find out which region of world we are in and update region parm*/
 		update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
@@ -231,6 +226,12 @@ int main( void )
 		// TODO: must ensure that eeprom is not filled with garbage. i.e. when the eeprom has never been programed
 		EepromMcuReadBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
 	}
+
+	#endif
+	
+	
+	PRINTF("SELFTEST: Now the radio should transmit\n\r");
+	
 
 	
 	
@@ -356,10 +357,21 @@ static void Send( void* context )
 	/* Restart tx interval timer */
 	TimerStart( &TxTimer);
 
+	
+	if (get_latest_gps_status() == GPS_SUCCESS)
+	{
+		/* Find out which region of world we are in and update region parm*/
+		update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 
-
-	/* Find out which region of world we are in */
-	update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+		/* Save current polygon to eeprom only if gps fix was valid */
+		// TODO: save to eeprom with EVERY gps fix.
+		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
+	}else
+	{
+		/* read the eeprom value instead */
+		// TODO: must ensure that eeprom is not filled with garbage. i.e. when the eeprom has never been programed
+		EepromMcuReadBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
+	}
 	
 	/* reinit everything if it enters another LoRaWAN region. */
 	if (lora_settings_status == INCORRECT ){
