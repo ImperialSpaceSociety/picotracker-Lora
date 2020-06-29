@@ -49,16 +49,13 @@ uint8_t GPSsats														= 0;
 gps_status_t latest_gps_status;
 
 
-#if DUMMY_GPS_COORDS
+#ifdef DUMMY_GPS_COORDS
 
 uint16_t dummy_coord_counter  = 0;
 
 
 /*dummy Coords ARRAYS (longitude, latitude) */
 static float dummy_coords_array[] = { 
-	126.9833,37.5500,  // South Korea
-	126.9833,37.5500,  // South Korea
-	126.9833,37.5500,  // South Korea
 	126.9833,37.5500,  // South Korea
 	13.4000,52.5167,  // Germany
 	2.3333,48.8667,  // France
@@ -118,6 +115,9 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 gps_status_t get_location_fix(uint32_t timeout);
 gps_status_t setup_GPS(void);
 gps_status_t get_latest_gps_status(void);
+
+void make_dummy_coordinates(void);
+
 
 /* ==================================================================== */
 /* ===================== All functions by section ===================== */
@@ -233,6 +233,12 @@ gps_status_t get_location_fix(uint32_t timeout)
 	unsigned long startTime = HAL_GetTick();
 	while (HAL_GetTick() - startTime < timeout)
 	{
+		#ifdef DUMMY_GPS_COORDS 
+		make_dummy_coordinates();
+		return GPS_SUCCESS;
+		#endif
+		
+
 		char fixType = getFixType(defaultMaxWait);
 		PRINTF("Fix: ");
 		if(fixType == 0) PRINTF("No fix");
@@ -319,5 +325,28 @@ gps_status_t get_location_fix(uint32_t timeout)
 
 	latest_gps_status = GPS_FAILURE;
 	return GPS_FAILURE;
+
+}
+
+
+void make_dummy_coordinates()
+{
+		#ifdef DUMMY_GPS_COORDS 
+		
+		
+		/* Strictly for testing if the geofencing works when GPS gives dummy values.
+		 * It returns a dummy GPS coordinate instead of the one the actual ublox GPS returns.
+		 */
+	
+		GPS_UBX_longitude_Float = dummy_coords_array[dummy_coord_counter * 2];    // dummy longitude
+		GPS_UBX_latitude_Float = dummy_coords_array[dummy_coord_counter * 2 + 1]; // dummy latitude
+		
+		if (dummy_coord_counter < dummy_coord_n-1){
+			dummy_coord_counter++;
+		}else{
+			dummy_coord_counter = 0;
+		}
+		
+		#endif
 
 }
