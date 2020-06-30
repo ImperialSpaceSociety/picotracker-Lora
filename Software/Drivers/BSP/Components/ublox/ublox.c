@@ -235,6 +235,7 @@ gps_status_t get_location_fix(uint32_t timeout)
 	{
 		#ifdef DUMMY_GPS_COORDS 
 		make_dummy_coordinates();
+		latest_gps_status = GPS_SUCCESS;
 		return GPS_SUCCESS;
 		#endif
 		
