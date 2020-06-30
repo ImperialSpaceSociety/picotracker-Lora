@@ -56,7 +56,7 @@
 #define LPP_APP_PORT 99
 
 
-#define LORAMAC_REGION_EEPROM_ADDR 300
+#define LORAMAC_REGION_EEPROM_ADDR 15
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 
 
@@ -363,13 +363,12 @@ static void Send( void* context )
 		update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
 
 		/* Save current polygon to eeprom only if gps fix was valid */
-		// TODO: save to eeprom with EVERY gps fix.
 		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
 	}
 	
 	/* reinit everything if it enters another LoRaWAN region. */
 	if (lora_settings_status == INCORRECT ){
-		TVL1(PRINTF("LoRa Regional settings incorrect. Data send terminated\n\r");)
+		PRINTF("LoRa Regional settings incorrect. Data send terminated\n\r");
 		return;
 	}
 	
