@@ -194,7 +194,7 @@ gps_status_t setup_GPS(){
 		PRINTF("set GPS constellation only carried out successfully!\n");
 	}
 
-	if (set_powersave_config(defaultMaxWait) == false) // Set the constellation to use only GPS
+	if (set_powersave_config(defaultMaxWait) == false)
 	{
 		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
 	}
@@ -210,6 +210,19 @@ gps_status_t setup_GPS(){
 	uint8_t versionLow = getProtocolVersionLow(defaultMaxWait);
 	PRINTF("%d\n",versionLow);
 	
+
+	
+	if (put_in_power_save_mode(defaultMaxWait) == false)
+	{
+		PRINTF("***!!! Warning: put_in_power_save_mode failed !!!***\n");
+	}
+	else
+	{
+		PRINTF("put_in_power_save_mode carried out successfully!\n");
+	}
+	
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);   // pull GPS extint0 pin low to put gps to sleep. Really important
+
 	return GPS_SUCCESS;
 }
 
