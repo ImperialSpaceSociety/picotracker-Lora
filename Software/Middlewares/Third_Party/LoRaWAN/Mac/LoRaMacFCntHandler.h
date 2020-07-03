@@ -38,8 +38,6 @@
 #include <stdint.h>
 #include "LoRaMacTypes.h"
 #include "LoRaMacMessageTypes.h"
-#include "main.h"
-
 
 /*!
  * LoRaMac FCnt Handler Status
