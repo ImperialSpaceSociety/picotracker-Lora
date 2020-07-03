@@ -455,6 +455,12 @@ static void Send( void* context )
 
   AppData.BuffSize = i;
 	
+	/* Based on the code on the STRKT01 tracker, the max bytes we can send
+	 * is 30 bytes. It has to be at a datarate above DR_3. By default, the
+	 * picotracker transmits at DR_4. The packet size is 26 bytes in the
+	 * picotracker.
+	 */
+	
 	#if RADIO_ENABLED
 	LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
 	#endif
