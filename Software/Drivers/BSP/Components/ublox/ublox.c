@@ -157,7 +157,6 @@ gps_status_t setup_GPS(){
 	PRINTF("Setting UBX only via I2C\n");
 	setI2COutput(COM_TYPE_UBX,defaultMaxWait); //Set the I2C port to output UBX only (turn off NMEA noise)
 	
-	saveConfiguration(defaultMaxWait); //Save the current settings to flash and BBR
 
 
 	// If we are going to change the dynamic platform model, let's do it here.
@@ -221,6 +220,8 @@ gps_status_t setup_GPS(){
 		PRINTF("put_in_power_save_mode carried out successfully!\n");
 	}
 	
+	//saveConfiguration(defaultMaxWait); //Save the current settings to flash and BBR
+
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);   // pull GPS extint0 pin low to put gps to sleep. Really important
 
 	return GPS_SUCCESS;
@@ -241,6 +242,37 @@ gps_status_t get_location_fix(uint32_t timeout)
 	else
 	{
 		PRINTF("put_in_continueous_mode carried out successfully!\n");
+	}
+	
+
+	
+	/* check if dynamic mode is correct */
+	
+	uint8_t newDynamicModel = getDynamicModel(defaultMaxWait);
+	if (newDynamicModel == 255)
+	{
+		PRINTF("***!!! Warning: getDynamicModel failed !!!***\n");
+	}
+	else if (newDynamicModel != 6)
+	{
+		PRINTF("The current dynamic model is INCORRECT \n");
+	}
+	else
+	{
+		PRINTF("The current dynamic model is: %d\n",newDynamicModel);
+	}
+	
+	
+	if (newDynamicModel != DYN_MODEL_AIRBORNE1g){
+		
+		if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // Set the dynamic model to PORTABLE
+		{
+			PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
+		}
+		else
+		{
+			PRINTF("Dynamic platform model changed successfully!\n");
+		}
 	}
 
 	unsigned long startTime = HAL_GetTick();
