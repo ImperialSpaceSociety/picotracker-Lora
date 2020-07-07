@@ -509,6 +509,7 @@ typedef struct
 
 	void factoryReset(void); //Send factory reset sequence (i.e. load "default" configuration and perform hardReset)
 	void hardReset(void);	 //Perform a reset leading to a cold start (zero info start-up)
+	void ihardReset(void);	 //Perform a reset leading to a cold start (zero info start-up) imperial
 
 	bool setI2CAddress(uint8_t deviceAddress, uint16_t maxTime);										 //Changes the I2C address of the Ublox module
 	void setSerialRate(uint32_t baudrate, uint8_t uartPort, uint16_t maxTime ); //Changes the serial baud rate of the Ublox module, uartPort should be COM_PORT_UART1/2

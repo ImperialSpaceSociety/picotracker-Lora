@@ -126,6 +126,21 @@ void hardReset()
 }
 
 
+// original uint8_t resetReceiver[12]		= {0xB5, 0x62, 0x06, 0x04, 0x04, 0x00, 0xFF, 0xB9, 0x00, 0x00, 0xC6, 0x8B}; 
+void ihardReset()
+{
+  // Issue hard reset
+  packetCfg.cls = UBX_CLASS_CFG;
+  packetCfg.id = UBX_CFG_RST;
+  packetCfg.len = 4;
+  packetCfg.startingSpot = 0;
+  payloadCfg[0] = 0xff;       // cold start
+  payloadCfg[1] = 0xb9;       // cold start
+  payloadCfg[2] = 0;          // 0=HW reset
+  payloadCfg[3] = 0;          // reserved
+  sendCommand(&packetCfg, 0); // don't expect ACK
+}
+
 
 //Called regularly to check for available bytes on the user' specified port
 bool checkUblox(uint8_t requestedClass, uint8_t requestedID)
