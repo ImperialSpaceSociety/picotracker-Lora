@@ -251,6 +251,19 @@ gps_status_t setup_GPS(){
 		PRINTF("set_powersave_config carried out successfully!\n");
 	}
 	
+	
+	if (saveConfiguration(defaultMaxWait) == false)           // saveConfiguration config to BBR ram.
+	{
+		PRINTF("***!!! Warning: saveConfiguration failed !!!***\n");
+	}
+	else
+	{
+		PRINTF("saveConfiguration carried out successfully!\n");
+	}
+
+	
+	
+	
 	return 0;
 }
 
@@ -289,17 +302,9 @@ gps_status_t get_location_fix(uint32_t timeout){
 	{
 		PRINTF("***!!! Warning: getDynamicModel failed !!!***\n");
 	}
-	else if (newDynamicModel != 6)
+	else if (newDynamicModel != DYN_MODEL_AIRBORNE1g)
 	{
 		PRINTF("The current dynamic model is INCORRECT. The current dynamic model is: %d\n",newDynamicModel);
-	}
-	else
-	{
-		PRINTF("The current dynamic model is: %d\n",newDynamicModel);
-	}
-
-	
-	if (newDynamicModel != DYN_MODEL_AIRBORNE1g){
 		
 		if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // Set the dynamic model to PORTABLE
 		{
@@ -309,9 +314,13 @@ gps_status_t get_location_fix(uint32_t timeout){
 		{
 			PRINTF("Dynamic platform model changed successfully!\n");
 		}
+		
 	}
-	
-	
+	else
+	{
+		PRINTF("The current dynamic model correct and is: %d\n",newDynamicModel);
+	}
+
 	
 	fixAttemptCount = 0;
 
