@@ -769,6 +769,7 @@ void processUBXpacket(ubxPacket *msg)
       gpsNanosecond = extractLong(16); //Includes milliseconds
 
       fixType = extractByte(20 - startingSpot);
+			gnssFixOK = (extractByte(21 - startingSpot)) & 1;
       carrierSolution = extractByte(21 - startingSpot) >> 6; //Get 6th&7th bits of this byte
       SIV = extractByte(23 - startingSpot);
       longitude = extractLong(24 - startingSpot);
@@ -796,6 +797,7 @@ void processUBXpacket(ubxPacket *msg)
       moduleQueried.altitudeMSL = true;
       moduleQueried.SIV = true;
       moduleQueried.fixType = true;
+			moduleQueried.gnssFixOK = true;
       moduleQueried.carrierSolution = true;
       moduleQueried.groundSpeed = true;
       moduleQueried.headingOfMotion = true;
@@ -2815,6 +2817,21 @@ uint8_t getFixType(uint16_t maxWait)
   return (fixType);
 }
 
+
+//Get the current gnssFixOK status
+//0= not valid fix, 1 = not valid fix
+uint8_t getgnssFixOK(uint16_t maxWait)
+{
+  if (moduleQueried.gnssFixOK == false)
+  {
+    getPVT(maxWait);
+  }
+  moduleQueried.gnssFixOK = false; //Since we are about to give this to user, mark this data as stale
+  moduleQueried.all = false;
+
+  return (gnssFixOK);
+}
+
 //Get the carrier phase range solution status
 //Useful when querying module to see if it has high-precision RTK fix
 //0=No solution, 1=Float solution, 2=Fixed solution
@@ -2951,6 +2968,7 @@ void flushPVT()
   moduleQueried.altitudeMSL = false;
   moduleQueried.SIV = false;
   moduleQueried.fixType = false;
+	moduleQueried.gnssFixOK = false;
   moduleQueried.carrierSolution = false;
   moduleQueried.groundSpeed = false;
   moduleQueried.headingOfMotion = false;

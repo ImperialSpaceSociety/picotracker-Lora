@@ -543,6 +543,7 @@ typedef struct
 	int32_t getAltitudeMSL(uint16_t maxWait );		  //Returns the current altitude in mm above mean sea level
 	uint8_t getSIV(uint16_t maxWait );				  //Returns number of sats used in fix
 	uint8_t getFixType(uint16_t maxWait );			  //Returns the type of fix: 0=no, 3=3D, 4=GNSS+Deadreckoning
+	uint8_t getgnssFixOK(uint16_t maxWait );			  //Returns the fix validity: 0=not valid, 1 = fix valid
 	uint8_t getCarrierSolutionType(uint16_t maxWait ); //Returns RTK solution: 0=no, 1=float solution, 2=fixed solution
 	int32_t getGroundSpeed(uint16_t maxWait );		  //Returns speed in mm/s
 	int32_t getHeading(uint16_t maxWait );			  //Returns heading in degrees * 10^-7
@@ -710,6 +711,7 @@ typedef struct
 	static int32_t altitudeMSL;	 //Number of mm above Mean Sea Level
 	static uint8_t SIV;			 //Number of satellites used in position solution
 	static uint8_t fixType;		 //Tells us when we have a solution aka lock
+	static uint8_t gnssFixOK;  //Tells us whether fix is OK
 	static uint8_t carrierSolution; //Tells us when we have an RTK float/fixed solution
 	static int32_t groundSpeed;	 //mm/s
 	static int32_t headingOfMotion; //degrees * 10^-5
@@ -894,6 +896,7 @@ typedef struct
 		uint32_t altitudeMSL : 1;
 		uint32_t SIV : 1;
 		uint32_t fixType : 1;
+		uint32_t gnssFixOK : 1;
 		uint32_t carrierSolution : 1;
 		uint32_t groundSpeed : 1;
 		uint32_t headingOfMotion : 1;
