@@ -285,9 +285,8 @@ gps_status_t get_location_fix(uint32_t timeout){
 		
 		if(temp_GPSfix_type == 3 && temp_GPSsats >= SATS && temp_GPSfix_OK == 1)           // check if we have a good fix
 		{ 
-			Backup_GPS();
 			display_fix_found();
-			
+	
 			GPSyear =  getYear(defaultMaxWait);
 			GPSmonth = getMonth(defaultMaxWait);
 			GPSday = getDay(defaultMaxWait);
@@ -303,6 +302,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 			GPS_UBX_longitude_Float = GPS_UBX_longitude/10000;
 			GPSaltitude = getAltitude(defaultMaxWait);
 
+			Backup_GPS();
 			latest_gps_status = GPS_SUCCESS;
 			return GPS_SUCCESS;
 		}       
