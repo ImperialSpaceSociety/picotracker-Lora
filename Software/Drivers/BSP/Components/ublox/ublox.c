@@ -132,7 +132,7 @@ static uint8_t GPSnavigation										= 0;
 gps_status_t get_location_fix(uint32_t timeout);
 gps_status_t setup_GPS(void);
 gps_status_t get_latest_gps_status(void);
-gps_status_t Backup_GPS();
+gps_status_t Backup_GPS(void);
 
 void make_dummy_coordinates(void);
 static gps_status_t display_still_searching(void);
