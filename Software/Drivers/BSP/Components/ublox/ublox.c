@@ -86,7 +86,7 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 
 #endif
 
-gps_status_t latest_gps_status;
+gps_status_t latest_gps_status = GPS_FAILURE;
 
 float GPS_UBX_latitude_Float							      = 0;  // YY.YYYYYYY, in +/- DEGREES, 
 float GPS_UBX_longitude_Float							      = 0;  // XXX.XXXXXXX, in +/- DEGREES,
@@ -303,6 +303,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 			GPS_UBX_longitude_Float = GPS_UBX_longitude/10000;
 			GPSaltitude = getAltitude(defaultMaxWait);
 
+			latest_gps_status = GPS_SUCCESS;
 			return GPS_SUCCESS;
 		}       
 		HAL_Delay(1000);
@@ -315,6 +316,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 	reinit_gps();
 
 	Backup_GPS();
+	latest_gps_status = GPS_FAILURE;
 	return GPS_FAILURE;
 }
 
