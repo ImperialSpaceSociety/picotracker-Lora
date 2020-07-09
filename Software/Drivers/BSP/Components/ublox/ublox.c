@@ -381,44 +381,44 @@ static void reinit_gps()
 		//ihardReset();	                                    	                         	// reset GPS module.
 	HAL_Delay(GPS_WAKEUP_TIMEOUT);                                                  // wait for GPS module to be ready
 
-		 
-		if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
-		{
-			PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
-		}
-		else
-		{
-			PRINTF("set setI2COutput carried out successfully!\n");
-		}
-		
-		
-		if (setGPS_constellation_only(defaultMaxWait) == false) // Set the constellation to use only GPS
-		{
-			PRINTF("***!!! Warning: setGPS_constellation_only failed !!!***\n");
-		}
-		else
-		{
-			PRINTF("set GPS constellation only carried out successfully!\n");
-		}
+	 
+	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
+	{
+		PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
+	}
+	else
+	{
+		PRINTF("set setI2COutput carried out successfully!\n");
+	}
+	
+	
+	if (setGPS_constellation_only(defaultMaxWait) == false) // Set the constellation to use only GPS
+	{
+		PRINTF("***!!! Warning: setGPS_constellation_only failed !!!***\n");
+	}
+	else
+	{
+		PRINTF("set GPS constellation only carried out successfully!\n");
+	}
 
-		if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // set to airbourne mode
-		{
-			PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
-		}
-		else
-		{
-			PRINTF("Dynamic platform model changed successfully!\n");
-		}
+	if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // set to airbourne mode
+	{
+		PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
+	}
+	else
+	{
+		PRINTF("Dynamic platform model changed successfully!\n");
+	}
 
-		if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
-		{
-			PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
-		}
-		else
-		{
-			PRINTF("set_powersave_config carried out successfully!\n");
-		}
-					
+	if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
+	{
+		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
+	}
+	else
+	{
+		PRINTF("set_powersave_config carried out successfully!\n");
+	}
+	
 }
 
 static void display_still_searching()
