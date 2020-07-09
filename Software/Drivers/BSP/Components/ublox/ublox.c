@@ -325,7 +325,7 @@ static gps_status_t init_for_fix()
 	
 	/* pull GPS extint0 pin high to wake gps */
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  
-	HAL_Delay(500);
+	HAL_Delay(GPS_WAKEUP_TIMEOUT);
 	
 	if (put_in_continueous_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
