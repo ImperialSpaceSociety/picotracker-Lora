@@ -92,7 +92,7 @@ void Error_Handler(void);
 /* ----------------------------------------------------------------------------------- */
 
 #define GPS_LOCATION_FIX_TIMEOUT          120000
-#define GPS_WAKEUP_TIMEOUT                250
+#define GPS_WAKEUP_TIMEOUT                1000
 
 
 /* GEOFENCE RELATED DEFINES */
