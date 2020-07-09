@@ -135,10 +135,10 @@ gps_status_t get_latest_gps_status(void);
 gps_status_t Backup_GPS();
 
 void make_dummy_coordinates(void);
-static void display_still_searching(void);
-static void display_fix_found(void);
-static void reinit_gps(void);
-static void init_for_fix(void);
+static gps_status_t display_still_searching(void);
+static gps_status_t display_fix_found(void);
+static gps_status_t reinit_gps(void);
+static gps_status_t init_for_fix(void);
 
 
 /* ==================================================================== */
@@ -319,7 +319,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 }
 
 /* wakeup gps  */
-static void init_for_fix()
+static gps_status_t init_for_fix()
 {
 	
 	
@@ -374,7 +374,7 @@ static void init_for_fix()
 	
 }
 
-static void reinit_gps()
+static gps_status_t reinit_gps()
 {
 	
 		// configure gps module again
@@ -421,7 +421,7 @@ static void reinit_gps()
 	
 }
 
-static void display_still_searching()
+static gps_status_t display_still_searching()
 {
 	// Indicator led to indicate that still searching
 	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
@@ -431,7 +431,7 @@ static void display_still_searching()
 
 
 /* indicate that fix has been found */
-static void display_fix_found()
+static gps_status_t display_fix_found()
 {
 	for(uint8_t i = 0; i < 20; i++)
 	{
