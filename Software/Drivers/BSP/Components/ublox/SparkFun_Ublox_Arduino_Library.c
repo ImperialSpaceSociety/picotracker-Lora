@@ -769,7 +769,7 @@ void processUBXpacket(ubxPacket *msg)
       gpsNanosecond = extractLong(16); //Includes milliseconds
 
       fixType = extractByte(20 - startingSpot);
-			gnssFixOK = (extractByte(21 - startingSpot)) & 1;
+			gnssFixOK = (extractByte(21 - startingSpot) >> 0) & 0x01; // get the first bit(least significant bit)
       carrierSolution = extractByte(21 - startingSpot) >> 6; //Get 6th&7th bits of this byte
       SIV = extractByte(23 - startingSpot);
       longitude = extractLong(24 - startingSpot);
