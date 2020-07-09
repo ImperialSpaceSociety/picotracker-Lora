@@ -381,8 +381,8 @@ static gps_status_t init_for_fix()
 static gps_status_t reinit_gps()
 {
 	
-		// configure gps module again
-		//ihardReset();	                                    	                         	// reset GPS module.
+	// configure gps module again
+	ihardReset();	                                    	                         	// reset GPS module.
 	HAL_Delay(GPS_WAKEUP_TIMEOUT);                                                  // wait for GPS module to be ready
 
 	 
