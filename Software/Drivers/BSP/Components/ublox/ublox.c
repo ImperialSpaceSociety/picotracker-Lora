@@ -32,12 +32,7 @@
 /* ==================================================================== */
 
 /* #define and enum statements go here */
-#define GPS_I2C_ADDRESS 0x42
-#define GPS_I2C_TIMEOUT 1000
-#define GPSBUFFER_SIZE			125 // bigger than max size of ubx message
 #define SATS				4		// number of satellites required for positional solution
-#define UBX_TIMEOUT  5000 // in milliseconds
-#define FIX				                        2		  // attempts to poll UBX-NAV-PVT
 
 /* ==================================================================== */
 /* ======================== global variables ========================== */
@@ -45,13 +40,6 @@
 
 /* Global variables definitions go here */
 
-
-float GPS_UBX_latitude_Float							= 51.509865; // YY.YYYYYYY, in +/- DEGREES, temp dummy for testing geofencing
-float GPS_UBX_longitude_Float							= -0.118092;  // XXX.XXXXXXX, in +/- DEGREES, temp dummy for testing geofencingstatic 
-int32_t GPSaltitude												= 0;
-uint8_t GPSsats														= 0;
-
-gps_status_t latest_gps_status;
 
 
 #ifdef DUMMY_GPS_COORDS
@@ -98,20 +86,15 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 
 #endif
 
+gps_status_t latest_gps_status;
 
-static uint8_t	buffer_0xB5[1];
-static uint8_t	buffer_0x62[1];
-static uint8_t buffer_ubx_packet_wo_header[150]; // this packet does not include the 0xb5 0x62 header
-static uint8_t flush_buffer[500];
+float GPS_UBX_latitude_Float							      = 0;  // YY.YYYYYYY, in +/- DEGREES, 
+float GPS_UBX_longitude_Float							      = 0;  // XXX.XXXXXXX, in +/- DEGREES,
+int32_t GPSaltitude												      = 0;
+uint8_t GPSsats													      	= 0;
 
-
-// UBLOX variables
-static uint8_t GPS_UBX_error_bitfield						= 0;
-
-
-
-static int32_t GPS_UBX_latitude                 = 0;								// YYYYYYYYY, +/-
-static int32_t GPS_UBX_longitude                = 0 ;								// XXXXXXXXXX, +/-
+static int32_t GPS_UBX_latitude                 = 0;	// YYYYYYYYY, +/-
+static int32_t GPS_UBX_longitude                = 0;	// XXXXXXXXXX, +/-
 				
 
 static uint8_t GPShour													= 0;
@@ -123,20 +106,12 @@ static uint16_t GPSyear													= 0;
 
 static uint8_t GPSfix_type											= 0;
 static uint8_t GPSfix_OK												= 0;
-//static uint8_t GPSvalidity											= 0;
+static uint8_t GPSvalidity											= 0;
 
 static uint8_t GPSnavigation										= 0;
-static uint32_t fixAttemptCount                 = 0;
 
 
 
-
-static  uint8_t GPSbuffer[GPSBUFFER_SIZE];
-
-
-volatile static  uint8_t GPS_UBX_ack_error = 0;
-volatile static  uint8_t GPS_UBX_checksum_error = 0;
-volatile static  uint8_t GPS_UBX_buffer_error = 0;
 
 /* ==================================================================== */
 /* ========================== private data ============================ */
@@ -160,6 +135,10 @@ gps_status_t get_latest_gps_status(void);
 gps_status_t Backup_GPS();
 
 void make_dummy_coordinates(void);
+static void display_still_searching(void);
+static void display_fix_found(void);
+static void reinit_gps(void);
+static void init_for_fix(void);
 
 
 /* ==================================================================== */
@@ -261,17 +240,91 @@ gps_status_t setup_GPS(){
 		PRINTF("saveConfiguration carried out successfully!\n");
 	}
 
-	
-	
-	
 	return 0;
 }
 
 /* Get the location fix */
 gps_status_t get_location_fix(uint32_t timeout){
 	
-	// wakeup gps
-	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  // pull GPS extint0 pin high to wake gps	
+	init_for_fix();
+	
+	/* poll UBX-NAV-PVT until the module has fix */	
+	uint32_t startTime = HAL_GetTick();
+	while (HAL_GetTick() - startTime < timeout)
+	{
+		display_still_searching();
+
+	
+		uint8_t temp_GPSfix_type = getFixType(defaultMaxWait);
+		uint8_t temp_GPSsats = getSIV(defaultMaxWait);
+		uint8_t temp_GPShour = getHour(defaultMaxWait);
+		uint8_t	temp_GPSminute = getMinute(defaultMaxWait);
+		uint8_t	temp_GPSsecond = getSecond(defaultMaxWait);
+		uint8_t temp_GPSfix_OK = getgnssFixOK(defaultMaxWait);
+
+				
+		PRINTNOW();
+		uint32_t current_time = HAL_GetTick() - startTime;
+		float current_time_F = (float)current_time/1000;
+		
+		PRINTF("Fix: ");
+		if(temp_GPSfix_type == 0) PRINTF("No fix");
+		else if(temp_GPSfix_type == 1) PRINTF("Dead reckoning");
+		else if(temp_GPSfix_type == 2) PRINTF("2D");
+		else if(temp_GPSfix_type == 3) PRINTF("3D");
+		else if(temp_GPSfix_type == 4) PRINTF("GNSS+Dead reckoning");
+		
+		
+		PRINTF(" SIV:%d ",temp_GPSsats);
+		
+		
+
+		PRINTF("GPS Fix time so far: %.3f seconds (%dh:%dm:%ds is GPS time)\r\n", current_time_F, temp_GPShour, temp_GPSminute, temp_GPSsecond);
+
+
+		
+		if(temp_GPSfix_type == 3 && temp_GPSsats >= SATS && temp_GPSfix_OK == 1)           // check if we have a good fix
+		{ 
+			Backup_GPS();
+			display_fix_found();
+			
+			GPSyear =  getYear(defaultMaxWait);
+			GPSmonth = getMonth(defaultMaxWait);
+			GPSday = getDay(defaultMaxWait);
+			GPShour = temp_GPShour;
+			GPSminute = temp_GPSminute;
+			GPSsecond = temp_GPSsecond;
+			GPSsats = temp_GPSsats;
+			GPSfix_type = temp_GPSfix_type;
+			GPSfix_OK = temp_GPSfix_OK;
+			GPS_UBX_latitude =  getLatitude(defaultMaxWait);
+			GPS_UBX_longitude = getLongitude(defaultMaxWait);
+			GPS_UBX_latitude_Float = GPS_UBX_latitude/10000;
+			GPS_UBX_longitude_Float = GPS_UBX_longitude/10000;
+			GPSaltitude = getAltitude(defaultMaxWait);
+
+			return 1;
+		}       
+		HAL_Delay(1000);
+	}
+
+ /* If fix taking too long, reset and re-initialize GPS module. 
+	* It does a forced hardware reset and recovers from a cold start
+	* Reset only after timeout.
+	*/
+	reinit_gps();
+
+	Backup_GPS();
+	return 0;
+}
+
+/* wakeup gps  */
+static void init_for_fix()
+{
+	
+	
+	/* pull GPS extint0 pin high to wake gps */
+	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  
 	HAL_Delay(500);
 	
 	if (put_in_continueous_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
@@ -283,7 +336,6 @@ gps_status_t get_location_fix(uint32_t timeout){
 		PRINTF("put_in_continueous_mode carried out successfully!\n");
 	}
 
-	
 	/* Set the I2C port to output UBX only (turn off NMEA noise) */
 	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
 	{
@@ -293,7 +345,6 @@ gps_status_t get_location_fix(uint32_t timeout){
 	{
 		PRINTF("set setI2COutput carried out successfully!\n");
 	}
-	
 	
 	/* Check if we are in airbourne mode. check if dynamic mode is correct */
 	
@@ -320,151 +371,73 @@ gps_status_t get_location_fix(uint32_t timeout){
 	{
 		PRINTF("The current dynamic model correct and is: %d\n",newDynamicModel);
 	}
-
 	
-	fixAttemptCount = 0;
+}
 
-	while(1)				// poll UBX-NAV-PVT until the module has fix
-	{
-
-		GPSfix_type = 0;
-		GPSfix_OK = 0;
-		GPSsats = 0;
-
-		
-		#if !DUMMY_GPS_COORDS 
-		
-		char fixType = getFixType(defaultMaxWait);
-		char SIV = getSIV(defaultMaxWait);
-		GPSyear =  getYear(defaultMaxWait);
-		GPSmonth = getMonth(defaultMaxWait);
-		GPSday = getDay(defaultMaxWait);
-		GPShour = getHour(defaultMaxWait);
-		GPSminute = getMinute(defaultMaxWait);
-		GPSsecond = getSecond(defaultMaxWait);
-		
-		long latitude = getLatitude(defaultMaxWait);
-		GPS_UBX_latitude_Float = latitude/10000;
-
-		long longitude = getLongitude(defaultMaxWait);
-		GPS_UBX_longitude_Float = longitude/10000;
-
-		long altitude = getAltitude(defaultMaxWait);
-		GPSaltitude = altitude;
-
-		GPSsats = SIV;
-		
-		#else
-		
-		/* Strictly for testing if the geofencing works when GPS gives dummy values.
-		 * It returns a dummy GPS coordinate instead of the one the actual ublox GPS returns.
-		 */
-		GPSsats = 6;     // dummy GPS sats
-		GPSfix_type = 3; // dummy GNSSfix Type
-		GPSfix_OK = 1;   // dummy Fix status flags: gnssFixOK
-		
-		GPS_UBX_longitude_Float = dummy_coords_array[dummy_coord_counter * 2];    // dummy longitude
-		GPS_UBX_latitude_Float = dummy_coords_array[dummy_coord_counter * 2 + 1]; // dummy latitude
-		
-		if (dummy_coord_counter < dummy_coord_n-1){
-			dummy_coord_counter++;
-		}else{
-			dummy_coord_counter = 0;
-		}
-		#endif
-
-		if(GPSfix_type == 3 && GPSsats >= SATS )           // check if we have a good fix
-		{ 
-			Backup_GPS();
-			
-			#if USE_LED
-			// indicate that fix has been found
-			for(uint8_t i = 0; i < 20; i++)
-			{
-				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
-				HAL_Delay(50);
-				HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
-				HAL_Delay(50);
-			}
-		 #endif
-
-			
-			return 1;
-		}       
-
-		fixAttemptCount++;
-		
-		#if USE_LED
-		
-		// Indicator led to indicate that still searching
-		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
-		HAL_Delay(100);
-		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+static void reinit_gps()
+{
 	
-		#endif
-		PRINTNOW();
-		PRINTF("GPS Fix Attempt count : %d (%dh:%dm:%ds is GPS time)\r\n",fixAttemptCount,GPShour,GPSminute,GPSsecond);
+		// configure gps module again
+		//ihardReset();	                                    	                         	// reset GPS module.
+		HAL_Delay(1000);                                                              // wait for GPS module to be ready
 
-
-		/* If fix taking too long, reset and re-initialize GPS module. 
-		 * It does a forced hardware reset and recovers from a cold start
-		 * Reset only after 250 tries, defined by FIX
-		 */
-		if(fixAttemptCount > FIX)														
+		 
+		if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
 		{
-			// configure gps module again
-			//ihardReset();	                                    	                         	// reset GPS module.
-			HAL_Delay(1000);                                                              // wait for GPS module to be ready
-
-			 
-			if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
-			{
-				PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
-			}
-			else
-			{
-				PRINTF("set setI2COutput carried out successfully!\n");
-			}
-			
-			
-			if (setGPS_constellation_only(defaultMaxWait) == false) // Set the constellation to use only GPS
-			{
-				PRINTF("***!!! Warning: setGPS_constellation_only failed !!!***\n");
-			}
-			else
-			{
-				PRINTF("set GPS constellation only carried out successfully!\n");
-			}
-
-			if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // set to airbourne mode
-			{
-				PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
-			}
-			else
-			{
-				PRINTF("Dynamic platform model changed successfully!\n");
-			}
-
-			if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
-			{
-				PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
-			}
-			else
-			{
-				PRINTF("set_powersave_config carried out successfully!\n");
-			}
-						
-			
-			GPSfix_type = 0;
-			GPSfix_OK = 0;
-			GPSsats = 0;
-			
-			Backup_GPS();
-			return 0;
-
+			PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
+		}
+		else
+		{
+			PRINTF("set setI2COutput carried out successfully!\n");
 		}
 		
-		HAL_Delay(1000);		
-	}
+		
+		if (setGPS_constellation_only(defaultMaxWait) == false) // Set the constellation to use only GPS
+		{
+			PRINTF("***!!! Warning: setGPS_constellation_only failed !!!***\n");
+		}
+		else
+		{
+			PRINTF("set GPS constellation only carried out successfully!\n");
+		}
 
+		if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // set to airbourne mode
+		{
+			PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
+		}
+		else
+		{
+			PRINTF("Dynamic platform model changed successfully!\n");
+		}
+
+		if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
+		{
+			PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
+		}
+		else
+		{
+			PRINTF("set_powersave_config carried out successfully!\n");
+		}
+					
+}
+
+static void display_still_searching()
+{
+	// Indicator led to indicate that still searching
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+	HAL_Delay(100);
+	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+}
+
+
+/* indicate that fix has been found */
+static void display_fix_found()
+{
+	for(uint8_t i = 0; i < 20; i++)
+	{
+		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+		HAL_Delay(50);
+		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+		HAL_Delay(50);
+	}
 }
