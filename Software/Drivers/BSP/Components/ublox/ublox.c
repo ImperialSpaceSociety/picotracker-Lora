@@ -166,7 +166,7 @@ gps_status_t Backup_GPS(){
 		PRINTF("put_in_power_save_mode carried out successfully!\n");
 	}
 	//HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
-	return 0;
+	return GPS_SUCCESS;
 }
 
 
@@ -240,7 +240,7 @@ gps_status_t setup_GPS(){
 		PRINTF("saveConfiguration carried out successfully!\n");
 	}
 
-	return 0;
+	return GPS_SUCCESS;
 }
 
 /* Get the location fix */
@@ -303,7 +303,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 			GPS_UBX_longitude_Float = GPS_UBX_longitude/10000;
 			GPSaltitude = getAltitude(defaultMaxWait);
 
-			return 1;
+			return GPS_SUCCESS;
 		}       
 		HAL_Delay(1000);
 	}
@@ -315,7 +315,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 	reinit_gps();
 
 	Backup_GPS();
-	return 0;
+	return GPS_FAILURE;
 }
 
 /* wakeup gps  */
@@ -372,6 +372,8 @@ static gps_status_t init_for_fix()
 		PRINTF("The current dynamic model correct and is: %d\n",newDynamicModel);
 	}
 	
+	return GPS_SUCCESS;	
+
 }
 
 static gps_status_t reinit_gps()
@@ -419,6 +421,7 @@ static gps_status_t reinit_gps()
 		PRINTF("set_powersave_config carried out successfully!\n");
 	}
 	
+	return GPS_SUCCESS;	
 }
 
 static gps_status_t display_still_searching()
@@ -427,6 +430,9 @@ static gps_status_t display_still_searching()
 	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
 	HAL_Delay(100);
 	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+	
+	return GPS_SUCCESS;
+
 }
 
 
@@ -440,4 +446,6 @@ static gps_status_t display_fix_found()
 		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
 		HAL_Delay(50);
 	}
+	
+	return GPS_SUCCESS;
 }
