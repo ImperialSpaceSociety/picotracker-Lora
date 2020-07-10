@@ -298,9 +298,9 @@ PRINTF("GPS Search time: %.3f seconds GPS time: %dh:%dm:%ds\r\n", current_time_F
 			GPSfix_OK = temp_GPSfix_OK;
 			GPS_UBX_latitude =  getLatitude(defaultMaxWait);
 			GPS_UBX_longitude = getLongitude(defaultMaxWait);
-			GPS_UBX_latitude_Float = GPS_UBX_latitude/10000;
-			GPS_UBX_longitude_Float = GPS_UBX_longitude/10000;
-			GPSaltitude = getAltitude(defaultMaxWait);
+			GPS_UBX_latitude_Float = (float)GPS_UBX_latitude/10000000;
+			GPS_UBX_longitude_Float = (float)GPS_UBX_longitude/10000000;
+			GPSaltitude = getAltitude(defaultMaxWait)/1000;
 
 			Backup_GPS();
 			latest_gps_status = GPS_SUCCESS;
