@@ -270,19 +270,18 @@ gps_status_t get_location_fix(uint32_t timeout){
 		uint32_t current_time = HAL_GetTick() - startTime;
 		float current_time_F = (float)current_time/1000;
 		
-		PRINTF("Fix: ");
-		if(temp_GPSfix_type == 0) PRINTF("No fix");
-		else if(temp_GPSfix_type == 1) PRINTF("Dead reckoning");
-		else if(temp_GPSfix_type == 2) PRINTF("2D");
-		else if(temp_GPSfix_type == 3) PRINTF("3D");
-		else if(temp_GPSfix_type == 4) PRINTF("GNSS+Dead reckoning");
+		PRINTF("Fixtype: ");
+		if(temp_GPSfix_type == 0)      PRINTF("No fix ");
+		else if(temp_GPSfix_type == 1) PRINTF("Dead reckoning ");
+		else if(temp_GPSfix_type == 2) PRINTF("2D ");
+		else if(temp_GPSfix_type == 3) PRINTF("3D ");
+		else if(temp_GPSfix_type == 4) PRINTF("GNSS+Dead reckoning ");
 		
 		
-		PRINTF(" SIV:%d ",temp_GPSsats);
-		
-		
-
-PRINTF("GPS Search time: %.3f seconds GPS time: %dh:%dm:%ds\r\n", current_time_F, temp_GPShour, temp_GPSminute, temp_GPSsecond);
+		PRINTF(" Sats:%d ",temp_GPSsats);
+		PRINTF(" GPSfix_OK:%d ",temp_GPSfix_OK);	
+		PRINTF(" GPS time: %d/%d/%d, %d:%d:%d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond);
+		PRINTF(" GPS Search time: %.3f seconds \r\n", current_time_F);
 
 
 		
