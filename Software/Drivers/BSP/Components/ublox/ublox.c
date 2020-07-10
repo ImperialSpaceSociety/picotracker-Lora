@@ -260,6 +260,9 @@ gps_status_t get_location_fix(uint32_t timeout){
 		uint8_t temp_GPShour = getHour(defaultMaxWait);
 		uint8_t	temp_GPSminute = getMinute(defaultMaxWait);
 		uint8_t	temp_GPSsecond = getSecond(defaultMaxWait);
+		uint16_t temp_GPSyear =  getYear(defaultMaxWait);
+		uint8_t temp_GPSmonth = getMonth(defaultMaxWait);
+		uint8_t temp_GPSday = getDay(defaultMaxWait);
 		uint8_t temp_GPSfix_OK = getgnssFixOK(defaultMaxWait);
 
 				
@@ -287,9 +290,9 @@ PRINTF("GPS Search time: %.3f seconds GPS time: %dh:%dm:%ds\r\n", current_time_F
 		{ 
 			display_fix_found();
 	
-			GPSyear =  getYear(defaultMaxWait);
-			GPSmonth = getMonth(defaultMaxWait);
-			GPSday = getDay(defaultMaxWait);
+			GPSyear =  temp_GPSyear;
+			GPSmonth = temp_GPSmonth;
+			GPSday = temp_GPSday;
 			GPShour = temp_GPShour;
 			GPSminute = temp_GPSminute;
 			GPSsecond = temp_GPSsecond;
