@@ -369,9 +369,13 @@ static gps_status_t init_for_fix()
 		}
 		
 	}
-	else
+	else if (newDynamicModel == DYN_MODEL_AIRBORNE1g)
 	{
 		PRINTF("The current dynamic model correct and is: %d\n",newDynamicModel);
+	}
+	else
+	{
+		PRINTF("dynamic model setting error %d\n");
 	}
 	
 	return GPS_SUCCESS;	
