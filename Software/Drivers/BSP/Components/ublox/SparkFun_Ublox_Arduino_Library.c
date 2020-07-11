@@ -45,6 +45,7 @@
 #include <hw_i2c.h>
 #include <stdio.h>
 #include "hw.h" // for PRINTF
+#include <i2c_middleware.h>
 
 
 
@@ -179,7 +180,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 		uint8_t buff_rx[2] = {0};
 		
 		//uint16_t return_value = 0;
-		if (HAL_I2C_Mem_Read(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFD,I2C_MEMADD_SIZE_8BIT,buff_rx,2,defaultMaxWait)!= HAL_OK)
+		if (I2C_receive_mem(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFD,buff_rx,2,defaultMaxWait ) != I2C_SUCCSS)
 		{
 			return (false);                          //Sensor did not ACK
 		}
@@ -273,7 +274,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
           //uint8_t incoming = _i2cPort->read(); //Grab the actual character
 					
 					uint8_t buff_rx[2] = {0};
-					if (HAL_I2C_Mem_Read(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFF,I2C_MEMADD_SIZE_8BIT,buff_rx,1,defaultMaxWait)!= HAL_OK)
+					if (I2C_receive_mem(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFF,buff_rx,1,defaultMaxWait ) != I2C_SUCCSS)
 					{
 						return (false);  //Sensor did not ACK
 					}
@@ -943,8 +944,7 @@ sfe_ublox_status_e sendI2cCommand(ubxPacket *outgoingUBX, uint16_t maxWait)
 	GPS_buffer[cnt++] = outgoingUBX->checksumB;
 	
 	
-
-	return ((HAL_I2C_Master_Transmit(&hi2c1, _gpsI2Caddress << 1, GPS_buffer, cnt, defaultMaxWait)== HAL_OK) 
+	return ((I2C_transmit(&hi2c1, _gpsI2Caddress << 1, GPS_buffer, cnt, defaultMaxWait) == I2C_SUCCSS)
 		       ? SFE_UBLOX_STATUS_SUCCESS : SFE_UBLOX_STATUS_I2C_COMM_FAILURE);
 }
 
