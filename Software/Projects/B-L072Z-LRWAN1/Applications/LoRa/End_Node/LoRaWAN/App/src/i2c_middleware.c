@@ -118,3 +118,34 @@ I2C_MIDDLEWARE_STATUS_t I2C_transmit(I2C_HandleTypeDef* hi2c, uint16_t DevAddres
 	
 	return I2C_FAIL;
 }
+
+
+
+I2C_MIDDLEWARE_STATUS_t I2C_receive_mem(I2C_HandleTypeDef* hi2c, uint16_t DevAddress, uint16_t MemAddress, uint8_t *pData, uint16_t Size, uint32_t Timeout )
+{
+	/* Init tickstart for timeout management*/
+	uint32_t tickstart = HAL_GetTick();
+	while ((HAL_GetTick() - tickstart) < Timeout){
+
+		volatile HAL_StatusTypeDef a = HAL_I2C_Mem_Read_IT(hi2c, DevAddress,MemAddress,I2C_MEMADD_SIZE_8BIT, pData, Size);
+		if(a != HAL_OK)
+		{
+			Error_Handler();
+		}
+
+		/* wait until I2C comms is completed */
+		while (HAL_I2C_GetState(hi2c) != HAL_I2C_STATE_READY)
+		{
+			
+		} 
+
+
+		if (HAL_I2C_GetError(hi2c) == HAL_I2C_ERROR_NONE){
+				return I2C_SUCCSS;
+		}
+	}
+	
+	return I2C_FAIL;
+}	
+
+
