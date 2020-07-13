@@ -180,7 +180,7 @@ gps_status_t setup_GPS(){
 	
 	// wake up gps in case it is in Lower Power mode
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
-	hardReset();	
+	factoryReset();	
 	HAL_Delay(GPS_WAKEUP_TIMEOUT);                                                // Wait for things to be setup	
 
 	/* Set the I2C port to output UBX only (turn off NMEA noise) */
@@ -388,7 +388,7 @@ static gps_status_t reinit_gps()
 {
 	
 	// configure gps module again
-	hardReset();	                                    	                         	// reset GPS module.
+	factoryReset();	
 	HAL_Delay(GPS_WAKEUP_TIMEOUT);                                                  // wait for GPS module to be ready
 
 	 
