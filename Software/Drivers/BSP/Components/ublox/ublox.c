@@ -27,6 +27,10 @@
 
 #include "SparkFun_Ublox_Arduino_Library.h"
 
+#include "i2c_middleware.h"
+#include <hw_i2c.h>
+
+
 /* ==================================================================== */
 /* ============================ constants ============================= */
 /* ==================================================================== */
@@ -181,12 +185,13 @@ gps_status_t setup_GPS(){
 	// wake up gps in case it is in Lower Power mode
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
 	factoryReset();	
-	HAL_Delay(GPS_WAKEUP_TIMEOUT*4);                                               // Wait for things to be setup	
+	HAL_Delay(GPS_WAKEUP_TIMEOUT);                                               // Wait for things to be setup	
 
 	/* Set the I2C port to output UBX only (turn off NMEA noise) */
 	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
 	{
 		PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -197,6 +202,7 @@ gps_status_t setup_GPS(){
 	if (isConnected(defaultMaxWait) == false) //Connect to the Ublox module using Wire port
 	{
 			PRINTF("SELFTEST: GPS did not respond. GPS error...\r\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -206,6 +212,7 @@ gps_status_t setup_GPS(){
 	if (setGPS_constellation_only(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
 		PRINTF("***!!! Warning: setGPS_constellation_only failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -215,6 +222,7 @@ gps_status_t setup_GPS(){
 	if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // set to airbourne mode
 	{
 		PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -224,6 +232,7 @@ gps_status_t setup_GPS(){
 	if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
 	{
 		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -234,6 +243,7 @@ gps_status_t setup_GPS(){
 	if (saveConfiguration(defaultMaxWait) == false)           // saveConfiguration config to BBR ram.
 	{
 		PRINTF("***!!! Warning: saveConfiguration failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -334,6 +344,7 @@ static gps_status_t init_for_fix()
 	if (put_in_continueous_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
 		PRINTF("***!!! Warning: put_in_continueous_mode failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -344,6 +355,7 @@ static gps_status_t init_for_fix()
 	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
 	{
 		PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -356,6 +368,7 @@ static gps_status_t init_for_fix()
 	if (newDynamicModel == 255)
 	{
 		PRINTF("***!!! Warning: getDynamicModel failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else if (newDynamicModel != DYN_MODEL_AIRBORNE1g)
 	{
@@ -364,6 +377,7 @@ static gps_status_t init_for_fix()
 		if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // Set the dynamic model to PORTABLE
 		{
 			PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
+			reinit_i2c(&hi2c1);
 		}
 		else
 		{
@@ -389,12 +403,13 @@ static gps_status_t reinit_gps()
 	
 	// configure gps module again
 	factoryReset();	
-	HAL_Delay(GPS_WAKEUP_TIMEOUT*4);                                                  // wait for GPS module to be ready
+	HAL_Delay(GPS_WAKEUP_TIMEOUT);                                                  // wait for GPS module to be ready
 
 	 
 	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
 	{
 		PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -405,6 +420,7 @@ static gps_status_t reinit_gps()
 	if (setGPS_constellation_only(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
 		PRINTF("***!!! Warning: setGPS_constellation_only failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -414,6 +430,7 @@ static gps_status_t reinit_gps()
 	if (setDynamicModel(DYN_MODEL_AIRBORNE1g,defaultMaxWait) == false) // set to airbourne mode
 	{
 		PRINTF("***!!! Warning: setDynamicModel failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -423,6 +440,7 @@ static gps_status_t reinit_gps()
 	if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
 	{
 		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
+		reinit_i2c(&hi2c1);
 	}
 	else
 	{
@@ -457,3 +475,5 @@ static gps_status_t display_fix_found()
 	
 	return GPS_SUCCESS;
 }
+
+

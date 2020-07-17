@@ -107,9 +107,9 @@ I2C_MIDDLEWARE_STATUS_t I2C_receive_mem(I2C_HandleTypeDef* hi2c, uint16_t DevAdd
 {
 
 
-		volatile HAL_StatusTypeDef a = HAL_I2C_Mem_Read(hi2c, DevAddress,MemAddress,I2C_MEMADD_SIZE_8BIT, pData, Size,Timeout);
-		if(a != HAL_OK)
+		if(HAL_I2C_Mem_Read(hi2c, DevAddress,MemAddress,I2C_MEMADD_SIZE_8BIT, pData, Size,Timeout) != HAL_OK)
 		{
+			
 		}
 
 
@@ -121,4 +121,8 @@ I2C_MIDDLEWARE_STATUS_t I2C_receive_mem(I2C_HandleTypeDef* hi2c, uint16_t DevAdd
 	return I2C_FAIL;
 }	
 
-
+I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
+{
+	HAL_I2C_MspDeInit(hi2c);
+	HAL_I2C_MspInit(hi2c);
+}

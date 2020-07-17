@@ -83,6 +83,9 @@ I2C_MIDDLEWARE_STATUS_t I2C_receive_mem(I2C_HandleTypeDef* hi2c,
 																				uint32_t Timeout );
 
 
+I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c);
+
+
 #endif // I2C_MIDDLEWARE_H
 #ifdef __cplusplus
 }
