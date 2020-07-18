@@ -290,7 +290,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 		
 		PRINTF(" Sats:%d ",temp_GPSsats);
 		PRINTF(" GPSfix_OK:%d ",temp_GPSfix_OK);	
-		PRINTF(" GPS time: %d/%d/%d, %d:%d:%d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond);
+		PRINTF(" GPS time: %02d/%02d/%04d, %02d:%02d:%02d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond);
 		PRINTF(" GPS Search time: %.3f seconds \r\n", current_time_F);
 
 
