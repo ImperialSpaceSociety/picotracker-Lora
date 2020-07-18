@@ -19,6 +19,7 @@
 /* Inclusion of system and local header files goes here */
 
 #include <i2c_middleware.h>
+#include "hw_i2c.h"
 
 
 /* ==================================================================== */
@@ -51,6 +52,7 @@
 /* Function prototypes for private (static) functions go here */
 
 
+void i2c_pins_gpio_init(void);
 
 
 
@@ -121,8 +123,43 @@ I2C_MIDDLEWARE_STATUS_t I2C_receive_mem(I2C_HandleTypeDef* hi2c, uint16_t DevAdd
 	return I2C_FAIL;
 }	
 
+
+void i2c_pins_gpio_init(){
+
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  /*Configure GPIO pin : PB9 */
+  GPIO_InitStruct.Pin = 8|9;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+}	
+	
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
 	HAL_I2C_MspDeInit(hi2c);
+	i2c_pins_gpio_init();
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
+	HAL_Delay(10);
 	HAL_I2C_MspInit(hi2c);
 }

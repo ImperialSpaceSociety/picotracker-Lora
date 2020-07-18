@@ -40,6 +40,10 @@ void MX_I2C1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
+void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle);
+void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle);
+
+
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
