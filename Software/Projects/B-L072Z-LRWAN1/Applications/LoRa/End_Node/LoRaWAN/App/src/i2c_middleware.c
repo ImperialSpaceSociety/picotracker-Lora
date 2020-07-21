@@ -137,30 +137,23 @@ void i2c_pins_gpio_init(){
 
 }	
 	
+/* rapidly toggle the i2c lines to get it unstuck
+ * Workaround to solve this mysterious problem where the sda line
+ * appears to get stuck low.
+ */
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
 	HAL_I2C_MspDeInit(hi2c);
 	i2c_pins_gpio_init();
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
-	HAL_Delay(10);
+	
+	for(uint8_t i = 0; i < 10; i++)
+	{
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8, GPIO_PIN_SET);
+		HAL_Delay(10);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8, GPIO_PIN_RESET);
+		HAL_Delay(10);
+	}
+	
 	HAL_I2C_MspInit(hi2c);
 	
 	return I2C_SUCCSS;
