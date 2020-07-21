@@ -128,8 +128,8 @@ void i2c_pins_gpio_init(){
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-  /*Configure GPIO pin : PB9 */
-  GPIO_InitStruct.Pin = 8|9;
+  /*Configure GPIO pin : PB9 | PB8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_8;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -162,4 +162,6 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8);
 	HAL_Delay(10);
 	HAL_I2C_MspInit(hi2c);
+	
+	return I2C_SUCCSS;
 }
