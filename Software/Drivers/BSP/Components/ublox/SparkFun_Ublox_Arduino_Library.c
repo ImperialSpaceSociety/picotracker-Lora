@@ -52,6 +52,7 @@
 
 
 static uint8_t GPS_buffer[MAX_PAYLOAD_SIZE];
+uint8_t ubx_packet_buff[200] = {0};
 
 
 
@@ -247,64 +248,19 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
         PRINTF(" bytes\r\n");
       }
     }
-
-    while (bytesAvailable)
-    {
-//      _i2cPort->beginTransmission(_gpsI2Caddress);
-//      _i2cPort->write(0xFF);                     //0xFF is the register to read data from
-      //if (_i2cPort->endTransmission(false) != 0) //Send a restart command. Do not release bus.
-        //return (false);                          //Sensor did not ACK
-			if (HAL_I2C_IsDeviceReady(&hi2c1,(uint16_t) _gpsI2Caddress << 1,5,defaultMaxWait) != HAL_OK)
-			{
-				return (false);                          //Sensor did not ACK
-			}
-			
-      //Limit to 32 bytes or whatever the buffer limit is for given platform
-      uint16_t bytesToRead = bytesAvailable;
-      if (bytesToRead > I2C_BUFFER_LENGTH)
-        bytesToRead = I2C_BUFFER_LENGTH;
-
-    TRY_AGAIN:
-
-      //_i2cPort->requestFrom((uint8_t)_gpsI2Caddress, (uint8_t)bytesToRead);
-      if (bytesToRead != 0 )
-      {
-        for (uint16_t x = 0; x < bytesToRead; x++)
-        {
-          //uint8_t incoming = _i2cPort->read(); //Grab the actual character
-					
-					uint8_t buff_rx[2] = {0};
-					if (I2C_receive_mem(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFF,buff_rx,1,defaultMaxWait ) != I2C_SUCCSS)
-					{
-						return (false);  //Sensor did not ACK
-					}
-					uint8_t incoming = buff_rx[0];
+		
 
 
-          //Check to see if the first read is 0x7F. If it is, the module is not ready
-          //to respond. Stop, wait, and try again
-          if (x == 0)
-          {
-            if (incoming == 0x7F)
-            {
-              if ((_printDebug == true) || (_printLimitedDebug == true)) // PRINTF this if doing limited debugging
-              {
-                PRINTF("checkUbloxU2C: Ublox error, module not ready with data");
-              }
-              HAL_Delay(5); //In logic analyzation, the module starting responding after 1.48ms
-
-              goto TRY_AGAIN;
-            }
-          }
-
-          process(incoming, incomingUBX, requestedClass, requestedID); //Process this valid character
-        }
-      }
-      else
-        return (false); //Sensor did not respond
-
-      bytesAvailable -= bytesToRead;
-    }
+		if (I2C_receive_mem(&hi2c1,(uint16_t) _gpsI2Caddress << 1,(uint16_t)0xFF,ubx_packet_buff,bytesAvailable,defaultMaxWait ) != I2C_SUCCSS)
+		{
+			return (false);  //Sensor did not ACK
+		}
+		
+		for(uint8_t i = 0; i < bytesAvailable ; i++)
+		{
+			uint8_t incoming = ubx_packet_buff[i];
+			process(incoming, incomingUBX, requestedClass, requestedID); //Process this valid character
+		}
   }
 
   return (true);
