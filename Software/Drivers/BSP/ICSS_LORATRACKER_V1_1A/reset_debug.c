@@ -54,7 +54,6 @@
 
 /* Function prototypes for private (static) functions go here */
 
-const char * reset_cause_get_name(reset_cause_t reset_cause);
 
 
 /* ==================================================================== */

@@ -52,6 +52,7 @@ typedef enum reset_cause_e
 
 /* Function prototypes for public (external) functions go here */
 reset_cause_t reset_cause_get(void);
+const char * reset_cause_get_name(reset_cause_t reset_cause);
 
 
 #endif
