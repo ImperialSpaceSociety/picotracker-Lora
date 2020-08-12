@@ -627,6 +627,11 @@
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
             </File>
+            <File>
+              <FileName>reset_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A\reset_debug.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1436,6 +1441,11 @@
               <FileName>i2c_middleware.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>reset_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A\reset_debug.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2247,6 +2257,11 @@
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
             </File>
+            <File>
+              <FileName>reset_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A\reset_debug.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3056,6 +3071,11 @@
               <FileName>i2c_middleware.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>reset_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A\reset_debug.c</FilePath>
             </File>
           </Files>
         </Group>
