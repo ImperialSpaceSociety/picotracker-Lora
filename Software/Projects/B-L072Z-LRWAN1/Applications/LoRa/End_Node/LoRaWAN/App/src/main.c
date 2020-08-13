@@ -28,6 +28,7 @@
 #include "ublox.h"
 #include "geofence.h"
 #include "main.h"
+#include "reset_debug.h"
 
 #include "stm32l0xx_hal_flash.h"
 #include "stm32l0xx_hal_flash_ex.h"
@@ -176,6 +177,8 @@ int main( void )
 	/* Configure the system clock*/
 	SystemClock_Config();
 	
+	reset_cause_t reset_cause = reset_cause_get();
+
 	/* Configure the debug mode*/
 	DBG_Init();
 
@@ -186,7 +189,7 @@ int main( void )
 	
 	/* Initialise serial debug interface */
 	TraceInit( );
-
+	PRINTF("The system reset cause is \"%s\"\n", reset_cause_get_name(reset_cause));
 	
 	PRINTF("\r\n\r\n");
 	PRINTF("************************************ \r\n");
