@@ -161,14 +161,14 @@ gps_status_t get_latest_gps_status(void)
  * GPS backup. 
  */
 gps_status_t Backup_GPS(){
-	if (put_in_power_save_mode(defaultMaxWait) == false)
-	{
-		PRINTF("***!!! Warning: put_in_power_save_mode failed !!!***\n");
-	}
-	else
-	{
-		PRINTF("put_in_power_save_mode carried out successfully!\n");
-	}
+//	if (put_in_power_save_mode(defaultMaxWait) == false)
+//	{
+//		PRINTF("***!!! Warning: put_in_power_save_mode failed !!!***\n");
+//	}
+//	else
+//	{
+//		PRINTF("put_in_power_save_mode carried out successfully!\n");
+//	}
 	//HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low		
 	return GPS_SUCCESS;
 }
@@ -183,9 +183,9 @@ gps_status_t Backup_GPS(){
 gps_status_t setup_GPS(){
 	
 	// wake up gps in case it is in Lower Power mode
-	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
-	factoryReset();	
-	HAL_Delay(GPS_WAKEUP_TIMEOUT);                                               // Wait for things to be setup	
+	//HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		      // pull GPS extint0 pin high to wake gps
+	//factoryReset();	
+	//HAL_Delay(GPS_WAKEUP_TIMEOUT);                                               // Wait for things to be setup	
 
 	/* Set the I2C port to output UBX only (turn off NMEA noise) */
 	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
@@ -229,15 +229,15 @@ gps_status_t setup_GPS(){
 		PRINTF("Dynamic platform model changed successfully!\n");
 	}
 	
-	if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
-	{
-		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
-		reinit_i2c(&hi2c1);
-	}
-	else
-	{
-		PRINTF("set_powersave_config carried out successfully!\n");
-	}
+//	if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
+//	{
+//		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
+//		reinit_i2c(&hi2c1);
+//	}
+//	else
+//	{
+//		PRINTF("set_powersave_config carried out successfully!\n");
+//	}
 	
 	
 	if (saveConfiguration(defaultMaxWait) == false)           // saveConfiguration config to BBR ram.
@@ -338,18 +338,18 @@ static gps_status_t init_for_fix()
 	
 	
 	/* pull GPS extint0 pin high to wake gps */
-	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  
-	HAL_Delay(GPS_WAKEUP_TIMEOUT);
+	//HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET);    		  
+//	HAL_Delay(GPS_WAKEUP_TIMEOUT);
 	
-	if (put_in_continueous_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
-	{
-		PRINTF("***!!! Warning: put_in_continueous_mode failed !!!***\n");
-		reinit_i2c(&hi2c1);
-	}
-	else
-	{
-		PRINTF("put_in_continueous_mode carried out successfully!\n");
-	}
+//	if (put_in_continueous_mode(defaultMaxWait) == false) // Set the constellation to use only GPS
+//	{
+//		PRINTF("***!!! Warning: put_in_continueous_mode failed !!!***\n");
+//		reinit_i2c(&hi2c1);
+//	}
+//	else
+//	{
+//		PRINTF("put_in_continueous_mode carried out successfully!\n");
+//	}
 
 	/* Set the I2C port to output UBX only (turn off NMEA noise) */
 	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
@@ -402,8 +402,8 @@ static gps_status_t reinit_gps()
 {
 	
 	// configure gps module again
-	factoryReset();	
-	HAL_Delay(GPS_WAKEUP_TIMEOUT);                                                  // wait for GPS module to be ready
+	//factoryReset();	
+	//HAL_Delay(GPS_WAKEUP_TIMEOUT);                                                  // wait for GPS module to be ready
 
 	 
 	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
@@ -437,15 +437,15 @@ static gps_status_t reinit_gps()
 		PRINTF("Dynamic platform model changed successfully!\n");
 	}
 
-	if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
-	{
-		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
-		reinit_i2c(&hi2c1);
-	}
-	else
-	{
-		PRINTF("set_powersave_config carried out successfully!\n");
-	}
+//	if (set_powersave_config(defaultMaxWait) == false)           // Save powersave config to ram. can be activated later.
+//	{
+//		PRINTF("***!!! Warning: set_powersave_config failed !!!***\n");
+//		reinit_i2c(&hi2c1);
+//	}
+//	else
+//	{
+//		PRINTF("set_powersave_config carried out successfully!\n");
+//	}
 	
 	return GPS_SUCCESS;	
 }
