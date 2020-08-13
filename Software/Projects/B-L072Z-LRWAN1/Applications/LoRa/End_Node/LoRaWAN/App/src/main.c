@@ -170,14 +170,15 @@ PWR_PVDTypeDef sConfigPVD;
   */
 int main( void )
 {
-		
+	reset_cause_t reset_cause = reset_cause_get();
+
 	/* STM32 HAL library initialization*/
 	HAL_Init();
+
 	
 	/* Configure the system clock*/
 	SystemClock_Config();
 	
-	reset_cause_t reset_cause = reset_cause_get();
 
 	/* Configure the debug mode*/
 	DBG_Init();
