@@ -94,10 +94,19 @@ reset_cause_t reset_cause_get(void)
     {
         reset_cause = RESET_CAUSE_POWER_ON_POWER_DOWN_RESET;
     }
-    else if (__HAL_RCC_GET_FLAG(RCC_FLAG_PINRST))
+    else if (__HAL_RCC_GET_FLAG(RCC_FLAG_OBLRST))
+    {
+        reset_cause = RESET_CAUSE_OPTIONS_BYTES_LOADING_RESET;
+    }
+		else if (__HAL_RCC_GET_FLAG(RCC_FLAG_FWRST))
+    {
+        reset_cause = RESET_CAUSE_FIREWALL_RESET;
+    }		
+		else if (__HAL_RCC_GET_FLAG(RCC_FLAG_PINRST))
     {
         reset_cause = RESET_CAUSE_EXTERNAL_RESET_PIN_RESET;
     }
+		
 		#if 0
     // Needs to come *after* checking the `RCC_FLAG_PORRST` flag in order to ensure first that the reset cause is 
     // NOT a POR/PDR reset. See note below. 
@@ -159,6 +168,12 @@ const char * reset_cause_get_name(reset_cause_t reset_cause)
         case RESET_CAUSE_EXTERNAL_RESET_PIN_RESET:
             reset_cause_name = "EXTERNAL_RESET_PIN_RESET";
             break;
+				case RESET_CAUSE_OPTIONS_BYTES_LOADING_RESET:
+	          reset_cause_name = "RESET_CAUSE_OPTIONS_BYTES_LOADING_RESET";
+            break;
+				case RESET_CAUSE_FIREWALL_RESET:
+	          reset_cause_name = "RESET_CAUSE_FIREWALL_RESET";
+            break;	
         case RESET_CAUSE_BROWNOUT_RESET:
             reset_cause_name = "BROWNOUT_RESET (BOR)";
             break;
