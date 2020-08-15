@@ -143,17 +143,33 @@ void i2c_pins_gpio_init(){
  */
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
-	HAL_I2C_MspDeInit(hi2c);
-	i2c_pins_gpio_init();
-	
-	for(uint8_t i = 0; i < 10; i++)
-	{
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8, GPIO_PIN_SET);
-		HAL_Delay(10);
-		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9|GPIO_PIN_8, GPIO_PIN_RESET);
-		HAL_Delay(10);
-	}
-	
+  uint32_t temp;
+  
+  /* De-initialize the I2C comunication bus */
+  //  HAL_I2C_DeInit(&PWR_I2C_Handle);
+  HAL_I2C_MspDeInit(hi2c);
+  
+  /* I2C SDA is tied low */
+  temp = GPIOB->MODER;
+  
+  /* PB8 (I2C CLK) is configured as general purpose output mode */
+  CLEAR_BIT(temp, 3 << (8 * 2));
+  SET_BIT(temp, 1 << (8 * 2));
+  GPIOB->MODER = temp;
+  
+  /* Safe delay */
+  uint32_t n= 100;
+  n = n * HAL_RCC_GetHCLKFreq()/1000;
+  n/=10;
+  while(n--);
+  
+  /* PB8 (I2C CLK) is configured as alternate function mode */
+  CLEAR_BIT(temp, 3 << (8 * 2));
+  SET_BIT(temp, 2 << (8 * 2));
+  GPIOB->MODER = temp;
+  
+  /* Re-Initiaize the I2C comunication bus */
+  //  PWR_I2C_Init();
 	HAL_I2C_MspInit(hi2c);
 	
 	return I2C_SUCCSS;
