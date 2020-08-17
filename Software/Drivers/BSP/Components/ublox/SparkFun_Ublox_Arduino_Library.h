@@ -557,6 +557,8 @@ typedef struct
 	uint16_t getMillisecond(uint16_t maxWait );
 	int32_t getNanosecond(uint16_t maxWait );
 	uint32_t getTimeOfWeek(uint16_t maxWait );
+	bool getDateValid(uint16_t maxWait);
+	bool getTimeValid(uint16_t maxWait);
 
 	int32_t getHighResLatitude(uint16_t maxWait );
 	int8_t getHighResLatitudeHp(uint16_t maxWait );
@@ -704,6 +706,8 @@ typedef struct
 	static uint8_t gpsSecond;
 	static uint16_t gpsMillisecond;
 	static int32_t gpsNanosecond;
+	static bool gpsDateValid;
+	static bool gpsTimeValid;
 
 	static int32_t latitude;		 //Degrees * 10^-7 (more accurate than floats)
 	static int32_t longitude;		 //Degrees * 10^-7 (more accurate than floats)
@@ -887,6 +891,8 @@ typedef struct
 		uint32_t gpsHour : 1;
 		uint32_t gpsMinute : 1;
 		uint32_t gpsSecond : 1;
+		uint32_t gpsDateValid : 1;
+		uint32_t gpsTimeValid : 1;
 		uint32_t gpsNanosecond : 1;
 
 		uint32_t all : 1;
