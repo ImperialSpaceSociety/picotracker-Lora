@@ -474,7 +474,7 @@ typedef struct
 // If you know you are only going to be using I2C / Qwiic communication, you can
 // safely reduce defaultMaxWait to 250.
 #ifndef defaultMaxWait // Let's allow the user to define their own value if they want to
-#define defaultMaxWait 250
+#define defaultMaxWait 1000
 #endif
 
 	//By default use the default I2C address, and use Wire port
