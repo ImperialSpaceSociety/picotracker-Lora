@@ -294,6 +294,20 @@ gps_status_t get_location_fix(uint32_t timeout){
 		PRINTF(" GPS Search time: %.3f seconds \r\n", current_time_F);
 
 
+    PRINTF("  Time is ");
+    if (getTimeValid(defaultMaxWait) == false)
+    {
+      PRINTF("not ");
+    }
+    PRINTF("valid  Date is ");
+    if (getDateValid(defaultMaxWait) == false)
+    {
+      PRINTF("not ");
+    }
+    PRINTF("valid\n");
+
+  
+
 		
 		if(temp_GPSfix_type == 3 && temp_GPSsats >= SATS && temp_GPSfix_OK == 1)           // check if we have a good fix
 		{ 
