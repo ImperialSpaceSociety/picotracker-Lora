@@ -270,6 +270,9 @@ gps_status_t get_location_fix(uint32_t timeout){
 		uint8_t temp_GPShour = getHour(defaultMaxWait);
 		uint8_t	temp_GPSminute = getMinute(defaultMaxWait);
 		uint8_t	temp_GPSsecond = getSecond(defaultMaxWait);
+		uint8_t temp_GPSmillisecond = getMillisecond(defaultMaxWait);
+		uint8_t	temp_GPSnanosecond = getNanosecond(defaultMaxWait);
+
 		uint16_t temp_GPSyear =  getYear(defaultMaxWait);
 		uint8_t temp_GPSmonth = getMonth(defaultMaxWait);
 		uint8_t temp_GPSday = getDay(defaultMaxWait);
@@ -290,7 +293,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 		
 		PRINTF(" Sats:%d ",temp_GPSsats);
 		PRINTF(" GPSfix_OK:%d ",temp_GPSfix_OK);	
-		PRINTF(" GPS time: %02d/%02d/%04d, %02d:%02d:%02d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond);
+		PRINTF(" GPS time: %02d/%02d/%04d, %02d:%02d:%02d.%04d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond,temp_GPSmillisecond);
 		PRINTF(" GPS Search time: %.3f seconds \r\n", current_time_F);
 
 
