@@ -20,6 +20,7 @@
 
 #include <i2c_middleware.h>
 #include "hw_i2c.h"
+#include "hw.h" // for PRINTF
 
 
 /* ==================================================================== */
@@ -143,6 +144,13 @@ void i2c_pins_gpio_init(){
  */
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
+	HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPS_EN_PIN, GPIO_PIN_SET); 
+	HAL_Delay(100);
+	HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPS_EN_PIN, GPIO_PIN_RESET); 
+	HAL_Delay(1000);
+
+
+	
   uint32_t temp;
   
   /* De-initialize the I2C comunication bus */
@@ -171,6 +179,10 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
   /* Re-Initiaize the I2C comunication bus */
   //  PWR_I2C_Init();
 	HAL_I2C_MspInit(hi2c);
+	
+	PRINTF("RESTARTING BECAUSE OF I2C ERROR");
+	HAL_Delay(100);
+	Error_Handler();
 	
 	return I2C_SUCCSS;
 }
