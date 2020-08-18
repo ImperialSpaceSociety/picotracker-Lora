@@ -173,8 +173,6 @@ Wire Wire Line
 Wire Wire Line
 	14050 3500 14050 3850
 Wire Wire Line
-	14250 3300 14050 3300
-Wire Wire Line
 	14250 3400 13950 3400
 $Comp
 L circuit-board-design-rescue:GND-power #PWR?
@@ -200,12 +198,7 @@ Connection ~ 14650 2750
 Wire Wire Line
 	14650 2750 14650 2900
 Wire Wire Line
-	14250 3100 14150 3100
-Wire Wire Line
 	14150 3100 14150 2750
-Wire Wire Line
-	14150 2750 14650 2750
-NoConn ~ 14250 3200
 $Comp
 L circuit-board-design-rescue:+3.3V-power #PWR?
 U 1 1 5DC84121
@@ -220,8 +213,6 @@ F 3 "" H 14650 2700 50  0001 C CNN
 	1    14650 2700
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	13950 2200 13950 3400
 Wire Wire Line
 	14050 2100 14050 3300
 Wire Wire Line
@@ -392,8 +383,6 @@ Text Label 12250 7700 0    50   ~ 0
 GPS_EXTINT
 Text Label 7800 3700 2    50   ~ 0
 GPS_EXTINT
-NoConn ~ 7150 3000
-NoConn ~ 7150 3300
 NoConn ~ 7150 4100
 NoConn ~ 7150 4200
 NoConn ~ 7150 4300
@@ -557,23 +546,6 @@ F 4 "0.003" H 15100 2850 50  0001 C CNN "Cost"
 F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/0391135/" H 15100 2850 50  0001 C CNN "Purchase link"
 F 6 "50" H 15100 2850 50  0001 C CNN "min_quantity"
 	1    15100 2850
-	1    0    0    -1  
-$EndComp
-$Comp
-L circuit-board-design-rescue:MS5607-02BA-Sensor_Pressure U?
-U 1 1 5DC8412A
-P 14650 3300
-AR Path="/5D5B1586/5DC8412A" Ref="U?"  Part="1" 
-AR Path="/5D5B15F7/5DC8412A" Ref="U?"  Part="1" 
-AR Path="/5DC8412A" Ref="U6"  Part="1" 
-F 0 "U6" H 14980 3346 50  0000 L CNN
-F 1 "MS5607-02BA" H 14980 3255 50  0000 L CNN
-F 2 "Package_LGA:LGA-8_3x5mm_P1.25mm" H 14650 3300 50  0001 C CNN
-F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5607-02BA03%7FB2%7Fpdf%7FEnglish%7FENG_DS_MS5607-02BA03_B2.pdf%7FCAT-BLPS0035" H 14650 3300 50  0001 C CNN
-F 4 "https://uk.rs-online.com/web/p/absolute-pressure-sensor-ics/8937095/" H 14650 3300 50  0001 C CNN "Purchase link"
-F 5 "2.86" H 14650 3300 50  0001 C CNN "Cost"
-F 6 "1" H 14650 3300 50  0001 C CNN "min_quantity"
-	1    14650 3300
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -828,7 +800,6 @@ Text Notes 8950 8400 0    50   ~ 0
 Hole to tie string\n
 Text Notes 7100 9100 0    50   ~ 0
 Structural holes\n
-NoConn ~ 7150 3200
 Text Label 4450 3900 0    50   ~ 0
 TCXO_EN
 Wire Wire Line
@@ -960,7 +931,6 @@ Wire Wire Line
 	1950 1700 2350 1700
 Wire Wire Line
 	2350 1250 2350 1700
-NoConn ~ 7150 3100
 NoConn ~ 14150 7300
 Wire Wire Line
 	7150 5200 8600 5200
@@ -1144,47 +1114,19 @@ Connection ~ 4000 4300
 Wire Wire Line
 	4000 4300 5350 4300
 NoConn ~ 12950 7900
-$Comp
-L Connector:TestPoint TP4
-U 1 1 5F496F33
-P 13850 1950
-F 0 "TP4" H 13908 2068 50  0000 L CNN
-F 1 "TestPoint" H 13900 2000 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 14050 1950 50  0001 C CNN
-F 3 "~" H 14050 1950 50  0001 C CNN
-	1    13850 1950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:TestPoint TP3
-U 1 1 5F4986F2
-P 13400 1950
-F 0 "TP3" H 13458 2068 50  0000 L CNN
-F 1 "TestPoint" H 13450 2000 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 13600 1950 50  0001 C CNN
-F 3 "~" H 13600 1950 50  0001 C CNN
-	1    13400 1950
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	13400 1950 13400 2200
 Wire Wire Line
 	12700 2100 13850 2100
 Connection ~ 13400 2200
 Wire Wire Line
 	13400 2200 13950 2200
-Wire Wire Line
-	13850 2100 13850 1950
 Connection ~ 13850 2100
-Wire Wire Line
-	13850 2100 14050 2100
 $Comp
 L Connector:TestPoint TP2
 U 1 1 5F4B0820
 P 12250 7000
 F 0 "TP2" H 12308 7118 50  0000 L CNN
 F 1 "TestPoint" H 12308 7027 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 12450 7000 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 12450 7000 50  0001 C CNN
 F 3 "~" H 12450 7000 50  0001 C CNN
 	1    12250 7000
 	1    0    0    -1  
@@ -1195,7 +1137,7 @@ U 1 1 5F4B0EE1
 P 12150 6800
 F 0 "TP1" H 12208 6918 50  0000 L CNN
 F 1 "TestPoint" H 12208 6827 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 12350 6800 50  0001 C CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 12350 6800 50  0001 C CNN
 F 3 "~" H 12350 6800 50  0001 C CNN
 	1    12150 6800
 	1    0    0    -1  
@@ -1210,4 +1152,118 @@ Wire Wire Line
 Connection ~ 12250 7100
 Wire Wire Line
 	12250 7100 11700 7100
+Wire Wire Line
+	13850 2100 14050 2100
+Wire Wire Line
+	13950 2200 13950 3400
+$Comp
+L circuit-board-design-rescue:MS5607-02BA-Sensor_Pressure U?
+U 1 1 5DC8412A
+P 14650 3300
+AR Path="/5D5B1586/5DC8412A" Ref="U?"  Part="1" 
+AR Path="/5D5B15F7/5DC8412A" Ref="U?"  Part="1" 
+AR Path="/5DC8412A" Ref="U6"  Part="1" 
+F 0 "U6" H 14980 3346 50  0000 L CNN
+F 1 "MS5607-02BA" H 14980 3255 50  0000 L CNN
+F 2 "Package_LGA:LGA-8_3x5mm_P1.25mm" H 14650 3300 50  0001 C CNN
+F 3 "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7FMS5607-02BA03%7FB2%7Fpdf%7FEnglish%7FENG_DS_MS5607-02BA03_B2.pdf%7FCAT-BLPS0035" H 14650 3300 50  0001 C CNN
+F 4 "https://uk.rs-online.com/web/p/absolute-pressure-sensor-ics/8937095/" H 14650 3300 50  0001 C CNN "Purchase link"
+F 5 "2.86" H 14650 3300 50  0001 C CNN "Cost"
+F 6 "1" H 14650 3300 50  0001 C CNN "min_quantity"
+	1    14650 3300
+	1    0    0    -1  
+$EndComp
+NoConn ~ 14250 3200
+Wire Wire Line
+	14150 2750 14650 2750
+Wire Wire Line
+	14250 3100 14150 3100
+Wire Wire Line
+	14250 3300 14050 3300
+Wire Wire Line
+	13850 2100 13850 1950
+Wire Wire Line
+	13400 1950 13400 2200
+$Comp
+L Connector:TestPoint TP3
+U 1 1 5F4986F2
+P 13400 1950
+F 0 "TP3" H 13458 2068 50  0000 L CNN
+F 1 "TestPoint" H 13450 2000 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 13600 1950 50  0001 C CNN
+F 3 "~" H 13600 1950 50  0001 C CNN
+	1    13400 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP4
+U 1 1 5F496F33
+P 13850 1950
+F 0 "TP4" H 13908 2068 50  0000 L CNN
+F 1 "TestPoint" H 13900 2000 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 14050 1950 50  0001 C CNN
+F 3 "~" H 14050 1950 50  0001 C CNN
+	1    13850 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP5
+U 1 1 5F50BCC5
+P 7450 2600
+F 0 "TP5" H 7508 2718 50  0000 L CNN
+F 1 "TestPoint" H 7500 2650 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 7650 2600 50  0001 C CNN
+F 3 "~" H 7650 2600 50  0001 C CNN
+	1    7450 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP6
+U 1 1 5F50BCCF
+P 7900 2600
+F 0 "TP6" H 7958 2718 50  0000 L CNN
+F 1 "TestPoint" H 7950 2650 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8100 2600 50  0001 C CNN
+F 3 "~" H 8100 2600 50  0001 C CNN
+	1    7900 2600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7150 3000 7450 3000
+Wire Wire Line
+	7450 2600 7450 3000
+Wire Wire Line
+	7150 3100 7900 3100
+Wire Wire Line
+	7900 2600 7900 3100
+$Comp
+L Connector:TestPoint TP7
+U 1 1 5F52664F
+P 8400 2600
+F 0 "TP7" H 8458 2718 50  0000 L CNN
+F 1 "TestPoint" H 8450 2650 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 8600 2600 50  0001 C CNN
+F 3 "~" H 8600 2600 50  0001 C CNN
+	1    8400 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP8
+U 1 1 5F52DCD2
+P 8900 2600
+F 0 "TP8" H 8958 2718 50  0000 L CNN
+F 1 "TestPoint" H 8950 2650 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 9100 2600 50  0001 C CNN
+F 3 "~" H 9100 2600 50  0001 C CNN
+	1    8900 2600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7150 3200 8400 3200
+Wire Wire Line
+	8400 2600 8400 3200
+Wire Wire Line
+	7150 3300 8900 3300
+Wire Wire Line
+	8900 2600 8900 3300
 $EndSCHEMATC
