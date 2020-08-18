@@ -72,30 +72,8 @@ Wire Wire Line
 	1350 1950 1650 1950
 Text Label 1650 1950 2    50   ~ 0
 RESET
-Wire Wire Line
-	5350 4300 4550 4300
-Text Label 4000 4300 0    50   ~ 0
+Text Label 3500 4300 0    50   ~ 0
 RESET
-Wire Wire Line
-	4550 4300 4550 4550
-Connection ~ 4550 4300
-Wire Wire Line
-	4550 4300 4000 4300
-$Comp
-L circuit-board-design-rescue:GND-power #PWR?
-U 1 1 5DC84068
-P 4550 4900
-AR Path="/5D5B15F7/5DC84068" Ref="#PWR?"  Part="1" 
-AR Path="/5DC84068" Ref="#PWR0106"  Part="1" 
-F 0 "#PWR0106" H 4550 4650 50  0001 C CNN
-F 1 "GND" H 4555 4727 50  0000 C CNN
-F 2 "" H 4550 4900 50  0001 C CNN
-F 3 "" H 4550 4900 50  0001 C CNN
-	1    4550 4900
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4550 4750 4550 4900
 Wire Wire Line
 	6150 1350 6150 2250
 Wire Wire Line
@@ -250,12 +228,10 @@ Wire Wire Line
 	12700 1050 12700 1400
 Connection ~ 12700 2100
 Wire Wire Line
-	12700 2100 14050 2100
-Wire Wire Line
 	13000 2200 13000 1700
 Connection ~ 13000 2200
 Wire Wire Line
-	13000 2200 13950 2200
+	13000 2200 13400 2200
 $Comp
 L circuit-board-design-rescue:+3.3V-power #PWR?
 U 1 1 5DC84141
@@ -372,10 +348,6 @@ Text Label 12000 2100 0    50   ~ 0
 I2C1_SDA
 Text Label 12000 2200 0    50   ~ 0
 I2C1_SCL
-Text Label 12250 7400 0    50   ~ 0
-I2C1_SDA
-Text Label 12250 7500 0    50   ~ 0
-I2C1_SCL
 $Comp
 L circuit-board-design-rescue:GND-power #PWR0102
 U 1 1 5DEE121A
@@ -416,22 +388,6 @@ Wire Wire Line
 Connection ~ 13450 6750
 Wire Wire Line
 	7150 3700 7800 3700
-Wire Wire Line
-	11750 7900 11750 7500
-$Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
-U 1 1 5DFABE1F
-P 11750 7500
-AR Path="/5D5B165E/5DFABE1F" Ref="#PWR?"  Part="1" 
-AR Path="/5D5B15F7/5DFABE1F" Ref="#PWR?"  Part="1" 
-AR Path="/5DFABE1F" Ref="#PWR0121"  Part="1" 
-F 0 "#PWR0121" H 11750 7350 50  0001 C CNN
-F 1 "+3.3V" H 11765 7673 50  0000 C CNN
-F 2 "" H 11750 7500 50  0001 C CNN
-F 3 "" H 11750 7500 50  0001 C CNN
-	1    11750 7500
-	1    0    0    -1  
-$EndComp
 Text Label 12250 7700 0    50   ~ 0
 GPS_EXTINT
 Text Label 7800 3700 2    50   ~ 0
@@ -457,12 +413,6 @@ Wire Wire Line
 	13550 6750 13550 6800
 Wire Wire Line
 	12950 7700 12250 7700
-NoConn ~ 12950 7100
-NoConn ~ 12950 7200
-Wire Wire Line
-	12250 7500 12950 7500
-Wire Wire Line
-	12950 7400 12250 7400
 NoConn ~ 13750 6800
 Wire Wire Line
 	14150 7500 14800 7500
@@ -498,19 +448,6 @@ F 1 "MAX-M8C" H 13150 6600 50  0000 C CNN
 F 2 "RF_GPS:ublox_MAX" H 13950 6850 50  0001 C CNN
 F 3 "https://www.u-blox.com/sites/default/files/MAX-M8-FW3_DataSheet_%28UBX-15031506%29.pdf" H 13550 7500 50  0001 C CNN
 	1    13550 7500
-	1    0    0    -1  
-$EndComp
-$Comp
-L circuit-board-design-rescue:CMWX1ZZABZ-078-RF_Module U?
-U 1 1 5DC84013
-P 6250 3900
-AR Path="/5D5B15F7/5DC84013" Ref="U?"  Part="1" 
-AR Path="/5DC84013" Ref="U3"  Part="1" 
-F 0 "U3" H 5550 5500 50  0000 C CNN
-F 1 "CMWX1ZZABZ-078" H 5550 5350 50  0000 C CNN
-F 2 "RF_Module:CMWX1ZZABZ" H 6250 3900 50  0001 C CNN
-F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 8700 2400 50  0001 C CNN
-	1    6250 3900
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -679,19 +616,6 @@ F 3 "~" H 6450 1550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:C_Small-Device C?
-U 1 1 5DC8406E
-P 4550 4650
-AR Path="/5D5B15F7/5DC8406E" Ref="C?"  Part="1" 
-AR Path="/5DC8406E" Ref="C1"  Part="1" 
-F 0 "C1" H 4642 4696 50  0000 L CNN
-F 1 "100nF" H 4642 4605 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0402_1005Metric" H 4550 4650 50  0001 C CNN
-F 3 "~" H 4550 4650 50  0001 C CNN
-	1    4550 4650
-	1    0    0    -1  
-$EndComp
-$Comp
 L circuit-board-design-rescue:R-Device R?
 U 1 1 5DC84036
 P 5000 5450
@@ -834,7 +758,7 @@ Wire Wire Line
 	4750 1350 6050 1350
 NoConn ~ 8950 7650
 Wire Wire Line
-	5350 3100 4450 3100
+	5350 3300 4450 3300
 Wire Wire Line
 	10850 3900 10850 4250
 $Comp
@@ -874,81 +798,11 @@ F 3 "~" H 10150 3900 50  0001 C CNN
 	1    10150 3900
 	0    1    1    0   
 $EndComp
-Wire Wire Line
-	5350 3200 4450 3200
-Text Label 4450 3200 0    50   ~ 0
-SWITCH
 Wire Notes Line
 	9350 4900 16050 4900
-Wire Wire Line
-	10150 5850 9900 5850
-Text Label 9500 5850 0    50   ~ 0
-SWITCH
-Wire Wire Line
-	9900 5850 9900 6000
-Connection ~ 9900 5850
-Wire Wire Line
-	9900 5850 9500 5850
-$Comp
-L circuit-board-design-rescue:GND-power #PWR?
-U 1 1 5DC040B5
-P 9900 6400
-AR Path="/5D5B15F7/5DC040B5" Ref="#PWR?"  Part="1" 
-AR Path="/5DC040B5" Ref="#PWR03"  Part="1" 
-F 0 "#PWR03" H 9900 6150 50  0001 C CNN
-F 1 "GND" H 9905 6227 50  0000 C CNN
-F 2 "" H 9900 6400 50  0001 C CNN
-F 3 "" H 9900 6400 50  0001 C CNN
-	1    9900 6400
-	1    0    0    -1  
-$EndComp
-$Comp
-L circuit-board-design-rescue:SW_Push-Switch SW1
-U 1 1 5DC04C37
-P 10350 5850
-F 0 "SW1" H 10350 6135 50  0000 C CNN
-F 1 "SW_Push" H 10350 6044 50  0000 C CNN
-F 2 "flight-computer:EVPAWCD4A" H 10350 6050 50  0001 C CNN
-F 3 "~" H 10350 6050 50  0001 C CNN
-	1    10350 5850
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10550 5850 10750 5850
-$Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
-U 1 1 5DC0A475
-P 10750 5300
-AR Path="/5D5B165E/5DC0A475" Ref="#PWR?"  Part="1" 
-AR Path="/5D5B15F7/5DC0A475" Ref="#PWR?"  Part="1" 
-AR Path="/5DC0A475" Ref="#PWR04"  Part="1" 
-F 0 "#PWR04" H 10750 5150 50  0001 C CNN
-F 1 "+3.3V" H 10765 5473 50  0000 C CNN
-F 2 "" H 10750 5300 50  0001 C CNN
-F 3 "" H 10750 5300 50  0001 C CNN
-	1    10750 5300
-	1    0    0    -1  
-$EndComp
-$Comp
-L circuit-board-design-rescue:R-Device R7
-U 1 1 5DC0F569
-P 9900 6150
-F 0 "R7" H 9970 6196 50  0000 L CNN
-F 1 "100K" H 9970 6105 50  0000 L CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 9830 6150 50  0001 C CNN
-F 3 "~" H 9900 6150 50  0001 C CNN
-	1    9900 6150
-	1    0    0    -1  
-$EndComp
-Text Notes 9700 6750 0    50   ~ 0
-User interface button\n
-Wire Wire Line
-	9900 6300 9900 6400
-Wire Wire Line
-	10750 5300 10750 5850
 Wire Notes Line
 	9350 650  9350 6850
-Text Label 4450 3100 0    50   ~ 0
+Text Label 4450 3300 0    50   ~ 0
 LED
 Text Label 9550 3900 0    50   ~ 0
 LED
@@ -975,10 +829,6 @@ Hole to tie string\n
 Text Notes 7100 9100 0    50   ~ 0
 Structural holes\n
 NoConn ~ 7150 3200
-Wire Wire Line
-	6450 2250 6750 2250
-Text Label 6750 2250 2    50   ~ 0
-TCXO_EN
 Text Label 4450 3900 0    50   ~ 0
 TCXO_EN
 Wire Wire Line
@@ -1006,9 +856,6 @@ V_SOLAR
 Wire Wire Line
 	5350 3400 4450 3400
 NoConn ~ 7150 3900
-NoConn ~ 5350 3300
-Wire Wire Line
-	12950 7900 11750 7900
 NoConn ~ 12950 7800
 Text Label 7800 3500 2    50   ~ 0
 I2C1_SDA
@@ -1041,14 +888,6 @@ Wire Wire Line
 	1350 1250 1750 1250
 Wire Wire Line
 	1350 1150 1750 1150
-Wire Wire Line
-	5350 3600 4450 3600
-Wire Wire Line
-	5350 3700 4450 3700
-Text Label 4450 3600 0    50   ~ 0
-USART1_TX
-Text Label 4450 3700 0    50   ~ 0
-USART1_RX
 Text Label 1750 1250 2    50   ~ 0
 USART1_TX
 Text Label 1750 1150 2    50   ~ 0
@@ -1123,21 +962,6 @@ Wire Wire Line
 	2350 1250 2350 1700
 NoConn ~ 7150 3100
 NoConn ~ 14150 7300
-$Comp
-L circuit-board-design-rescue:+3.3V-power #PWR?
-U 1 1 5E3AF5DA
-P 6350 2100
-AR Path="/5D5B15F7/5E3AF5DA" Ref="#PWR?"  Part="1" 
-AR Path="/5E3AF5DA" Ref="#PWR0124"  Part="1" 
-F 0 "#PWR0124" H 6350 1950 50  0001 C CNN
-F 1 "+3.3V" H 6365 2273 50  0000 C CNN
-F 2 "" H 6350 2100 50  0001 C CNN
-F 3 "" H 6350 2100 50  0001 C CNN
-	1    6350 2100
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6350 2400 6350 2100
 Wire Wire Line
 	7150 5200 8600 5200
 Wire Wire Line
@@ -1228,4 +1052,162 @@ $EndComp
 Connection ~ 8600 5600
 Wire Wire Line
 	8600 5600 8600 5950
+Wire Wire Line
+	6450 2250 6750 2250
+$Comp
+L circuit-board-design-rescue:CMWX1ZZABZ-078-RF_Module U?
+U 1 1 5DC84013
+P 6250 3900
+AR Path="/5D5B15F7/5DC84013" Ref="U?"  Part="1" 
+AR Path="/5DC84013" Ref="U3"  Part="1" 
+F 0 "U3" H 5550 5500 50  0000 C CNN
+F 1 "CMWX1ZZABZ-078" H 5550 5350 50  0000 C CNN
+F 2 "RF_Module:CMWX1ZZABZ" H 6250 3900 50  0001 C CNN
+F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 8700 2400 50  0001 C CNN
+	1    6250 3900
+	1    0    0    -1  
+$EndComp
+Text Label 4450 3700 0    50   ~ 0
+USART1_RX
+Wire Wire Line
+	5350 3700 4450 3700
+Wire Wire Line
+	5350 3600 4450 3600
+Text Label 4450 3600 0    50   ~ 0
+USART1_TX
+NoConn ~ 12950 7500
+NoConn ~ 12950 7400
+Text Label 4450 3100 0    50   ~ 0
+USART2_TX
+Wire Wire Line
+	5350 3100 4450 3100
+Wire Wire Line
+	5350 3200 4450 3200
+Text Label 4450 3200 0    50   ~ 0
+USART2_RX
+Text Label 11700 7100 0    50   ~ 0
+USART2_TX
+Wire Wire Line
+	12950 7100 12250 7100
+Wire Wire Line
+	12950 7200 12150 7200
+Text Label 11700 7200 0    50   ~ 0
+USART2_RX
+Wire Wire Line
+	3500 4300 4000 4300
+Wire Wire Line
+	6350 2400 6350 2100
+$Comp
+L circuit-board-design-rescue:+3.3V-power #PWR?
+U 1 1 5E3AF5DA
+P 6350 2100
+AR Path="/5D5B15F7/5E3AF5DA" Ref="#PWR?"  Part="1" 
+AR Path="/5E3AF5DA" Ref="#PWR0124"  Part="1" 
+F 0 "#PWR0124" H 6350 1950 50  0001 C CNN
+F 1 "+3.3V" H 6365 2273 50  0000 C CNN
+F 2 "" H 6350 2100 50  0001 C CNN
+F 3 "" H 6350 2100 50  0001 C CNN
+	1    6350 2100
+	1    0    0    -1  
+$EndComp
+Text Label 6750 2250 2    50   ~ 0
+TCXO_EN
+$Comp
+L circuit-board-design-rescue:+3.3V-power #PWR?
+U 1 1 5F45EF07
+P 4000 3700
+AR Path="/5D5B15F7/5F45EF07" Ref="#PWR?"  Part="1" 
+AR Path="/5F45EF07" Ref="#PWR06"  Part="1" 
+F 0 "#PWR06" H 4000 3550 50  0001 C CNN
+F 1 "+3.3V" H 4015 3873 50  0000 C CNN
+F 2 "" H 4000 3700 50  0001 C CNN
+F 3 "" H 4000 3700 50  0001 C CNN
+	1    4000 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L circuit-board-design-rescue:R-Device R?
+U 1 1 5F466C77
+P 4000 3850
+AR Path="/5D5B15F7/5F466C77" Ref="R?"  Part="1" 
+AR Path="/5F466C77" Ref="R9"  Part="1" 
+F 0 "R9" H 4070 3896 50  0000 L CNN
+F 1 "10K" H 4070 3805 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 3930 3850 50  0001 C CNN
+F 3 "~" H 4000 3850 50  0001 C CNN
+	1    4000 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4000 4000 4000 4300
+Connection ~ 4000 4300
+Wire Wire Line
+	4000 4300 5350 4300
+NoConn ~ 12950 7900
+$Comp
+L Connector:TestPoint TP4
+U 1 1 5F496F33
+P 13850 1950
+F 0 "TP4" H 13908 2068 50  0000 L CNN
+F 1 "TestPoint" H 13900 2000 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 14050 1950 50  0001 C CNN
+F 3 "~" H 14050 1950 50  0001 C CNN
+	1    13850 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP3
+U 1 1 5F4986F2
+P 13400 1950
+F 0 "TP3" H 13458 2068 50  0000 L CNN
+F 1 "TestPoint" H 13450 2000 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 13600 1950 50  0001 C CNN
+F 3 "~" H 13600 1950 50  0001 C CNN
+	1    13400 1950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	13400 1950 13400 2200
+Wire Wire Line
+	12700 2100 13850 2100
+Connection ~ 13400 2200
+Wire Wire Line
+	13400 2200 13950 2200
+Wire Wire Line
+	13850 2100 13850 1950
+Connection ~ 13850 2100
+Wire Wire Line
+	13850 2100 14050 2100
+$Comp
+L Connector:TestPoint TP2
+U 1 1 5F4B0820
+P 12250 7000
+F 0 "TP2" H 12308 7118 50  0000 L CNN
+F 1 "TestPoint" H 12308 7027 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 12450 7000 50  0001 C CNN
+F 3 "~" H 12450 7000 50  0001 C CNN
+	1    12250 7000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP1
+U 1 1 5F4B0EE1
+P 12150 6800
+F 0 "TP1" H 12208 6918 50  0000 L CNN
+F 1 "TestPoint" H 12208 6827 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D2.0mm" H 12350 6800 50  0001 C CNN
+F 3 "~" H 12350 6800 50  0001 C CNN
+	1    12150 6800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12150 6800 12150 7200
+Connection ~ 12150 7200
+Wire Wire Line
+	12150 7200 11700 7200
+Wire Wire Line
+	12250 7000 12250 7100
+Connection ~ 12250 7100
+Wire Wire Line
+	12250 7100 11700 7100
 $EndSCHEMATC
