@@ -6,8 +6,8 @@ $Descr A3 16535 11693
 encoding utf-8
 Sheet 1 1
 Title "Pico lora tracker"
-Date "2019-11-27"
-Rev "1.1"
+Date "2020-08-19"
+Rev "1.3"
 Comp "Imperial College Space Society"
 Comment1 "Based on the Picotracker MK II and Project mach one flight computer"
 Comment2 ""
@@ -603,7 +603,7 @@ $EndComp
 NoConn ~ 5350 5000
 Connection ~ 13150 6100
 Wire Wire Line
-	13350 6100 13350 6750
+	13350 6100 13350 6550
 Wire Wire Line
 	13350 6100 13150 6100
 $Comp
@@ -1266,4 +1266,22 @@ Wire Wire Line
 	7150 3300 8900 3300
 Wire Wire Line
 	8900 2600 8900 3300
+$Comp
+L Connector:TestPoint svcc
+U 1 1 5F57EBA2
+P 14000 6350
+F 0 "svcc" H 14058 6468 50  0000 L CNN
+F 1 "TestPoint" H 14050 6400 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 14200 6350 50  0001 C CNN
+F 3 "~" H 14200 6350 50  0001 C CNN
+	1    14000 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	13350 6550 14000 6550
+Wire Wire Line
+	14000 6550 14000 6350
+Connection ~ 13350 6550
+Wire Wire Line
+	13350 6550 13350 6750
 $EndSCHEMATC
