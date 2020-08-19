@@ -1267,10 +1267,10 @@ Wire Wire Line
 Wire Wire Line
 	8900 2600 8900 3300
 $Comp
-L Connector:TestPoint svcc
+L Connector:TestPoint TP9
 U 1 1 5F57EBA2
 P 14000 6350
-F 0 "svcc" H 14058 6468 50  0000 L CNN
+F 0 "TP9" H 14058 6468 50  0000 L CNN
 F 1 "TestPoint" H 14050 6400 50  0000 L CNN
 F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 14200 6350 50  0001 C CNN
 F 3 "~" H 14200 6350 50  0001 C CNN
