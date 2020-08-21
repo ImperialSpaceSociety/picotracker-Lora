@@ -105,10 +105,10 @@ void Error_Handler(void);
 /* ----------------------------------------------------------------------------------- */
 
 /*!
- * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
+ * Defines the application data transmission duty cycle. 2 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           10000
+#define APP_TX_DUTYCYCLE                           120000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
