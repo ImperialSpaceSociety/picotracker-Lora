@@ -45,8 +45,8 @@
  */
 lora_setting_status_t lora_settings_status = CORRECT; 
 
-LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_EU868;  // Loramac region EU
-Polygon_t curr_poly_region = EU863870_EUROPE_polygon; // London is in this polygon
+LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_AS923;  // Loramac region AS923
+Polygon_t curr_poly_region = AS923925_INDONESIA_polygon; // Indonesia is in this polygon
 
 tx_permission_t tx_permission = TX_OK;
 
@@ -630,8 +630,8 @@ static void set_current_loramac_region(Polygon_t current_poly)
 
 void update_geofence_position(float latitude, float longitude)
 {		
-		/* store the current geofence region to compare later */
-		Polygon_t prev_poly_region = curr_poly_region;
+		/* store the current loramac region to compare later */
+		LoRaMacRegion_t prev_loramac_region =  current_loramac_region;
 	
 		/* get our current polygon */
 	  curr_poly_region = get_polygon(latitude, longitude);
@@ -642,6 +642,6 @@ void update_geofence_position(float latitude, float longitude)
 		set_current_loramac_region(curr_poly_region);
 
 		/* now check if we have moved into a different geofence region */
-		lora_settings_status = (prev_poly_region != curr_poly_region)? INCORRECT : CORRECT;
+		lora_settings_status = (current_loramac_region != prev_loramac_region)? INCORRECT : CORRECT;
 }
 
