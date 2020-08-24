@@ -40,7 +40,6 @@ class MqttLogParser:
     def get_gateway_locations(self, json_line):
         gateway_locations = []  # list of [long,lat]
         for i in json_line["metadata"]["gateways"]:
-            # print(i)
             try:
                 gateway_locations.append([i["latitude"],i["longitude"]])
             except KeyError:
@@ -86,7 +85,8 @@ class MqttLogParser:
         all_transmissions = []
         for line in f:
             gateway_locations = self.parse_line(line)
-            all_transmissions.append(gateway_locations)
+            if len(gateway_locations)>5:
+                all_transmissions.append(gateway_locations)
 
         self.save_locations_to_csv(all_transmissions)
 
