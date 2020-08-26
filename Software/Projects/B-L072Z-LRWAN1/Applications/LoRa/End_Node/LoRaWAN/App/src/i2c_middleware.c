@@ -145,7 +145,10 @@ void I2C_PINS_GPIO_INIT(){
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
 	PRINTF("REINITALISING GPS. Powercycling first");
-
+	
+	//////////////////////////////////////////////////////////////
+	/* COMPLETELY USELESS FROM HERE */
+	
 	/* disable power to GPS */
 	HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPS_EN_PIN, GPIO_PIN_SET); 
 	HAL_Delay(100);
@@ -176,6 +179,12 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 	
 	/* Re-Initiaize the I2C comunication bus */
 	HAL_I2C_MspInit(hi2c);
+	
+	/* COMPLETELY USELESS TO HERE */
+	/////////////////////////////////////////////////////////////////
+	
+	// only the error handler fixes it
+	Error_Handler();
 
 	return I2C_SUCCSS;
 }
