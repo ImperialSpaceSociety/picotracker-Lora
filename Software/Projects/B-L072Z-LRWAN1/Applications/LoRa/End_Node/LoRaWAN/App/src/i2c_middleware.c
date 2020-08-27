@@ -225,7 +225,7 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 	
 	PRINTF("I2C not stuck low, carry on.\n");	
 	
-	PRINTF("Deinit i2c");	
+	PRINTF("Deinit i2c\n");	
 
 	HAL_StatusTypeDef status = HAL_I2C_DeInit(hi2c);
 	
@@ -233,16 +233,16 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 	switch(status) {
 		
 		case HAL_ERROR:
-		PRINTF("HAL_ERROR deinit i2c error");	
+		PRINTF("HAL_ERROR deinit i2c error\n");	
 		break; 
 
 		case HAL_OK:
-		PRINTF("HAL_OK deinit");	
+		PRINTF("HAL_OK deinit\n");	
 		break; 
 
 		/* you can have any number of case statements */
 		default: 
-		PRINTF("unknown deinit i2c error");	
+		PRINTF("unknown deinit i2c error\n");	
 	}
 	
 	HAL_Delay(20);
@@ -253,16 +253,16 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 	switch(status) {
 		
 		case HAL_ERROR:
-		PRINTF("HAL_ERROR init i2c error");	
+		PRINTF("HAL_ERROR init i2c error\n");	
 		break; 
 
 		case HAL_OK:
-		PRINTF("HAL_OK init");	
+		PRINTF("HAL_OK init\n");	
 		break; 
 
 		/* you can have any number of case statements */
 		default: 
-		PRINTF("unknown init i2c error");	
+		PRINTF("unknown init i2c error\n");	
 	}
 	
 	
