@@ -210,9 +210,6 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 	{
 			// only the error handler fixes it. carry out a software reset
 			PRINTF("SCL OR SDA STUCK LOW. calling Error_Handler().\n");
-			HAL_Delay(100);
-
-			Error_Handler();
 	}
 	else
 	{
