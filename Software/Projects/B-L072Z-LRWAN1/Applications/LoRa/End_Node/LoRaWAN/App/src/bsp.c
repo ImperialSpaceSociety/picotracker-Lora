@@ -90,8 +90,9 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	PRINTF("altitude: "); 
 	PRINTF("%ld", GPSaltitude	); 
 	PRINTF("\r\n");
-	PRINTF("Solar voltage: "); 
-	PRINTF("%ld", battery_level16	); 
+	PRINTF("Solar voltage no load: "); 
+	PRINTF("%ld", no_load_solar_voltage	); 
+	PRINTF("\r\n");
 	PRINTF("\r\n");
 	PRINTF("================================================================\r\n");
 
@@ -104,7 +105,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	sensor_data->altitudeGps = GPSaltitude;
 	sensor_data->latitude    = GPS_UBX_latitude_Float;
 	sensor_data->longitude   = GPS_UBX_longitude_Float;
-	sensor_data->battery_level16 = battery_level16;
+	sensor_data->no_load_solar_voltage = no_load_solar_voltage;
 
   /* USER CODE END 5 */
 }

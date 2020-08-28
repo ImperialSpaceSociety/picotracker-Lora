@@ -390,7 +390,7 @@ static void Send( void* context )
   cayenne_temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
   cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
   //cayenne_humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
-  cayenne_battery_voltage = ( uint16_t )(sensor_data.battery_level16 / 10);    /* Battery level expressed in hundreds of mV */
+  cayenne_battery_voltage = ( uint16_t )(sensor_data.no_load_solar_voltage / 10);    /* Battery level expressed in hundreds of mV */
 
 	cayenne_altitudeGps = ( int32_t )( sensor_data.altitudeGps * 100 );
 	cayenne_latitude = ( int32_t )( sensor_data.latitude * 10000 );

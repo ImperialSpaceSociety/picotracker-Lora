@@ -50,7 +50,7 @@ typedef struct{
   float latitude;
   float longitude ;
   uint32_t  altitudeGps;       /* in m */
-	uint16_t battery_level16;
+	uint16_t no_load_solar_voltage;
   /**more may be added*/
 } sensor_t;
 
