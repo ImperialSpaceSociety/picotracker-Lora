@@ -100,7 +100,7 @@ void BSP_sensor_Read( sensor_t *sensor_data);
   * @param none
   * @retval uint16_t The battery voltage value in mV
   */
-uint16_t BSP_GetBatteryLevel16( void );
+uint16_t BSP_GetSolarLevel16( void );
 
 
 void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data);
