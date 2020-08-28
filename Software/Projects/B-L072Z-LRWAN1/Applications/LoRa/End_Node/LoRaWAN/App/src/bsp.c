@@ -93,6 +93,8 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	PRINTF("Solar voltage no load: "); 
 	PRINTF("%ld", no_load_solar_voltage	); 
 	PRINTF("\r\n");
+	PRINTF("Solar voltage with GPS load: "); 
+	PRINTF("%ld", load_solar_voltage); 
 	PRINTF("\r\n");
 	PRINTF("================================================================\r\n");
 
@@ -106,6 +108,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	sensor_data->latitude    = GPS_UBX_latitude_Float;
 	sensor_data->longitude   = GPS_UBX_longitude_Float;
 	sensor_data->no_load_solar_voltage = no_load_solar_voltage;
+	sensor_data->load_solar_voltage = load_solar_voltage;
 
   /* USER CODE END 5 */
 }
