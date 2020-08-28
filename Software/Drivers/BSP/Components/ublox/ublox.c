@@ -417,6 +417,16 @@ static gps_status_t reinit_gps()
 		PRINTF("set setI2COutput carried out successfully!\n");
 	}
 	
+	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
+	{
+		PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
+		reinit_i2c(&hi2c1);
+	}
+	else
+	{
+		PRINTF("set setI2COutput carried out successfully!\n");
+	}
+	
 	
 	if (setGPS_constellation_only(defaultMaxWait) == false) // Set the constellation to use only GPS
 	{
