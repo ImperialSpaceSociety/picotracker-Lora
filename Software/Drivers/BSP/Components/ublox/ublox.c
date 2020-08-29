@@ -24,6 +24,7 @@
 #include "main.h"
 #include <string.h>
 #include "hw.h"
+#include "bsp.h"
 
 #include "SparkFun_Ublox_Arduino_Library.h"
 
@@ -114,6 +115,8 @@ static uint8_t GPSvalidity											= 0;
 
 static uint8_t GPSnavigation										= 0;
 
+uint16_t load_solar_voltage = 0;
+
 
 
 
@@ -156,6 +159,11 @@ gps_status_t get_latest_gps_status(void)
 	return latest_gps_status;
 }
 
+/* Get solar voltage when under load from GPS */
+uint16_t get_load_solar_voltage()
+{
+	return load_solar_voltage;
+}
 
 /* 
  * GPS backup. 
@@ -295,6 +303,9 @@ gps_status_t get_location_fix(uint32_t timeout){
 		PRINTF(" GPSfix_OK:%d ",temp_GPSfix_OK);	
 		PRINTF(" GPS time: %02d/%02d/%04d, %02d:%02d:%02d.%04d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond,temp_GPSmillisecond);
 		PRINTF(" GPS Search time: %.3f seconds \r\n", current_time_F);
+		
+		load_solar_voltage = BSP_GetSolarLevel16();
+
 		
 		if(temp_GPSfix_type == 3 && temp_GPSsats >= SATS && temp_GPSfix_OK == 1)           // check if we have a good fix
 		{ 

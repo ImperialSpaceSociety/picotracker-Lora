@@ -70,6 +70,8 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	#endif
 	
 	uint16_t no_load_solar_voltage = (uint16_t) BSP_GetSolarLevel16();
+	uint16_t load_solar_voltage = get_load_solar_voltage();
+
 
 	
 	PRINTF("================================================================\r\n");
