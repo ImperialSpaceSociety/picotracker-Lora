@@ -391,8 +391,8 @@ static void Send( void* context )
   cayenne_temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
   cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
   //cayenne_humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
-  cayenne_no_load_voltage = ( uint16_t )(sensor_data.no_load_solar_voltage / 1000);    /* Battery level expressed in hundreds of mV */
-  cayenne_load_voltage = ( uint16_t )(sensor_data.load_solar_voltage / 1000);    /* Battery level expressed in hundreds of mV */
+  cayenne_no_load_voltage = ( uint8_t )(sensor_data.no_load_solar_voltage / 100);    /* Battery level expressed in hundreds of mV */
+  cayenne_load_voltage = ( uint8_t )(sensor_data.load_solar_voltage / 100);    /* Battery level expressed in hundreds of mV */
 	cayenne_altitudeGps = ( int32_t )( sensor_data.altitudeGps * 100 );
 	cayenne_latitude = ( int32_t )( sensor_data.latitude * 10000 );
 	cayenne_longitude = ( int32_t )( sensor_data.longitude * 10000 );
@@ -445,8 +445,8 @@ static void Send( void* context )
 		
 	AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_ANALOG_INPUT;
-  AppData.Buff[i++] = cayenne_load_voltage & 0x00FF;
-  AppData.Buff[i++] = cayenne_no_load_voltage & 0x00FF;
+  AppData.Buff[i++] = cayenne_load_voltage;
+  AppData.Buff[i++] = cayenne_no_load_voltage;
   
   AppData.Buff[i++] = cchannel++;
   AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 
