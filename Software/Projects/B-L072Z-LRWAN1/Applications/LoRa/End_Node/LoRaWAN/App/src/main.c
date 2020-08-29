@@ -332,6 +332,7 @@ static void Send( void* context )
 	int32_t cayenne_longitude = 0;
 	int32_t cayenne_altitudeGps = 0;
   uint16_t cayenne_no_load_voltage;
+	uint16_t cayenne_load_voltage;
 	uint8_t cayenne_GPS_sats;
 
 
@@ -391,7 +392,7 @@ static void Send( void* context )
   cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
   //cayenne_humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
   cayenne_no_load_voltage = ( uint16_t )(sensor_data.no_load_solar_voltage / 10);    /* Battery level expressed in hundreds of mV */
-
+  cayenne_load_voltage = ( uint16_t )(sensor_data.load_solar_voltage / 10);    /* Battery level expressed in hundreds of mV */
 	cayenne_altitudeGps = ( int32_t )( sensor_data.altitudeGps * 100 );
 	cayenne_latitude = ( int32_t )( sensor_data.latitude * 10000 );
 	cayenne_longitude = ( int32_t )( sensor_data.longitude * 10000 );
