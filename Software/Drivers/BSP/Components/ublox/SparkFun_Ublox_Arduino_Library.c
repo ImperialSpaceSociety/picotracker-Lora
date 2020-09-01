@@ -255,8 +255,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 		{
 			return (false);  //Sensor did not ACK
 		}
-		
-		for(uint8_t i = 0; i < bytesAvailable ; i++)
+		for(int i = 0; i < bytesAvailable ; i++)
 		{
 			uint8_t incoming = ubx_packet_buff[i];
 			process(incoming, incomingUBX, requestedClass, requestedID); //Process this valid character
