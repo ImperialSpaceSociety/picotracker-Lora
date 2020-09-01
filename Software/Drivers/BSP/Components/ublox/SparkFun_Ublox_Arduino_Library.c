@@ -52,7 +52,7 @@
 
 
 static uint8_t GPS_buffer[MAX_PAYLOAD_SIZE];
-uint8_t ubx_packet_buff[200] = {0};
+uint8_t ubx_packet_buff[MAX_PAYLOAD_SIZE] = {0};
 
 
 
