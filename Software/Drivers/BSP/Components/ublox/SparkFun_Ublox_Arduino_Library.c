@@ -457,7 +457,9 @@ void process(uint8_t incoming, ubxPacket *incomingUBX, uint8_t requestedClass, u
 //Or user could pipe each character to a buffer, radio, etc.
 void processNMEA(char incoming)
 {
-	PRINTF("%c",incoming); //Echo this byte to the serial port
+//  //If user has assigned an output port then pipe the characters there
+//  if (_nmeaOutputPort != NULL)
+    //PRINTF("%c",incoming); //Echo this byte to the serial port
 }
 
 //We need to be able to identify an RTCM packet and then the length
