@@ -52,7 +52,7 @@
 
 
 static uint8_t GPS_buffer[MAX_PAYLOAD_SIZE];
-uint8_t ubx_packet_buff[200] = {0};
+uint8_t ubx_packet_buff[MAX_PAYLOAD_SIZE] = {0};
 
 
 
@@ -255,8 +255,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 		{
 			return (false);  //Sensor did not ACK
 		}
-		
-		for(uint8_t i = 0; i < bytesAvailable ; i++)
+		for(int i = 0; i < bytesAvailable ; i++)
 		{
 			uint8_t incoming = ubx_packet_buff[i];
 			process(incoming, incomingUBX, requestedClass, requestedID); //Process this valid character
@@ -460,7 +459,7 @@ void processNMEA(char incoming)
 {
 //  //If user has assigned an output port then pipe the characters there
 //  if (_nmeaOutputPort != NULL)
-    //PRINTF("%c",incoming); //Echo this byte to the serial port
+    PRINTF("%c",incoming); //Echo this byte to the serial port
 }
 
 //We need to be able to identify an RTCM packet and then the length
