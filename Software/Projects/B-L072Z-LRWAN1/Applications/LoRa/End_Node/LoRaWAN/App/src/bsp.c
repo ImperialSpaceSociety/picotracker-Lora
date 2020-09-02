@@ -69,7 +69,9 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
 	#endif
 	
-	uint16_t battery_level16 = (uint16_t) BSP_GetBatteryLevel16();
+	uint16_t no_load_solar_voltage = BSP_GetSolarLevel16();
+	uint16_t load_solar_voltage = get_load_solar_voltage();
+
 
 	
 	PRINTF("================================================================\r\n");
@@ -90,8 +92,11 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	PRINTF("altitude: "); 
 	PRINTF("%ld", GPSaltitude	); 
 	PRINTF("\r\n");
-	PRINTF("Solar voltage: "); 
-	PRINTF("%ld", battery_level16	); 
+	PRINTF("Solar voltage no load: "); 
+	PRINTF("%ld", no_load_solar_voltage	); 
+	PRINTF("\r\n");
+	PRINTF("Solar voltage with GPS load: "); 
+	PRINTF("%ld", load_solar_voltage); 
 	PRINTF("\r\n");
 	PRINTF("================================================================\r\n");
 
@@ -104,7 +109,8 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	sensor_data->altitudeGps = GPSaltitude;
 	sensor_data->latitude    = GPS_UBX_latitude_Float;
 	sensor_data->longitude   = GPS_UBX_longitude_Float;
-	sensor_data->battery_level16 = battery_level16;
+	sensor_data->no_load_solar_voltage = no_load_solar_voltage;
+	sensor_data->load_solar_voltage = load_solar_voltage;
 
   /* USER CODE END 5 */
 }
@@ -128,11 +134,11 @@ void  BSP_sensor_Init( void  )
 
 
 /**
-  * @brief It measures the battery voltage by returning the value in mV
+  * @brief It measures the solar voltage by returning the value in mV
   * @param none
-  * @retval uint16_t The battery voltage value in mV
+  * @retval uint16_t The solar voltage value in mV
   */
-uint16_t BSP_GetBatteryLevel16( void )
+uint16_t BSP_GetSolarLevel16( void )
 {
 
   uint16_t batteryLevel = 0;
