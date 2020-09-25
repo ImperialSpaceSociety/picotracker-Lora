@@ -1,4 +1,5 @@
 # Created by Medad Rufus Newman on 27/12/2019
+# THis program auto genenerates the .c and .h files for geofencing for the picotracker Lora
 
 
 from bs4 import BeautifulSoup
