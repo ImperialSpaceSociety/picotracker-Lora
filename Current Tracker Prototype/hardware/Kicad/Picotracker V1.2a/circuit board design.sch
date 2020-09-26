@@ -441,7 +441,7 @@ U 1 1 5DE442FF
 P 8600 4850
 F 0 "AE1" H 8680 4839 50  0000 L CNN
 F 1 "Lora Antenna" H 8680 4748 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 8600 4850 50  0001 C CNN
+F 2 "pico_tracker:SolderWirePad_1x01_Drill0.8mm_square" H 8600 4850 50  0001 C CNN
 F 3 "~" H 8600 4850 50  0001 C CNN
 	1    8600 4850
 	1    0    0    -1  
@@ -963,8 +963,6 @@ F 3 "" H 8600 5950 50  0001 C CNN
 	1    8600 5950
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	8600 5350 8600 5600
 $Comp
 L circuit-board-design-rescue:R-Device R8
 U 1 1 5E4D040B
@@ -1000,20 +998,6 @@ F 4 "https://uk.rs-online.com/web/p/mosfets/0301322/" H 13750 5800 50  0001 C CN
 	1    13750 5800
 	1    0    0    1   
 $EndComp
-$Comp
-L circuit-board-design-rescue:Conn_01x01-Connector_Generic J6
-U 1 1 5E3B5A9B
-P 8800 5600
-F 0 "J6" H 8880 5642 50  0000 L CNN
-F 1 "Conn_01x01" H 8880 5551 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 8800 5600 50  0001 C CNN
-F 3 "~" H 8800 5600 50  0001 C CNN
-	1    8800 5600
-	1    0    0    -1  
-$EndComp
-Connection ~ 8600 5600
-Wire Wire Line
-	8600 5600 8600 5950
 Wire Wire Line
 	6450 2250 6750 2250
 $Comp
@@ -1312,4 +1296,6 @@ F 3 "~" H 12050 7200 50  0001 C CNN
 	1    12050 7200
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	8600 5350 8600 5950
 $EndSCHEMATC
