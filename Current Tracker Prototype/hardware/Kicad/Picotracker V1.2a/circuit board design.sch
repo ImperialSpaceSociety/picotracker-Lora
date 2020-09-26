@@ -1008,7 +1008,7 @@ AR Path="/5D5B15F7/5DC84013" Ref="U?"  Part="1"
 AR Path="/5DC84013" Ref="U3"  Part="1" 
 F 0 "U3" H 5550 5500 50  0000 C CNN
 F 1 "CMWX1ZZABZ-078" H 5550 5350 50  0000 C CNN
-F 2 "RF_Module:CMWX1ZZABZ" H 6250 3900 50  0001 C CNN
+F 2 "pico_tracker:CMWX1ZZABZ_custom" H 6250 3900 50  0001 C CNN
 F 3 "https://wireless.murata.com/RFM/data/type_abz.pdf" H 8700 2400 50  0001 C CNN
 	1    6250 3900
 	1    0    0    -1  

@@ -1,4 +1,4 @@
-16073975096123828
+16075576219735186
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -62271,6 +62271,13 @@ Through hole pin header THT 1x10 2.54mm single row
 0
 10
 10
+pico_tracker
+CMWX1ZZABZ_custom
+https://wireless.murata.com/RFM/data/type_abz.pdf
+iot lora sigfox
+0
+57
+57
 pico_tracker
 Johanson434
 Johanson 1575 GPS Antenna 15757AT43A40
