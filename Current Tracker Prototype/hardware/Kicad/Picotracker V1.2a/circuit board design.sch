@@ -136,8 +136,6 @@ $EndComp
 Wire Wire Line
 	7900 1850 7900 1700
 Connection ~ 7900 1700
-Wire Wire Line
-	7150 3400 7800 3400
 $Comp
 L circuit-board-design-rescue:GND-power #PWR?
 U 1 1 5DC840FF
@@ -262,63 +260,63 @@ Wire Wire Line
 $Comp
 L circuit-board-design-rescue:GND-power #PWR?
 U 1 1 5DC84165
-P 13550 8350
+P 14050 8350
 AR Path="/5D5B165E/5DC84165" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC84165" Ref="#PWR?"  Part="1" 
 AR Path="/5DC84165" Ref="#PWR0119"  Part="1" 
-F 0 "#PWR0119" H 13550 8100 50  0001 C CNN
-F 1 "GND" H 13555 8177 50  0000 C CNN
-F 2 "" H 13550 8350 50  0001 C CNN
-F 3 "" H 13550 8350 50  0001 C CNN
-	1    13550 8350
+F 0 "#PWR0119" H 14050 8100 50  0001 C CNN
+F 1 "GND" H 14055 8177 50  0000 C CNN
+F 2 "" H 14050 8350 50  0001 C CNN
+F 3 "" H 14050 8350 50  0001 C CNN
+	1    14050 8350
 	1    0    0    -1  
 $EndComp
 $Comp
 L circuit-board-design-rescue:+3.3V-power #PWR?
 U 1 1 5DC841BA
-P 13350 5200
+P 13850 5200
 AR Path="/5D5B165E/5DC841BA" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC841BA" Ref="#PWR?"  Part="1" 
 AR Path="/5DC841BA" Ref="#PWR0122"  Part="1" 
-F 0 "#PWR0122" H 13350 5050 50  0001 C CNN
-F 1 "+3.3V" H 13365 5373 50  0000 C CNN
-F 2 "" H 13350 5200 50  0001 C CNN
-F 3 "" H 13350 5200 50  0001 C CNN
-	1    13350 5200
+F 0 "#PWR0122" H 13850 5050 50  0001 C CNN
+F 1 "+3.3V" H 13865 5373 50  0000 C CNN
+F 2 "" H 13850 5200 50  0001 C CNN
+F 3 "" H 13850 5200 50  0001 C CNN
+	1    13850 5200
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	12800 6500 12800 6400
+	13300 6500 13300 6400
 Wire Wire Line
-	13150 6400 13150 6500
+	13650 6400 13650 6500
 Wire Wire Line
-	13150 6100 12800 6100
+	13650 6100 13300 6100
 Wire Wire Line
-	13150 6200 13150 6100
+	13650 6200 13650 6100
 Wire Wire Line
-	12800 6100 12800 6200
+	13300 6100 13300 6200
 $Comp
 L circuit-board-design-rescue:GND-power #PWR?
 U 1 1 5DC841DF
-P 12800 6600
+P 13300 6600
 AR Path="/5D5B17D8/5DC841DF" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B165E/5DC841DF" Ref="#PWR?"  Part="1" 
 AR Path="/5D5B15F7/5DC841DF" Ref="#PWR?"  Part="1" 
 AR Path="/5DC841DF" Ref="#PWR0123"  Part="1" 
-F 0 "#PWR0123" H 12800 6350 50  0001 C CNN
-F 1 "GND" H 12805 6427 50  0000 C CNN
-F 2 "" H 12800 6600 50  0001 C CNN
-F 3 "" H 12800 6600 50  0001 C CNN
-	1    12800 6600
+F 0 "#PWR0123" H 13300 6350 50  0001 C CNN
+F 1 "GND" H 13305 6427 50  0000 C CNN
+F 2 "" H 13300 6600 50  0001 C CNN
+F 3 "" H 13300 6600 50  0001 C CNN
+	1    13300 6600
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	12800 6600 12800 6500
-Connection ~ 12800 6500
+	13300 6600 13300 6500
+Connection ~ 13300 6500
 Wire Wire Line
-	12800 6500 13150 6500
+	13300 6500 13650 6500
 Wire Wire Line
-	14800 7500 14800 7350
+	15300 7500 15300 7350
 Text Notes 11200 4850 0    50   ~ 0
 Pressure temperature humidity sensor\n
 Text Notes 11200 9100 0    50   ~ 0
@@ -331,8 +329,6 @@ Wire Notes Line
 	500  6850 500  11200
 Text Notes 650  11100 0    50   ~ 0
 Power supply\n
-Text Label 7800 3400 2    50   ~ 0
-I2C1_SCL
 Wire Wire Line
 	8600 5200 8600 5050
 Text Label 12000 2100 0    50   ~ 0
@@ -372,14 +368,14 @@ Wire Wire Line
 Wire Wire Line
 	6150 2250 6150 2400
 Wire Wire Line
-	13450 6750 13350 6750
-Connection ~ 13350 6750
+	13950 6750 13850 6750
+Connection ~ 13850 6750
 Wire Wire Line
-	13450 6750 13550 6750
-Connection ~ 13450 6750
+	13950 6750 14050 6750
+Connection ~ 13950 6750
 Wire Wire Line
 	7150 3700 7800 3700
-Text Label 12250 7700 0    50   ~ 0
+Text Label 12750 7700 0    50   ~ 0
 GPS_EXTINT
 Text Label 7800 3700 2    50   ~ 0
 GPS_EXTINT
@@ -395,21 +391,21 @@ NoConn ~ 7150 5000
 NoConn ~ 5350 3500
 NoConn ~ 5350 3000
 Wire Wire Line
-	13350 6750 13350 6800
+	13850 6750 13850 6800
 Wire Wire Line
-	13450 6800 13450 6750
+	13950 6800 13950 6750
 Wire Wire Line
-	13550 6750 13550 6800
+	14050 6750 14050 6800
 Wire Wire Line
-	12950 7700 12250 7700
-NoConn ~ 13750 6800
+	13450 7700 12750 7700
+NoConn ~ 14250 6800
 Wire Wire Line
-	14150 7500 14800 7500
+	14650 7500 15300 7500
 Wire Wire Line
-	13550 8200 13550 8350
+	14050 8200 14050 8350
 Wire Wire Line
-	14150 7800 15000 7800
-Text Label 15000 7800 2    50   ~ 0
+	14650 7800 15500 7800
+Text Label 15500 7800 2    50   ~ 0
 GPS_TIMEPULSE
 Wire Wire Line
 	7150 3800 7800 3800
@@ -431,12 +427,12 @@ Main Microcontroller + Lora tranceiver\n
 $Comp
 L circuit-board-design-rescue:MAX-M8C-RF_GPS U1
 U 1 1 5DDCC018
-P 13550 7500
-F 0 "U1" H 13150 6700 50  0000 C CNN
-F 1 "MAX-M8C" H 13150 6600 50  0000 C CNN
-F 2 "RF_GPS:ublox_MAX" H 13950 6850 50  0001 C CNN
-F 3 "https://www.u-blox.com/sites/default/files/MAX-M8-FW3_DataSheet_%28UBX-15031506%29.pdf" H 13550 7500 50  0001 C CNN
-	1    13550 7500
+P 14050 7500
+F 0 "U1" H 13650 6700 50  0000 C CNN
+F 1 "MAX-M8C" H 13650 6600 50  0000 C CNN
+F 2 "RF_GPS:ublox_MAX" H 14450 6850 50  0001 C CNN
+F 3 "https://www.u-blox.com/sites/default/files/MAX-M8-FW3_DataSheet_%28UBX-15031506%29.pdf" H 14050 7500 50  0001 C CNN
+	1    14050 7500
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -453,48 +449,48 @@ $EndComp
 $Comp
 L flight-computer:GPS_Antenna AE2
 U 1 1 5DDA946B
-P 14800 7150
-F 0 "AE2" H 14880 7139 50  0000 L CNN
-F 1 "GPS Antenna" H 14880 7048 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 14800 7150 50  0001 C CNN
-F 3 "~" H 14800 7150 50  0001 C CNN
-	1    14800 7150
+P 15300 7150
+F 0 "AE2" H 15380 7139 50  0000 L CNN
+F 1 "GPS Antenna" H 15380 7048 50  0000 L CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 15300 7150 50  0001 C CNN
+F 3 "~" H 15300 7150 50  0001 C CNN
+	1    15300 7150
 	1    0    0    -1  
 $EndComp
 $Comp
 L circuit-board-design-rescue:C_Small-Device C?
 U 1 1 5DC841D3
-P 13150 6300
+P 13650 6300
 AR Path="/5D5B17D8/5DC841D3" Ref="C?"  Part="1" 
 AR Path="/5D5B165E/5DC841D3" Ref="C?"  Part="1" 
 AR Path="/5D5B15F7/5DC841D3" Ref="C?"  Part="1" 
 AR Path="/5DC841D3" Ref="C13"  Part="1" 
-F 0 "C13" H 13058 6346 50  0000 R CNN
-F 1 "10uF" H 13058 6255 50  0000 R CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 13150 6300 50  0001 C CNN
-F 3 "https://docs-emea.rs-online.com/webdocs/13b3/0900766b813b3e64.pdf" H 13150 6300 50  0001 C CNN
-F 4 "0.07" H 13150 6300 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/8467293/" H 13150 6300 50  0001 C CNN "Purchase link"
-F 6 "100" H 13150 6300 50  0001 C CNN "min_quantity"
-	1    13150 6300
+F 0 "C13" H 13558 6346 50  0000 R CNN
+F 1 "10uF" H 13558 6255 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric" H 13650 6300 50  0001 C CNN
+F 3 "https://docs-emea.rs-online.com/webdocs/13b3/0900766b813b3e64.pdf" H 13650 6300 50  0001 C CNN
+F 4 "0.07" H 13650 6300 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/8467293/" H 13650 6300 50  0001 C CNN "Purchase link"
+F 6 "100" H 13650 6300 50  0001 C CNN "min_quantity"
+	1    13650 6300
 	1    0    0    -1  
 $EndComp
 $Comp
 L circuit-board-design-rescue:C_Small-Device C?
 U 1 1 5DC841CA
-P 12800 6300
+P 13300 6300
 AR Path="/5D5B17D8/5DC841CA" Ref="C?"  Part="1" 
 AR Path="/5D5B165E/5DC841CA" Ref="C?"  Part="1" 
 AR Path="/5D5B15F7/5DC841CA" Ref="C?"  Part="1" 
 AR Path="/5DC841CA" Ref="C12"  Part="1" 
-F 0 "C12" H 12708 6346 50  0000 R CNN
-F 1 "100nF" H 12708 6255 50  0000 R CNN
-F 2 "Capacitor_SMD:C_0402_1005Metric" H 12800 6300 50  0001 C CNN
-F 3 "https://docs-emea.rs-online.com/webdocs/0dc2/0900766b80dc2409.pdf" H 12800 6300 50  0001 C CNN
-F 4 "0.01" H 12800 6300 50  0001 C CNN "Cost"
-F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983251/" H 12800 6300 50  0001 C CNN "Purchase link"
-F 6 "50" H 12800 6300 50  0001 C CNN "min_quantity"
-	1    12800 6300
+F 0 "C12" H 13208 6346 50  0000 R CNN
+F 1 "100nF" H 13208 6255 50  0000 R CNN
+F 2 "Capacitor_SMD:C_0402_1005Metric" H 13300 6300 50  0001 C CNN
+F 3 "https://docs-emea.rs-online.com/webdocs/0dc2/0900766b80dc2409.pdf" H 13300 6300 50  0001 C CNN
+F 4 "0.01" H 13300 6300 50  0001 C CNN "Cost"
+F 5 "https://uk.rs-online.com/web/p/mlccs-multilayer-ceramic-capacitors/6983251/" H 13300 6300 50  0001 C CNN "Purchase link"
+F 6 "50" H 13300 6300 50  0001 C CNN "min_quantity"
+	1    13300 6300
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -601,11 +597,11 @@ F 3 "~" H 5000 5450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 NoConn ~ 5350 5000
-Connection ~ 13150 6100
+Connection ~ 13650 6100
 Wire Wire Line
-	13350 6100 13350 6550
+	13850 6100 13850 6550
 Wire Wire Line
-	13350 6100 13150 6100
+	13850 6100 13650 6100
 $Comp
 L circuit-board-design-rescue:PWR_FLAG-power #FLG0101
 U 1 1 5DBC451E
@@ -827,11 +823,7 @@ V_SOLAR
 Wire Wire Line
 	5350 3400 4450 3400
 NoConn ~ 7150 3900
-NoConn ~ 12950 7800
-Text Label 7800 3500 2    50   ~ 0
-I2C1_SDA
-Wire Wire Line
-	7150 3500 7800 3500
+NoConn ~ 13450 7800
 NoConn ~ 7150 3600
 Wire Wire Line
 	5000 5200 4050 5200
@@ -931,18 +923,18 @@ Wire Wire Line
 	1950 1700 2350 1700
 Wire Wire Line
 	2350 1250 2350 1700
-NoConn ~ 14150 7300
+NoConn ~ 14650 7300
 Wire Wire Line
 	7150 5200 8600 5200
 Wire Wire Line
-	13350 5200 13350 5300
+	13850 5200 13850 5300
 Wire Wire Line
-	13350 6100 13350 6000
-Connection ~ 13350 6100
-Text Label 12000 5800 0    50   ~ 0
+	13850 6100 13850 6000
+Connection ~ 13850 6100
+Text Label 12500 5800 0    50   ~ 0
 GPS_MOSFET_GATE
 Wire Wire Line
-	12000 5800 12850 5800
+	12500 5800 13350 5800
 Text Label 4450 3800 0    50   ~ 0
 GPS_MOSFET_GATE
 Wire Wire Line
@@ -976,36 +968,36 @@ Wire Wire Line
 $Comp
 L circuit-board-design-rescue:R-Device R8
 U 1 1 5E4D040B
-P 12850 5550
-F 0 "R8" H 12920 5596 50  0000 L CNN
-F 1 "4.7K" H 12920 5505 50  0000 L CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" V 12780 5550 50  0001 C CNN
-F 3 "~" H 12850 5550 50  0001 C CNN
-	1    12850 5550
+P 13350 5550
+F 0 "R8" H 13420 5596 50  0000 L CNN
+F 1 "4.7K" H 13420 5505 50  0000 L CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" V 13280 5550 50  0001 C CNN
+F 3 "~" H 13350 5550 50  0001 C CNN
+	1    13350 5550
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	12850 5400 12850 5300
+	13350 5400 13350 5300
 Wire Wire Line
-	12850 5300 13350 5300
-Connection ~ 13350 5300
+	13350 5300 13850 5300
+Connection ~ 13850 5300
 Wire Wire Line
-	13350 5300 13350 5600
+	13850 5300 13850 5600
 Wire Wire Line
-	12850 5800 12850 5700
-Connection ~ 12850 5800
+	13350 5800 13350 5700
+Connection ~ 13350 5800
 Wire Wire Line
-	12850 5800 13050 5800
+	13350 5800 13550 5800
 $Comp
 L circuit-board-design-rescue:IRLML6402-Transistor_FET Q1
 U 1 1 5E4BFDEA
-P 13250 5800
-F 0 "Q1" H 13456 5846 50  0000 L CNN
-F 1 "IRLML6402" H 13456 5755 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 13450 5725 50  0001 L CIN
-F 3 "https://www.infineon.com/dgdl/irlml6402pbf.pdf?fileId=5546d462533600a401535668d5c2263c" H 13250 5800 50  0001 L CNN
-F 4 "https://uk.rs-online.com/web/p/mosfets/0301322/" H 13250 5800 50  0001 C CNN "Purchase link"
-	1    13250 5800
+P 13750 5800
+F 0 "Q1" H 13956 5846 50  0000 L CNN
+F 1 "IRLML6402" H 13956 5755 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 13950 5725 50  0001 L CIN
+F 3 "https://www.infineon.com/dgdl/irlml6402pbf.pdf?fileId=5546d462533600a401535668d5c2263c" H 13750 5800 50  0001 L CNN
+F 4 "https://uk.rs-online.com/web/p/mosfets/0301322/" H 13750 5800 50  0001 C CNN "Purchase link"
+	1    13750 5800
 	1    0    0    1   
 $EndComp
 $Comp
@@ -1045,8 +1037,6 @@ Wire Wire Line
 	5350 3600 4450 3600
 Text Label 4450 3600 0    50   ~ 0
 USART1_TX
-NoConn ~ 12950 7500
-NoConn ~ 12950 7400
 Text Label 4450 3100 0    50   ~ 0
 USART2_TX
 Wire Wire Line
@@ -1055,13 +1045,11 @@ Wire Wire Line
 	5350 3200 4450 3200
 Text Label 4450 3200 0    50   ~ 0
 USART2_RX
-Text Label 11700 7100 0    50   ~ 0
-USART2_TX
 Wire Wire Line
-	12950 7100 12250 7100
+	13450 7100 12750 7100
 Wire Wire Line
-	12950 7200 12150 7200
-Text Label 11700 7200 0    50   ~ 0
+	13450 7200 12650 7200
+Text Label 11900 7200 2    50   ~ 0
 USART2_RX
 Wire Wire Line
 	3500 4300 4000 4300
@@ -1113,7 +1101,7 @@ Wire Wire Line
 Connection ~ 4000 4300
 Wire Wire Line
 	4000 4300 5350 4300
-NoConn ~ 12950 7900
+NoConn ~ 13450 7900
 Wire Wire Line
 	12700 2100 13850 2100
 Connection ~ 13400 2200
@@ -1123,35 +1111,35 @@ Connection ~ 13850 2100
 $Comp
 L Connector:TestPoint TP2
 U 1 1 5F4B0820
-P 12250 7000
-F 0 "TP2" H 12308 7118 50  0000 L CNN
-F 1 "TestPoint" H 12308 7027 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 12450 7000 50  0001 C CNN
-F 3 "~" H 12450 7000 50  0001 C CNN
-	1    12250 7000
+P 12750 7000
+F 0 "TP2" H 12808 7118 50  0000 L CNN
+F 1 "TestPoint" H 12808 7027 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 12950 7000 50  0001 C CNN
+F 3 "~" H 12950 7000 50  0001 C CNN
+	1    12750 7000
 	1    0    0    -1  
 $EndComp
 $Comp
 L Connector:TestPoint TP1
 U 1 1 5F4B0EE1
-P 12150 6800
-F 0 "TP1" H 12208 6918 50  0000 L CNN
-F 1 "TestPoint" H 12208 6827 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 12350 6800 50  0001 C CNN
-F 3 "~" H 12350 6800 50  0001 C CNN
-	1    12150 6800
+P 12650 6800
+F 0 "TP1" H 12708 6918 50  0000 L CNN
+F 1 "TestPoint" H 12708 6827 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 12850 6800 50  0001 C CNN
+F 3 "~" H 12850 6800 50  0001 C CNN
+	1    12650 6800
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	12150 6800 12150 7200
-Connection ~ 12150 7200
+	12650 6800 12650 7200
+Connection ~ 12650 7200
 Wire Wire Line
-	12150 7200 11700 7200
+	12650 7200 12200 7200
 Wire Wire Line
-	12250 7000 12250 7100
-Connection ~ 12250 7100
+	12750 7000 12750 7100
+Connection ~ 12750 7100
 Wire Wire Line
-	12250 7100 11700 7100
+	12750 7100 12200 7100
 Wire Wire Line
 	13850 2100 14050 2100
 Wire Wire Line
@@ -1269,19 +1257,59 @@ Wire Wire Line
 $Comp
 L Connector:TestPoint TP9
 U 1 1 5F57EBA2
-P 14000 6350
-F 0 "TP9" H 14058 6468 50  0000 L CNN
-F 1 "TestPoint" H 14050 6400 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 14200 6350 50  0001 C CNN
-F 3 "~" H 14200 6350 50  0001 C CNN
-	1    14000 6350
+P 14500 6350
+F 0 "TP9" H 14558 6468 50  0000 L CNN
+F 1 "TestPoint" H 14550 6400 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 14700 6350 50  0001 C CNN
+F 3 "~" H 14700 6350 50  0001 C CNN
+	1    14500 6350
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	13350 6550 14000 6550
+	13850 6550 14500 6550
 Wire Wire Line
-	14000 6550 14000 6350
-Connection ~ 13350 6550
+	14500 6550 14500 6350
+Connection ~ 13850 6550
 Wire Wire Line
-	13350 6550 13350 6750
+	13850 6550 13850 6750
+Text Label 7800 3500 2    50   ~ 0
+I2C1_SDA
+Text Label 7800 3400 2    50   ~ 0
+I2C1_SCL
+Wire Wire Line
+	7150 3400 7800 3400
+Wire Wire Line
+	7150 3500 7800 3500
+Wire Wire Line
+	13450 7400 12750 7400
+Wire Wire Line
+	13450 7500 12750 7500
+Text Label 12750 7500 0    50   ~ 0
+I2C1_SCL
+Text Label 12750 7400 0    50   ~ 0
+I2C1_SDA
+$Comp
+L Jumper:SolderJumper_2_Open JP1
+U 1 1 5F7E23E4
+P 12050 7100
+F 0 "JP1" H 12050 7500 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 12050 7300 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm" H 12050 7100 50  0001 C CNN
+F 3 "~" H 12050 7100 50  0001 C CNN
+	1    12050 7100
+	1    0    0    -1  
+$EndComp
+Text Label 11900 7100 2    50   ~ 0
+USART2_TX
+$Comp
+L Jumper:SolderJumper_2_Open JP2
+U 1 1 5F80485F
+P 12050 7200
+F 0 "JP2" H 12050 7100 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 12050 7000 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm" H 12050 7200 50  0001 C CNN
+F 3 "~" H 12050 7200 50  0001 C CNN
+	1    12050 7200
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
