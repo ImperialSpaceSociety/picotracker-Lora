@@ -486,7 +486,6 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
 // Workaround to use only 8 channel gateways over US915 and AU915 regions.
 // Code source: https://github.com/Lora-net/LoRaMac-node/issues/742#issuecomment-492231231
 // confirm that US915 and AU915 use 2nd subband on The Things Network: https://thethingsstack.io/reference/frequency-plans/
-// The actual frequencies can be found here: https://www.baranidesign.com/faq-articles/2019/4/23/lorawan-usa-frequencies-channels-and-sub-bands-for-iot-devices
 #if defined( REGION_US915 )
 			// Enabling 2nd block of 8 channels (8-15) + channel 65
 			uint16_t channelMask[] = { 0xFF00, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000};
@@ -497,6 +496,7 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
 			mibReq.Param.ChannelsDefaultMask = channelMask;
 			LoRaMacMibSetRequestConfirm( &mibReq );
 #endif
+// The actual frequencies for US915 can be found here: https://www.baranidesign.com/faq-articles/2019/4/23/lorawan-usa-frequencies-channels-and-sub-bands-for-iot-devices
       
       mibReq.Type = MIB_ADR;
       mibReq.Param.AdrEnable = LoRaParamInit->AdrEnable;
