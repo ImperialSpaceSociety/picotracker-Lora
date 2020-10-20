@@ -157,73 +157,10 @@ void I2C_pins_GPIO_OUTPUT_init(){
  */
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
-	
-	//////////////////////////////////////////////////////////////
-	/* COMPLETELY USELESS FROM HERE */
-	
-	/* disable power to GPS */
-	HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPS_EN_PIN, GPIO_PIN_SET); 
-	HAL_Delay(100);
-  
-  /* De-initialize the I2C comunication bus */
-  HAL_I2C_MspDeInit(hi2c);
-  
-	/* Make I2C bus pins GPIO */
-	I2C_pins_GPIO_OUTPUT_init();
-	
-	/* set i2c pins low to ensure it cannot power up the core of the GPS */
-	HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPIO_PIN_9|GPIO_PIN_8, GPIO_PIN_RESET); 
-	HAL_Delay(1000);
-	
-	/* Enable power to GPS */
-	HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPS_EN_PIN, GPIO_PIN_RESET); 
-	HAL_Delay(1000);
-	
-	/* send 9 clock pulses to the GPS ref: https://www.microchip.com/forums/FindPost/175578 */
-	for (uint8_t i = 0; i < 9; i++)
-	{
-		HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPIO_PIN_8, GPIO_PIN_RESET); 
-		HAL_Delay(1);
-		HAL_GPIO_WritePin(GPS_EN_GPIO_Port, GPIO_PIN_8, GPIO_PIN_SET); 
-		HAL_Delay(1);
 
-	}
-	
-
-	
-	/* COMPLETELY USELESS TO HERE */
-	/////////////////////////////////////////////////////////////////
-	
-	// check if sda is stuck low. if so, call error handler
-	
-	I2C_pins_GPIO_INPUT_init();
-	
-	/**I2C1 GPIO Configuration    
-	PB9     ------> I2C1_SDA
-	PB8     ------> I2C1_SCL 
-	*/
-	
-	volatile GPIO_PinState pinstate_scl =  HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8);
-	volatile GPIO_PinState pinstate_sda =  HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9);
-	
-	if ((pinstate_scl == GPIO_PIN_RESET) || (pinstate_sda == GPIO_PIN_RESET))
-	{
-			// only the error handler fixes it. carry out a software reset
-			PRINTF("SCL OR SDA STUCK LOW. calling Error_Handler().\n");
-	}
-	else
-	{
-			PRINTF("I2C not stuck low, carry on.\n");	
-	}
-
-	
 	/* Re-Initiaize the I2C comunication bus */
 	HAL_I2C_MspInit(hi2c);
 	
-	PRINTF("I2C not stuck low, carry on.\n");	
-	
-	PRINTF("Deinit i2c\n");	
-
 	HAL_StatusTypeDef status = HAL_I2C_DeInit(hi2c);
 	
 	
