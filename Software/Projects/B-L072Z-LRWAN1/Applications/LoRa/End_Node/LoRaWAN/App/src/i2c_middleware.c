@@ -158,9 +158,6 @@ void I2C_pins_GPIO_OUTPUT_init(){
  */
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
-	/* Re-Initiaize the I2C comunication bus */
-	HAL_I2C_MspInit(hi2c);
-	
 	HAL_StatusTypeDef status = HAL_I2C_DeInit(hi2c);
 	
 	
