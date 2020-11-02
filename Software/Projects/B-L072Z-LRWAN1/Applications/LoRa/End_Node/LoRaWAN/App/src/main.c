@@ -215,7 +215,7 @@ int main( void )
 	if (get_latest_gps_status() == GPS_SUCCESS)
 	{
 		/* Find out which region of world we are in and update region parm*/
-		update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+		update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
 		
 		/* Save current polygon to eeprom only if gps fix was valid */
 		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
@@ -361,7 +361,7 @@ static void Send( void* context )
 	if (get_latest_gps_status() == GPS_SUCCESS)
 	{
 		/* Find out which region of world we are in and update region parm*/
-		update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+		update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
 
 		/* Save current polygon to eeprom only if gps fix was valid */
 		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
@@ -396,7 +396,7 @@ static void Send( void* context )
 	cayenne_altitudeGps = ( int32_t )( sensor_data.altitudeGps * 100 );
 	cayenne_latitude = ( int32_t )( sensor_data.latitude * 10000 );
 	cayenne_longitude = ( int32_t )( sensor_data.longitude * 10000 );
-	cayenne_GPS_sats = ( uint8_t ) GPSsats;
+	cayenne_GPS_sats = ( uint8_t ) gps_info.GPSsats;
 	
 	
 
