@@ -324,17 +324,7 @@ static void LORA_HasJoined( void )
 
 static void Send( void* context )
 {
-  uint16_t cayenne_pressure = 0;
-  int16_t cayenne_temperature = 0;
-  //uint16_t cayenne_humidity = 0;
-  sensor_t sensor_data;
-  int32_t cayenne_latitude = 0;
-	int32_t cayenne_longitude = 0;
-	int32_t cayenne_altitudeGps = 0;
-  uint16_t cayenne_no_load_voltage;
-	uint16_t cayenne_load_voltage;
-	uint8_t cayenne_GPS_sats;
-
+	sensor_t sensor_data;
 
   /* now join if not yet joined. */	
 	#if RADIO_ENABLED
@@ -351,6 +341,7 @@ static void Send( void* context )
 	TimerStop( &TxTimer);
 
 
+	
 	/* reading sensors and GPS */
   BSP_sensor_Read( &sensor_data );
 	
@@ -381,76 +372,18 @@ static void Send( void* context )
 		return;
 	}
 	
-	
-	
 
 	
 	/* Evaluate battery level */
   uint8_t cchannel=0;
-
-  cayenne_temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
-  cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
-  //cayenne_humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
-  cayenne_no_load_voltage = ( uint8_t )(sensor_data.no_load_solar_voltage / 100);    /* Battery level expressed in hundreds of mV */
-  cayenne_load_voltage = ( uint8_t )(sensor_data.load_solar_voltage / 100);    /* Battery level expressed in hundreds of mV */
-	cayenne_altitudeGps = ( int32_t )( sensor_data.altitudeGps * 100 );
-	cayenne_latitude = ( int32_t )( sensor_data.latitude * 10000 );
-	cayenne_longitude = ( int32_t )( sensor_data.longitude * 10000 );
-	cayenne_GPS_sats = ( uint8_t ) gps_info.GPSsats;
-	
-	
 
 	
 	uint32_t i = 0;
   
   AppData.Port = LPP_APP_PORT;
   
-  AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_BAROMETER;
-  AppData.Buff[i++] = ( cayenne_pressure >> 8 ) & 0xFF;
-  AppData.Buff[i++] = cayenne_pressure & 0xFF;
-  AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_TEMPERATURE; 
-  AppData.Buff[i++] = ( cayenne_temperature >> 8 ) & 0xFF;
-  AppData.Buff[i++] = cayenne_temperature & 0xFF;
-	
-	// TO be uncommented if humidity value is recorded
-//  AppData.Buff[i++] = cchannel++;
-//  AppData.Buff[i++] = LPP_DATATYPE_HUMIDITY;
-//  AppData.Buff[i++] = cayenne_humidity & 0xFF;
+	//AppData.Buff[i++] = cchannel++;
 
-  /* The maximum payload size does not allow to send more data for lowest DRs.
-	 * Problem solved by setting the min data rates for the two regions(AU915 and US915) greater
-	 * than DR3
-	 */
-
-	/* Using cayenne reference 
-	 * https://github.com/MicrochipTech/Location-Tracking-using-SAMR34-and-UBLOX-GPS-Module/blob/master/src/CayenneLPP/lpp.c  
-	 */
-	AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_GPSLOCATION;
-  AppData.Buff[i++] = cayenne_latitude >> 16;
-  AppData.Buff[i++] = cayenne_latitude >> 8;
-  AppData.Buff[i++] = cayenne_latitude;
-	
-  AppData.Buff[i++] = cayenne_longitude >> 16;
-  AppData.Buff[i++] = cayenne_longitude >> 8;
-  AppData.Buff[i++] = cayenne_longitude;
-	
-	
-  AppData.Buff[i++] = ( cayenne_altitudeGps >> 16 ) & 0xFF; 
-  AppData.Buff[i++] = ( cayenne_altitudeGps >> 8 ) & 0xFF;
-  AppData.Buff[i++] = cayenne_altitudeGps & 0xFF;
-		
-		
-	AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_ANALOG_INPUT;
-  AppData.Buff[i++] = cayenne_load_voltage;
-  AppData.Buff[i++] = cayenne_no_load_voltage;
-  
-  AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 
-  AppData.Buff[i++] = cayenne_GPS_sats;
     
 
 
