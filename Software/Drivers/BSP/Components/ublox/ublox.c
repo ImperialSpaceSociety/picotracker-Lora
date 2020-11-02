@@ -92,31 +92,8 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 #endif
 
 gps_status_t latest_gps_status = GPS_FAILURE;
-
-float GPS_UBX_latitude_Float							      = 0;  // YY.YYYYYYY, in +/- DEGREES, 
-float GPS_UBX_longitude_Float							      = 0;  // XXX.XXXXXXX, in +/- DEGREES,
-int32_t GPSaltitude												      = 0;
-uint8_t GPSsats													      	= 0;
-
-static int32_t GPS_UBX_latitude                 = 0;	// YYYYYYYYY, +/-
-static int32_t GPS_UBX_longitude                = 0;	// XXXXXXXXXX, +/-
-				
-
-static uint8_t GPShour													= 0;
-static uint8_t GPSminute												= 0;
-static uint8_t GPSsecond												= 0;
-static uint8_t GPSday														= 0;
-static uint8_t GPSmonth													= 0;
-static uint16_t GPSyear													= 0;
-
-static uint8_t GPSfix_type											= 0;
-static uint8_t GPSfix_OK												= 0;
-static uint8_t GPSvalidity											= 0;
-
-static uint8_t GPSnavigation										= 0;
-
 uint16_t load_solar_voltage = 0;
-
+gps_info_t gps_info = {0};
 
 
 
@@ -311,20 +288,20 @@ gps_status_t get_location_fix(uint32_t timeout){
 		{ 
 			display_fix_found();
 	
-			GPSyear =  temp_GPSyear;
-			GPSmonth = temp_GPSmonth;
-			GPSday = temp_GPSday;
-			GPShour = temp_GPShour;
-			GPSminute = temp_GPSminute;
-			GPSsecond = temp_GPSsecond;
-			GPSsats = temp_GPSsats;
-			GPSfix_type = temp_GPSfix_type;
-			GPSfix_OK = temp_GPSfix_OK;
-			GPS_UBX_latitude =  getLatitude(defaultMaxWait);
-			GPS_UBX_longitude = getLongitude(defaultMaxWait);
-			GPS_UBX_latitude_Float = (float)GPS_UBX_latitude/10000000;
-			GPS_UBX_longitude_Float = (float)GPS_UBX_longitude/10000000;
-			GPSaltitude = getAltitude(defaultMaxWait)/1000;
+			gps_info.GPSyear =  temp_GPSyear;
+			gps_info.GPSmonth = temp_GPSmonth;
+			gps_info.GPSday = temp_GPSday;
+			gps_info.GPShour = temp_GPShour;
+			gps_info.GPSminute = temp_GPSminute;
+			gps_info.GPSsecond = temp_GPSsecond;
+			gps_info.GPSsats = temp_GPSsats;
+			gps_info.GPSfix_type = temp_GPSfix_type;
+			gps_info.GPSfix_OK = temp_GPSfix_OK;
+			gps_info.GPS_UBX_latitude =  getLatitude(defaultMaxWait);
+			gps_info.GPS_UBX_longitude = getLongitude(defaultMaxWait);
+			gps_info.GPS_UBX_latitude_Float = (float)gps_info.GPS_UBX_latitude/10000000;
+			gps_info.GPS_UBX_longitude_Float = (float)gps_info.GPS_UBX_longitude/10000000;
+			gps_info.GPSaltitude = getAltitude(defaultMaxWait)/1000;
 
 			Backup_GPS();
 			latest_gps_status = GPS_SUCCESS;
