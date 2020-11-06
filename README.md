@@ -80,8 +80,6 @@ The board will output debug information at `20000000` baud. I normally use the A
 
 
 An expected output on the terminal will look like this. It will initialise, and transmit a packet every 2 minutes. This packet will be the same size as the ones transmitted over Canada on ICSPACE22 and will be transmitting on US915 freqencies. This will replicate the same parameters of ICSPACE22 over Canada, where we saw that some packets did not contain any data at all.
-
-If you want to speed up the process for debugging, 
 ```
 
 
@@ -142,91 +140,20 @@ TX on freq 904600000 Hz at DR 4
  15s735ms: APP> McpsConfirm STATUS: OK
 
  15s735ms: #= U/L FRAME 6641 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
-
-⸮READING SENSOR AND GPS
-
-================================================================
-SENSOR AND GPS VALUES
-================================================================
-Temperature degrees C: 0.000000
-Pressure mBar: 0.000000
-Longitude: 0.000000 Latitude: 0.000000 altitude: 0
-Solar voltage no load: 3
-Solar voltage with GPS load: 0
-================================================================
-TX on freq 904600000 Hz at DR 4
-⸮ 25s646ms: PHY txDone
-⸮RX on freq 923900000 Hz at DR 13
-⸮ 26s677ms: PHY rxTimeOut
-⸮RX on freq 923300000 Hz at DR 8
-⸮ 27s730ms: PHY rxTimeOut
- 27s739ms: APP> McpsConfirm STATUS: OK
-
- 27s739ms: #= U/L FRAME 6642 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
-
-⸮READING SENSOR AND GPS
-================================================================
-SENSOR AND GPS VALUES
-================================================================
-Temperature degrees C: 0.000000
-Pressure mBar: 0.000000
-Longitude: 0.000000 Latitude: 0.000000 altitude: 0
-Solar voltage no load: 3
-Solar voltage with GPS load: 0
-================================================================
-TX on freq 904600000 Hz at DR 4
-⸮ 37s650ms: PHY txDone
-⸮RX on freq 923900000 Hz at DR 13
-⸮ 38s681ms: PHY rxTimeOut
-⸮RX on freq 923300000 Hz at DR 8
-⸮ 39s734ms: PHY rxTimeOut
- 39s743ms: APP> McpsConfirm STATUS: OK
- 
- 39s744ms: #= U/L FRAME 6643 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
-
-⸮READING SENSOR AND GPS
-
-================================================================
-SENSOR AND GPS VALUES
-================================================================
-Temperature degrees C: 0.000000
-Pressure mBar: 0.000000
-Longitude: 0.000000 Latitude: 0.000000 altitude: 0
-Solar voltage no load: 3
-Solar voltage with GPS load: 0
-================================================================
-TX on freq 904600000 Hz at DR 4
-⸮ 49s654ms: PHY txDone
-⸮RX on freq 923900000 Hz at DR 13
-⸮ 50s685ms: PHY rxTimeOut
-⸮RX on freq 923300000 Hz at DR 8
-⸮ 51s738ms: PHY rxTimeOut
- 51s747ms: APP> McpsConfirm STATUS: OK
-
- 51s747ms: #= U/L FRAME 6644 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
-
-⸮READING SENSOR AND GPS
-
-================================================================
-SENSOR AND GPS VALUES
-================================================================
-Temperature degrees C: 0.000000
-Pressure mBar: 0.000000
-Longitude: 0.000000 Latitude: 0.000000 altitude: 0
-Solar voltage no load: 3
-Solar voltage with GPS load: 0
-================================================================
-TX on freq 904600000 Hz at DR 4
-⸮ 61s658ms: PHY txDone
-⸮RX on freq 923900000 Hz at DR 13
-⸮ 62s689ms: PHY rxTimeOut
-⸮RX on freq 923300000 Hz at DR 8
-⸮ 63s742ms: PHY rxTimeOut
- 63s750ms: APP> McpsConfirm STATUS: OK
-
- 63s751ms: #= U/L FRAME 6645 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
-
 ```
+### speed up debugging tips
+If you want to speed up the process for debugging, in `main.h`, you can set `APP_TX_DUTYCYCLE` to a lower value to increase the frequency of transmissions.
+```c
+#define APP_TX_DUTYCYCLE                           120000
+```
+
+For debugging, you can switch the end node to transmit on EU868 frequencies by making the following changes to `geofence.c`
+```c
+LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_EU868;  // Loramac region EU868
+Polygon_t curr_poly_region = EU863870_EUROPE_polygon; // Europe is in this polygon
+```
+
+
 
 Now if everything is working on the end node side, it is time to see what is appearing on the TTN console. You should be able to see packets of data that look something like this. The important thing is, in order to pass this test, every packet should have a `payload_raw` and `payload_fields` section. Note, that every single piece of MQTT data is archived [here](http://medadnewman.co.uk/wp-content/uploads/2020/10/mqtt_log_data-1.txt). 
 ```json
