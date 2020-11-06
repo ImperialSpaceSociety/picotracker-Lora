@@ -129,6 +129,33 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define USARTx_FORCE_RESET()             __USART1_FORCE_RESET()
 #define USARTx_RELEASE_RESET()           __USART1_RELEASE_RESET()
 
+#ifdef B_L072Z_LRWAN1
+
+#define USARTx_TX_PIN                  GPIO_PIN_2
+#define USARTx_TX_GPIO_PORT            GPIOA
+#define USARTx_TX_AF                   GPIO_AF4_USART2
+#define USARTx_RX_PIN                  GPIO_PIN_3
+#define USARTx_RX_GPIO_PORT            GPIOA
+#define USARTx_RX_AF                   GPIO_AF4_USART2
+
+/* Definition for USARTx's NVIC */
+#define USARTx_IRQn                      USART2_IRQn
+#define USARTx_IRQHandler                USART2_IRQHandler
+
+/* Definition for USARTx's DMA */
+#define USARTx_TX_DMA_CHANNEL             DMA1_Channel7
+
+/* Definition for USARTx's DMA Request */
+#define USARTx_TX_DMA_REQUEST             DMA_REQUEST_4
+
+/* Definition for USARTx's NVIC */
+#define USARTx_DMA_TX_IRQn                DMA1_Channel4_5_6_7_IRQn
+#define USARTx_DMA_TX_IRQHandler          DMA1_Channel4_5_6_7_IRQHandler
+
+#define USARTx_Priority 0
+#define USARTx_DMA_Priority 0
+
+#else
 
 #define USARTx_TX_PIN                  GPIO_PIN_9
 #define USARTx_TX_GPIO_PORT            GPIOA  
@@ -153,6 +180,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 #define USARTx_Priority 0
 #define USARTx_DMA_Priority 0
+#endif
 
 #define LED_Toggle( x )                 BSP_LED_Toggle( x );
 #define LED_On( x )                     BSP_LED_On( x );
