@@ -69,6 +69,18 @@ These are photos of ICSPACE19 before launch, during testing in the sun. It is a 
 ![In the sun](/Photos/20200316_130210.jpg "In the sun")
 
 # Instructions for special tests of multiregion Lorawan
+
+In this test, I want to test if the tracker will work properly over US915. We have had issues where some packets over Canada contained no payload data. I don't know the root cause. Could be power supply issues. To narrow down causes, I have created this test, to be run on the B-L072Z-LRWAN1.
+
+This test will:
+1. transmit every 2 minutes
+2. a packet the size of our typical message
+3. on US915 frequencies.
+
+I want to find out if we receive any empty packets.
+
+## How to run the program
+
 Clone this project and switch to branch `multi-region-tests`. All tests on multi region lorawan will be here.
 Navigate to `picotracker-Lora/Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/` and run `Lora.uvprojx` with Keil.
 
