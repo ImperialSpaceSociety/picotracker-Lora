@@ -68,6 +68,199 @@ These are photos of ICSPACE19 before launch, during testing in the sun. It is a 
 ![In the sun](/Photos/20200316_125523.jpg "In the sun")
 ![In the sun](/Photos/20200316_130210.jpg "In the sun")
 
+# Instructions for special tests of multiregion Lorawan
+
+
+
+An expected output on the terminal will look like this:
+```
+
+
+************************************ 
+* Picotracker Lora                 * 
+* Imperial College Space Society   * 
+************************************ 
+
+SELFTEST: Initialising Hardware
+SELFTEST: LED should blink now
+SELFTEST: Now initing sensors
+SELFTEST: Initialisng ms5607
+SELFTEST: Now the radio should transmit
+APP DUTY CYCLE(TX INTERVAL maybe longer depending on message length and datarate) : 12000
+ABP
+DevEui= 00-AB-DF-8A-62-F5-C1-81
+DevAdd=  26011673
+NwkSKey= D1 21 88 24 49 F6 0C 62 C0 C1 EF 4E FC 24 EC E4
+AppSKey= 8F 3C F3 ED 51 FE 03 64 EC 0E 1A 06 6D 41 FC 9D
+
+READING SENSOR AND GPS
+================================================================
+SENSOR AND GPS VALUES
+================================================================
+Temperature degrees C: 0.000000
+Pressure mBar: 0.000000
+Longitude: 0.000000 Latitude: 0.000000 altitude: 0
+Solar voltage no load: 3
+Solar voltage with GPS load: 0
+================================================================
+TX on freq 904600000 Hz at DR 4
+⸮  1s615ms: PHY txDone
+⸮RX on freq 923900000 Hz at DR 13
+⸮  2s646ms: PHY rxTimeOut
+⸮RX on freq 923300000 Hz at DR 8
+⸮  3s698ms: PHY rxTimeOut
+  3s707ms: APP> McpsConfirm STATUS: OK
+
+  3s707ms: #= U/L FRAME 6640 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
+
+⸮READING SENSOR AND GPS
+
+================================================================
+SENSOR AND GPS VALUES
+================================================================
+Temperature degrees C: 0.000000
+Pressure mBar: 0.000000
+Longitude: 0.000000 Latitude: 0.000000 altitude: 0
+Solar voltage no load: 3
+Solar voltage with GPS load: 0
+================================================================
+TX on freq 904600000 Hz at DR 4
+⸮ 13s642ms: PHY txDone
+⸮RX on freq 923900000 Hz at DR 13
+⸮ 14s673ms: PHY rxTimeOut
+⸮RX on freq 923300000 Hz at DR 8
+⸮ 15s726ms: PHY rxTimeOut
+ 15s735ms: APP> McpsConfirm STATUS: OK
+
+ 15s735ms: #= U/L FRAME 6641 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
+
+⸮READING SENSOR AND GPS
+
+================================================================
+SENSOR AND GPS VALUES
+================================================================
+Temperature degrees C: 0.000000
+Pressure mBar: 0.000000
+Longitude: 0.000000 Latitude: 0.000000 altitude: 0
+Solar voltage no load: 3
+Solar voltage with GPS load: 0
+================================================================
+TX on freq 904600000 Hz at DR 4
+⸮ 25s646ms: PHY txDone
+⸮RX on freq 923900000 Hz at DR 13
+⸮ 26s677ms: PHY rxTimeOut
+⸮RX on freq 923300000 Hz at DR 8
+⸮ 27s730ms: PHY rxTimeOut
+ 27s739ms: APP> McpsConfirm STATUS: OK
+
+ 27s739ms: #= U/L FRAME 6642 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
+
+⸮READING SENSOR AND GPS
+================================================================
+SENSOR AND GPS VALUES
+================================================================
+Temperature degrees C: 0.000000
+Pressure mBar: 0.000000
+Longitude: 0.000000 Latitude: 0.000000 altitude: 0
+Solar voltage no load: 3
+Solar voltage with GPS load: 0
+================================================================
+TX on freq 904600000 Hz at DR 4
+⸮ 37s650ms: PHY txDone
+⸮RX on freq 923900000 Hz at DR 13
+⸮ 38s681ms: PHY rxTimeOut
+⸮RX on freq 923300000 Hz at DR 8
+⸮ 39s734ms: PHY rxTimeOut
+ 39s743ms: APP> McpsConfirm STATUS: OK
+ 
+ 39s744ms: #= U/L FRAME 6643 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
+
+⸮READING SENSOR AND GPS
+
+================================================================
+SENSOR AND GPS VALUES
+================================================================
+Temperature degrees C: 0.000000
+Pressure mBar: 0.000000
+Longitude: 0.000000 Latitude: 0.000000 altitude: 0
+Solar voltage no load: 3
+Solar voltage with GPS load: 0
+================================================================
+TX on freq 904600000 Hz at DR 4
+⸮ 49s654ms: PHY txDone
+⸮RX on freq 923900000 Hz at DR 13
+⸮ 50s685ms: PHY rxTimeOut
+⸮RX on freq 923300000 Hz at DR 8
+⸮ 51s738ms: PHY rxTimeOut
+ 51s747ms: APP> McpsConfirm STATUS: OK
+
+ 51s747ms: #= U/L FRAME 6644 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
+
+⸮READING SENSOR AND GPS
+
+================================================================
+SENSOR AND GPS VALUES
+================================================================
+Temperature degrees C: 0.000000
+Pressure mBar: 0.000000
+Longitude: 0.000000 Latitude: 0.000000 altitude: 0
+Solar voltage no load: 3
+Solar voltage with GPS load: 0
+================================================================
+TX on freq 904600000 Hz at DR 4
+⸮ 61s658ms: PHY txDone
+⸮RX on freq 923900000 Hz at DR 13
+⸮ 62s689ms: PHY rxTimeOut
+⸮RX on freq 923300000 Hz at DR 8
+⸮ 63s742ms: PHY rxTimeOut
+ 63s750ms: APP> McpsConfirm STATUS: OK
+
+ 63s751ms: #= U/L FRAME 6645 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
+
+```
+
+Now if everything is working on the end node side, it is time to see what is appearing on the TTN console. You should be able to see packets of data that look something like this. The important thing is, in order to pass this test, every packet should have a `payload_raw` and `payload_fields` section. Note, that every single piece of MQTT data is archived [here](http://medadnewman.co.uk/wp-content/uploads/2020/10/mqtt_log_data-1.txt). 
+```json
+{
+  "app_id": "icss_lora_tracker",
+  "dev_id": "icspace23",
+  "hardware_serial": "0093BECA9134091B",
+  "port": 99,
+  "counter": 6603,
+  "payload_raw": "AHN2YwFnERICiAAAAAAAAAAAAAMCAAAEAQA=",
+  "payload_fields": {
+    "analog_in_3": 0,
+    "barometric_pressure_0": 3030.7,
+    "digital_out_4": 0,
+    "gps_2": {
+      "altitude": 0,
+      "latitude": 0,
+      "longitude": 0
+    },
+    "temperature_1": 437
+  },
+  "metadata": {
+    "time": "2020-11-06T22:20:03.034197954Z",
+    "frequency": 868.5,
+    "modulation": "LORA",
+    "data_rate": "SF8BW125",
+    "airtime": 154112000,
+    "coding_rate": "4/5",
+    "gateways": [
+      {
+        "gtw_id": "eui-58a0cbfffe800f4d",
+        "timestamp": 3440028508,
+        "time": "2020-11-06T22:20:03.082736968Z",
+        "channel": 0,
+        "rssi": -67,
+        "snr": 8.5,
+        "rf_chain": 0
+      }
+    ]
+  }
+}
+
+```
 
 ## License
 
