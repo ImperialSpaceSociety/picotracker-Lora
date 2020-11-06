@@ -483,17 +483,23 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
       /* Initialise LoRa to Geofence region */
 			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, current_loramac_region );
 
-// source: https://github.com/Lora-net/LoRaMac-node/issues/742#issuecomment-492231231
-#if defined( REGION_US915 )
-			// Enabling 2nd block of 8 channels (8-15) + channel 65
-			uint16_t channelMask[] = { 0xFF00, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000};
-			mibReq.Type = MIB_CHANNELS_MASK;
-			mibReq.Param.ChannelsMask = channelMask;
-			LoRaMacMibSetRequestConfirm( &mibReq );
-			mibReq.Type = MIB_CHANNELS_DEFAULT_MASK;
-			mibReq.Param.ChannelsDefaultMask = channelMask;
-			LoRaMacMibSetRequestConfirm( &mibReq );
-#endif
+
+			// Workaround to use only 8 channel gateways over US915 and AU915 regions.
+			// Code source: https://github.com/Lora-net/LoRaMac-node/issues/742#issuecomment-492231231
+			// confirm that US915 and AU915 use 2nd subband on The Things Network: https://thethingsstack.io/reference/frequency-plans/
+			// The actual frequencies for US915 can be found here: https://www.baranidesign.com/faq-articles/2019/4/23/lorawan-usa-frequencies-channels-and-sub-bands-for-iot-devices
+						
+			if ( (current_loramac_region == LORAMAC_REGION_AU915) || (current_loramac_region == LORAMAC_REGION_US915) )
+			{
+					// Enabling 2nd block of 8 channels (8-15) + channel 65
+					uint16_t channelMask[] = { 0xFF00, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000};
+					mibReq.Type = MIB_CHANNELS_MASK;
+					mibReq.Param.ChannelsMask = channelMask;
+					LoRaMacMibSetRequestConfirm( &mibReq );
+					mibReq.Type = MIB_CHANNELS_DEFAULT_MASK;
+					mibReq.Param.ChannelsDefaultMask = channelMask;
+					LoRaMacMibSetRequestConfirm( &mibReq );
+			}
       
       mibReq.Type = MIB_ADR;
       mibReq.Param.AdrEnable = LoRaParamInit->AdrEnable;

@@ -48,6 +48,7 @@ The moto: KEEP IT SIMPLE
 * ICSPACE17: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/02/balloon-flights-to-austria-and-slovakia/)
 * ICSPACE18: Was lost after launch
 * ICSPACE19: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/03/launch-of-icspace19/)
+* ICSPACE20 & 21: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/10/icspace21-flight-to-japan-and-icspace20/)
 
 
 # Design Files

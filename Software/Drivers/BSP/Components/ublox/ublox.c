@@ -403,7 +403,7 @@ static gps_status_t init_for_fix()
 	}
 	else
 	{
-		PRINTF("dynamic model setting error %d\n");
+		PRINTF("dynamic model setting error\n");
 	}
 	
 	return GPS_SUCCESS;	
