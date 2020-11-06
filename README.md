@@ -69,10 +69,19 @@ These are photos of ICSPACE19 before launch, during testing in the sun. It is a 
 ![In the sun](/Photos/20200316_130210.jpg "In the sun")
 
 # Instructions for special tests of multiregion Lorawan
+Clone this project and switch to branch `multi-region-tests`. All tests on multi region lorawan will be here.
+Navigate to `picotracker-Lora/Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/` and run `Lora.uvprojx` with Keil.
+
+After opening the Keil project, switch the firmware config to work on the B-L072Z-LRWAN1 dev board. This can be done as follows: ![image](https://user-images.githubusercontent.com/26815217/98421499-5a224f00-2081-11eb-8eb2-aedb4195027d.png)
+
+Now compile and upload the code into the dev board.
+
+The board will output debug information at `20000000` baud. I normally use the Arduino editor's inbuilt terminal. ![image](https://user-images.githubusercontent.com/26815217/98421622-a5d4f880-2081-11eb-9401-e1e49dbddd8e.png)
 
 
+An expected output on the terminal will look like this. It will initialise, and transmit a packet every 2 minutes. This packet will be the same size as the ones transmitted over Canada on ICSPACE22 and will be transmitting on US915 freqencies. This will replicate the same parameters of ICSPACE22 over Canada, where we saw that some packets did not contain any data at all.
 
-An expected output on the terminal will look like this:
+If you want to speed up the process for debugging, 
 ```
 
 
