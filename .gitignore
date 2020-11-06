@@ -462,3 +462,5 @@ fp-info-cache
 *.csv
 Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_Tracker_1.1a/Drivers/CMSIS/Lib/ARM/arm_cortexM0b_math.lib
 Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_Tracker_1.1a/Drivers/CMSIS/Lib/ARM/arm_cortexM0l_math.lib
+
+!circuit board design-rescue.lib
