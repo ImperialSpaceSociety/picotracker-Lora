@@ -15,6 +15,7 @@
 
 /* Inclusion of system and local header files goes here */
 #include "playback.h"
+#include "stdint.h"
  
 
 /* ==================================================================== */
@@ -31,7 +32,13 @@
 
 
 
-
+typedef struct
+{
+	uint32_t timestamp; // epoch time in seconds
+	uint32_t latitude;  // Latitude
+	uint32_t longitude; // Longitude
+	
+}time_pos_fix;
 
 
 /* ==================================================================== */
@@ -50,7 +57,7 @@
 
 /* Function prototypes for private (static) functions go here */
 
-
+void save_position(uint32_t timestamp, uint32_t latitude, uint32_t longitude);
 
 /* ==================================================================== */
 /* ===================== All functions by section ===================== */
