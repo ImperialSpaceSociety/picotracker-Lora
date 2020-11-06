@@ -138,7 +138,7 @@ void HW_Init( void )
 		
 		#endif
 		
-		#if defined( VARIANT_1V2A)
+		#if defined( VARIANT_1V2A) || defined( VARIANT_1V3A)
 		/* enable power to the GPS with mosfet */
 		GPS_EN_GPIO_Init();
 		#endif 

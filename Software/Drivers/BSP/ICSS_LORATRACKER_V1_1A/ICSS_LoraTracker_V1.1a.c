@@ -125,7 +125,7 @@ void SENSOR_EN_GPIO_Init(void)
 
 
 
-#if defined (VARIANT_1V2A)
+#if defined (VARIANT_1V2A) || defined(VARIANT_1V3A)
 
 void GPS_EN_GPIO_Init(void)
 {
