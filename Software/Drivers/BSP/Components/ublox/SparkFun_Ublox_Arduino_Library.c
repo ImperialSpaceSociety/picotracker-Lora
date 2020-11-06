@@ -2421,6 +2421,33 @@ uint8_t getDynamicModel(uint16_t maxWait)
   return (payloadCfg[2]); // Return the dynamic model
 }
 
+
+//Get the time using  using UBX-TIM-TOS
+//Returns 255 if the sendCommand fails
+//Reads survey in status and sets the global variables
+//for status, position valid, observation time, and mean 3D StdDev
+//Returns true if commands was successful
+bool getTime(uint16_t maxWait)
+{
+  //Reset variables
+	time_info.week = 0;
+  time_info.TOW = 0;
+
+  packetCfg.cls = UBX_CLASS_TIM;
+  packetCfg.id = UBX_TIM_TOS;
+  packetCfg.len = 0;
+  packetCfg.startingSpot = 0;
+
+  if ((sendCommand(&packetCfg, maxWait)) != SFE_UBLOX_STATUS_DATA_RECEIVED) // We are expecting data and an ACK
+    return (false);                                                         //If command send fails then bail
+
+  //We got a response, now parse the bits into the time info structure
+  time_info.week = extractLong(24);
+  time_info.TOW = extractLong(28);
+
+  return (true);
+}
+
 //Given a spot in the payload array, extract four bytes and build a long
 uint32_t extractLong(uint8_t spotToStart)
 {
