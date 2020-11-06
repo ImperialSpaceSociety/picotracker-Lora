@@ -200,7 +200,6 @@ prototype/firmware/EDBG UART erert/EDBG UART erert/.atmel-start-backup/*
 *.elf
 *.hex
 *.h86
-*.lib
 *.obj
 *.o
 *.sbr
@@ -448,6 +447,8 @@ _autosave-*
 *-save.pro
 *-save.kicad_pcb
 fp-info-cache
+*-cache.lib
+*-rescue.lib
 
 # Netlist files (exported from Eeschema)
 *.net
@@ -459,3 +460,5 @@ fp-info-cache
 # Exported BOM files
 *.xml
 *.csv
+Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_Tracker_1.1a/Drivers/CMSIS/Lib/ARM/arm_cortexM0b_math.lib
+Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_Tracker_1.1a/Drivers/CMSIS/Lib/ARM/arm_cortexM0l_math.lib
