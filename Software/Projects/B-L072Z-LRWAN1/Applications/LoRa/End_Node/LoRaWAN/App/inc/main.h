@@ -65,12 +65,6 @@ void Error_Handler(void);
 #define GPS_INT_Pin GPIO_PIN_13
 #define GPS_INT_GPIO_Port GPIOB
 
-#define LED_Pin GPIO_PIN_2
-#define LED_GPIO_Port GPIOA
-
-#define BUTTON_Pin GPIO_PIN_3
-#define BUTTON_GPIO_Port GPIOA
-
 #define SENSOR_EN_PIN GPIO_PIN_7
 #define SENSOR_EN_GPIO_Port GPIOB
 
