@@ -155,7 +155,10 @@ Polygon_t curr_poly_region = EU863870_EUROPE_polygon; // Europe is in this polyg
 
 
 
-Now if everything is working on the end node side, it is time to see what is appearing on the TTN console. You should be able to see packets of data that look something like this. The important thing is, in order to pass this test, every packet should have a `payload_raw` and `payload_fields` section. Note, that every single piece of MQTT data is archived [here](http://medadnewman.co.uk/wp-content/uploads/2020/10/mqtt_log_data-1.txt). 
+Now if everything is working on the end node side, it is time to see what is appearing on the TTN console. 
+You should be able to see packets of data that look something like this. The important thing is, in order to pass this test, every packet should have a `payload_raw` and `payload_fields` section. During ICSPACE22's flight over Canada, we found that some packets did not contain the `payload_fields` section. I want to find out if it is a software issue that causes it.
+
+Note, that every single piece of MQTT data is archived [here](http://medadnewman.co.uk/wp-content/uploads/2020/10/mqtt_log_data-1.txt) for reference. 
 ```json
 {
   "app_id": "icss_lora_tracker",
