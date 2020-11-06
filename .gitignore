@@ -200,7 +200,6 @@ prototype/firmware/EDBG UART erert/EDBG UART erert/.atmel-start-backup/*
 *.elf
 *.hex
 *.h86
-*.lib
 *.obj
 *.o
 *.sbr
@@ -428,3 +427,40 @@ Current Tracker Prototype/firmware/Util scripts/Geofence/.idea/misc.xml
 Current Tracker Prototype/firmware/Util scripts/Geofence/.idea/modules.xml
 Current Tracker Prototype/firmware/Util scripts/Geofence/.idea/vcs.xml
 Current Tracker Prototype/firmware/Util scripts/Geofence/.idea/workspace.xml
+
+
+
+# For PCBs designed using KiCad: http://www.kicad-pcb.org/
+# Format documentation: http://kicad-pcb.org/help/file-formats/
+
+# Temporary files
+*.000
+*.bak
+*.bck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.kicad_prl
+*.sch-bak
+*~
+_autosave-*
+*.tmp
+*-save.pro
+*-save.kicad_pcb
+fp-info-cache
+*-cache.lib
+*-rescue.lib
+
+# Netlist files (exported from Eeschema)
+*.net
+
+# Autorouter files (exported from Pcbnew)
+*.dsn
+*.ses
+
+# Exported BOM files
+*.xml
+*.csv
+Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_Tracker_1.1a/Drivers/CMSIS/Lib/ARM/arm_cortexM0b_math.lib
+Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_Tracker_1.1a/Drivers/CMSIS/Lib/ARM/arm_cortexM0l_math.lib
+
+!circuit board design-rescue.lib
