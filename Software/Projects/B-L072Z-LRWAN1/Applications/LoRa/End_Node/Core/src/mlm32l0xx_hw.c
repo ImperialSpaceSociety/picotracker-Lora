@@ -121,9 +121,9 @@ void HW_Init( void )
 
 		for(uint8_t i = 0; i < 5; i++)
 		{
-			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+			BSP_LED_On(LED1);
 			HAL_Delay(50);
-			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+			BSP_LED_Off(LED1);
 			HAL_Delay(50);
 		}
 

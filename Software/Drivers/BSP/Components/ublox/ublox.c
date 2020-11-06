@@ -475,9 +475,9 @@ static gps_status_t reinit_gps()
 static gps_status_t display_still_searching()
 {
 	// Indicator led to indicate that still searching
-	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+	BSP_LED_On(LED1);
 	HAL_Delay(100);
-	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+	BSP_LED_Off(LED1);
 	
 	return GPS_SUCCESS;
 
@@ -489,9 +489,9 @@ static gps_status_t display_fix_found()
 {
 	for(uint8_t i = 0; i < 20; i++)
 	{
-		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+		BSP_LED_On(LED1);
 		HAL_Delay(50);
-		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+		BSP_LED_Off(LED1);
 		HAL_Delay(50);
 	}
 	
