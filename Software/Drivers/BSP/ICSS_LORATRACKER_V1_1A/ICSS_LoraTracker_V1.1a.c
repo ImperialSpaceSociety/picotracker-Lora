@@ -125,7 +125,7 @@ void SENSOR_EN_GPIO_Init(void)
 
 
 
-#if defined (VARIANT_1V2A)
+#if defined (VARIANT_1V2A) || defined(VARIANT_1V3A)
 
 void GPS_EN_GPIO_Init(void)
 {
@@ -209,7 +209,7 @@ void BSP_LED_Init(Led_TypeDef Led)
   GPIO_InitStruct.Pin = LED_PIN[Led];
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   
   HAL_GPIO_Init(LED_PORT[Led], &GPIO_InitStruct);
 	
