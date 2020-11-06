@@ -141,7 +141,7 @@ TX on freq 904600000 Hz at DR 4
 
  15s735ms: #= U/L FRAME 6641 =# Class A, Port 99, data size 26, pwr 2, Channel Mask FF00 
 ```
-### speed up debugging tips
+### Speed up debugging tips
 If you want to speed up the process for debugging, in `main.h`, you can set `APP_TX_DUTYCYCLE` to a lower value to increase the frequency of transmissions.
 ```c
 #define APP_TX_DUTYCYCLE                           120000
@@ -154,7 +154,7 @@ Polygon_t curr_poly_region = EU863870_EUROPE_polygon; // Europe is in this polyg
 ```
 
 
-
+### Verify the data(the actual test)
 Now if everything is working on the end node side, it is time to see what is appearing on the TTN console. 
 You should be able to see packets of data that look something like this. The important thing is, in order to pass this test, every packet should have a `payload_raw` and `payload_fields` section. During ICSPACE22's flight over Canada, we found that some packets did not contain the `payload_fields` section. I want to find out if it is a software issue that causes it.
 
