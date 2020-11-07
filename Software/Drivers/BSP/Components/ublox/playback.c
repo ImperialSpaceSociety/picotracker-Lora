@@ -43,15 +43,25 @@
 
 typedef struct
 {
-	uint32_t TOW; // time of week in seconds
-	uint32_t weeks; // weeks since epoch
-	uint32_t latitude;  // Latitude
-	uint32_t longitude; // Longitude
-	
+	uint32_t TOW;          // time of week in seconds
+	uint32_t weeks;        // weeks since epoch
+	float latitude;        // Latitude
+	float longitude;       // Longitude
+	uint32_t altitude;     // Altitude
+
 }time_pos_fix;
 
-time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .latitude = 1234, .longitude = 5678};
 
+/* Dummy values for testing */
+time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .latitude = 51.509865, .longitude = -0.118092, .altitude = 9789};
+
+uint8_t cayenne_no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
+uint8_t cayenne_load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
+int temperature = -23;                 // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
+uint16_t pressure = 400;               // 130 - 1030 (min 128 values, 10mbar per increment)(7 bits)
+uint8_t data_received = 1;             // 0 or 1. indicates that message was received(1 bit)
+uint8_t sats = 12;                     // 0 - 32. Number of sats. (4 bits)
+uint8_t reset_count = 7;               // 0-8. Number of resets in (3 bits)
 
 /*!
  * Application Data structure
@@ -70,7 +80,6 @@ typedef struct
 static uint8_t AppDataBuff[LORAWAN_APP_DATA_BUFF_SIZE];
 
 lora_AppData_t AppData={ AppDataBuff,  0 ,0 };
-
 
 
 time_pos_fix archived_positions[N_ARCHIVED_POSITIONS];
@@ -98,6 +107,8 @@ void save_position(uint32_t timestamp, uint32_t latitude, uint32_t longitude);
 time_pos_fix *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
 int mod(int a, int b);
+char * prep_tx_str();
+
 
 /* ==================================================================== */
 /* ===================== All functions by section ===================== */
@@ -116,6 +127,8 @@ void main()
 	}
 	printf("\n");
 	
+	prep_tx_str();
+	
 }
 
 
@@ -126,7 +139,7 @@ int mod(int a, int b)
 }
 
 /**
- * \brief This will generate random number in range l and r, inclusive of both
+ * \brief This will generate random number in range l and r, inclusive of both(TODO: verify if this works)
  * 
  * \param l: lower bound
  * \param r: upper bound
@@ -138,10 +151,38 @@ int generate_random(int l, int r) {
 	return rand_num;
 }
 
+
+
 char * prep_tx_str()
 {
 	  AppData.Port = LPP_APP_PORT;
 	  
+	  /* no load voltage(5 bits) and load voltage(3 bits) */
+	  AppData.Buff[0] = ((cayenne_no_load_voltage - 18) & 0b00011111) << 3 | ((cayenne_load_voltage - 18) & 0b00011100) >> 2 ;
 	  
-	  AppData.Buff[0] = 5;
+	  /* load voltage(remaining 2 bits) and temperature(6 bits)*/
+	  AppData.Buff[1] = ((cayenne_load_voltage - 18) & 0b00000011) << 6 | ((temperature + 50)/2) & 0b00111111;
+	  
+	  /* pressure(7 bits) and data received flag(1 bit)*/
+	  AppData.Buff[2] = ((pressure/10) & 0b01111111) << 1 | (data_received & 0b00000001);
+	  
+	  /* Sats(5 bits) and reset count(3 bits)*/
+	  AppData.Buff[3] = ((sats) & 0b00011111) << 3 | ((reset_count) & 0b00000111);
+	  
+	  /* current position. Use the most significant numbers */
+	  /* latitude(16 bits) */
+	  AppData.Buff[4] = ((uint16_t)current_pos.latitude*10000) >> 8;
+	  AppData.Buff[5] = ((uint16_t)current_pos.latitude*10000) >> 0;
+	  /* longitude(16 bits) */
+	  AppData.Buff[6] = ((uint16_t)current_pos.longitude*10000) >> 8;
+	  AppData.Buff[7] = ((uint16_t)current_pos.longitude*10000) >> 0;
+	  /* altitude(16 bits) */
+	  AppData.Buff[8] = ((uint16_t)current_pos.altitude) >> 8;
+	  AppData.Buff[9] = ((uint16_t)current_pos.altitude) >> 0;
+	  
+	  for (int i = 0; i<10;i ++)
+	  {
+		  printf("%x ",AppData.Buff[i]);
+	  }
+
 }
