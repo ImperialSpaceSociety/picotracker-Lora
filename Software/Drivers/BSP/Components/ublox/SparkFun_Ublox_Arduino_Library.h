@@ -658,6 +658,10 @@ typedef struct
   // toggle putting into power save mode and continueous mode
 	bool put_in_power_save_mode(uint16_t maxWait);
 	bool put_in_continueous_mode(uint16_t maxWait);
+	
+	// get the time.
+	bool getTime(uint16_t maxWait);
+
 
 	//Survey-in specific controls
 	static struct svinStructure
@@ -668,12 +672,14 @@ typedef struct
 		float meanAccuracy;
 	} svin;
 	
-	//Survey-in specific controls
-	struct timeStructure
+	//structure to hold time information
+	 typedef struct 
 	{
 		uint32_t TOW;  //  TIme of week In seconds since the start of the week
 		uint32_t week;         // Weeks sincestarting with the first full week in January 1980
-	} time_info;
+	} timeStructure;
+	
+	extern timeStructure time_info;
 
 	//Relative Positioning Info in NED frame specific controls
 	static struct frelPosInfoStructure
