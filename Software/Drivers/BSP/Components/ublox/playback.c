@@ -25,8 +25,13 @@
 /* ==================================================================== */
 
 /* #define and enum statements go here */
-#define SUBSET_SIZE 8U
-#define N_ARCHIVED_POSITIONS 500UL
+#define SUBSET_SIZE 2U
+#define N_ARCHIVED_POSITIONS 5UL
+
+#define LORAWAN_APP_DATA_BUFF_SIZE                           64
+#define LPP_APP_PORT 99
+
+
 
 /* ==================================================================== */
 /* ======================== global variables ========================== */
@@ -38,15 +43,39 @@
 
 typedef struct
 {
-	uint32_t timestamp; // epoch time in seconds
+	uint32_t TOW; // time of week in seconds
+	uint32_t weeks; // weeks since epoch
 	uint32_t latitude;  // Latitude
 	uint32_t longitude; // Longitude
 	
 }time_pos_fix;
 
+time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .latitude = 1234, .longitude = 5678};
+
+
+/*!
+ * Application Data structure
+ */
+typedef struct
+{
+  /*point to the LoRa App data buffer*/
+  uint8_t* Buff;
+  /*LoRa App data buffer size*/
+  uint8_t BuffSize;
+  /*Port on which the LoRa App is data is sent/ received*/
+  uint8_t Port;
+  
+} lora_AppData_t;
+
+static uint8_t AppDataBuff[LORAWAN_APP_DATA_BUFF_SIZE];
+
+lora_AppData_t AppData={ AppDataBuff,  0 ,0 };
+
+
+
 time_pos_fix archived_positions[N_ARCHIVED_POSITIONS];
 time_pos_fix subset_positions[SUBSET_SIZE];
-int current_index = 100;
+int current_index = 3;
 
 
 /* ==================================================================== */
@@ -79,21 +108,11 @@ int mod(int a, int b);
 
 void main()
 {
-	printf("hello world\n");
-	
-
-	int lower = 0, upper = N_ARCHIVED_POSITIONS, count = SUBSET_SIZE;
-	
-	
-	for (int i = 0; i < count; i++) 
+	for (int i = 0; i < SUBSET_SIZE; i++) 
 	{
-		int rand_n = generate_random(lower, upper);
-		printf("offset index: %d, ",rand_n);
-		printf("test: %d, ",current_index - rand_n);
+		int rand_n = generate_random(0, N_ARCHIVED_POSITIONS);
 		int abs_index = mod((current_index - rand_n),N_ARCHIVED_POSITIONS);
 		printf("abs index:%d\n",abs_index);
-
-
 	}
 	printf("\n");
 	
@@ -117,4 +136,12 @@ int mod(int a, int b)
 int generate_random(int l, int r) { 
 	int rand_num = (rand() % (r - l + 1)) + l;
 	return rand_num;
+}
+
+char * prep_tx_str()
+{
+	  AppData.Port = LPP_APP_PORT;
+	  
+	  
+	  AppData.Buff[0] = 5;
 }
