@@ -63,6 +63,10 @@ typedef struct{
 	uint8_t GPSvalidity;
 
 	uint8_t GPSnavigation;
+	
+	uint32_t week;
+	uint32_t TOW;
+
 
 } gps_info_t;
 
