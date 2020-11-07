@@ -464,3 +464,20 @@ Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_T
 Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_Tracker_1.1a/Drivers/CMSIS/Lib/ARM/arm_cortexM0l_math.lib
 
 !circuit board design-rescue.lib
+
+
+
+
+# cmake gitignore
+
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
