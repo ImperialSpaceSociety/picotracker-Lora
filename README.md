@@ -60,6 +60,11 @@ We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free
 
 The software on the latest tracker can be found in the [Software folder](Software). You need to navigate to ``Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/`` and you can open the KEIL project by clicking ``Lora.uvprojx``
 
+The picotracker state machine is as follows: 
+It gets a GPS fix every 2 minutes and transmits it to ground
+
+![image](https://user-images.githubusercontent.com/26815217/98449495-002a9380-212c-11eb-80c6-c811061492fa.png)
+
 # Photos
 These are photos of ICSPACE19 before launch, during testing in the sun. It is a 1.1a variant, with no power storage.
 
