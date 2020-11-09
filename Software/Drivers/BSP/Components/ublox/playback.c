@@ -107,7 +107,7 @@ void save_position(uint32_t timestamp, uint32_t latitude, uint32_t longitude);
 time_pos_fix *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
 int mod(int a, int b);
-char * prep_tx_str();
+uint8_t * prep_tx_str( void );
 
 
 /* ==================================================================== */
@@ -153,12 +153,12 @@ int generate_random(int l, int r) {
 
 
 
-char * prep_tx_str()
+uint8_t * prep_tx_str()
 {
 	  AppData.Port = LPP_APP_PORT;
 	  
 	  /* no load voltage(5 bits) and load voltage(3 bits) */
-	  AppData.Buff[0] = ((cayenne_no_load_voltage - 18) & 0b00011111) << 3 | ((cayenne_load_voltage - 18) & 0b00011100) >> 2 ;
+	  AppData.Buff[0] = ((cayenne_no_load_voltage - 18) & 0b00011111) << 3 | ((cayenne_load_voltage - 18) & 0b00011100) >> 2;
 	  
 	  /* load voltage(remaining 2 bits) and temperature(6 bits)*/
 	  AppData.Buff[1] = ((cayenne_load_voltage - 18) & 0b00000011) << 6 | ((temperature + 50)/2) & 0b00111111;
@@ -184,5 +184,6 @@ char * prep_tx_str()
 	  {
 		  printf("%x ",AppData.Buff[i]);
 	  }
-
+		
+		return AppData.Buff;
 }
