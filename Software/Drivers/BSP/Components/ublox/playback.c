@@ -31,7 +31,7 @@
 #define LORAWAN_APP_DATA_BUFF_SIZE                           64
 #define LPP_APP_PORT 99
 
-
+//#define playback_testing
 
 /* ==================================================================== */
 /* ======================== global variables ========================== */
@@ -116,7 +116,7 @@ char * prep_tx_str();
 
 /* Functions definitions go here, organised into sections */
 
-
+#ifdef playback_testing
 void main()
 {
 	for (int i = 0; i < SUBSET_SIZE; i++) 
@@ -130,7 +130,7 @@ void main()
 	prep_tx_str();
 	
 }
-
+#endif
 
 int mod(int a, int b)
 {
