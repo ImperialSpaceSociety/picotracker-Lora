@@ -45,15 +45,15 @@ typedef struct
 {
 	uint32_t TOW;          // time of week in seconds
 	uint32_t weeks;        // weeks since epoch
-	float latitude;        // Latitude
-	float longitude;       // Longitude
+	uint32_t latitude;        // Latitude
+	uint32_t longitude;       // Longitude
 	uint32_t altitude;     // Altitude
 
 }time_pos_fix;
 
 
 /* Dummy values for testing */
-time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .latitude = 51.509865, .longitude = -0.118092, .altitude = 9789};
+time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .latitude = 0x17CA1BA2, .longitude = 0xD3123A77, .altitude = 9789};
 
 uint8_t cayenne_no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
 uint8_t cayenne_load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
@@ -171,14 +171,19 @@ uint8_t * prep_tx_str()
 	  
 	  /* current position. Use the most significant numbers */
 	  /* latitude(16 bits) */
-	  AppData.Buff[4] = ((uint16_t)current_pos.latitude*10000) >> 8;
-	  AppData.Buff[5] = ((uint16_t)current_pos.latitude*10000) >> 0;
-	  /* longitude(16 bits) */
-	  AppData.Buff[6] = ((uint16_t)current_pos.longitude*10000) >> 8;
-	  AppData.Buff[7] = ((uint16_t)current_pos.longitude*10000) >> 0;
+	  
+	  int32_t temp_lat = ((int32_t)current_pos.latitude + 90*10000000)*65536/180*10000000;
+	  int32_t temp_long = ((int32_t)current_pos.longitude + 180*10000000)*65536/360*10000000;
+	  
+	  /* latitude(16 bits) -90 to 90*/
+	  AppData.Buff[4] = (uint8_t)(temp_lat >> 8) & 0xff;
+	  AppData.Buff[5] = (uint8_t)(temp_lat >> 0) & 0xff;
+	  /* longitude(16 bits) -180 to 180 */
+	  AppData.Buff[6] = (uint8_t)(temp_long >> 8) & 0xff;
+	  AppData.Buff[7] = (uint8_t)(temp_long >> 8) & 0xff;
 	  /* altitude(16 bits) */
-	  AppData.Buff[8] = ((uint16_t)current_pos.altitude) >> 8;
-	  AppData.Buff[9] = ((uint16_t)current_pos.altitude) >> 0;
+	  AppData.Buff[8] = (uint8_t)(current_pos.altitude) >> 8;
+	  AppData.Buff[9] = (uint8_t)(current_pos.altitude) >> 0;
 	  
 	  for (int i = 0; i<10;i ++)
 	  {
