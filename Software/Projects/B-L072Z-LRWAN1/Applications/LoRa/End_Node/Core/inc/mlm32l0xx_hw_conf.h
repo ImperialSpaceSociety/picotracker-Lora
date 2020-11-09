@@ -120,16 +120,16 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define RTC_Alarm_IRQ_SP            0
    
 /* --------------------------- USART HW definition -------------------------------*/
-#define USARTx                           USART1
-#define USARTx_CLK_ENABLE()              __USART1_CLK_ENABLE();
+#ifdef B_L072Z_LRWAN1
+
+#define USARTx                           USART2
+#define USARTx_CLK_ENABLE()              __USART2_CLK_ENABLE();
 #define USARTx_RX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
-#define USARTx_TX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE() 
+#define USARTx_TX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
 #define DMAx_CLK_ENABLE()                __HAL_RCC_DMA1_CLK_ENABLE()
 
-#define USARTx_FORCE_RESET()             __USART1_FORCE_RESET()
-#define USARTx_RELEASE_RESET()           __USART1_RELEASE_RESET()
-
-#ifdef B_L072Z_LRWAN1
+#define USARTx_FORCE_RESET()             __USART2_FORCE_RESET()
+#define USARTx_RELEASE_RESET()           __USART2_RELEASE_RESET()
 
 #define USARTx_TX_PIN                  GPIO_PIN_2
 #define USARTx_TX_GPIO_PORT            GPIOA
@@ -156,6 +156,15 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define USARTx_DMA_Priority 0
 
 #else
+
+#define USARTx                           USART1
+#define USARTx_CLK_ENABLE()              __USART1_CLK_ENABLE();
+#define USARTx_RX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
+#define USARTx_TX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE() 
+#define DMAx_CLK_ENABLE()                __HAL_RCC_DMA1_CLK_ENABLE()
+
+#define USARTx_FORCE_RESET()             __USART1_FORCE_RESET()
+#define USARTx_RELEASE_RESET()           __USART1_RELEASE_RESET()
 
 #define USARTx_TX_PIN                  GPIO_PIN_9
 #define USARTx_TX_GPIO_PORT            GPIOA  
