@@ -35,6 +35,7 @@
 #define LONGITUDE_BYTES_LEN 2U
 #define LATITUDE_BYTES_LEN 2U
 #define ALTITUDE_BYTES_LEN 2U
+#define HOURS_SINCE_EPOCH_BYTES_LEN 2U
 #define POSITION_BYTES_LEN (LONGITUDE_BYTES_LEN + LATITUDE_BYTES_LEN + ALTITUDE_BYTES_LEN)
 
 
@@ -50,6 +51,7 @@ typedef struct
 {
 	uint32_t TOW;          // time of week in seconds
 	uint32_t weeks;        // weeks since epoch
+	uint16_t hours_since_epoch; // hours since Epoch
 	uint32_t latitude;        // Latitude
 	uint32_t longitude;       // Longitude
 	uint32_t altitude;     // Altitude
@@ -58,7 +60,7 @@ typedef struct
 
 
 /* Dummy values for testing */
-time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .latitude = 0x17CA1BA2/*399121314 == 399121314*/, .longitude = 0xD3123A77/*3541187191 == -753780105 */, .altitude = 0x0000F221};
+time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .hours_since_epoch = 200, .latitude = 0x17CA1BA2/*399121314 == 399121314*/, .longitude = 0xD3123A77/*3541187191 == -753780105 */, .altitude = 0x0000F221};
 
 uint8_t cayenne_no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
 uint8_t cayenne_load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
@@ -121,6 +123,7 @@ int mod(int a, int b);
 uint8_t * prep_tx_str( void );
 void fill_subset_positions_buffer(uint16_t subset_size);
 void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint32_t  latitude, uint32_t  longitude, uint32_t  altitude );
+void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint32_t latitude, uint32_t longitude, uint32_t altitude, uint16_t hours_since_epoch );
 
 
 
@@ -140,6 +143,8 @@ void main()
 		archived_positions[i].longitude = current_pos.longitude;
 		archived_positions[i].latitude = current_pos.latitude;
 		archived_positions[i].altitude = current_pos.altitude;
+		archived_positions[i].hours_since_epoch = current_pos.hours_since_epoch;
+
 	}
 	
 	fill_subset_positions_buffer(subset_size);
@@ -221,6 +226,15 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint32
 }
 
 
+void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint32_t latitude, uint32_t longitude, uint32_t altitude, uint16_t hours_since_epoch )
+{
+	
+	fill_tx_buffer_with_location(start_point, buffer, latitude, longitude, altitude );
+	
+	AppData.Buff[start_point + POSITION_BYTES_LEN + 0] = (hours_since_epoch >> 8) & 0xff;
+	AppData.Buff[start_point + POSITION_BYTES_LEN + 1] = (hours_since_epoch >> 0) & 0xff;
+}
+
 /**
  * \brief Prepare Tx string, by filling the AppData.Buff[] with the 
  * data string to be sent down to gateways on the ground. 
@@ -250,7 +264,7 @@ uint8_t * prep_tx_str()
 	  for (int i = 0; i < subset_size; i++)
 	  {
 		  time_pos_fix temp_pos = subset_positions[i];
-		  fill_tx_buffer_with_location(10 + i * POSITION_BYTES_LEN, AppData.Buff, temp_pos.latitude,temp_pos.longitude,temp_pos.altitude);
+		  fill_tx_buffer_with_location_and_time(10 + i * (POSITION_BYTES_LEN+HOURS_SINCE_EPOCH_BYTES_LEN), AppData.Buff, temp_pos.latitude,temp_pos.longitude,temp_pos.altitude, temp_pos.hours_since_epoch);
 		  
 	  }
 
