@@ -49,18 +49,16 @@
 
 typedef struct
 {
-	uint32_t TOW;          // time of week in seconds
-	uint32_t weeks;        // weeks since epoch
 	uint16_t hours_since_epoch; // hours since Epoch
-	uint32_t latitude;        // Latitude
-	uint32_t longitude;       // Longitude
-	uint32_t altitude;     // Altitude
+	uint16_t latitude;        // Latitude
+	uint16_t longitude;       // Longitude
+	uint16_t altitude;     // Altitude
 
 }time_pos_fix;
 
 
 /* Dummy values for testing */
-time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .hours_since_epoch = 200, .latitude = 0x17CA1BA2/*399121314 == 399121314*/, .longitude = 0xD3123A77/*3541187191 == -753780105 */, .altitude = 0x0000F221};
+time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .hours_since_epoch = 200, .latitude = 0x17CA/*399121314 == 399121314*/, .longitude = 0xD312/*3541187191 == -753780105 */, .altitude = 0x0000F221};
 
 uint8_t cayenne_no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
 uint8_t cayenne_load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
@@ -116,14 +114,14 @@ uint16_t n_archived_positions = 200;    /* Number of positions held in the EEPRO
 
 /* Function prototypes for private (static) functions go here */
 
-void save_position(uint32_t timestamp, uint32_t latitude, uint32_t longitude);
+void save_position(uint16_t hours_since_epoch, uint16_t latitude, uint16_t longitude, uint16_t altitude);
 time_pos_fix *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
 int mod(int a, int b);
 uint8_t * prep_tx_str( void );
 void fill_subset_positions_buffer(uint16_t subset_size);
-void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint32_t  latitude, uint32_t  longitude, uint32_t  altitude );
-void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint32_t latitude, uint32_t longitude, uint32_t altitude, uint16_t hours_since_epoch );
+void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude );
+void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint16_t hours_since_epoch );
 
 
 
@@ -208,25 +206,25 @@ int generate_random(int l, int r) {
 }
 
 
-void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint32_t latitude, uint32_t longitude, uint32_t altitude )
+void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude )
 {
 	
 	/* current position. Use the most significant numbers. Truncate to 16 bits.*/
 	/* latitude(16 bits) -90 to 90*/
-	AppData.Buff[start_point + 0] = (latitude >> 24) & 0xff;
-	AppData.Buff[start_point + 1] = (latitude >> 16) & 0xff;
+	AppData.Buff[start_point + 0] = (latitude >> 8) & 0xff;
+	AppData.Buff[start_point + 1] = (latitude >> 0) & 0xff;
 	/* longitude(16 bits) -180 to 180 */
-	AppData.Buff[start_point + 2] = (longitude >> 24) & 0xff;
-	AppData.Buff[start_point + 3] = (longitude >> 16) & 0xff;
+	AppData.Buff[start_point + 2] = (longitude >> 8) & 0xff;
+	AppData.Buff[start_point + 3] = (longitude >> 0) & 0xff;
 	/* altitude(16 bits) */
-	AppData.Buff[start_point + 4] = (altitude >> 24) & 0xff;
-	AppData.Buff[start_point + 5] = (altitude >> 16) & 0xff;
+	AppData.Buff[start_point + 4] = (altitude >> 8) & 0xff;
+	AppData.Buff[start_point + 5] = (altitude >> 0) & 0xff;
 		  
 	
 }
 
 
-void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint32_t latitude, uint32_t longitude, uint32_t altitude, uint16_t hours_since_epoch )
+void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint16_t hours_since_epoch )
 {
 	
 	fill_tx_buffer_with_location(start_point, buffer, latitude, longitude, altitude );
