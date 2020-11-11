@@ -53,7 +53,7 @@ typedef struct
 
 
 /* Dummy values for testing */
-time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .latitude = 0x17CA1BA2, .longitude = 0xD3123A77, .altitude = 9789};
+time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .latitude = 0x17CA1BA2/*399121314 == 399121314*/, .longitude = 0xD3123A77/*3541187191 == -753780105 */, .altitude = 9789};
 
 uint8_t cayenne_no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
 uint8_t cayenne_load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
