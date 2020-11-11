@@ -264,7 +264,12 @@ uint8_t * prep_tx_str()
 	  for (int i = 0; i < subset_size; i++)
 	  {
 		  time_pos_fix temp_pos = subset_positions[i];
-		  fill_tx_buffer_with_location_and_time(10 + i * (POSITION_BYTES_LEN+HOURS_SINCE_EPOCH_BYTES_LEN), AppData.Buff, temp_pos.latitude,temp_pos.longitude,temp_pos.altitude, temp_pos.hours_since_epoch);
+		  fill_tx_buffer_with_location_and_time(10 + i * (POSITION_BYTES_LEN+HOURS_SINCE_EPOCH_BYTES_LEN), 
+												AppData.Buff,
+												temp_pos.latitude,
+												temp_pos.longitude,
+												temp_pos.altitude,
+												temp_pos.hours_since_epoch);
 		  
 	  }
 
