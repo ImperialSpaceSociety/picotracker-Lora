@@ -173,21 +173,16 @@ uint8_t * prep_tx_str()
 	  /* Sats(5 bits) and reset count(3 bits)*/
 	  AppData.Buff[3] = ((sats) & 0b00011111) << 3 | ((reset_count) & 0b00000111);
 	  
-	  /* current position. Use the most significant numbers */
-	  /* latitude(16 bits) */
-	  
-	  int32_t temp_lat = ((int32_t)current_pos.latitude + 90*10000000)*65536/180*10000000;
-	  int32_t temp_long = ((int32_t)current_pos.longitude + 180*10000000)*65536/360*10000000;
-	  
+	  /* current position. Use the most significant numbers. Truncate to 16 bits.*/
 	  /* latitude(16 bits) -90 to 90*/
-	  AppData.Buff[4] = (uint8_t)(temp_lat >> 8) & 0xff;
-	  AppData.Buff[5] = (uint8_t)(temp_lat >> 0) & 0xff;
+	  AppData.Buff[4] = (current_pos.latitude>> 24) & 0xff;
+	  AppData.Buff[5] = (current_pos.latitude>> 16) & 0xff;
 	  /* longitude(16 bits) -180 to 180 */
-	  AppData.Buff[6] = (uint8_t)(temp_long >> 8) & 0xff;
-	  AppData.Buff[7] = (uint8_t)(temp_long >> 8) & 0xff;
+	  AppData.Buff[6] = (current_pos.longitude >> 24) & 0xff;
+	  AppData.Buff[7] = (current_pos.longitude >> 16) & 0xff;
 	  /* altitude(16 bits) */
-	  AppData.Buff[8] = (uint8_t)(current_pos.altitude) >> 8;
-	  AppData.Buff[9] = (uint8_t)(current_pos.altitude) >> 0;
+	  AppData.Buff[8] = (uint8_t)(current_pos.altitude >> 8);
+	  AppData.Buff[9] = (uint8_t)(current_pos.altitude >> 0);
 	  
 	  for (int i = 0; i<10;i ++)
 	  {
