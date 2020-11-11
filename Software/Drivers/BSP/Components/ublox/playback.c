@@ -86,9 +86,11 @@ time_pos_fix archived_positions[MAX_N_ARCHIVED_POSITIONS];
 time_pos_fix subset_positions[MAX_SUBSET_SIZE];
 
 
-uint16_t current_index = 3;
-uint16_t subset_size = 8;
-uint16_t n_archived_positions = 200;
+uint16_t current_index = 3;             /* As we fill the archived positions buffer, 
+                                         * we keep tracker of our current index in this buffer
+									     */
+uint16_t subset_size = 8;               /* Number of positions to send down */
+uint16_t n_archived_positions = 200;    /* Number of positions held in the EEPROM */
 
 
 /* ==================================================================== */
@@ -133,6 +135,12 @@ void main()
 }
 #endif
 
+/**
+ * \brief Fill the subset_positions[] buffer with a randomly selected subset of archived positions.
+ * 
+ * 
+ * \return void
+ */
 void fill_subset_positions_buffer(uint16_t subset_size)
 {
 	for (int i = 0; i < subset_size; i++)
@@ -150,6 +158,16 @@ void fill_subset_positions_buffer(uint16_t subset_size)
 	}
 }
 
+
+
+/**
+ * \brief Mathematical mod operation. a mod b.
+ * 
+ * \param a
+ * \param b
+ * 
+ * \return int
+ */
 int mod(int a, int b)
 {
 	int r = a % b;
@@ -171,6 +189,13 @@ int generate_random(int l, int r) {
 
 
 
+
+/**
+ * \brief Prepare Tx string, by filling the AppData.Buff[] with the 
+ * data string to be sent down to gateways on the ground. 
+ * 
+ * \return uint8_t *
+ */
 uint8_t * prep_tx_str()
 {
 	  AppData.Port = LPP_APP_PORT;
