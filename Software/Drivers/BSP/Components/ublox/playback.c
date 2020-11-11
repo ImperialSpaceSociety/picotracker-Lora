@@ -32,6 +32,11 @@
 #define LPP_APP_PORT 99
 
 //#define playback_testing
+#define LONGITUDE_BYTES_LEN 2
+#define LATITUDE_BYTES_LEN 2
+#define ALTITUDE_BYTES_LEN 2
+#define POSITION_BYTES_LEN LONGITUDE_BYTES_LEN+LATITUDE_BYTES_LEN+ALTITUDE_BYTES_LEN
+
 
 /* ==================================================================== */
 /* ======================== global variables ========================== */
