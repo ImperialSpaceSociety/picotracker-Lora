@@ -239,6 +239,13 @@ uint8_t * prep_tx_str()
 	  fill_tx_buffer_with_location(4, AppData.Buff, current_pos.latitude,current_pos.longitude,current_pos.altitude);
 
 	  
+	  for (int i = 0; i < subset_size; i++)
+	  {
+		  time_pos_fix temp_pos = subset_positions[i];
+		  fill_tx_buffer_with_location(10 + i * POSITION_BYTES_LEN, AppData.Buff, temp_pos.latitude,temp_pos.longitude,temp_pos.altitude);
+		  
+	  }
+
 
 	  
 	  
