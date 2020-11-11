@@ -115,6 +115,8 @@ int generate_random(int l, int r);
 int mod(int a, int b);
 uint8_t * prep_tx_str( void );
 void fill_subset_positions_buffer(uint16_t subset_size);
+void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint32_t  latitude, uint32_t  longitude, uint32_t  altitude );
+
 
 
 /* ==================================================================== */
@@ -188,6 +190,22 @@ int generate_random(int l, int r) {
 }
 
 
+void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint32_t latitude, uint32_t longitude, uint32_t altitude )
+{
+	
+	/* current position. Use the most significant numbers. Truncate to 16 bits.*/
+	/* latitude(16 bits) -90 to 90*/
+	AppData.Buff[start_point + 0] = (latitude >> 24) & 0xff;
+	AppData.Buff[start_point + 1] = (latitude >> 16) & 0xff;
+	/* longitude(16 bits) -180 to 180 */
+	AppData.Buff[start_point + 2] = (longitude >> 24) & 0xff;
+	AppData.Buff[start_point + 3] = (longitude >> 16) & 0xff;
+	/* altitude(16 bits) */
+	AppData.Buff[start_point + 4] = (altitude >> 24) & 0xff;
+	AppData.Buff[start_point + 5] = (altitude >> 16) & 0xff;
+		  
+	
+}
 
 
 /**
@@ -212,17 +230,14 @@ uint8_t * prep_tx_str()
 	  /* Sats(5 bits) and reset count(3 bits)*/
 	  AppData.Buff[3] = ((sats) & 0b00011111) << 3 | ((reset_count) & 0b00000111);
 	  
-	  /* current position. Use the most significant numbers. Truncate to 16 bits.*/
-	  /* latitude(16 bits) -90 to 90*/
-	  AppData.Buff[4] = (current_pos.latitude>> 24) & 0xff;
-	  AppData.Buff[5] = (current_pos.latitude>> 16) & 0xff;
-	  /* longitude(16 bits) -180 to 180 */
-	  AppData.Buff[6] = (current_pos.longitude >> 24) & 0xff;
-	  AppData.Buff[7] = (current_pos.longitude >> 16) & 0xff;
-	  /* altitude(16 bits) */
-	  AppData.Buff[8] = (uint8_t)(current_pos.altitude >> 8);
-	  AppData.Buff[9] = (uint8_t)(current_pos.altitude >> 0);
 	  
+	  fill_tx_buffer_with_location(4, AppData.Buff, current_pos.latitude,current_pos.longitude,current_pos.altitude);
+
+	  
+
+	  
+	  
+	  // length of buffer
 	  for (int i = 0; i<10;i ++)
 	  {
 		  printf("%x ",AppData.Buff[i]);
