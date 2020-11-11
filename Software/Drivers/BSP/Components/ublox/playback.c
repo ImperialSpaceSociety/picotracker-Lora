@@ -58,7 +58,7 @@ typedef struct
 
 
 /* Dummy values for testing */
-time_pos_fix current_pos = {.TOW = 100, .weeks = 20, .hours_since_epoch = 200, .latitude = 0x17CA/*399121314 == 399121314*/, .longitude = 0xD312/*3541187191 == -753780105 */, .altitude = 0x0000F221};
+time_pos_fix current_pos = {.hours_since_epoch = 200, .latitude = 0x17CA/*399121314 == 399121314*/, .longitude = 0xD312/*3541187191 == -753780105 */, .altitude = 0x0000F221};
 
 uint8_t cayenne_no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
 uint8_t cayenne_load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
