@@ -133,7 +133,15 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint32
 #ifdef playback_testing
 void main()
 {
-
+	
+	// Print out buffer for debug
+	for (int i = 0; i<MAX_N_ARCHIVED_POSITIONS;i ++)
+	{
+		archived_positions[i].longitude = current_pos.longitude;
+		archived_positions[i].latitude = current_pos.latitude;
+		archived_positions[i].altitude = current_pos.altitude;
+	}
+	
 	fill_subset_positions_buffer(subset_size);
 	printf("\n");
 	
