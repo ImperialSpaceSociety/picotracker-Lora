@@ -25,8 +25,8 @@
 /* ==================================================================== */
 
 /* #define and enum statements go here */
-#define SUBSET_SIZE 2U
-#define N_ARCHIVED_POSITIONS 5UL
+#define MAX_SUBSET_SIZE 100U
+#define MAX_N_ARCHIVED_POSITIONS 500UL
 
 #define LORAWAN_APP_DATA_BUFF_SIZE                           64
 #define LPP_APP_PORT 99
@@ -82,9 +82,13 @@ static uint8_t AppDataBuff[LORAWAN_APP_DATA_BUFF_SIZE];
 lora_AppData_t AppData={ AppDataBuff,  0 ,0 };
 
 
-time_pos_fix archived_positions[N_ARCHIVED_POSITIONS];
-time_pos_fix subset_positions[SUBSET_SIZE];
-int current_index = 3;
+time_pos_fix archived_positions[MAX_N_ARCHIVED_POSITIONS];
+time_pos_fix subset_positions[MAX_SUBSET_SIZE];
+
+
+uint16_t current_index = 3;
+uint16_t subset_size = 8;
+uint16_t n_archived_positions = 200;
 
 
 /* ==================================================================== */
@@ -119,10 +123,10 @@ uint8_t * prep_tx_str( void );
 #ifdef playback_testing
 void main()
 {
-	for (int i = 0; i < SUBSET_SIZE; i++) 
+	for (int i = 0; i < subset_size; i++) 
 	{
-		int rand_n = generate_random(0, N_ARCHIVED_POSITIONS);
-		int abs_index = mod((current_index - rand_n),N_ARCHIVED_POSITIONS);
+		int rand_n = generate_random(0, n_archived_positions);
+		int abs_index = mod((current_index - rand_n),n_archived_positions);
 		printf("abs index:%d\n",abs_index);
 	}
 	printf("\n");
