@@ -112,6 +112,7 @@ time_pos_fix *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
 int mod(int a, int b);
 uint8_t * prep_tx_str( void );
+void fill_subset_positions_buffer(uint16_t subset_size);
 
 
 /* ==================================================================== */
@@ -123,18 +124,31 @@ uint8_t * prep_tx_str( void );
 #ifdef playback_testing
 void main()
 {
-	for (int i = 0; i < subset_size; i++) 
-	{
-		int rand_n = generate_random(0, n_archived_positions);
-		int abs_index = mod((current_index - rand_n),n_archived_positions);
-		printf("abs index:%d\n",abs_index);
-	}
+
+	fill_subset_positions_buffer(subset_size);
 	printf("\n");
 	
 	prep_tx_str();
 	
 }
 #endif
+
+void fill_subset_positions_buffer(uint16_t subset_size)
+{
+	for (int i = 0; i < subset_size; i++)
+	{
+		int rand_n = generate_random(0, n_archived_positions);
+		/* Our archived positions have a certain length, which overwrites once it reaches the end.
+		 * Take this into account 
+		 */
+		int abs_index = mod((current_index - rand_n),n_archived_positions);
+		
+		/* Add the randomly selected position to the subset of positions */
+		subset_positions[i] = archived_positions[abs_index];
+		printf("abs index:%d\n",abs_index);
+
+	}
+}
 
 int mod(int a, int b)
 {
