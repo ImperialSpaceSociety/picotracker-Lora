@@ -1,9 +1,9 @@
-#---------------------------------------
+# ---------------------------------------
 #
 # Created: 30/09/2020
 # Author: Medad Newman
 #
-#---------------------------------------
+# ---------------------------------------
 
 import re
 from pathlib import Path
@@ -14,15 +14,13 @@ import pandas as pd
 
 line_selector = "\[(Sun|Mon|Tues|Wed|Thurs|Fri|Sat), (\d{2}) (Jan|Feb|Mar|Apr|May|June|July|Aug|Sep|Oct|Nov|Dec) (\d{4}) ([0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])\] INFO b'(.*)'"
 
-
 filename = "mqtt_log_data-1.txt"
 
 raw_data = Path(filename).read_text()
 
 lines = re.findall(line_selector, raw_data)
 
-
-#print(*lines, sep="\n")
+# print(*lines, sep="\n")
 
 timestamps = []
 for i in lines:
@@ -37,12 +35,11 @@ for i in lines:
     except KeyError:
         pass
 
-
-df = pd.DataFrame(timestamps, columns = ["datetime"])
+df = pd.DataFrame(timestamps, columns=["datetime"])
 df["datetime"] = pd.to_datetime(df['datetime'])
 diffs = df["datetime"].diff().dt.total_seconds()
 
-#diffs = diffs[diffs[""] > 0]
+# diffs = diffs[diffs[""] > 0]
 
-plt.scatter(x = df,y=diffs)
+plt.scatter(x=df, y=diffs)
 plt.show()
