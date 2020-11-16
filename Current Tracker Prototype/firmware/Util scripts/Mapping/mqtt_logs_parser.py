@@ -23,6 +23,7 @@ lines = re.findall(line_selector, raw_data)
 # print(*lines, sep="\n")
 
 timestamps = []
+mask = []
 for i in lines:
     day, date, month, year, hour, minute, second, data = i
     d = json.loads(data)
@@ -32,6 +33,8 @@ for i in lines:
                 a = d["is_retry"]
             except:
                 timestamps.append(d["metadata"]["time"][:-4])
+
+                mask.append("blue" if d["payload_raw"] else "red")
     except KeyError:
         pass
 
@@ -41,5 +44,8 @@ diffs = df["datetime"].diff().dt.total_seconds()
 
 # diffs = diffs[diffs[""] > 0]
 
-plt.scatter(x=df, y=diffs)
+plt.scatter(x=df, y=diffs,c=mask)
+plt.xlabel("datetime")
+plt.ylabel("time gap from previous transmission(seconds)")
+plt.title("Elapsed time between previous and current transmission plotted against time. Red is an empty frame, blue is a data frame")
 plt.show()
