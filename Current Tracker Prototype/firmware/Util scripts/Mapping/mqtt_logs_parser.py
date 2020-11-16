@@ -30,16 +30,17 @@ for i in lines:
     d = json.loads(data)
     try:
         if d["dev_id"] == "icspace22":
-            ##print(d["metadata"]["time"].replace("Z",""))
-            ##timestamps.append(datetime.strptime(d["metadata"]["time"][:-4], '%Y-%m-%dT%H:%M:%S.%f'))
-            timestamps.append(d["metadata"]["time"][:-4])
+            try:
+                a = d["is_retry"]
+            except:
+                timestamps.append(d["metadata"]["time"][:-4])
     except KeyError:
         pass
 
 
 df = pd.DataFrame(timestamps, columns = ["datetime"])
-df = pd.to_datetime(df['datetime'])
-diffs = df.diff().dt.total_seconds()
+df["datetime"] = pd.to_datetime(df['datetime'])
+diffs = df["datetime"].diff().dt.total_seconds()
 
 #diffs = diffs[diffs[""] > 0]
 
