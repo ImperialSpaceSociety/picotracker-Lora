@@ -483,6 +483,7 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
       /* Initialise LoRa to Geofence region */
 			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, current_loramac_region );
 
+
 			// Workaround to use only 8 channel gateways over US915 and AU915 regions.
 			// Code source: https://github.com/Lora-net/LoRaMac-node/issues/742#issuecomment-492231231
 			// confirm that US915 and AU915 use 2nd subband on The Things Network: https://thethingsstack.io/reference/frequency-plans/
