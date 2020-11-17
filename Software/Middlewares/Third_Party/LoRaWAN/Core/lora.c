@@ -499,15 +499,23 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
 					LoRaMacMibSetRequestConfirm( &mibReq );
 					
 					
-					// default is TX_POWER_0 which is max power. But it is too much power that it is causing the 
-					// tracker to brownout. Reducing TX_POWER_0 to TX_POWER_3. Yet to prove if this is optimal.
-					// Too low power, and it will not be received; too high power and it will brownout.
+					/* Default is TX_POWER_0 which is max power. But it is too much power in US915 that it is causing the 
+					 * tracker to brownout. I am reducing TX_POWER_0 to TX_POWER_8. 
+					 * In EU868, TX_POWER_0 sets phyTxPower to 13(dbm?) which corresponds to 20mW(sounds about right)
+					 * In US915, TX_POWER_0 sets phyTxPower to 26(dbm?) which corresponds to 398mW. It uses the PA boost.
+					 * PA_boost is turned on when phyTxPower > 14.
+					 * I will bring down US915 power setting to TX_POWER_8 which sets phyTxPower to 14(dbm?) which
+					 * corresponds to 25mW. It will not use the less efficient PA boost. This is slightly more powerful
+					 * than over EU868 but I think the solar cells should be able to handle that.
+					 * Too low TX power, and it will not be received; too high power and it will brownout.
+					 */
+					
 					mibReq.Type = MIB_CHANNELS_DEFAULT_TX_POWER;
-					mibReq.Param.ChannelsDefaultTxPower = TX_POWER_7;
+					mibReq.Param.ChannelsDefaultTxPower = TX_POWER_8;
 					LoRaMacMibSetRequestConfirm( &mibReq );
 					
 					mibReq.Type = MIB_CHANNELS_TX_POWER;
-					mibReq.Param.ChannelsTxPower = TX_POWER_7;
+					mibReq.Param.ChannelsTxPower = TX_POWER_8;
 					LoRaMacMibSetRequestConfirm( &mibReq );
 
 			}
