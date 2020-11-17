@@ -502,8 +502,8 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
 					// default is TX_POWER_0 which is max power. But it is too much power that it is causing the 
 					// tracker to brownout. Reducing TX_POWER_0 to TX_POWER_3. Yet to prove if this is optimal.
 					// Too low power, and it will not be received; too high power and it will brownout.
-					mibReq.Param.ChannelsDefaultTxPower = TX_POWER_3;
-					mibReq.Param.ChannelsTxPower = TX_POWER_3;
+					mibReq.Param.ChannelsDefaultTxPower = TX_POWER_7;
+					mibReq.Param.ChannelsTxPower = TX_POWER_7;
 					LoRaMacMibSetRequestConfirm( &mibReq );
 
 			}
