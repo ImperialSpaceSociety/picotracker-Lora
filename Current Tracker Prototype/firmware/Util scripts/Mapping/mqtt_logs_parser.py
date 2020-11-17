@@ -1,6 +1,6 @@
 # ---------------------------------------
 #
-# Created: 30/09/2020
+# Created: 17/11/2020
 # Author: Medad Newman
 #
 # This program plots the elapsed time between tranmissions, and colours the ones
