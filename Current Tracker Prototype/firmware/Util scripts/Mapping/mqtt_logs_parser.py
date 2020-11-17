@@ -28,10 +28,9 @@ for i in lines:
     day, date, month, year, hour, minute, second, data = i
     d = json.loads(data)
     try:
-        if d["dev_id"] == "icspace22":
-            if not "is_retry" in d:
-                timestamps.append(d["metadata"]["time"][:-4])
-                colour_selection.append("blue" if d["payload_raw"] else "red")
+        if d["dev_id"] == "icspace22" and not "is_retry" in d:
+            timestamps.append(d["metadata"]["time"][:-4])
+            colour_selection.append("blue" if d["payload_raw"] else "red")
     except KeyError:
         pass
 
