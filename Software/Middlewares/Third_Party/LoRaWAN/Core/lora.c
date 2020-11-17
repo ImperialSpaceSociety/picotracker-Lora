@@ -477,8 +477,7 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
         LoRaMacCallbacks.GetTemperatureLevel = LoRaMainCallbacks->BoardGetTemperatureLevel;
         LoRaMacCallbacks.MacProcessNotify = LoRaMainCallbacks->MacProcessNotify;
 				
-// MEDAD: I think we can call these intialisation functions when we change regions.
-// because this init function sets up the loramac context(region, restrictions etc)
+			// This init function sets up the loramac context(region, restrictions etc)
 				
       /* Initialise LoRa to Geofence region */
 			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, current_loramac_region );
