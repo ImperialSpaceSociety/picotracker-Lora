@@ -470,7 +470,6 @@ Current Tracker Prototype/test_firmware/Keil tests/Testing GPS and Sensor/ICSS_T
 
 # cmake gitignore
 
-
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
