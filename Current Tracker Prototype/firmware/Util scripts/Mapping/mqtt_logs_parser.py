@@ -29,11 +29,8 @@ for i in lines:
     d = json.loads(data)
     try:
         if d["dev_id"] == "icspace22":
-            try:
-                a = d["is_retry"]
-            except:
+            if not "is_retry" in d:
                 timestamps.append(d["metadata"]["time"][:-4])
-
                 colour_selection.append("blue" if d["payload_raw"] else "red")
     except KeyError:
         pass
