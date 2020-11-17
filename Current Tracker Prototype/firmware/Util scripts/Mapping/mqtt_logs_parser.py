@@ -3,6 +3,9 @@
 # Created: 30/09/2020
 # Author: Medad Newman
 #
+# This program plots the elapsed time between tranmissions, and colours the ones
+# with empty packet in red and packets with data in blue. This allows me to tell
+# that the tracker is resetting a lot.
 # ---------------------------------------
 
 import re
