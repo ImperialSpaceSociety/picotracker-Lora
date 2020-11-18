@@ -477,8 +477,7 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
         LoRaMacCallbacks.GetTemperatureLevel = LoRaMainCallbacks->BoardGetTemperatureLevel;
         LoRaMacCallbacks.MacProcessNotify = LoRaMainCallbacks->MacProcessNotify;
 				
-// MEDAD: I think we can call these intialisation functions when we change regions.
-// because this init function sets up the loramac context(region, restrictions etc)
+			// This init function sets up the loramac context(region, restrictions etc)
 				
       /* Initialise LoRa to Geofence region */
 			LoRaMacInitialization( &LoRaMacPrimitives, &LoRaMacCallbacks, current_loramac_region );
@@ -499,6 +498,27 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
 					mibReq.Type = MIB_CHANNELS_DEFAULT_MASK;
 					mibReq.Param.ChannelsDefaultMask = channelMask;
 					LoRaMacMibSetRequestConfirm( &mibReq );
+					
+					
+					/* Default is TX_POWER_0 which is max power. But it is too much power in US915 that it is causing the 
+					 * tracker to brownout. I am reducing TX_POWER_0 to TX_POWER_8. 
+					 * In EU868, TX_POWER_0 sets phyTxPower to 13(dbm?) which corresponds to 20mW(sounds about right)
+					 * In US915, TX_POWER_0 sets phyTxPower to 26(dbm?) which corresponds to 398mW. It uses the PA boost.
+					 * PA_boost is turned on when phyTxPower > 14.
+					 * I will bring down US915 power setting to TX_POWER_8 which sets phyTxPower to 14(dbm?) which
+					 * corresponds to 25mW. It will not use the less efficient PA boost. This is slightly more powerful
+					 * than over EU868 but I think the solar cells should be able to handle that.
+					 * Too low TX power, and it will not be received; too high power and it will brownout.
+					 */
+					
+					mibReq.Type = MIB_CHANNELS_DEFAULT_TX_POWER;
+					mibReq.Param.ChannelsDefaultTxPower = TX_POWER_8;
+					LoRaMacMibSetRequestConfirm( &mibReq );
+					
+					mibReq.Type = MIB_CHANNELS_TX_POWER;
+					mibReq.Param.ChannelsTxPower = TX_POWER_8;
+					LoRaMacMibSetRequestConfirm( &mibReq );
+
 			}
       
       mibReq.Type = MIB_ADR;
