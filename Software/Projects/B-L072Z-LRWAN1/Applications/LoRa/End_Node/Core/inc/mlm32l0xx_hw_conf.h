@@ -131,6 +131,7 @@ Maintainer: Miguel Luis and Gregory Cristian
 #define USARTx_FORCE_RESET()             __USART2_FORCE_RESET()
 #define USARTx_RELEASE_RESET()           __USART2_RELEASE_RESET()
 
+
 #define USARTx_TX_PIN                  GPIO_PIN_2
 #define USARTx_TX_GPIO_PORT            GPIOA
 #define USARTx_TX_AF                   GPIO_AF4_USART2
@@ -165,6 +166,8 @@ Maintainer: Miguel Luis and Gregory Cristian
 
 #define USARTx_FORCE_RESET()             __USART1_FORCE_RESET()
 #define USARTx_RELEASE_RESET()           __USART1_RELEASE_RESET()
+
+
 #define USARTx_TX_PIN                  GPIO_PIN_9
 #define USARTx_TX_GPIO_PORT            GPIOA  
 #define USARTx_TX_AF                   GPIO_AF4_USART1
