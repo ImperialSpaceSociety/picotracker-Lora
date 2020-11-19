@@ -211,14 +211,14 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16
 	
 	/* current position. Use the most significant numbers. Truncate to 16 bits.*/
 	/* latitude(16 bits) -90 to 90*/
-	AppData.Buff[start_point + 0] = (latitude >> 8) & 0xff;
-	AppData.Buff[start_point + 1] = (latitude >> 0) & 0xff;
+	AppData.Buff[start_point + 0] = (latitude >> 0) & 0xff;
+	AppData.Buff[start_point + 1] = (latitude >> 8) & 0xff;
 	/* longitude(16 bits) -180 to 180 */
-	AppData.Buff[start_point + 2] = (longitude >> 8) & 0xff;
-	AppData.Buff[start_point + 3] = (longitude >> 0) & 0xff;
+	AppData.Buff[start_point + 2] = (longitude >> 0) & 0xff;
+	AppData.Buff[start_point + 3] = (longitude >> 8) & 0xff;
 	/* altitude(16 bits) */
-	AppData.Buff[start_point + 4] = (altitude >> 8) & 0xff;
-	AppData.Buff[start_point + 5] = (altitude >> 0) & 0xff;
+	AppData.Buff[start_point + 4] = (altitude >> 0) & 0xff;
+	AppData.Buff[start_point + 5] = (altitude >> 8) & 0xff;
 		  
 	
 }
