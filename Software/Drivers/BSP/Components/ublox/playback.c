@@ -247,7 +247,7 @@ uint8_t * prep_tx_str()
 	  AppData.Buff[0] = ((cayenne_no_load_voltage - 18) & 0b00011111) << 3 | ((cayenne_load_voltage - 18) & 0b00011100) >> 2;
 	  
 	  /* load voltage(remaining 2 bits) and temperature(6 bits)*/
-	  AppData.Buff[1] = ((cayenne_load_voltage - 18) & 0b00000011) << 6 | ((temperature + 50)/2) & 0b00111111;
+	  AppData.Buff[1] = ((cayenne_load_voltage - 18) & 0b00000011) << 6 | temperature>>2 & 0b00111111;
 	  
 	  /* pressure(7 bits) and data received flag(1 bit)*/
 	  AppData.Buff[2] = ((pressure/10) & 0b01111111) << 1 | (data_received & 0b00000001);
