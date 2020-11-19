@@ -277,7 +277,7 @@ uint8_t * prep_tx_str()
 	  // Print out buffer for debug
 	  for (int i = 0; i<LORAWAN_APP_DATA_BUFF_SIZE;i ++)
 	  {
-		  printf("%x ",AppData.Buff[i]);
+		  printf("%02x",AppData.Buff[i]);
 	  }
 		
 		return AppData.Buff;
