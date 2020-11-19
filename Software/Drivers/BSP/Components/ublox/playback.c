@@ -62,7 +62,7 @@ time_pos_fix current_pos = {.hours_since_epoch = 200, .latitude = 0x17CA/*399121
 
 uint8_t cayenne_no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
 uint8_t cayenne_load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
-int temperature = -23;                 // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
+int8_t temperature = -23;                 // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
 uint16_t pressure = 400;               // 130 - 1030 (min 128 values, 10mbar per increment)(7 bits)
 uint8_t data_received = 1;             // 0 or 1. indicates that message was received(1 bit)
 uint8_t sats = 12;                     // 0 - 32. Number of sats. (4 bits)
