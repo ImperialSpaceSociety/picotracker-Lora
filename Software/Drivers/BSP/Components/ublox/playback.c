@@ -243,16 +243,16 @@ uint8_t * prep_tx_str()
 {
 	  AppData.Port = LPP_APP_PORT;
 	  
-	  /* no load voltage(5 bits) and load voltage(3 bits) */
+	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
 	  AppData.Buff[0] = ((cayenne_no_load_voltage - 18) & 0b00011111) << 3 | ((cayenne_load_voltage - 18) & 0b00011100) >> 2;
 	  
-	  /* load voltage(remaining 2 bits) and temperature(6 bits)*/
+	  /* byte1: load voltage(remaining 2 bits) and temperature(6 bits)*/
 	  AppData.Buff[1] = ((cayenne_load_voltage - 18) & 0b00000011) << 6 | temperature>>2 & 0b00111111;
 	  
-	  /* pressure(7 bits) and data received flag(1 bit)*/
+	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
 	  AppData.Buff[2] = ((pressure/10) & 0b01111111) << 1 | (data_received & 0b00000001);
 	  
-	  /* Sats(5 bits) and reset count(3 bits)*/
+	  /* byte3: Sats(5 bits) and reset count(3 bits)*/
 	  AppData.Buff[3] = ((sats) & 0b00011111) << 3 | ((reset_count) & 0b00000111);
 	  
 	  
