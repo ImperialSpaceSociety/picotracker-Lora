@@ -374,8 +374,6 @@ static void Send( void* context )
 	
 
 	
-	/* Evaluate battery level */
-  uint8_t cchannel=0;
 
 	
 	uint32_t i = 0;
