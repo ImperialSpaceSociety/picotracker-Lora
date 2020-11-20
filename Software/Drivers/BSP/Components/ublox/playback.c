@@ -291,11 +291,23 @@ void prepare_tx_buffer(void)
 }
 
 
+/**
+ * \brief 
+ * 
+ * 
+ * \return uint8_t *
+ */
 uint8_t *get_tx_buffer()
 {
 	return tx_str_buffer;
 }
 
+/**
+ * \brief 
+ * 
+ * 
+ * \return uint16_t
+ */
 uint16_t  get_tx_buffer_len()
 {
 	return tx_str_buffer_len;
