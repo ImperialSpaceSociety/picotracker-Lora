@@ -482,3 +482,4 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 Software/Drivers/BSP/Components/ublox/playback_test.exe
+Software/playback_test.exe
