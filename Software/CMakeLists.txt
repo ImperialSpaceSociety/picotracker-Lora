@@ -4,4 +4,4 @@ cmake_minimum_required(VERSION 3.6)
 project(playback_test)
 
 # add the executable
-add_executable(playback_test playback.c)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Drivers)
