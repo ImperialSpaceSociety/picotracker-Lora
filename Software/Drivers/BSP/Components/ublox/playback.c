@@ -229,8 +229,8 @@ void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffe
 	
 	fill_tx_buffer_with_location(start_point, buffer, latitude, longitude, altitude );
 	
-	AppData.Buff[start_point + POSITION_BYTES_LEN + 0] = (hours_since_epoch >> 8) & 0xff;
-	AppData.Buff[start_point + POSITION_BYTES_LEN + 1] = (hours_since_epoch >> 0) & 0xff;
+	AppData.Buff[start_point + POSITION_BYTES_LEN + 0] = (hours_since_epoch >> 0) & 0xff;
+	AppData.Buff[start_point + POSITION_BYTES_LEN + 1] = (hours_since_epoch >> 8) & 0xff;
 }
 
 /**
