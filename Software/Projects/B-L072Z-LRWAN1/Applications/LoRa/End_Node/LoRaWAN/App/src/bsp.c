@@ -160,10 +160,10 @@ void save_current_position_info_to_EEPROM( void )
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	
 	/* save Long, Lat, Altitude, minutes since epoch to EEPROM */
-	uint16_t truncated_altitude = (uint16_t)(gps_info.GPSaltitude >> 2) & 0xffff;
-	uint16_t truncated_latitude = (uint16_t)(gps_info.GPS_UBX_latitude >> 4) & 0xffff;
-	uint16_t truncated_longitude = (uint16_t)(gps_info.GPS_UBX_longitude >> 4) & 0xffff;
-	uint32_t truncated_time_since_epoch = (uint32_t)(gps_info.minutes_since_epoch) & 0xffffff;
+	uint16_t truncated_altitude = (uint16_t)(gps_info.GPSaltitude >> 2) & 0xffffUL;
+	uint16_t truncated_latitude = (uint16_t)(gps_info.GPS_UBX_latitude >> 4) & 0xffffUL;
+	uint16_t truncated_longitude = (uint16_t)(gps_info.GPS_UBX_longitude >> 4) & 0xffffUL;
+	uint32_t truncated_time_since_epoch = (uint32_t)(gps_info.minutes_since_epoch) & 0xffffffUL;
 
 	
 	EepromMcuWriteBuffer(current_EEPROM_index + 0,(void*)&truncated_altitude,2);
