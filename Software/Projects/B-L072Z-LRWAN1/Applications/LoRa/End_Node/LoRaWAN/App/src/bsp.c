@@ -52,6 +52,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint16_t current_EEPROM_index = 0;
+uint16_t n_playback_positions_saved = 0;
 
 
 
@@ -139,6 +140,10 @@ void  BSP_sensor_Init( void  )
 	 //GPS SETUP
 	 setup_GPS();
 	#endif
+	
+	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
+	EepromMcuReadBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
+	init_playback(current_EEPROM_index,n_playback_positions_saved);
 
 }
 
@@ -168,9 +173,11 @@ void save_current_position_info_to_EEPROM( void )
 
 	
 	/* Now update the index in EEPROM */
-	current_EEPROM_index+=NVM_GPS_EEPROM_PACKET_SIZE;
+	current_EEPROM_index+=PLAYBACK_EEPROM_PACKET_SIZE;
+	n_playback_positions_saved+=1U;
 	
-	EepromMcuWriteBuffer(NVM_GPS_EEPROM_INDEX_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
+	EepromMcuWriteBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
+	EepromMcuWriteBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index)); // TODO: max it out at 
 
 	
 }
