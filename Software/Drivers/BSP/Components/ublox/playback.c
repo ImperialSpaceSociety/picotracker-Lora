@@ -244,17 +244,20 @@ uint8_t * prep_tx_str()
 	  AppData.Port = LPP_APP_PORT;
 	  
 	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
-	  AppData.Buff[0] = ((cayenne_no_load_voltage - 18) & 0b00011111) << 3 | ((cayenne_load_voltage - 18) & 0b00011100) >> 2;
+	  AppData.Buff[0] |= ((cayenne_no_load_voltage - 18) & 0x1F) << 3;
+		AppData.Buff[0] |= ((cayenne_load_voltage - 18) & 0x1C) >> 2;
 	  
 	  /* byte1: load voltage(remaining 2 bits) and temperature(6 bits)*/
-	  AppData.Buff[1] = ((cayenne_load_voltage - 18) & 0b00000011) << 6 | temperature>>2 & 0b00111111;
-	  
+	  AppData.Buff[1] |= ((cayenne_load_voltage - 18) & 0x03) << 6;
+	  AppData.Buff[1] |= (temperature >> 2 & 0x3F);
 	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
-	  AppData.Buff[2] = ((pressure/10) & 0b01111111) << 1 | (data_received & 0b00000001);
+	  AppData.Buff[2] |= ((pressure/10) & 0x7F) << 1;
+    AppData.Buff[2] |=	(data_received & 0x01);
 	  
 	  /* byte3: Sats(5 bits) and reset count(3 bits)*/
-	  AppData.Buff[3] = ((sats) & 0b00011111) << 3 | ((reset_count) & 0b00000111);
-	  
+	  AppData.Buff[3] |= (sats & 0x1F) << 3;
+    AppData.Buff[3] |=	(reset_count & 0x07);
+
 	  
 	  fill_tx_buffer_with_location(4, AppData.Buff, current_pos.latitude,current_pos.longitude,current_pos.altitude);
 
