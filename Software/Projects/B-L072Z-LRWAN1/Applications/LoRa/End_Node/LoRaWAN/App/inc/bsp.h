@@ -39,7 +39,7 @@ Maintainer: Miguel Luis and Gregory Cristian
  extern "C" {
 #endif
 /* Includes ------------------------------------------------------------------*/
-#include "hw.h"
+#include <stdint.h>
 
 /* Exported types ------------------------------------------------------------*/
 
