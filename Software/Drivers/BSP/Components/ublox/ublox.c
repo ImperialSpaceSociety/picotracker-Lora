@@ -484,3 +484,14 @@ static gps_status_t display_fix_found()
 }
 
 
+
+/**
+  * @brief Calculate minutes since epoch. Based on GPS time.
+  * @param none
+  * @retval none
+  */
+uint32_t minutes_since_epoch()
+{
+
+}
+
