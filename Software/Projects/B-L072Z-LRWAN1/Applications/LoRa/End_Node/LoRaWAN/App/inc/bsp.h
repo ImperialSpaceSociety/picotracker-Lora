@@ -44,14 +44,17 @@ Maintainer: Miguel Luis and Gregory Cristian
 /* Exported types ------------------------------------------------------------*/
 
 typedef struct{
-  double pressure;    /* in mbar */  
-  double temperature; /* in °C   */
-  double humidity;    /* in %    */
-  float latitude;
-  float longitude ;
-  uint32_t  altitudeGps;       /* in m */
-	uint16_t no_load_solar_voltage;
-	uint16_t load_solar_voltage;
+  uint16_t pressure;    /* in mbar */  
+  int8_t temperature; /* in °C   */
+  int8_t humidity;    /* in %    */
+  uint16_t latitude;
+  uint16_t longitude ;
+  uint16_t altitudeGps;       /* in m */
+  uint8_t no_load_solar_voltage;
+  uint8_t load_solar_voltage;
+  uint8_t sats;                 /* satellites in fix */
+  uint16_t reset_count;          /* Count number of resets */
+  uint8_t data_received;
   /**more may be added*/
 } sensor_t;
 
