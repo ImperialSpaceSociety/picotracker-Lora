@@ -121,7 +121,9 @@ int mod(int a, int b);
 uint8_t * prep_tx_str( void );
 void fill_subset_positions_buffer(uint16_t subset_size);
 void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude );
-void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint16_t hours_since_epoch );
+void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer,
+											uint16_t latitude, uint16_t longitude,
+											uint16_t altitude, uint16_t hours_since_epoch );
 
 
 
