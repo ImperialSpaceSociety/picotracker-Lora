@@ -73,8 +73,13 @@ typedef struct{
 #define LORAMAC_REGION_EEPROM_ADDR                 (4)
 #define LORAMAC_REGION_EEPROM_LEN                  (1)
 
+#define NVM_GPS_EEPROM_PACKET_SIZE                 (9)
 #define NVM_GPS_EEPROM_ADDR_START                  (5)
-#define NVM_GPS_EEPROM_ADDR_END                    
+#define NVM_GPS_N_PACKETS                          (650)
+
+/* WARNING! Ensure this value is less than DATA_EEPROM_BANK2_END. Or else, it will overflow EEPROM */
+#define NVM_GPS_EEPROM_ADDR_END                    (NVM_GPS_EEPROM_ADDR_START - 1 + NVM_GPS_N_PACKETS * NVM_GPS_EEPROM_PACKET_SIZE)
+																												
 
 
 /* Exported constants --------------------------------------------------------*/
