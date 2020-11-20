@@ -39,9 +39,10 @@ extern "C"
 
 typedef struct
 {
-	uint16_t n_positions_in_eeprom;
-	uint16_t current_index_in_eeprom;
-
+	uint16_t n_positions_in_eeprom;            /* Number of positions held in the EEPROM */
+	uint16_t n_positions_to_send;              /* Number of positions to send down in single transmission*/
+	uint16_t n_positions_offset;               /* Send positions from n_positions_offset from current position. */
+	uint16_t n_positions_to_select_from;       /* Define size of pool of positions to select from */
 }playback_key_info_t;
 
 
@@ -56,7 +57,7 @@ void prepare_tx_buffer( void );
 
 uint8_t * get_tx_buffer( void );
 uint16_t get_tx_buffer_len( void );
-void  init_playback(uint16_t current_index_in_eeprom, uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions );
+void  init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions );
 /* ==================================================================== */
 /* ======================= public functions =========================== */
 /* ==================================================================== */

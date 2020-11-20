@@ -73,11 +73,9 @@ time_pos_fix_t archived_positions[MAX_N_ARCHIVED_POSITIONS];
 time_pos_fix_t *subset_positions_ptr;
 
 
-uint16_t current_index = 3;             /* As we fill the archived positions buffer, 
-                                         * we keep tracker of our current index in this buffer
-									     */
-uint16_t subset_size = 8;               /* Number of positions to send down */
-uint16_t n_archived_positions = 200;    /* Number of positions held in the EEPROM */
+
+uint16_t subset_size = 8;               
+uint16_t n_archived_positions = 200;   
 
 
 /* ==================================================================== */
@@ -87,7 +85,13 @@ uint16_t n_archived_positions = 200;    /* Number of positions held in the EEPRO
 /* Definition of private datatypes go here */
 
 
-playback_key_info_t current_playback_key_info;
+playback_key_info_t current_playback_key_info = 
+{
+	.n_positions_in_eeprom = 0,            /* Number of positions held in the EEPROM */
+	.n_positions_to_send = 8,              /* Number of positions to send down in single transmission*/
+	.n_positions_offset = 5,               /* Send positions from n_positions_offset from current position. */
+	.n_positions_to_select_from = 300      /* Define size of pool of positions to select from */
+};
 
 
 /* ==================================================================== */
@@ -136,28 +140,7 @@ void main()
 }
 #endif
 
-/**
- * \brief Fill the subset_positions[] buffer with a randomly selected subset of archived positions.
- * 
- * 
- * \return void
- */
-void fill_subset_positions_buffer(uint16_t subset_size)
-{
-	for (int i = 0; i < subset_size; i++)
-	{
-		int rand_n = generate_random(0, n_archived_positions);
-		/* Our archived positions have a certain length, which overwrites once it reaches the end.
-		 * Take this into account 
-		 */
-		int abs_index = mod((current_index - rand_n),n_archived_positions);
-		
-		/* Add the randomly selected position to the subset of positions */
-		subset_positions_ptr[i] = archived_positions[abs_index];
-		printf("abs index:%d\n",abs_index);
 
-	}
-}
 
 
 
@@ -312,9 +295,8 @@ uint16_t  get_tx_buffer_len()
 	return tx_str_buffer_len;
 }
 
-void  init_playback(uint16_t current_index_in_eeprom, uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions )
+void  init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions )
 {
-	current_playback_key_info.current_index_in_eeprom = current_index_in_eeprom;
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
 	subset_positions_ptr = subset_positions;
 }
