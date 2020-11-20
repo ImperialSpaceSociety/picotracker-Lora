@@ -88,7 +88,7 @@ uint16_t n_archived_positions = 200;    /* Number of positions held in the EEPRO
 /* Definition of private datatypes go here */
 
 
-
+playback_key_info_t current_playback_key_info;
 
 
 /* ==================================================================== */
@@ -311,5 +311,11 @@ uint8_t *get_tx_buffer()
 uint16_t  get_tx_buffer_len()
 {
 	return tx_str_buffer_len;
+}
+
+void  init_playback(uint16_t current_index_in_eeprom, uint16_t n_positions_in_eeprom )
+{
+	current_playback_key_info.current_index_in_eeprom = current_index_in_eeprom;
+	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
 }
 

@@ -33,6 +33,12 @@ extern "C"
 /* ==================================================================== */
 
 /* #define and enum statements go here */
+typedef struct
+{
+	uint16_t n_positions_in_eeprom;
+	uint16_t current_index_in_eeprom;
+
+}playback_key_info_t;
 
 
 
@@ -46,6 +52,7 @@ void prepare_tx_buffer( void );
 
 uint8_t * get_tx_buffer( void );
 uint16_t get_tx_buffer_len( void );
+void init_playback(uint16_t current_index_in_eeprom, uint16_t n_positions_in_eeprom );
 /* ==================================================================== */
 /* ======================= public functions =========================== */
 /* ==================================================================== */
