@@ -28,6 +28,7 @@
 #include "ublox.h"
 #include "geofence.h"
 #include "main.h"
+#include "playback.h"
 
 #include "stm32l0xx_hal_flash.h"
 #include "stm32l0xx_hal_flash_ex.h"
@@ -352,17 +353,17 @@ static void Send( void* context )
 
 	
 
-	
-	uint32_t i = 0;
-  
+	  
   AppData.Port = LPP_APP_PORT;
   
-	//AppData.Buff[i++] = cchannel++;
+	prepare_tx_buffer();
+	
+	memcpy(AppData.Buff, get_tx_buffer(), LORAWAN_APP_DATA_BUFF_SIZE);
 
     
 
+  AppData.BuffSize = get_tx_buffer_len();
 
-  AppData.BuffSize = i;
 	
 	#if RADIO_ENABLED
 	LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
