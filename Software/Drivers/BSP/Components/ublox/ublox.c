@@ -17,12 +17,11 @@
 
 /* Inclusion of system and local header files goes here */
 
-#include <stdlib.h>
 #include "ublox.h"
+#include <stdlib.h>
 #include <stdio.h>
 #include "stm32l0xx_hal.h"
 #include "main.h"
-#include <string.h>
 #include "hw.h"
 #include "bsp.h"
 
