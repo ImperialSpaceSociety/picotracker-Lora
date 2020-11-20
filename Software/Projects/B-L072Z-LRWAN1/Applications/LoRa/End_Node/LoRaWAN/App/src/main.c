@@ -56,7 +56,7 @@
 #define LPP_APP_PORT 99
 
 
-#define LORAMAC_REGION_EEPROM_ADDR 15
+
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 
 

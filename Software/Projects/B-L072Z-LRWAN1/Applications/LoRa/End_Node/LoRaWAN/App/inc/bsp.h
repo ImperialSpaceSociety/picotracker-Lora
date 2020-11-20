@@ -65,14 +65,17 @@ typedef struct{
 
 
 // EEPROM related defines
-#define EEPROM_ADDR_START                       0x08080000       /* Start @ of STM32 internal EEPROM area */
 
-#define FRAME_COUNTER_EEPROM_ID                    (1)
-#define FRAME_COUNTER_EEPROM_OFFSET                (0)
-#define FRAME_COUNTER_EEPROM_LEN                   (8)
-#define FRAME_COUNTER_EEPROM_ADDRESS               (uint32_t)(EEPROM_ADDR_START + FRAME_COUNTER_EEPROM_OFFSET)
 
-   
+#define FRAME_COUNTER_EEPROM_ADDRESS               (0)
+#define FRAME_COUNTER_EEPROM_LEN                   (4)
+
+#define LORAMAC_REGION_EEPROM_ADDR                 (4)
+#define LORAMAC_REGION_EEPROM_LEN                  (1)
+
+#define NVM_GPS_EEPROM_ADDR_START                  (5)
+#define NVM_GPS_EEPROM_ADDR_END                    
+
 
 /* Exported constants --------------------------------------------------------*/
 /* External variables --------------------------------------------------------*/

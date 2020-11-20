@@ -161,41 +161,6 @@ uint16_t BSP_GetSolarLevel16( void )
   return batteryLevel;
 }
 
-/** @brief Write in STM32 internal EEPROM 
-  * @param dest_addr EEPROM address (range 0x08080000 - 0x080817FF)
-  * @param data uint32_t data
-  * @retval none
-  */
-void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data)
-{
-	#if 1
-  HAL_FLASH_Unlock();
-  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR );
-  
-
-  HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, dest_addr, data);
-  
-  HAL_FLASH_Lock();
-	#endif
-	
-}
-
-/**
-  * @brief Check Frame Counter value saved in EEPROM
-  * @param none
-  * @retval uint8_t Battery charging status
-  */
-uint8_t EepromFrameCounterValidation(void)
-{
-  uint8_t retval = 0;
-  /* DevEui validation */
-  if((*(uint64_t*)FRAME_COUNTER_EEPROM_ADDRESS) == 0)
-  {
-    retval |= FRAME_COUNTER_EEPROM_ID;
-  }
-  return retval;
-}
-
 
 /**
   * @brief  Load Frame counter from STM32 internal EEPROM
@@ -205,12 +170,8 @@ uint8_t EepromFrameCounterValidation(void)
 void LoadFrameCounter(uint32_t* fcnt)
 {
 #if SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
-  
-  if(EepromFrameCounterValidation() != 0)
-  {
-    return;
-  }
-  memcpy(fcnt, (void*)FRAME_COUNTER_EEPROM_ADDRESS, FRAME_COUNTER_EEPROM_LEN);
+
+	EepromMcuReadBuffer(FRAME_COUNTER_EEPROM_ADDRESS,(void*)fcnt,FRAME_COUNTER_EEPROM_LEN);
 
 #endif //SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
 }
