@@ -60,8 +60,8 @@ typedef struct
 /* Dummy values for testing */
 time_pos_fix current_pos = {.hours_since_epoch = 0x00C8, .latitude = 0x17CA/*399121314 == 399121314*/, .longitude = 0xD312/*3541187191 == -753780105 */, .altitude = 0x00F2/*0x0000F221 >>2 */};
 
-uint8_t cayenne_no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
-uint8_t cayenne_load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
+uint8_t no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
+uint8_t load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
 int8_t temperature = -23;                 // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
 uint16_t pressure = 400;               // 130 - 1030 (min 128 values, 10mbar per increment)(7 bits)
 uint8_t data_received = 1;             // 0 or 1. indicates that message was received(1 bit)
@@ -268,8 +268,8 @@ uint8_t * prep_tx_str()
 	  AppData.Port = LPP_APP_PORT;
 	  
 	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
-	  AppData.Buff[0] |= ((cayenne_no_load_voltage - 18) & 0x1F) << 3;
-	  AppData.Buff[0] |= ((cayenne_load_voltage - 18) & 0x1C) >> 2;
+	  AppData.Buff[0] |= ((no_load_voltage - 18) & 0x1F) << 3;
+	  AppData.Buff[0] |= ((load_voltage - 18) & 0x1C) >> 2;
 	  
 	  /* byte1: load voltage(remaining 2 bits) and temperature(6 bits)*/
 	  AppData.Buff[1] |= ((cayenne_load_voltage - 18) & 0x03) << 6;
