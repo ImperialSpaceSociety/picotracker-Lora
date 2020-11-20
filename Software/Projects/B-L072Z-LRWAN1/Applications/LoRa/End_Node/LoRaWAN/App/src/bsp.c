@@ -167,7 +167,7 @@ void save_current_position_info_to_EEPROM( void )
 	uint32_t truncated_time_since_epoch = (uint32_t)(gps_info.minutes_since_epoch) & 0xffffffUL;
 
 	
-	EepromMcuWriteBuffer(current_EEPROM_index + 0,(void*)&truncated_altitude,2);
+	EepromMcuWriteBuffer(current_EEPROM_index + 0,(void*)&truncated_altitude,2); // todo: don't use numbers here. use #define
 	EepromMcuWriteBuffer(current_EEPROM_index + 2,(void*)&truncated_latitude,2);
 	EepromMcuWriteBuffer(current_EEPROM_index + 4,(void*)&truncated_longitude,2);
 	EepromMcuWriteBuffer(current_EEPROM_index + 6,(void*)&truncated_time_since_epoch,3); // todo: verify if works
@@ -178,7 +178,7 @@ void save_current_position_info_to_EEPROM( void )
 	n_playback_positions_saved+=1U;
 	
 	EepromMcuWriteBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
-	EepromMcuWriteBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index)); // TODO: max it out at 
+	EepromMcuWriteBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index)); // TODO: max it out at MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM
 
 	
 }
