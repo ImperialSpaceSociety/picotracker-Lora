@@ -15,7 +15,7 @@
 
 /* Inclusion of system and local header files goes here */
 #include "playback.h"
-#include "stdint.h"
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
  
