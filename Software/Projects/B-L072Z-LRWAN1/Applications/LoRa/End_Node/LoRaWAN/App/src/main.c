@@ -133,16 +133,8 @@ static  LoRaParam_t LoRaParamInit= {LORAWAN_ADR_STATE,
 
 
 
-uint8_t GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
-
-// Set up brown out reset voltage above the level of the GPS
+// Set up brown out reset voltage as low as possible
 void set_brownout_level( void );
-
-// Configure the Power Voltage Detector (PVD)
-void PVD_Config( void );
-// PCD config type def
-PWR_PVDTypeDef sConfigPVD;
-
 
 
 /* Private functions ---------------------------------------------------------*/
@@ -532,43 +524,5 @@ void set_brownout_level( void )
 	}
 }
 
-/**
-  * @brief  Configures the PVD resources.
-  * @param  None
-  * @retval None
-  */
-static void PVD_Config(void)
-{
-  /*##-1- Enable Power Clock #################################################*/
-  __HAL_RCC_PWR_CLK_ENABLE();
-
-  /*##-2- Configure the NVIC for PVD #########################################*/
-  HAL_NVIC_SetPriority(PVD_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(PVD_IRQn);
-
-  /* Configure the PVD Level to 5 and generate an interrupt on rising and falling
-     edges(PVD detection level set to 2.9V) */
-  sConfigPVD.PVDLevel = PWR_PVDLEVEL_5;  
-  sConfigPVD.Mode = PWR_PVD_MODE_NORMAL;
-  HAL_PWR_ConfigPVD(&sConfigPVD);
-
-  /* Enable the PVD Output */
-  HAL_PWR_EnablePVD();
-}
-
-
-
-/**
-  * @brief  PWR PVD interrupt callback
-  * @param  None
-  * @retval None
-  */
-void HAL_PWR_PVDCallback(void)
-{
-  /* Toggle LED1 */
-  BSP_LED_Toggle(LED1);
-//	GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
-	
-}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
