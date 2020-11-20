@@ -71,7 +71,7 @@ uint8_t reset_count = 7;               // 0-8. Number of resets in (3 bits)
 
 
 static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
-
+static uint16_t tx_str_buffer_len = 0;
 
 
 time_pos_fix archived_positions[MAX_N_ARCHIVED_POSITIONS];
@@ -105,7 +105,6 @@ void save_position(uint16_t hours_since_epoch, uint16_t latitude, uint16_t longi
 time_pos_fix *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
 int mod(int a, int b);
-uint8_t * prep_tx_str( void );
 void fill_subset_positions_buffer(uint16_t subset_size);
 void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude );
 void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer,
@@ -137,7 +136,7 @@ void main()
 	fill_subset_positions_buffer(subset_size);
 	printf("\n");
 	
-	prep_tx_str();
+	prepare_tx_buffer();
 	
 }
 #endif
@@ -248,9 +247,9 @@ void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffe
  * \brief Prepare Tx string, by filling the AppData.Buff[] with the 
  * data string to be sent down to gateways on the ground. 
  * 
- * \return uint8_t *
+ * \return none
  */
-uint8_t * prep_tx_str()
+void prepare_tx_buffer(void)
 {
 	  
 	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
@@ -293,5 +292,17 @@ uint8_t * prep_tx_str()
 		  printf("%02x",tx_str_buffer[i]);
 	  }
 	  
-	  return tx_str_buffer;
 }
+
+
+uint8_t *get_tx_buffer()
+{
+	return tx_str_buffer;
+}
+
+uint16_t  get_tx_buffer_len()
+{
+	return tx_str_buffer_len;
+}
+
+#endif
