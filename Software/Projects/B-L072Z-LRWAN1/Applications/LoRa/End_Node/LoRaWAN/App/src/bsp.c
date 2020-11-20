@@ -162,20 +162,6 @@ uint16_t BSP_GetSolarLevel16( void )
 }
 
 
-/**
-  * @brief  Load Frame counter from STM32 internal EEPROM
-  * @param  Pointer to frame count
-  * @retval None
-  */
-void LoadFrameCounter(uint32_t* fcnt)
-{
-#if SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
-
-	EepromMcuReadBuffer(FRAME_COUNTER_EEPROM_ADDRESS,(void*)fcnt,FRAME_COUNTER_EEPROM_LEN);
-
-#endif //SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
-}
-
 
 uint8_t EepromMcuWriteBuffer( uint16_t addr, uint8_t *buffer, uint16_t size )
 {

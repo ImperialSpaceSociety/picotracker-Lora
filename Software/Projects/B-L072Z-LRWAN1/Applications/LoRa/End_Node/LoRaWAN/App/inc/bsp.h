@@ -107,14 +107,6 @@ void BSP_sensor_Read( sensor_t *sensor_data);
 uint16_t BSP_GetSolarLevel16( void );
 
 
-void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data);
-uint8_t EepromLoraKeysValidation(void);
-void LoadLoraKeys( void );
-void LoadFrameCounter( uint32_t* fcnt );
-uint8_t EepromFrameCounterValidation(void);
-
-
-
 /*!
  * Writes the given buffer to the EEPROM at the specified address.
  *
