@@ -48,14 +48,7 @@
 
 
 
-typedef struct
-{
-	uint16_t hours_since_epoch; // hours since Epoch
-	uint16_t latitude;        // Latitude
-	uint16_t longitude;       // Longitude
-	uint16_t altitude;     // Altitude
 
-}time_pos_fix;
 
 
 /* Dummy values for testing */
