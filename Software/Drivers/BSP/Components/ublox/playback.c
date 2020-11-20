@@ -301,4 +301,3 @@ uint16_t  get_tx_buffer_len()
 	return tx_str_buffer_len;
 }
 
-#endif
