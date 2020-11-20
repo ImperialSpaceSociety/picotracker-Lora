@@ -1,7 +1,0 @@
-cmake_minimum_required(VERSION 3.6)
-
-# set the project name
-project(playback_test)
-
-# add the executable
-add_executable(playback_test playback.c)
