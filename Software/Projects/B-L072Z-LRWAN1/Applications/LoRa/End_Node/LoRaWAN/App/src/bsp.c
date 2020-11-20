@@ -50,12 +50,12 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-uint32_t current_position_in_EEPROM = 0;
+uint16_t current_EEPROM_index = 0;
 
 
 
 /* Private function prototypes -----------------------------------------------*/
-void save_GPS_info_to_EEPROM(void);
+void save_current_position_info_to_EEPROM(void);
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -121,6 +121,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 
 
 	// now save all this data to non volatile memory
+	save_current_position_info_to_EEPROM();
 }
 
 void  BSP_sensor_Init( void  )
@@ -140,6 +141,38 @@ void  BSP_sensor_Init( void  )
 
 }
 
+
+
+/**
+  * @brief Save all the position data and time to EEPROM
+  * @param none
+  * @retval none
+  */
+void save_current_position_info_to_EEPROM( void )
+{
+	/* Find the index from the EEPROM */
+	EepromMcuReadBuffer(NVM_GPS_EEPROM_INDEX_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
+	
+	/* save Long, Lat, Altitude, minutes since epoch to EEPROM */
+	uint16_t truncated_altitude = (uint16_t)(gps_info.GPSaltitude >> 2) & 0xffff;
+	uint16_t truncated_latitude = (uint16_t)(gps_info.GPS_UBX_latitude >> 4) & 0xffff;
+	uint16_t truncated_longitude = (uint16_t)(gps_info.GPS_UBX_longitude >> 4) & 0xffff;
+	uint32_t truncated_time_since_epoch = (uint32_t)(gps_info.minutes_since_epoch) & 0xffffff;
+
+	
+	EepromMcuWriteBuffer(current_EEPROM_index + 0,(void*)&truncated_altitude,2);
+	EepromMcuWriteBuffer(current_EEPROM_index + 2,(void*)&truncated_latitude,2);
+	EepromMcuWriteBuffer(current_EEPROM_index + 4,(void*)&truncated_longitude,2);
+	EepromMcuWriteBuffer(current_EEPROM_index + 6,(void*)&truncated_time_since_epoch,3); // todo: verify if works
+
+	
+	/* Now update the index in EEPROM */
+	current_EEPROM_index+=NVM_GPS_EEPROM_PACKET_SIZE;
+	
+	EepromMcuWriteBuffer(NVM_GPS_EEPROM_INDEX_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
+
+	
+}
 
 /**
   * @brief It measures the solar voltage by returning the value in mV
