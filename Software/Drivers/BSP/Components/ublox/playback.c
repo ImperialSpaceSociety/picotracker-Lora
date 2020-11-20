@@ -73,11 +73,6 @@ time_pos_fix_t archived_positions[MAX_N_ARCHIVED_POSITIONS];
 time_pos_fix_t *subset_positions_ptr;
 
 
-
-uint16_t subset_size = 8;               
-uint16_t n_archived_positions = 200;   
-
-
 /* ==================================================================== */
 /* ========================== private data ============================ */
 /* ==================================================================== */
@@ -249,7 +244,7 @@ void prepare_tx_buffer(void)
 	  fill_tx_buffer_with_location(4, tx_str_buffer, current_pos.latitude,current_pos.longitude,current_pos.altitude);
 
 	  
-	  for (int i = 0; i < subset_size; i++)
+	  for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
 	  {
 		  time_pos_fix_t temp_pos = subset_positions_ptr[i];
 		  fill_tx_buffer_with_location_and_time(10 + i * (POSITION_BYTES_LEN+HOURS_SINCE_EPOCH_BYTES_LEN), 
