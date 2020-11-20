@@ -26,7 +26,6 @@
 /* ==================================================================== */
 
 /* #define and enum statements go here */
-#define MAX_SUBSET_SIZE 100U
 #define MAX_N_ARCHIVED_POSITIONS 500UL
 
 #define LORAWAN_APP_DATA_BUFF_SIZE                           242U
@@ -71,7 +70,7 @@ static uint16_t tx_str_buffer_len = 0;
 
 
 time_pos_fix_t archived_positions[MAX_N_ARCHIVED_POSITIONS];
-time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
+time_pos_fix_t *subset_positions_ptr;
 
 
 uint16_t current_index = 3;             /* As we fill the archived positions buffer, 
@@ -154,7 +153,7 @@ void fill_subset_positions_buffer(uint16_t subset_size)
 		int abs_index = mod((current_index - rand_n),n_archived_positions);
 		
 		/* Add the randomly selected position to the subset of positions */
-		subset_positions[i] = archived_positions[abs_index];
+		subset_positions_ptr[i] = archived_positions[abs_index];
 		printf("abs index:%d\n",abs_index);
 
 	}
@@ -269,7 +268,7 @@ void prepare_tx_buffer(void)
 	  
 	  for (int i = 0; i < subset_size; i++)
 	  {
-		  time_pos_fix_t temp_pos = subset_positions[i];
+		  time_pos_fix_t temp_pos = subset_positions_ptr[i];
 		  fill_tx_buffer_with_location_and_time(10 + i * (POSITION_BYTES_LEN+HOURS_SINCE_EPOCH_BYTES_LEN), 
 												tx_str_buffer,
 												temp_pos.latitude,
@@ -313,9 +312,10 @@ uint16_t  get_tx_buffer_len()
 	return tx_str_buffer_len;
 }
 
-void  init_playback(uint16_t current_index_in_eeprom, uint16_t n_positions_in_eeprom )
+void  init_playback(uint16_t current_index_in_eeprom, uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions )
 {
 	current_playback_key_info.current_index_in_eeprom = current_index_in_eeprom;
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
+	subset_positions_ptr = subset_positions;
 }
 

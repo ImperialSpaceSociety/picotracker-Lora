@@ -26,13 +26,17 @@ extern "C"
 
 /* Inclusion of system and local header files goes here */
 #include <stdint.h>
-
+#include "bsp.h"
 
 /* ==================================================================== */
 /* ============================ constants ============================= */
 /* ==================================================================== */
 
 /* #define and enum statements go here */
+
+#define MAX_SUBSET_SIZE 100U
+
+
 typedef struct
 {
 	uint16_t n_positions_in_eeprom;
@@ -52,7 +56,7 @@ void prepare_tx_buffer( void );
 
 uint8_t * get_tx_buffer( void );
 uint16_t get_tx_buffer_len( void );
-void init_playback(uint16_t current_index_in_eeprom, uint16_t n_positions_in_eeprom );
+void  init_playback(uint16_t current_index_in_eeprom, uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions );
 /* ==================================================================== */
 /* ======================= public functions =========================== */
 /* ==================================================================== */
