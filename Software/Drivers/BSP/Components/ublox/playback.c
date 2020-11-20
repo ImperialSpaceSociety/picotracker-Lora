@@ -52,7 +52,7 @@
 
 
 /* Dummy values for testing */
-time_pos_fix current_pos = {.hours_since_epoch = 0x00C8, .latitude = 0x17CA/*399121314 == 399121314*/, .longitude = 0xD312/*3541187191 == -753780105 */, .altitude = 0x00F2/*0x0000F221 >>2 */};
+time_pos_fix_t current_pos = {.hours_since_epoch = 0x00C8, .latitude = 0x17CA/*399121314 == 399121314*/, .longitude = 0xD312/*3541187191 == -753780105 */, .altitude = 0x00F2/*0x0000F221 >>2 */};
 
 uint8_t no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
 uint8_t load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)

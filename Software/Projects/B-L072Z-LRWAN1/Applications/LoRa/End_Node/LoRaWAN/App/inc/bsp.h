@@ -62,7 +62,7 @@ typedef struct
   uint16_t longitude;       // Longitude
   uint16_t altitude;     // Altitude
 
-}time_pos_fix;
+}time_pos_fix_t;
 
 
 
