@@ -70,8 +70,8 @@ static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
 static uint16_t tx_str_buffer_len = 0;
 
 
-time_pos_fix archived_positions[MAX_N_ARCHIVED_POSITIONS];
-time_pos_fix subset_positions[MAX_SUBSET_SIZE];
+time_pos_fix_t archived_positions[MAX_N_ARCHIVED_POSITIONS];
+time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
 
 
 uint16_t current_index = 3;             /* As we fill the archived positions buffer, 
@@ -98,7 +98,7 @@ uint16_t n_archived_positions = 200;    /* Number of positions held in the EEPRO
 /* Function prototypes for private (static) functions go here */
 
 void save_position(uint16_t hours_since_epoch, uint16_t latitude, uint16_t longitude, uint16_t altitude);
-time_pos_fix *pick_subset_of_time_pos_fix(uint16_t how_far_back);
+time_pos_fix_t *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
 int mod(int a, int b);
 void fill_subset_positions_buffer(uint16_t subset_size);
@@ -269,7 +269,7 @@ void prepare_tx_buffer(void)
 	  
 	  for (int i = 0; i < subset_size; i++)
 	  {
-		  time_pos_fix temp_pos = subset_positions[i];
+		  time_pos_fix_t temp_pos = subset_positions[i];
 		  fill_tx_buffer_with_location_and_time(10 + i * (POSITION_BYTES_LEN+HOURS_SINCE_EPOCH_BYTES_LEN), 
 												tx_str_buffer,
 												temp_pos.latitude,
