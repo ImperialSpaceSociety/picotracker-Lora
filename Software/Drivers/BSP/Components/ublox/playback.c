@@ -207,7 +207,17 @@ int generate_random(int l, int r) {
 	return rand_num;
 }
 
-
+/**
+ * \brief  Fill the tx buffer with location info only
+ * 
+ * \param start_point : index of start point in buffer to start filling
+ * \param buffer : pointer to buffer
+ * \param latitude 
+ * \param longitude
+ * \param altitude
+ * 
+ * \return void
+ */
 void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude )
 {
 	
@@ -226,6 +236,18 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16
 }
 
 
+/**
+ * \brief  Fill the tx buffer with location and time information
+ * 
+ * \param start_point : index of start point in buffer to start filling
+ * \param buffer : pointer to buffer
+ * \param latitude
+ * \param longitude
+ * \param altitude
+ * \param hours_since_epoch
+ * 
+ * \return void
+ */
 void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint16_t hours_since_epoch )
 {
 	
@@ -284,6 +306,6 @@ uint8_t * prep_tx_str()
 	  {
 		  printf("%02x",AppData.Buff[i]);
 	  }
-		
-		return AppData.Buff;
+	  
+	  return AppData.Buff;
 }
