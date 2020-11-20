@@ -42,6 +42,7 @@
 //#define LOW_POWER_DISABLE
 
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
+#define LPP_APP_PORT 99
 
 
 
