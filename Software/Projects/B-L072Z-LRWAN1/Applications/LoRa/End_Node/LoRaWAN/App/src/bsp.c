@@ -112,7 +112,9 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	sensor_data->no_load_solar_voltage = no_load_solar_voltage;
 	sensor_data->load_solar_voltage = load_solar_voltage;
 
-  /* USER CODE END 5 */
+
+
+	// now save all this data to non volatile memory
 }
 
 void  BSP_sensor_Init( void  )
