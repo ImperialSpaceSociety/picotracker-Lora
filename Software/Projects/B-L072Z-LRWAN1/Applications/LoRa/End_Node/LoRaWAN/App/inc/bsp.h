@@ -84,19 +84,22 @@ typedef struct
 #define LORAMAC_REGION_EEPROM_LEN                  (1)
 
 
-#define NVM_GPS_EEPROM_INDEX_ADDR                  (5)
-#define NVM_GPS_EEPROM_INDEX_LEN                   (2)
-
-#define RESET_COUNTER_ADDR                         (7)
+#define RESET_COUNTER_ADDR                         (5)
 #define RESET_COUNTER_LEN                          (2)
 
 
-#define NVM_GPS_EEPROM_ADDR_START                  (9)
-#define NVM_GPS_EEPROM_PACKET_SIZE                 (9)
-#define NVM_GPS_N_PACKETS                          (650)
+#define CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR      (7)
+#define CURRENT_PLAYBACK_INDEX_IN_EEPROM_LEN       (2)
+
+#define N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR  (9)
+#define N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_LEN   (2)
+
+#define PLAYBACK_EEPROM_ADDR_START                 (11)
+#define PLAYBACK_EEPROM_PACKET_SIZE                (9)
+#define MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM     (650)
 
 /* WARNING! Ensure this value is less than DATA_EEPROM_BANK2_END. Or else, it will overflow EEPROM */
-#define NVM_GPS_EEPROM_ADDR_END                    (NVM_GPS_EEPROM_ADDR_START - 1 + NVM_GPS_N_PACKETS * NVM_GPS_EEPROM_PACKET_SIZE)
+#define NVM_GPS_EEPROM_ADDR_END                    (NVM_GPS_EEPROM_ADDR_START - 1 + MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM * NVM_GPS_EEPROM_PACKET_SIZE)
 																												
 
 
