@@ -40,22 +40,6 @@
 /* Private define ------------------------------------------------------------*/
 
 //#define LOW_POWER_DISABLE
-/*!
- * CAYENNE_LPP is myDevices Application server.
- */
-#define CAYENNE_LPP
-#define LPP_DATATYPE_DIGITAL_INPUT  0x0
-#define LPP_DATATYPE_DIGITAL_OUTPUT 0x1
-#define LPP_DATATYPE_ANALOG_INPUT   0x2
-#define LPP_DATATYPE_HUMIDITY       0x68
-#define LPP_DATATYPE_TEMPERATURE    0x67
-#define LPP_DATATYPE_BAROMETER      0x73
-#define LPP_DATATYPE_GPSLOCATION    0x88
-#define LPP_DATATYPE_ACCELEROMETER  0x71
-#define LPP_DATATYPE_GPSTIME        0x85
-#define LPP_APP_PORT 99
-
-
 
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 
