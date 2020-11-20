@@ -68,23 +68,10 @@ uint8_t data_received = 1;             // 0 or 1. indicates that message was rec
 uint8_t sats = 12;                     // 0 - 32. Number of sats. (4 bits)
 uint8_t reset_count = 7;               // 0-8. Number of resets in (3 bits)
 
-/*!
- * Application Data structure
- */
-typedef struct
-{
-  /*point to the LoRa App data buffer*/
-  uint8_t* Buff;
-  /*LoRa App data buffer size*/
-  uint8_t BuffSize;
-  /*Port on which the LoRa App is data is sent/ received*/
-  uint8_t Port;
-  
-} lora_AppData_t;
 
-static uint8_t AppDataBuff[LORAWAN_APP_DATA_BUFF_SIZE];
 
-lora_AppData_t AppData={ AppDataBuff,  0 ,0 };
+static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
+
 
 
 time_pos_fix archived_positions[MAX_N_ARCHIVED_POSITIONS];
@@ -223,14 +210,14 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16
 	
 	/* current position. Use the most significant numbers. Truncate to 16 bits.*/
 	/* latitude(16 bits) -90 to 90*/
-	AppData.Buff[start_point + 0] = (latitude >> 0) & 0xff;
-	AppData.Buff[start_point + 1] = (latitude >> 8) & 0xff;
+	tx_str_buffer[start_point + 0] = (latitude >> 0) & 0xff;
+	tx_str_buffer[start_point + 1] = (latitude >> 8) & 0xff;
 	/* longitude(16 bits) -180 to 180 */
-	AppData.Buff[start_point + 2] = (longitude >> 0) & 0xff;
-	AppData.Buff[start_point + 3] = (longitude >> 8) & 0xff;
+	tx_str_buffer[start_point + 2] = (longitude >> 0) & 0xff;
+	tx_str_buffer[start_point + 3] = (longitude >> 8) & 0xff;
 	/* altitude(16 bits) */
-	AppData.Buff[start_point + 4] = (altitude >> 0) & 0xff;
-	AppData.Buff[start_point + 5] = (altitude >> 8) & 0xff;
+	tx_str_buffer[start_point + 4] = (altitude >> 0) & 0xff;
+	tx_str_buffer[start_point + 5] = (altitude >> 8) & 0xff;
 		  
 	
 }
@@ -253,8 +240,8 @@ void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffe
 	
 	fill_tx_buffer_with_location(start_point, buffer, latitude, longitude, altitude );
 	
-	AppData.Buff[start_point + POSITION_BYTES_LEN + 0] = (hours_since_epoch >> 0) & 0xff;
-	AppData.Buff[start_point + POSITION_BYTES_LEN + 1] = (hours_since_epoch >> 8) & 0xff;
+	tx_str_buffer[start_point + POSITION_BYTES_LEN + 0] = (hours_since_epoch >> 0) & 0xff;
+	tx_str_buffer[start_point + POSITION_BYTES_LEN + 1] = (hours_since_epoch >> 8) & 0xff;
 }
 
 /**
@@ -265,32 +252,31 @@ void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffe
  */
 uint8_t * prep_tx_str()
 {
-	  AppData.Port = LPP_APP_PORT;
 	  
 	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
-	  AppData.Buff[0] |= ((no_load_voltage - 18) & 0x1F) << 3;
-	  AppData.Buff[0] |= ((load_voltage - 18) & 0x1C) >> 2;
+	  tx_str_buffer[0] |= ((no_load_voltage - 18) & 0x1F) << 3;
+	  tx_str_buffer[0] |= ((load_voltage - 18) & 0x1C) >> 2;
 	  
 	  /* byte1: load voltage(remaining 2 bits) and temperature(6 bits)*/
-	  AppData.Buff[1] |= (temperature >> 2 & 0x3F);
-	  AppData.Buff[1] |= ((load_voltage - 18) & 0x03) << 6;
+	  tx_str_buffer[1] |= ((load_voltage - 18) & 0x03) << 6;
+	  tx_str_buffer[1] |= (temperature >> 2 & 0x3F);
 	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
-	  AppData.Buff[2] |= ((pressure/10) & 0x7F) << 1;
-	  AppData.Buff[2] |=	(data_received & 0x01);
+	  tx_str_buffer[2] |= ((pressure/10) & 0x7F) << 1;
+	  tx_str_buffer[2] |=	(data_received & 0x01);
 	  
 	  /* byte3: Sats(5 bits) and reset count(3 bits)*/
-	  AppData.Buff[3] |= (sats & 0x1F) << 3;
-	  AppData.Buff[3] |=	(reset_count & 0x07);
+	  tx_str_buffer[3] |= (sats & 0x1F) << 3;
+	  tx_str_buffer[3] |=	(reset_count & 0x07);
 
 	  
-	  fill_tx_buffer_with_location(4, AppData.Buff, current_pos.latitude,current_pos.longitude,current_pos.altitude);
+	  fill_tx_buffer_with_location(4, tx_str_buffer, current_pos.latitude,current_pos.longitude,current_pos.altitude);
 
 	  
 	  for (int i = 0; i < subset_size; i++)
 	  {
 		  time_pos_fix temp_pos = subset_positions[i];
 		  fill_tx_buffer_with_location_and_time(10 + i * (POSITION_BYTES_LEN+HOURS_SINCE_EPOCH_BYTES_LEN), 
-												AppData.Buff,
+												tx_str_buffer,
 												temp_pos.latitude,
 												temp_pos.longitude,
 												temp_pos.altitude,
@@ -304,8 +290,8 @@ uint8_t * prep_tx_str()
 	  // Print out buffer for debug
 	  for (int i = 0; i<LORAWAN_APP_DATA_BUFF_SIZE;i ++)
 	  {
-		  printf("%02x",AppData.Buff[i]);
+		  printf("%02x",tx_str_buffer[i]);
 	  }
 	  
-	  return AppData.Buff;
+	  return tx_str_buffer;
 }
