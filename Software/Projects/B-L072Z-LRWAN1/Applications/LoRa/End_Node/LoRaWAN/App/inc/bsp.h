@@ -77,7 +77,11 @@ typedef struct{
 #define NVM_GPS_EEPROM_INDEX_ADDR                  (5)
 #define NVM_GPS_EEPROM_INDEX_LEN                   (2)
 
-#define NVM_GPS_EEPROM_ADDR_START                  (7)
+#define RESET_COUNTER_ADDR                         (7)
+#define RESET_COUNTER_LEN                          (2)
+
+
+#define NVM_GPS_EEPROM_ADDR_START                  (9)
 #define NVM_GPS_EEPROM_PACKET_SIZE                 (9)
 #define NVM_GPS_N_PACKETS                          (650)
 
