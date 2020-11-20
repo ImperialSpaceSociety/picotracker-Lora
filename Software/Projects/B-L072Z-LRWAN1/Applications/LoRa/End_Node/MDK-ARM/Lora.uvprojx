@@ -4708,6 +4708,11 @@
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
             </File>
+            <File>
+              <FileName>playback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
