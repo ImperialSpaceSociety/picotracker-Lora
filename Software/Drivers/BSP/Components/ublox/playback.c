@@ -54,14 +54,16 @@
 /* Dummy values for testing */
 time_pos_fix_t current_pos = {.hours_since_epoch = 0x00C8, .latitude = 0x17CA/*399121314 == 399121314*/, .longitude = 0xD312/*3541187191 == -753780105 */, .altitude = 0x00F2/*0x0000F221 >>2 */};
 
-uint8_t no_load_voltage = 33;  // 18 - 43 (min 25 values)(5 bits)
-uint8_t load_voltage = 43;     // 18 - 43 (min 25 values)(5 bits)
-int8_t temperature = -23;                 // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
-uint16_t pressure = 400;               // 130 - 1030 (min 128 values, 10mbar per increment)(7 bits)
-uint8_t data_received = 1;             // 0 or 1. indicates that message was received(1 bit)
-uint8_t sats = 12;                     // 0 - 32. Number of sats. (4 bits)
-uint8_t reset_count = 7;               // 0-8. Number of resets in (3 bits)
 
+sensor_t current_sensor_data = {
+.no_load_solar_voltage = 33,  // 18 - 43 (min 25 values)(5 bits)
+.load_solar_voltage = 43,     // 18 - 43 (min 25 values)(5 bits)
+.temperature = -23,                // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
+.pressure = 400,               // 130 - 1030 (min 128 values, 10mbar per increment)(7 bits)
+.data_received = 1,            // 0 or 1. indicates that message was received(1 bit)
+.sats = 12,                     // 0 - 32. Number of sats. (4 bits)
+.reset_count = 7               // 0-7. Number of resets in (3 bits)
+};
 
 
 static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
@@ -247,19 +249,19 @@ void prepare_tx_buffer(void)
 {
 	  
 	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
-	  tx_str_buffer[0] |= ((no_load_voltage - 18) & 0x1F) << 3;
-	  tx_str_buffer[0] |= ((load_voltage - 18) & 0x1C) >> 2;
+	  tx_str_buffer[0] |= ((current_sensor_data.no_load_solar_voltage - 18) & 0x1F) << 3;
+	  tx_str_buffer[0] |= ((current_sensor_data.load_solar_voltage - 18) & 0x1C) >> 2;
 	  
 	  /* byte1: load voltage(remaining 2 bits) and temperature(6 bits)*/
-	  tx_str_buffer[1] |= ((load_voltage - 18) & 0x03) << 6;
-	  tx_str_buffer[1] |= (temperature >> 2 & 0x3F);
+	  tx_str_buffer[1] |= ((current_sensor_data.load_solar_voltage - 18) & 0x03) << 6;
+	  tx_str_buffer[1] |= (current_sensor_data.temperature >> 2 & 0x3F);
 	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
-	  tx_str_buffer[2] |= ((pressure/10) & 0x7F) << 1;
-	  tx_str_buffer[2] |=	(data_received & 0x01);
+	  tx_str_buffer[2] |= ((current_sensor_data.pressure/10) & 0x7F) << 1;
+	  tx_str_buffer[2] |=	(current_sensor_data.data_received & 0x01);
 	  
 	  /* byte3: Sats(5 bits) and reset count(3 bits)*/
-	  tx_str_buffer[3] |= (sats & 0x1F) << 3;
-	  tx_str_buffer[3] |=	(reset_count & 0x07);
+	  tx_str_buffer[3] |= (current_sensor_data.sats & 0x1F) << 3;
+	  tx_str_buffer[3] |= (current_sensor_data.reset_count & 0x07);
 
 	  
 	  fill_tx_buffer_with_location(4, tx_str_buffer, current_pos.latitude,current_pos.longitude,current_pos.altitude);
