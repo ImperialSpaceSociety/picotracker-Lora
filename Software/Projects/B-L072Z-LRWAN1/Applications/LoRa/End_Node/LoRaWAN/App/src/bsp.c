@@ -96,7 +96,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	PRINTF("Latitude: "); 
 	PRINTF("%lf ", gps_info.GPS_UBX_latitude_Float); 
 	PRINTF("altitude: "); 
-	PRINTF("%ld", gps_info.GPSaltitude	); 
+	PRINTF("%ld", gps_info.GPSaltitude/1000	); 
 	PRINTF("\r\n");
 	PRINTF("Solar voltage no load: "); 
 	PRINTF("%ld", no_load_solar_voltage	); 
@@ -112,7 +112,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
   sensor_data->humidity    = 34; // hard coded dummy value
   sensor_data->temperature = TEMPERATURE_Value;
   sensor_data->pressure    = PRESSURE_Value;
-	sensor_data->altitudeGps = gps_info.GPSaltitude;
+	sensor_data->altitudeGps = gps_info.GPSaltitude/1000;
 	sensor_data->latitude    = gps_info.GPS_UBX_latitude_Float;
 	sensor_data->longitude   = gps_info.GPS_UBX_longitude_Float;
 	sensor_data->no_load_solar_voltage = no_load_solar_voltage;

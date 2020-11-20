@@ -300,7 +300,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 			gps_info.GPS_UBX_longitude = getLongitude(defaultMaxWait);
 			gps_info.GPS_UBX_latitude_Float = (float)gps_info.GPS_UBX_latitude/10000000;
 			gps_info.GPS_UBX_longitude_Float = (float)gps_info.GPS_UBX_longitude/10000000;
-			gps_info.GPSaltitude = getAltitude(defaultMaxWait)/1000;
+			gps_info.GPSaltitude = getAltitude(defaultMaxWait);
 			
 			
 			if (getTime(defaultMaxWait))//Query module for the time info
