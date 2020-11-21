@@ -66,7 +66,7 @@ void save_current_position_info_to_EEPROM(void);
 /* Private variables ---------------------------------------------------------*/
 
 
-void BSP_sensor_Read( sensor_t *sensor_data)
+void BSP_sensor_Read(void)
 {
 	TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
 

@@ -302,7 +302,6 @@ static void LORA_HasJoined( void )
 
 static void Send( void* context )
 {
-	sensor_t sensor_data;
 
   /* now join if not yet joined. */	
 	#if RADIO_ENABLED
@@ -321,7 +320,7 @@ static void Send( void* context )
 
 	
 	/* reading sensors and GPS */
-  BSP_sensor_Read( &sensor_data );
+  BSP_sensor_Read( );
 	
 	/* Restart tx interval timer */
 	TimerStart( &TxTimer);

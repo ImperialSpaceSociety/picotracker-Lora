@@ -121,7 +121,7 @@ void  BSP_sensor_Init( void  );
  * @note none
  * @retval sensor_data
  */
-void BSP_sensor_Read( sensor_t *sensor_data);
+void BSP_sensor_Read( void );
 
 
 
