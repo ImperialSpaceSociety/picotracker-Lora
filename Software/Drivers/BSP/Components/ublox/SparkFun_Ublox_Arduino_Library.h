@@ -659,8 +659,6 @@ typedef struct
 	bool put_in_power_save_mode(uint16_t maxWait);
 	bool put_in_continueous_mode(uint16_t maxWait);
 	
-	// get the time.
-	bool getTime(uint16_t maxWait);
 
 
 	//Survey-in specific controls
