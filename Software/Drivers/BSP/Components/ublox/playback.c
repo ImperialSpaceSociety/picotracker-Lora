@@ -68,10 +68,12 @@ sensor_t current_sensor_data = {
 static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
 static uint16_t tx_str_buffer_len = 0;
 
-
-time_pos_fix_t archived_positions[MAX_N_ARCHIVED_POSITIONS];
+#ifdef playback_testing
+time_pos_fix_t test_subset[MAX_SUBSET_SIZE];
+time_pos_fix_t *subset_positions_ptr = test_subset;
+#else
 time_pos_fix_t *subset_positions_ptr;
-
+#endif
 
 /* ==================================================================== */
 /* ========================== private data ============================ */
