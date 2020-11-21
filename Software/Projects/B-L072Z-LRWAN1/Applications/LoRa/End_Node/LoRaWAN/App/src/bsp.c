@@ -205,8 +205,6 @@ void  BSP_sensor_Init( void  )
   */
 void save_current_position_info_to_EEPROM( void )
 {
-	/* Find the index from the EEPROM */
-	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	
 	/* save Long, Lat, Altitude, minutes since epoch to EEPROM */
 	uint16_t truncated_altitude = (uint16_t)(gps_info.GPSaltitude >> 2) & 0xffffUL;
