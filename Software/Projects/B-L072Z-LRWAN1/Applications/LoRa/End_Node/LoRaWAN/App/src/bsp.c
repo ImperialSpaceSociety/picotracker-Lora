@@ -195,14 +195,7 @@ time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index)
 	
 	/* read Long, Lat, Altitude, minutes since epoch from EEPROM */
 	
-	volatile uint16_t eeprom_location;
-	if (current_EEPROM_index - ((time_pos_index + 1) * PLAYBACK_EEPROM_PACKET_SIZE <0))
-	{
-		eeprom_location = 0;
-	}else
-	{
-	 eeprom_location =  current_EEPROM_index - ((time_pos_index + 1) * PLAYBACK_EEPROM_PACKET_SIZE);
-	}
+	volatile int32_t a = current_EEPROM_index - ((time_pos_index + 1) * PLAYBACK_EEPROM_PACKET_SIZE);
 	
 	// TODO: check if eeprom location falls within bounds
 	
