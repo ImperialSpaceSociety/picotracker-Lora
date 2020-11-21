@@ -21,6 +21,7 @@
 #include <i2c_middleware.h>
 #include "hw_i2c.h"
 #include "hw.h" // for PRINTF
+#include "main.h"
 
 
 /* ==================================================================== */
