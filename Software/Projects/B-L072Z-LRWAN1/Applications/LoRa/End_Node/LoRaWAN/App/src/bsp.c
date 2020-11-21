@@ -181,31 +181,6 @@ void fill_positions_to_send_buffer( void )
 }
 
 
-/**
- * \brief Read the eeprom for a position and time and a certain index.
- * 
- * \param index
- * 
- * \return time_pos_fix_t position time fix
- */
-time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index)
-{
-	
-	time_pos_fix_t time_pos_fix;
-	
-	/* read Long, Lat, Altitude, minutes since epoch from EEPROM */
-	
-	volatile int32_t a = current_EEPROM_index - ((time_pos_index + 1) * PLAYBACK_EEPROM_PACKET_SIZE);
-	
-	// TODO: check if eeprom location falls within bounds
-	
-	EepromMcuReadBuffer(eeprom_location + 0,(void*)&time_pos_fix.altitude,2); // todo: don't use numbers here. use #define
-	EepromMcuReadBuffer(eeprom_location + 2,(void*)&time_pos_fix.latitude,2);
-	EepromMcuReadBuffer(eeprom_location + 4,(void*)&time_pos_fix.longitude,2);
-	EepromMcuReadBuffer(eeprom_location + 6,(void*)&time_pos_fix.minutes_since_epoch,3); // todo: verify if works
-	
-	return time_pos_fix;
-}
 
 /**
  * \brief Intialise all the sensors and playback
@@ -280,6 +255,33 @@ void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position)
 	EepromMcuWriteBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index)); // TODO: max it out at MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM
 
 	
+}
+
+
+/**
+ * \brief Read the eeprom for a position and time and a certain index.
+ * 
+ * \param index
+ * 
+ * \return time_pos_fix_t position time fix
+ */
+time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index)
+{
+	
+	time_pos_fix_t time_pos_fix;
+	
+	/* read Long, Lat, Altitude, minutes since epoch from EEPROM */
+	
+	volatile int32_t a = current_EEPROM_index - ((time_pos_index + 1) * PLAYBACK_EEPROM_PACKET_SIZE);
+	
+	// TODO: check if eeprom location falls within bounds
+	
+	EepromMcuReadBuffer(eeprom_location + 0,(void*)&time_pos_fix.altitude,2); // todo: don't use numbers here. use #define
+	EepromMcuReadBuffer(eeprom_location + 2,(void*)&time_pos_fix.latitude,2);
+	EepromMcuReadBuffer(eeprom_location + 4,(void*)&time_pos_fix.longitude,2);
+	EepromMcuReadBuffer(eeprom_location + 6,(void*)&time_pos_fix.minutes_since_epoch,3); // todo: verify if works
+	
+	return time_pos_fix;
 }
 
 /**
