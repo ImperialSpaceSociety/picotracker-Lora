@@ -54,6 +54,8 @@
 uint16_t current_EEPROM_index = 0;
 uint16_t n_playback_positions_saved = 0;
 time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
+time_pos_fix_t current_position;
+sensor_t sensor_data;
 time_pos_fix_t read_eeprom_pos_time(uint16_t index);
 void fill_positions_to_send_buffer( void );
 
@@ -192,7 +194,7 @@ void  BSP_sensor_Init( void  )
 	
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	EepromMcuReadBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
-	init_playback(n_playback_positions_saved,subset_positions);
+	init_playback(n_playback_positions_saved, subset_positions, &sensor_data);
 
 }
 

@@ -73,6 +73,7 @@ time_pos_fix_t test_subset[MAX_SUBSET_SIZE];
 time_pos_fix_t *subset_positions_ptr = test_subset;
 #else
 time_pos_fix_t *subset_positions_ptr;
+sensor_t *sensor_data_ptr;
 #endif
 
 /* ==================================================================== */
@@ -295,9 +296,11 @@ uint16_t  get_tx_buffer_len()
 	return tx_str_buffer_len;
 }
 
-void  init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions )
+void  init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions, sensor_t *sensor_data )
 {
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
 	subset_positions_ptr = subset_positions;
+	sensor_data_ptr = sensor_data;
+
 }
 

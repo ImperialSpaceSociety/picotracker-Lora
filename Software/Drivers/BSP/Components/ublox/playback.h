@@ -58,7 +58,7 @@ playback_key_info_t *get_playback_key_info( void );
 
 uint8_t * get_tx_buffer( void );
 uint16_t get_tx_buffer_len( void );
-void  init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions );
+void  init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions, sensor_t *sensor_data );
 /* ==================================================================== */
 /* ======================= public functions =========================== */
 /* ==================================================================== */
