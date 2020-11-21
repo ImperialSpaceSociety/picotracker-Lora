@@ -40,6 +40,8 @@ Maintainer: Miguel Luis and Gregory Cristian
 #endif
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
+#include "main.h"
+
 
 /* Exported types ------------------------------------------------------------*/
 
