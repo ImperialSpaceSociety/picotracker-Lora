@@ -277,7 +277,7 @@ void prepare_tx_buffer(void)
 	  }
 
 
-	  
+	  // TODO: set string length
 	  
 	  // Print out buffer for debug
 	  for (int i = 0; i<LORAWAN_APP_DATA_BUFF_SIZE;i ++)
