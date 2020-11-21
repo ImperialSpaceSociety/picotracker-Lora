@@ -410,20 +410,14 @@ static void LORA_RxData( lora_AppData_t *AppData )
     }
     break;
     case LORAWAN_APP_PORT:
-    if( AppData->BuffSize == 1 )
-    {
-      AppLedStateOn = AppData->Buff[0] & 0x01;
-      if ( AppLedStateOn == RESET )
-      {
-        PRINTF("LED OFF\n\r");
-        LED_Off( LED1 ) ; 
-      }
-      else
-      {
-        PRINTF("LED ON\n\r");
-        LED_On( LED1 ) ; 
-      }
-    }
+			PRINTF("Received data: ");
+		
+			for (int i = 0; i< AppData->BuffSize;i ++)
+			{
+				PRINTF("%02x",AppData->Buff[i]);
+			}
+			PRINTF("\n\n");
+
     break;
   case LPP_APP_PORT:
   {
