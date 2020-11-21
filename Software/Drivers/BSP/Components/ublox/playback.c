@@ -120,16 +120,15 @@ void main()
 {
 	
 	// Print out buffer for debug
-	for (int i = 0; i<MAX_N_ARCHIVED_POSITIONS;i ++)
+	for (int i = 0; i<current_playback_key_info.n_positions_to_send;i ++)
 	{
-		archived_positions[i].longitude = current_pos.longitude;
-		archived_positions[i].latitude = current_pos.latitude;
-		archived_positions[i].altitude = current_pos.altitude;
-		archived_positions[i].hours_since_epoch = current_pos.hours_since_epoch;
+		subset_positions_ptr[i].longitude = current_pos.longitude;
+		subset_positions_ptr[i].latitude = current_pos.latitude;
+		subset_positions_ptr[i].altitude = current_pos.altitude;
+		subset_positions_ptr[i].hours_since_epoch = current_pos.hours_since_epoch;
 
 	}
 	
-	fill_subset_positions_buffer(subset_size);
 	printf("\n");
 	
 	prepare_tx_buffer();
