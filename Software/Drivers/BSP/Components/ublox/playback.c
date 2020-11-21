@@ -29,7 +29,6 @@
 #define MAX_N_ARCHIVED_POSITIONS 500UL
 
 #define LORAWAN_APP_DATA_BUFF_SIZE                           242U
-#define LPP_APP_PORT 99U
 
 //#define playback_testing
 #define LONGITUDE_BYTES_LEN 2U
