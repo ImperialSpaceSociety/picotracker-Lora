@@ -24,6 +24,7 @@
 #include "main.h"
 #include "hw.h"
 #include "bsp.h"
+#include <time.h>
 
 #include "SparkFun_Ublox_Arduino_Library.h"
 
@@ -280,6 +281,20 @@ gps_status_t get_location_fix(uint32_t timeout){
 		PRINTF(" GPS time: %02d/%02d/%04d, %02d:%02d:%02d.%04d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond,temp_GPSmillisecond);
 		PRINTF(" GPS Search time: %.3f seconds \r\n", current_time_F);
 		
+    struct tm t;
+    time_t t_of_day;
+
+    t.tm_year = temp_GPSyear-1900;  // Year - 1900
+    t.tm_mon = temp_GPSmonth;           // Month, where 0 = jan
+    t.tm_mday = temp_GPSday;          // Day of the month
+    t.tm_hour = temp_GPShour;
+    t.tm_min = temp_GPSminute;
+    t.tm_sec = temp_GPSsecond;
+    t.tm_isdst = 0;        // Is DST on? 1 = yes, 0 = no, -1 = unknown
+    t_of_day = mktime(&t);
+
+    PRINTF("seconds since the Epoch: %ld\n", (uint32_t) t_of_day);
+		
 		load_solar_voltage = BSP_GetSolarLevel16();
 
 		
@@ -301,7 +316,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 			gps_info.GPS_UBX_latitude_Float = (float)gps_info.GPS_UBX_latitude/10000000;
 			gps_info.GPS_UBX_longitude_Float = (float)gps_info.GPS_UBX_longitude/10000000;
 			gps_info.GPSaltitude = getAltitude(defaultMaxWait);
-			
+			gps_info.unix_time = (uint32_t) t_of_day;
 					
 			
 
