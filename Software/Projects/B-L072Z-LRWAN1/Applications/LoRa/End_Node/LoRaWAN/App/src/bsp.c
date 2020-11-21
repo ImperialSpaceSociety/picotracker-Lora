@@ -118,14 +118,14 @@ void BSP_sensor_Read(void)
 	sensor_data.humidity    = 34; // hard coded dummy value
 	sensor_data.temperature = TEMPERATURE_Value;
 	sensor_data.pressure    = PRESSURE_Value;
-	sensor_data.no_load_solar_voltage = no_load_solar_voltage;
-	sensor_data.load_solar_voltage = load_solar_voltage;
+	sensor_data.no_load_solar_voltage = no_load_solar_voltage/100;
+	sensor_data.load_solar_voltage = load_solar_voltage/100;
 
 
-	current_position.altitude  = gps_info.GPSaltitude;
-	current_position.latitude  = gps_info.GPS_UBX_latitude_Float;
-	current_position.longitude = gps_info.GPS_UBX_longitude_Float;
-	current_position.minutes_since_epoch = gps_info.GPS_UBX_longitude_Float;
+	current_position.altitude  = (gps_info.GPSaltitude >> 8) & 0xffff;
+	current_position.latitude  = (gps_info.GPS_UBX_latitude >> 16) & 0xffff;
+	current_position.longitude = (gps_info.GPS_UBX_longitude >> 16) & 0xffff;
+	current_position.minutes_since_epoch = gps_info.GPS_UBX_longitude_Float; // TODO: get the actual epoch value
 
 
 	/* fill up the buffer to send down */
