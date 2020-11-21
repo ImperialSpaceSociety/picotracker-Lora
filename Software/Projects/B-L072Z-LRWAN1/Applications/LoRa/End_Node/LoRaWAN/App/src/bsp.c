@@ -56,7 +56,8 @@ uint16_t n_playback_positions_saved = 0;
 time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
 time_pos_fix_t current_position;
 sensor_t sensor_data;
-time_pos_fix_t read_eeprom_pos_time(uint16_t index);
+time_pos_fix_t read_eeprom_time_pos(uint16_t time_pos_index);
+
 
 
 /* Private function prototypes -----------------------------------------------*/
@@ -164,7 +165,7 @@ void fill_positions_to_send_buffer( void )
 		
 		int rand_time_pos_index = randr(lower_val, upper_val);
 		
-		time_pos_fix_t random_time_pos = read_eeprom_pos_time(rand_time_pos_index);
+		time_pos_fix_t random_time_pos = read_eeprom_time_pos(rand_time_pos_index);
 		
 		
 		subset_positions[i].altitude = random_time_pos.altitude;
@@ -182,7 +183,7 @@ void fill_positions_to_send_buffer( void )
  * 
  * \return time_pos_fix_t position time fix
  */
-time_pos_fix_t read_eeprom_pos_time(uint16_t index)
+time_pos_fix_t read_eeprom_time_pos(uint16_t time_pos_index)
 {
 	
 	time_pos_fix_t time_pos_fix;
