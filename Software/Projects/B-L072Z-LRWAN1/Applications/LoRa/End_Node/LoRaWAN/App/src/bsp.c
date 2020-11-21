@@ -139,7 +139,8 @@ void BSP_sensor_Read(void)
 
 /**
  * \brief Fill buffer of random subset of positions to be sent.
- * 
+ *  TODO: find out how to select a subset without repeats
+ *  TODO: find a better solution of selecting a subset to give us the most info
  * \param 
  * 
  * \return void
