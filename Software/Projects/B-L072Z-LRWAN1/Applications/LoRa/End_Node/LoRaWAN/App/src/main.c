@@ -201,7 +201,9 @@ int main( void )
 	{
 		/* read the eeprom value instead */
 		// TODO: must ensure that eeprom is not filled with garbage. i.e. when the eeprom has never been programed
+		#if USE_NVM_STORED_LORAWAN_REGION
 		EepromMcuReadBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
+		#endif
 	}
 
 	#endif
