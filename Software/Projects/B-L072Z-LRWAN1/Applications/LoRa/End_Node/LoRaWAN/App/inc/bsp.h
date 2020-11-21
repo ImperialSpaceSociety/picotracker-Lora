@@ -60,7 +60,7 @@ typedef struct{
 
 typedef struct
 {
-  uint16_t hours_since_epoch; // hours since Epoch
+  uint32_t minutes_since_epoch; // minutes since Epoch
   uint16_t latitude;        // Latitude
   uint16_t longitude;       // Longitude
   uint16_t altitude;     // Altitude

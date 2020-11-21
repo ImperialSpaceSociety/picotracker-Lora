@@ -156,7 +156,7 @@ void fill_positions_to_send_buffer( void )
 		subset_positions[i].altitude = random_time_pos.altitude;
 		subset_positions[i].latitude = random_time_pos.latitude;
 		subset_positions[i].longitude = random_time_pos.longitude;
-		subset_positions[i].hours_since_epoch = random_time_pos.hours_since_epoch;
+		subset_positions[i].minutes_since_epoch = random_time_pos.minutes_since_epoch;
 	}
 }
 

@@ -35,7 +35,7 @@
 #define LONGITUDE_BYTES_LEN 2U
 #define LATITUDE_BYTES_LEN 2U
 #define ALTITUDE_BYTES_LEN 2U
-#define HOURS_SINCE_EPOCH_BYTES_LEN 2U
+#define MINUTES_SINCE_EPOCH_BYTES_LEN 3U
 #define POSITION_BYTES_LEN (LONGITUDE_BYTES_LEN + LATITUDE_BYTES_LEN + ALTITUDE_BYTES_LEN)
 
 
@@ -51,7 +51,13 @@
 
 
 /* Dummy values for testing */
-time_pos_fix_t current_pos = {.hours_since_epoch = 0x00C8, .latitude = 0x17CA/*399121314 == 399121314*/, .longitude = 0xD312/*3541187191 == -753780105 */, .altitude = 0x00F2/*0x0000F221 >>2 */};
+time_pos_fix_t current_pos = 
+{
+	.minutes_since_epoch = 0x00C8AA,
+	.latitude = 0x17CA/*399121314 == 399121314*/,
+	.longitude = 0xD312/*3541187191 == -753780105 */,
+	.altitude = 0x00F2/*0x0000F221 >>2 */
+};
 
 
 sensor_t current_sensor_data = {
@@ -98,7 +104,7 @@ playback_key_info_t current_playback_key_info =
 
 /* Function prototypes for private (static) functions go here */
 
-void save_position(uint16_t hours_since_epoch, uint16_t latitude, uint16_t longitude, uint16_t altitude);
+void save_position(uint32_t minutes_since_epoch, uint16_t latitude, uint16_t longitude, uint16_t altitude);
 time_pos_fix_t *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
 int mod(int a, int b);
@@ -106,7 +112,7 @@ void fill_subset_positions_buffer(uint16_t subset_size);
 void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude );
 void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer,
 											uint16_t latitude, uint16_t longitude,
-											uint16_t altitude, uint16_t hours_since_epoch );
+											uint16_t altitude, uint32_t minutes_since_epoch );
 
 
 
@@ -126,7 +132,7 @@ void main()
 		subset_positions_ptr[i].longitude = current_pos.longitude;
 		subset_positions_ptr[i].latitude = current_pos.latitude;
 		subset_positions_ptr[i].altitude = current_pos.altitude;
-		subset_positions_ptr[i].hours_since_epoch = current_pos.hours_since_epoch;
+		subset_positions_ptr[i].minutes_since_epoch = current_pos.minutes_since_epoch;
 
 	}
 	
@@ -209,17 +215,19 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16
  * \param latitude
  * \param longitude
  * \param altitude
- * \param hours_since_epoch
+ * \param minutes_since_epoch
  * 
  * \return void
  */
-void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint16_t hours_since_epoch )
+void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint32_t minutes_since_epoch )
 {
 	
 	fill_tx_buffer_with_location(start_point, buffer, latitude, longitude, altitude );
 	
-	tx_str_buffer[start_point + POSITION_BYTES_LEN + 0] = (hours_since_epoch >> 0) & 0xff;
-	tx_str_buffer[start_point + POSITION_BYTES_LEN + 1] = (hours_since_epoch >> 8) & 0xff;
+	tx_str_buffer[start_point + POSITION_BYTES_LEN + 0] = (minutes_since_epoch >> 0) & 0xff;
+	tx_str_buffer[start_point + POSITION_BYTES_LEN + 1] = (minutes_since_epoch >> 8) & 0xff;
+	tx_str_buffer[start_point + POSITION_BYTES_LEN + 2] = (minutes_since_epoch >> 16) & 0xff;
+
 }
 
 /**
@@ -253,12 +261,12 @@ void prepare_tx_buffer(void)
 	  for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
 	  {
 		  time_pos_fix_t temp_pos = subset_positions_ptr[i];
-		  fill_tx_buffer_with_location_and_time(10 + i * (POSITION_BYTES_LEN+HOURS_SINCE_EPOCH_BYTES_LEN), 
+		  fill_tx_buffer_with_location_and_time(4 + POSITION_BYTES_LEN + i * (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_BYTES_LEN), 
 												tx_str_buffer,
 												temp_pos.latitude,
 												temp_pos.longitude,
 												temp_pos.altitude,
-												temp_pos.hours_since_epoch);
+												temp_pos.minutes_since_epoch);
 		  
 	  }
 
