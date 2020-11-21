@@ -60,7 +60,7 @@ time_pos_fix_t read_eeprom_pos_time(uint16_t index);
 
 
 /* Private function prototypes -----------------------------------------------*/
-void save_current_position_info_to_EEPROM(void);
+void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position);
 void fill_positions_to_send_buffer( void );
 uint32_t unix_time_to_minutes_since_epoch(uint32_t unix_time);
 
@@ -133,7 +133,7 @@ void BSP_sensor_Read(void)
 	/* fill up the buffer to send down */
 	fill_positions_to_send_buffer();
 	/* now save all this data to non volatile memory */
-	save_current_position_info_to_EEPROM();
+	save_current_position_info_to_EEPROM(&current_position);
 	
 	
 }
@@ -233,20 +233,15 @@ void  BSP_sensor_Init( void  )
   * @param none
   * @retval none
   */
-void save_current_position_info_to_EEPROM( void )
+void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position)
 {
 	
 	/* save Long, Lat, Altitude, minutes since epoch to EEPROM */
-	uint16_t truncated_altitude = (uint16_t)(gps_info.GPSaltitude >> 2) & 0xffffUL;
-	uint16_t truncated_latitude = (uint16_t)(gps_info.GPS_UBX_latitude >> 4) & 0xffffUL;
-	uint16_t truncated_longitude = (uint16_t)(gps_info.GPS_UBX_longitude >> 4) & 0xffffUL;
-	uint32_t truncated_time_since_epoch = (uint32_t)(gps_info.minutes_since_epoch) & 0xffffffUL;
-
 	
-	EepromMcuWriteBuffer(current_EEPROM_index + 0,(void*)&truncated_altitude,2); // todo: don't use numbers here. use #define
-	EepromMcuWriteBuffer(current_EEPROM_index + 2,(void*)&truncated_latitude,2);
-	EepromMcuWriteBuffer(current_EEPROM_index + 4,(void*)&truncated_longitude,2);
-	EepromMcuWriteBuffer(current_EEPROM_index + 6,(void*)&truncated_time_since_epoch,3); // todo: verify if works
+	EepromMcuWriteBuffer(current_EEPROM_index + 0,(void*)&current_position.altitude,2); // todo: don't use numbers here. use #define
+	EepromMcuWriteBuffer(current_EEPROM_index + 2,(void*)&current_position.latitude,2);
+	EepromMcuWriteBuffer(current_EEPROM_index + 4,(void*)&current_position.longitude,2);
+	EepromMcuWriteBuffer(current_EEPROM_index + 6,(void*)&current_position.minutes_since_epoch,3); // todo: verify if works
 
 	
 	/* Now update the index in EEPROM */
