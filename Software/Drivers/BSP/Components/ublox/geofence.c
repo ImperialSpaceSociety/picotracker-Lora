@@ -45,7 +45,7 @@
  */
 lora_setting_status_t lora_settings_status = CORRECT; 
 
-LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_AS923;  // Loramac region AS923
+LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_EU868;  // Loramac region AS923
 Polygon_t curr_poly_region = AS923925_INDONESIA_polygon; // Indonesia is in this polygon
 
 tx_permission_t tx_permission = TX_OK;
