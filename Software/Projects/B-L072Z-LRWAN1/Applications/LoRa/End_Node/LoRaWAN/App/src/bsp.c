@@ -54,7 +54,8 @@
 uint16_t current_EEPROM_index = 0;
 uint16_t n_playback_positions_saved = 0;
 time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
-
+time_pos_fix_t read_eeprom_pos_time(uint16_t index);
+void fill_subset_positions_buffer( void );
 
 
 /* Private function prototypes -----------------------------------------------*/
@@ -121,10 +122,57 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	sensor_data->no_load_solar_voltage = no_load_solar_voltage;
 	sensor_data->load_solar_voltage = load_solar_voltage;
 
-
-
-	// now save all this data to non volatile memory
+	/* fill up the buffer to send down */
+	fill_subset_positions_buffer();
+	/* now save all this data to non volatile memory */
 	save_current_position_info_to_EEPROM();
+	
+	
+}
+
+
+void fill_subset_positions_buffer( void )
+{
+	
+	playback_key_info_t current_playback_key_info = *get_playback_key_info();
+	
+
+	for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
+	{
+		/* if the eeprom is not yet full, then only select the ones that are in there */
+		int upper_val = MIN(current_playback_key_info.n_positions_to_select_from,
+			                  current_playback_key_info.n_positions_in_eeprom);
+		
+		int lower_val = current_playback_key_info.n_positions_offset;
+		
+		
+		int rand_time_pos_index = randr(lower_val, upper_val);
+		
+		time_pos_fix_t random_time_pos = read_eeprom_pos_time(rand_time_pos_index);
+		
+		
+		subset_positions[i].altitude = random_time_pos.altitude;
+		subset_positions[i].latitude = random_time_pos.latitude;
+		subset_positions[i].longitude = random_time_pos.longitude;
+		subset_positions[i].hours_since_epoch = random_time_pos.hours_since_epoch;
+	}
+}
+
+
+time_pos_fix_t read_eeprom_pos_time(uint16_t index)
+{
+	
+	time_pos_fix_t time_pos_fix;
+	
+	/* read Long, Lat, Altitude, minutes since epoch from EEPROM */
+	uint16_t eeprom_location = current_EEPROM_index - ((index + 1) * PLAYBACK_EEPROM_PACKET_SIZE);
+		
+	EepromMcuWriteBuffer(eeprom_location + 0,(void*)&time_pos_fix.altitude,2); // todo: don't use numbers here. use #define
+	EepromMcuWriteBuffer(eeprom_location + 2,(void*)&time_pos_fix.latitude,2);
+	EepromMcuWriteBuffer(eeprom_location + 4,(void*)&time_pos_fix.longitude,2);
+	EepromMcuWriteBuffer(eeprom_location + 6,(void*)&time_pos_fix.hours_since_epoch,3); // todo: verify if works
+	
+	return time_pos_fix;
 }
 
 void  BSP_sensor_Init( void  )
