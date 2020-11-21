@@ -86,9 +86,12 @@ static uint16_t tx_str_buffer_len = 0;
 #ifdef playback_testing
 time_pos_fix_t test_subset[MAX_SUBSET_SIZE];
 time_pos_fix_t *subset_positions_ptr = test_subset;
+sensor_t *sensor_data_ptr = &current_sensor_data;
+time_pos_fix_t *current_pos_ptr = &current_pos;
 #else
 time_pos_fix_t *subset_positions_ptr;
 sensor_t *sensor_data_ptr;
+time_pos_fix_t *current_pos_ptr;
 #endif
 
 /* ==================================================================== */
@@ -307,11 +310,12 @@ uint16_t  get_tx_buffer_len()
 	return tx_str_buffer_len;
 }
 
-void  init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions, sensor_t *sensor_data )
+void init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions, sensor_t *sensor_data, time_pos_fix_t *current_pos )
 {
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
 	subset_positions_ptr = subset_positions;
 	sensor_data_ptr = sensor_data;
+	current_pos_ptr = current_pos;
 
 }
 

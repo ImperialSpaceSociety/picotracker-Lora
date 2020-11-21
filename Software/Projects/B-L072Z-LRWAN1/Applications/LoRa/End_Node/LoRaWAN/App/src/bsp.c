@@ -194,7 +194,7 @@ void  BSP_sensor_Init( void  )
 	
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	EepromMcuReadBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
-	init_playback(n_playback_positions_saved, subset_positions, &sensor_data);
+	init_playback(n_playback_positions_saved, subset_positions, &sensor_data, &current_position);
 
 }
 
