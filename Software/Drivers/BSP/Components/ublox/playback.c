@@ -286,12 +286,15 @@ void prepare_tx_buffer(void)
 
 	  tx_str_buffer_len = 4 + POSITION_BYTES_LEN + (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_BYTES_LEN) * current_playback_key_info.n_positions_to_send;
 	  
+		#ifdef playback_testing
 	  // Print out buffer for debug
 	  for (int i = 0; i<tx_str_buffer_len;i ++)
 	  {
 		  printf("%02x",tx_str_buffer[i]);
 	  }
-	  
+		printf("\n");
+		printf("tx_str_buffer_len: %d",tx_str_buffer_len);
+	  #endif
 }
 
 
