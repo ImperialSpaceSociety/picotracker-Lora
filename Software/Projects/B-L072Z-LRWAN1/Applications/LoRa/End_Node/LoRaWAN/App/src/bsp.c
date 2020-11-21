@@ -241,10 +241,11 @@ void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position)
 	
 	/* save Long, Lat, Altitude, minutes since epoch to EEPROM */
 	
-	EepromMcuWriteBuffer(PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index + 0,(void*)&current_position.altitude,2); // todo: don't use numbers here. use #define
-	EepromMcuWriteBuffer(PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index + 2,(void*)&current_position.latitude,2);
-	EepromMcuWriteBuffer(PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index + 4,(void*)&current_position.longitude,2);
-	EepromMcuWriteBuffer(PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index + 6,(void*)&current_position.minutes_since_epoch,3); // todo: verify if works
+	uint16_t location_to_write = PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index;
+	EepromMcuWriteBuffer(location_to_write + 0,(void*)&current_position.altitude,2); // todo: don't use numbers here. use #define
+	EepromMcuWriteBuffer(location_to_write + 2,(void*)&current_position.latitude,2);
+	EepromMcuWriteBuffer(location_to_write + 4,(void*)&current_position.longitude,2);
+	EepromMcuWriteBuffer(location_to_write + 6,(void*)&current_position.minutes_since_epoch,3); // todo: verify if works
 
 	
 	/* Now update the index in EEPROM */
