@@ -172,7 +172,7 @@ time_pos_fix_t read_eeprom_pos_time(uint16_t index)
 	EepromMcuWriteBuffer(eeprom_location + 0,(void*)&time_pos_fix.altitude,2); // todo: don't use numbers here. use #define
 	EepromMcuWriteBuffer(eeprom_location + 2,(void*)&time_pos_fix.latitude,2);
 	EepromMcuWriteBuffer(eeprom_location + 4,(void*)&time_pos_fix.longitude,2);
-	EepromMcuWriteBuffer(eeprom_location + 6,(void*)&time_pos_fix.hours_since_epoch,3); // todo: verify if works
+	EepromMcuWriteBuffer(eeprom_location + 6,(void*)&time_pos_fix.minutes_since_epoch,3); // todo: verify if works
 	
 	return time_pos_fix;
 }
