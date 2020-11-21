@@ -57,11 +57,11 @@ time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
 time_pos_fix_t current_position;
 sensor_t sensor_data;
 time_pos_fix_t read_eeprom_pos_time(uint16_t index);
-void fill_positions_to_send_buffer( void );
 
 
 /* Private function prototypes -----------------------------------------------*/
 void save_current_position_info_to_EEPROM(void);
+void fill_positions_to_send_buffer( void );
 uint32_t unix_time_to_minutes_since_epoch(uint32_t unix_time);
 
 /* Exported functions ---------------------------------------------------------*/
