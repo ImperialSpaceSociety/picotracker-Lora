@@ -53,22 +53,22 @@
 /* Dummy values for testing */
 time_pos_fix_t current_pos = 
 {
-	.latitude = 0x17CA/*399121314 == 399121314*/,
-	.longitude = 0xD312/*3541187191 == -753780105 */,
-	.altitude = 0x00F2/*0x0000F221 >>2 */
 	.minutes_since_epoch = 0x00BBC8AA,  /*12306602 minutes */
+	.latitude = 0x17CA                  /*399121314 == 399121314*/,
+	.longitude = 0xD312                 /*3541187191 == -753780105 */,
+	.altitude = 0x00F2                  /*0x0000F221 >>2 */
 };
 
 
 sensor_t current_sensor_data = 
 {
-	.no_load_solar_voltage = 33,  // 18 - 43 (min 25 values)(5 bits)
-	.load_solar_voltage = 43,     // 18 - 43 (min 25 values)(5 bits)
-	.temperature = -23,                // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
-	.pressure = 400,               // 130 - 1030 (min 128 values, 10mbar per increment)(7 bits)
-	.data_received = 1,            // 0 or 1. indicates that message was received(1 bit)
-	.sats = 12,                     // 0 - 32. Number of sats. (4 bits)
-	.reset_count = 7               // 0-7. Number of resets in (3 bits)
+	.no_load_solar_voltage = 33,  /* 18 - 43 (min 25 values)(5 bits) */
+	.load_solar_voltage = 43,     /* 18 - 43 (min 25 values)(5 bits) */
+	.temperature = -23,           /* -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits) */
+	.pressure = 400,              /* 130 - 1030 (min 128 values, 10mbar per increment)(7 bits) */
+	.data_received = 1,           /* 0 or 1. indicates that message was received(1 bit) */
+	.sats = 12,                   /* 0 - 32. Number of sats. (4 bits) */
+	.reset_count = 7              /* 0-7. Number of resets in (3 bits) */
 };
 
 
