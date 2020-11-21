@@ -273,15 +273,15 @@ void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position)
 	
 	/* save Long, Lat, Altitude, minutes since epoch to EEPROM */
 	
-	EepromMcuWriteBuffer(current_EEPROM_index + 0,(void*)&current_position.altitude,2); // todo: don't use numbers here. use #define
-	EepromMcuWriteBuffer(current_EEPROM_index + 2,(void*)&current_position.latitude,2);
-	EepromMcuWriteBuffer(current_EEPROM_index + 4,(void*)&current_position.longitude,2);
-	EepromMcuWriteBuffer(current_EEPROM_index + 6,(void*)&current_position.minutes_since_epoch,3); // todo: verify if works
+	EepromMcuWriteBuffer(PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index + 0,(void*)&current_position.altitude,2); // todo: don't use numbers here. use #define
+	EepromMcuWriteBuffer(PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index + 2,(void*)&current_position.latitude,2);
+	EepromMcuWriteBuffer(PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index + 4,(void*)&current_position.longitude,2);
+	EepromMcuWriteBuffer(PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index + 6,(void*)&current_position.minutes_since_epoch,3); // todo: verify if works
 
 	
 	/* Now update the index in EEPROM */
-	current_EEPROM_index+=PLAYBACK_EEPROM_PACKET_SIZE;
-	n_playback_positions_saved+=1U;
+	current_EEPROM_index = (current_EEPROM_index + PLAYBACK_EEPROM_PACKET_SIZE)% PLAYBACK_EEPROM_SIZE;
+	n_playback_positions_saved= MIN(n_playback_positions_saved + 1,MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM);
 	
 	EepromMcuWriteBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	EepromMcuWriteBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index)); // TODO: max it out at MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM

@@ -99,9 +99,10 @@ typedef struct
 #define PLAYBACK_EEPROM_ADDR_START                 (14)
 #define PLAYBACK_EEPROM_PACKET_SIZE                (9)
 #define MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM     (650)
+#define PLAYBACK_EEPROM_SIZE                       (MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM * PLAYBACK_EEPROM_PACKET_SIZE)
 
 /* WARNING! Ensure this value is less than DATA_EEPROM_BANK2_END. Or else, it will overflow EEPROM */
-#define NVM_GPS_EEPROM_ADDR_END                    (NVM_GPS_EEPROM_ADDR_START - 1 + MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM * NVM_GPS_EEPROM_PACKET_SIZE)
+#define NVM_GPS_EEPROM_ADDR_END                    (NVM_GPS_EEPROM_ADDR_START - 1 + PLAYBACK_EEPROM_SIZE)
 																												
 
 
