@@ -64,7 +64,7 @@ sensor_t current_sensor_data =
 {
 	.no_load_solar_voltage = 33,  /* 18 - 43 (min 25 values)(5 bits) */
 	.load_solar_voltage = 43,     /* 18 - 43 (min 25 values)(5 bits) */
-	.temperature = -23,           /* -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits) */
+	.temperature = -23,           /* -64 to 64 in increments of 2 degrees celcius (min 40 values)(6 bits) */
 	.pressure = 400,              /* 130 - 1030 (min 128 values, 10mbar per increment)(7 bits) */
 	.data_received = 1,           /* 0 or 1. indicates that message was received(1 bit) */
 	.sats = 12,                   /* 0 - 32. Number of sats. (4 bits) */
