@@ -62,6 +62,7 @@ void fill_positions_to_send_buffer( void );
 
 /* Private function prototypes -----------------------------------------------*/
 void save_current_position_info_to_EEPROM(void);
+uint32_t unix_time_to_minutes_since_epoch(uint32_t unix_time);
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -126,7 +127,7 @@ void BSP_sensor_Read(void)
 	current_position.altitude  = (gps_info.GPSaltitude >> 8) & 0xffff;
 	current_position.latitude  = (gps_info.GPS_UBX_latitude >> 16) & 0xffff;
 	current_position.longitude = (gps_info.GPS_UBX_longitude >> 16) & 0xffff;
-	current_position.minutes_since_epoch = gps_info.GPS_UBX_longitude_Float; // TODO: get the actual epoch value
+	current_position.minutes_since_epoch = unix_time_to_minutes_since_epoch(gps_info.unix_time)&0x00ffffff;
 
 
 	/* fill up the buffer to send down */
@@ -257,6 +258,19 @@ void save_current_position_info_to_EEPROM( void )
 
 	
 }
+
+/**
+  * @brief Calculate minutes since epoch. Based on GPS time.
+	* Epoch is set to 1 Jan 2020 00:00:00H( unix time: 1577840461)
+  * @param none
+  * @retval none
+  */
+uint32_t unix_time_to_minutes_since_epoch(uint32_t unix_time)
+{
+	return (unix_time - 1577840461)/60;
+}
+
+
 
 /**
   * @brief It measures the solar voltage by returning the value in mV
