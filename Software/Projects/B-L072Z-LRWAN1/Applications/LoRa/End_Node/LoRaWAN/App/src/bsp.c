@@ -137,6 +137,13 @@ void BSP_sensor_Read(void)
 }
 
 
+/**
+ * \brief Fill buffer of random subset of positions to be sent.
+ * 
+ * \param 
+ * 
+ * \return void
+ */
 void fill_positions_to_send_buffer( void )
 {
 	
@@ -165,6 +172,13 @@ void fill_positions_to_send_buffer( void )
 }
 
 
+/**
+ * \brief Read the eeprom for a position and time and a certain index.
+ * 
+ * \param index
+ * 
+ * \return time_pos_fix_t position time fix
+ */
 time_pos_fix_t read_eeprom_pos_time(uint16_t index)
 {
 	
@@ -181,6 +195,13 @@ time_pos_fix_t read_eeprom_pos_time(uint16_t index)
 	return time_pos_fix;
 }
 
+/**
+ * \brief Intialise all the sensors and playback
+ * 
+ * \param 
+ * 
+ * \return void
+ */
 void  BSP_sensor_Init( void  )
 {
 	PRINTF("SELFTEST: Initialisng ms5607\n\r");

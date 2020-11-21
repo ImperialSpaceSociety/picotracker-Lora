@@ -151,6 +151,13 @@ void main()
 
 
 
+/**
+ * \brief Return pointer to current_playback_key_info
+ * 
+ * \param 
+ * 
+ * \return playback_key_info_t *
+ */
 playback_key_info_t *get_playback_key_info( void )
 {
 	return &current_playback_key_info;
@@ -289,7 +296,7 @@ void prepare_tx_buffer(void)
 
 
 /**
- * \brief 
+ * \brief  return pointer to tx_str_buffer
  * 
  * 
  * \return uint8_t *
@@ -300,7 +307,7 @@ uint8_t *get_tx_buffer()
 }
 
 /**
- * \brief 
+ * \brief return length of tx buffer
  * 
  * 
  * \return uint16_t
@@ -310,6 +317,17 @@ uint16_t  get_tx_buffer_len()
 	return tx_str_buffer_len;
 }
 
+/**
+ * \brief Intialise the pointers with pointers to actual buffer locations
+ *  Initialises this module
+ * 
+ * \param n_positions_in_eeprom
+ * \param subset_positions
+ * \param sensor_data
+ * \param current_pos
+ * 
+ * \return void
+ */
 void init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions, sensor_t *sensor_data, time_pos_fix_t *current_pos )
 {
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
