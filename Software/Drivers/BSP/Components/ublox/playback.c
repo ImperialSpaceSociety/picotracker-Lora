@@ -75,7 +75,7 @@ sensor_t current_sensor_data =
 playback_key_info_t current_playback_key_info = 
 {
 	.n_positions_in_eeprom = 0,            /* Number of positions held in the EEPROM */
-	.n_positions_to_send = 1,              /* Number of positions to send down in single transmission*/
+	.n_positions_to_send = 8,              /* Number of positions to send down in single transmission*/
 	.n_positions_offset = 5,               /* Send positions from n_positions_offset from current position. */
 	.n_positions_to_select_from = 300      /* Define size of pool of positions to select from */
 };
