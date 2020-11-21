@@ -353,16 +353,11 @@ static void Send( void* context )
 
 	
 
-	  
-  AppData.Port = LPP_APP_PORT;
-  
 	prepare_tx_buffer();
 	
-	memcpy(AppData.Buff, get_tx_buffer(), LORAWAN_APP_DATA_BUFF_SIZE);
-
-    
-
-  AppData.BuffSize = get_tx_buffer_len();
+  AppData.Port     =  LPP_APP_PORT;	
+	AppData.Buff     =  get_tx_buffer();
+  AppData.BuffSize =  get_tx_buffer_len();
 
 	
 	#if RADIO_ENABLED
