@@ -81,20 +81,20 @@ typedef struct
 #define FRAME_COUNTER_EEPROM_LEN                   (4)
 
 #define LORAMAC_REGION_EEPROM_ADDR                 (4)
-#define LORAMAC_REGION_EEPROM_LEN                  (1)
+#define LORAMAC_REGION_EEPROM_LEN                  (4)
 
 
-#define RESET_COUNTER_ADDR                         (5)
+#define RESET_COUNTER_ADDR                         (8)
 #define RESET_COUNTER_LEN                          (2)
 
 
-#define CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR      (7)
+#define CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR      (10)
 #define CURRENT_PLAYBACK_INDEX_IN_EEPROM_LEN       (2)
 
-#define N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR  (9)
+#define N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR  (12)
 #define N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_LEN   (2)
 
-#define PLAYBACK_EEPROM_ADDR_START                 (11)
+#define PLAYBACK_EEPROM_ADDR_START                 (14)
 #define PLAYBACK_EEPROM_PACKET_SIZE                (9)
 #define MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM     (650)
 
