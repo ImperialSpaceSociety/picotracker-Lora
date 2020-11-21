@@ -287,7 +287,7 @@ void prepare_tx_buffer(void)
 	  tx_str_buffer_len = 4 + POSITION_BYTES_LEN + (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_BYTES_LEN) * current_playback_key_info.n_positions_to_send;
 	  
 	  // Print out buffer for debug
-	  for (int i = 0; i<LORAWAN_APP_DATA_BUFF_SIZE;i ++)
+	  for (int i = 0; i<tx_str_buffer_len;i ++)
 	  {
 		  printf("%02x",tx_str_buffer[i]);
 	  }
