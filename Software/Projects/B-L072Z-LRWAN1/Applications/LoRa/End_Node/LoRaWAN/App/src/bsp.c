@@ -115,9 +115,9 @@ void BSP_sensor_Read(void)
 
 	
 	
-  sensor_data.humidity    = 34; // hard coded dummy value
-  sensor_data.temperature = TEMPERATURE_Value;
-  sensor_data.pressure    = PRESSURE_Value;
+	sensor_data.humidity    = 34; // hard coded dummy value
+	sensor_data.temperature = TEMPERATURE_Value;
+	sensor_data.pressure    = PRESSURE_Value;
 	sensor_data.no_load_solar_voltage = no_load_solar_voltage;
 	sensor_data.load_solar_voltage = load_solar_voltage;
 
