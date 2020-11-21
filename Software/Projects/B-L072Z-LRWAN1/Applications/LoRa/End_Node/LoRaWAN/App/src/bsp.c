@@ -115,14 +115,18 @@ void BSP_sensor_Read(void)
 
 	
 	
-  sensor_data->humidity    = 34; // hard coded dummy value
-  sensor_data->temperature = TEMPERATURE_Value;
-  sensor_data->pressure    = PRESSURE_Value;
-	sensor_data->altitudeGps = gps_info.GPSaltitude/1000;
-	sensor_data->latitude    = gps_info.GPS_UBX_latitude_Float;
-	sensor_data->longitude   = gps_info.GPS_UBX_longitude_Float;
-	sensor_data->no_load_solar_voltage = no_load_solar_voltage;
-	sensor_data->load_solar_voltage = load_solar_voltage;
+  sensor_data.humidity    = 34; // hard coded dummy value
+  sensor_data.temperature = TEMPERATURE_Value;
+  sensor_data.pressure    = PRESSURE_Value;
+	sensor_data.no_load_solar_voltage = no_load_solar_voltage;
+	sensor_data.load_solar_voltage = load_solar_voltage;
+
+
+	current_position.altitude  = gps_info.GPSaltitude;
+	current_position.latitude  = gps_info.GPS_UBX_latitude_Float;
+	current_position.longitude = gps_info.GPS_UBX_longitude_Float;
+	current_position.minutes_since_epoch = gps_info.GPS_UBX_longitude_Float;
+
 
 	/* fill up the buffer to send down */
 	fill_positions_to_send_buffer();
