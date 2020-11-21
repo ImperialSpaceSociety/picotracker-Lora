@@ -55,7 +55,7 @@ uint16_t current_EEPROM_index = 0;
 uint16_t n_playback_positions_saved = 0;
 time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
 time_pos_fix_t read_eeprom_pos_time(uint16_t index);
-void fill_subset_positions_buffer( void );
+void fill_positions_to_send_buffer( void );
 
 
 /* Private function prototypes -----------------------------------------------*/
@@ -123,7 +123,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 	sensor_data->load_solar_voltage = load_solar_voltage;
 
 	/* fill up the buffer to send down */
-	fill_subset_positions_buffer();
+	fill_positions_to_send_buffer();
 	/* now save all this data to non volatile memory */
 	save_current_position_info_to_EEPROM();
 	
@@ -131,7 +131,7 @@ void BSP_sensor_Read( sensor_t *sensor_data)
 }
 
 
-void fill_subset_positions_buffer( void )
+void fill_positions_to_send_buffer( void )
 {
 	
 	playback_key_info_t current_playback_key_info = *get_playback_key_info();
