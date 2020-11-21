@@ -357,6 +357,16 @@ static void Send( void* context )
   AppData.Port     =  LPP_APP_PORT;	
 	AppData.Buff     =  get_tx_buffer();
   AppData.BuffSize =  get_tx_buffer_len();
+	
+	// Print out buffer for debug
+	PRINTF("Buffer to tx:\n",AppData.BuffSize);
+	
+	for (int i = 0; i< AppData.BuffSize;i ++)
+	{
+		PRINTF("%02x",AppData.Buff[i]);
+	}
+	PRINTF("\n");
+	PRINTF("tx_str_buffer_len: %d\n\n",AppData.BuffSize);
 
 	
 	#if RADIO_ENABLED
