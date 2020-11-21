@@ -132,16 +132,7 @@ void HW_Init( void )
 		GPS_INT_GPIO_Init();
 		
 	
-		#if defined( VARIANT_1V1B )  || defined ( VARIANT_1V2B )
-		/* enable power to the sensors */
-		SENSOR_EN_GPIO_Init();
-		
-		#endif
-		
-		#if defined( VARIANT_1V2A) || defined( VARIANT_1V3A)
-		/* enable power to the GPS with mosfet */
-		GPS_EN_GPIO_Init();
-		#endif 
+
 		
 		PRINTF("SELFTEST: Now initing sensors\n\r");
     BSP_sensor_Init( );
