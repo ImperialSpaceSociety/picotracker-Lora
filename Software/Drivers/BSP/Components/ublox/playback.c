@@ -137,6 +137,10 @@ void main()
 
 
 
+playback_key_info_t *get_playback_key_info( void )
+{
+	return &current_playback_key_info;
+}
 
 
 /**

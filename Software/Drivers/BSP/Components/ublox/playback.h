@@ -53,6 +53,7 @@ typedef struct
 
 /* Definition of public (external) data types go here */
 void prepare_tx_buffer( void );
+playback_key_info_t *get_playback_key_info( void );
 
 
 uint8_t * get_tx_buffer( void );
