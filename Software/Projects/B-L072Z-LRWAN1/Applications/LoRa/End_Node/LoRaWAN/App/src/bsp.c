@@ -112,6 +112,12 @@ void BSP_sensor_Read(void)
 	PRINTF("Solar voltage with GPS load: "); 
 	PRINTF("%ld", load_solar_voltage); 
 	PRINTF("\r\n");
+	PRINTF("Reset Count: "); 
+	PRINTF("%ld", sensor_data.reset_count); 
+	PRINTF("\r\n");
+	PRINTF("Data received from ground: "); 
+	PRINTF("%ld", sensor_data.data_received); 
+	PRINTF("\r\n");
 	PRINTF("================================================================\r\n");
 
 
