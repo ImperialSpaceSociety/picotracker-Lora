@@ -63,6 +63,7 @@ time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
 void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position);
 void fill_positions_to_send_buffer( void );
 uint32_t unix_time_to_minutes_since_epoch(uint32_t unix_time);
+int mod(int a, int b);
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -284,6 +285,22 @@ time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index)
 	
 	return time_pos_fix;
 }
+
+/*
+ * \brief Mathematical mod operation. a mod b.
+ * 
+ * \param a
+ * \param b
+ * 
+ * \return int
+ */
+int mod(int a, int b)
+{
+	int r = a % b;
+	return r < 0 ? r + b : r;
+}
+
+
 
 /**
   * @brief Calculate minutes since epoch. Based on GPS time.

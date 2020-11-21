@@ -112,7 +112,6 @@ time_pos_fix_t *current_pos_ptr;
 void save_position(uint32_t minutes_since_epoch, uint16_t latitude, uint16_t longitude, uint16_t altitude);
 time_pos_fix_t *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
-int mod(int a, int b);
 void fill_subset_positions_buffer(uint16_t subset_size);
 void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude );
 void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer,
@@ -164,18 +163,7 @@ playback_key_info_t *get_playback_key_info( void )
 
 
 /**
- * \brief Mathematical mod operation. a mod b.
- * 
- * \param a
- * \param b
- * 
- * \return int
- */
-int mod(int a, int b)
-{
-	int r = a % b;
-	return r < 0 ? r + b : r;
-}
+
 
 /**
  * \brief This will generate random number in range l and r, inclusive of both(TODO: verify if this works)
