@@ -25,7 +25,6 @@
 #include "bsp.h"
 #include "ms5607.h"
 #include "ublox.h"
-#include "main.h"
 #include "playback.h"
 
 
