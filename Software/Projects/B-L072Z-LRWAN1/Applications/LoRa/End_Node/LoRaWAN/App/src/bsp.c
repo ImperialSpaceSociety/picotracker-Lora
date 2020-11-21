@@ -218,6 +218,25 @@ time_pos_fix_t read_eeprom_time_pos(uint16_t time_pos_index)
  */
 void  BSP_sensor_Init( void  )
 {
+	/* record number of resets to EEPROM, and also to send down */
+	EepromMcuReadBuffer(RESET_COUNTER_ADDR,(void*)&sensor_data.reset_count,RESET_COUNTER_LEN);
+	sensor_data.reset_count+=1;
+	EepromMcuWriteBuffer(RESET_COUNTER_ADDR,(void*)&sensor_data.reset_count,RESET_COUNTER_LEN);
+
+
+	
+	#if defined( VARIANT_1V1B )  || defined ( VARIANT_1V2B )
+	/* enable power to the sensors */
+	SENSOR_EN_GPIO_Init();
+	
+	#endif
+	
+	#if defined( VARIANT_1V2A) || defined( VARIANT_1V3A)
+	/* enable power to the GPS with mosfet */
+	GPS_EN_GPIO_Init();
+	#endif 
+	
+	
 	PRINTF("SELFTEST: Initialisng ms5607\n\r");
 	#if SENSOR_ENABLED
   /* Initialize sensors */	
