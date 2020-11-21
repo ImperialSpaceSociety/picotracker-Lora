@@ -60,16 +60,25 @@ time_pos_fix_t current_pos =
 };
 
 
-sensor_t current_sensor_data = {
-.no_load_solar_voltage = 33,  // 18 - 43 (min 25 values)(5 bits)
-.load_solar_voltage = 43,     // 18 - 43 (min 25 values)(5 bits)
-.temperature = -23,                // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
-.pressure = 400,               // 130 - 1030 (min 128 values, 10mbar per increment)(7 bits)
-.data_received = 1,            // 0 or 1. indicates that message was received(1 bit)
-.sats = 12,                     // 0 - 32. Number of sats. (4 bits)
-.reset_count = 7               // 0-7. Number of resets in (3 bits)
+sensor_t current_sensor_data = 
+{
+	.no_load_solar_voltage = 33,  // 18 - 43 (min 25 values)(5 bits)
+	.load_solar_voltage = 43,     // 18 - 43 (min 25 values)(5 bits)
+	.temperature = -23,                // -50 to 30 in increments of 2 degrees celcius (min 40 values)(6 bits)
+	.pressure = 400,               // 130 - 1030 (min 128 values, 10mbar per increment)(7 bits)
+	.data_received = 1,            // 0 or 1. indicates that message was received(1 bit)
+	.sats = 12,                     // 0 - 32. Number of sats. (4 bits)
+	.reset_count = 7               // 0-7. Number of resets in (3 bits)
 };
 
+
+playback_key_info_t current_playback_key_info = 
+{
+	.n_positions_in_eeprom = 0,            /* Number of positions held in the EEPROM */
+	.n_positions_to_send = 1,              /* Number of positions to send down in single transmission*/
+	.n_positions_offset = 5,               /* Send positions from n_positions_offset from current position. */
+	.n_positions_to_select_from = 300      /* Define size of pool of positions to select from */
+};
 
 static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
 static uint16_t tx_str_buffer_len = 0;
@@ -89,13 +98,7 @@ sensor_t *sensor_data_ptr;
 /* Definition of private datatypes go here */
 
 
-playback_key_info_t current_playback_key_info = 
-{
-	.n_positions_in_eeprom = 0,            /* Number of positions held in the EEPROM */
-	.n_positions_to_send = 8,              /* Number of positions to send down in single transmission*/
-	.n_positions_offset = 5,               /* Send positions from n_positions_offset from current position. */
-	.n_positions_to_select_from = 300      /* Define size of pool of positions to select from */
-};
+
 
 
 /* ==================================================================== */
