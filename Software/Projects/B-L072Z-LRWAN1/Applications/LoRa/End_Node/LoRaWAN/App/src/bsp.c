@@ -120,6 +120,7 @@ void BSP_sensor_Read(void)
 	sensor_data.pressure    = PRESSURE_Value;
 	sensor_data.no_load_solar_voltage = no_load_solar_voltage/100;
 	sensor_data.load_solar_voltage = load_solar_voltage/100;
+	sensor_data.sats = gps_info.GPSsats;
 
 
 	current_position.altitude  = (gps_info.GPSaltitude >> 8) & 0xffff;
