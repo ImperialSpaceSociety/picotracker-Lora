@@ -49,7 +49,7 @@
 /* Dummy values for testing */
 time_pos_fix_t current_pos = 
 {
-	.minutes_since_epoch = 0x00BBC8AA,  /*12306602 minutes */
+	.minutes_since_epoch = 0x0007342E,  /*472110 minutes */
 	.latitude = 0x17CA                  /*399121314 == 399121314*/,
 	.longitude = 0xD312                 /*3541187191 == -753780105 */,
 	.altitude = 0x00F2                  /*0x0000F221 >>2 */
