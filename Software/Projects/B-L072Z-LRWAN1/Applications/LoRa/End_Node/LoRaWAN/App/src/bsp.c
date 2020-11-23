@@ -106,6 +106,9 @@ void BSP_sensor_Read(void)
 	PRINTF("altitude: "); 
 	PRINTF("%ld", gps_info.GPSaltitude/1000	); 
 	PRINTF("\r\n");
+	PRINTF("GPS time: "); 
+	PRINTF("%ld", gps_info.unix_time	); 
+	PRINTF("\r\n");
 	PRINTF("Solar voltage no load: "); 
 	PRINTF("%ld", no_load_solar_voltage	); 
 	PRINTF("\r\n");
