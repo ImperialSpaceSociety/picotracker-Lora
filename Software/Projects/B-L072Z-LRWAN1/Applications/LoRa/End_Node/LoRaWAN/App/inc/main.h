@@ -97,6 +97,11 @@ void Error_Handler(void);
 /* LORAWAN RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 
+
+/* PLAYBACK RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
+#define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM  (20*60)    // Save to eeprom every 20 minutes
+
 /*!
  * Defines the application data transmission duty cycle. 2 minutes, value in [ms].
  */

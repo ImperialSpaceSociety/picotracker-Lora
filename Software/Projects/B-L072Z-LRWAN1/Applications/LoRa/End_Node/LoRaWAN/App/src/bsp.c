@@ -140,7 +140,12 @@ void BSP_sensor_Read(void)
 	/* fill up the buffer to send down */
 	fill_positions_to_send_buffer();
 	/* now save all this data to non volatile memory */
-	save_current_position_info_to_EEPROM(&current_position);
+	
+	time_pos_fix_t most_recent = retrieve_eeprom_time_pos(0);
+	if (current_position.minutes_since_epoch - most_recent.minutes_since_epoch  > HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM)
+	{
+		save_current_position_info_to_EEPROM(&current_position);
+	}
 	
 	
 }
