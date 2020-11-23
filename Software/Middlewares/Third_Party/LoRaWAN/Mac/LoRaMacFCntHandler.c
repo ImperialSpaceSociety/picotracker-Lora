@@ -299,8 +299,7 @@ LoRaMacFCntHandlerStatus_t LoRaMacResetFCnts( void )
 {
         
 #if SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
-	  LoadFrameCounter(&fCntUp_global);
-	  FCntHandlerNvmCtx.FCntList.FCntUp  = fCntUp_global;
+	  LoadFrameCounter(&FCntHandlerNvmCtx.FCntList.FCntUp);
 #else
 	  FCntHandlerNvmCtx.FCntList.FCntUp = 0;
 #endif //SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM
