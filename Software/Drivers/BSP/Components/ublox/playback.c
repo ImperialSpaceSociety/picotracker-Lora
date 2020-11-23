@@ -128,6 +128,7 @@ void main()
 {
 	
 	// Print out buffer for debug
+	printf("Filling buffer\n");
 	for (int i = 0; i<current_playback_key_info.n_positions_to_send;i ++)
 	{
 		subset_positions_ptr[i].longitude = current_pos.longitude;
@@ -140,6 +141,18 @@ void main()
 	printf("\n");
 	
 	prepare_tx_buffer();
+
+	printf("testing corput");
+	// Print out buffer for debug
+
+	int base = 10;
+
+	for (int i = 0; i<base*10;i ++)
+	{
+		double res = corput(i,base);
+		printf("i:%d res:%f\n",i,res);
+
+	}
 	
 }
 #endif
