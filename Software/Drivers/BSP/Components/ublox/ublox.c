@@ -93,8 +93,7 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 
 gps_status_t latest_gps_status = GPS_FAILURE;
 uint16_t load_solar_voltage = 0;
-gps_info_t gps_info = {0};
-
+gps_info_t gps_info = {.unix_time = 1606167108 };
 
 
 /* ==================================================================== */
