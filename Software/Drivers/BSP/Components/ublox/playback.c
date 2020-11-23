@@ -28,7 +28,6 @@
 /* #define and enum statements go here */
 #define LORAWAN_APP_DATA_BUFF_SIZE                           242U
 
-//#define playback_testing
 #define LONGITUDE_BYTES_LEN 2U
 #define LATITUDE_BYTES_LEN 2U
 #define ALTITUDE_BYTES_LEN 2U
