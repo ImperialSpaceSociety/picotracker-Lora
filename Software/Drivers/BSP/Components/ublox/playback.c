@@ -85,11 +85,11 @@ static uint16_t tx_str_buffer_len = 0;
 #ifdef playback_testing
 time_pos_fix_t test_subset[MAX_SUBSET_SIZE];
 time_pos_fix_t *subset_positions_ptr = test_subset;
-sensor_t *sensor_data_ptr = &current_sensor_data;
+sensor_t *current_sensor_data_ptr = &current_sensor_data;
 time_pos_fix_t *current_pos_ptr = &current_pos;
 #else
 time_pos_fix_t *subset_positions_ptr;
-sensor_t *sensor_data_ptr;
+sensor_t *current_sensor_data_ptr;
 time_pos_fix_t *current_pos_ptr;
 #endif
 
@@ -250,19 +250,19 @@ void prepare_tx_buffer(void)
 {
 	  
 	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
-	  tx_str_buffer[0] |= ((sensor_data_ptr->no_load_solar_voltage - 18) & 0x1F) << 3;
-	  tx_str_buffer[0] |= ((sensor_data_ptr->load_solar_voltage - 18) & 0x1C) >> 2;
+	  tx_str_buffer[0] |= ((current_sensor_data_ptr->no_load_solar_voltage - 18) & 0x1F) << 3;
+	  tx_str_buffer[0] |= ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x1C) >> 2;
 	  
 	  /* byte1: load voltage(remaining 2 bits) and temperature(6 bits)*/
-	  tx_str_buffer[1] |= ((sensor_data_ptr->load_solar_voltage - 18) & 0x03) << 6;
-	  tx_str_buffer[1] |= (sensor_data_ptr->temperature >> 2 & 0x3F);
+	  tx_str_buffer[1] |= ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x03) << 6;
+	  tx_str_buffer[1] |= (current_sensor_data_ptr->temperature >> 2 & 0x3F);
 	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
-	  tx_str_buffer[2] |= ((sensor_data_ptr->pressure/10) & 0x7F) << 1; // TODO: some minusing has to happen for pressure
-	  tx_str_buffer[2] |=	(sensor_data_ptr->data_received & 0x01);
+	  tx_str_buffer[2] |= ((current_sensor_data_ptr->pressure/10) & 0x7F) << 1; // TODO: some minusing has to happen for pressure
+	  tx_str_buffer[2] |=	(current_sensor_data_ptr->data_received & 0x01);
 	  
 	  /* byte3: Sats(5 bits) and reset count(3 bits)*/
-	  tx_str_buffer[3] |= (sensor_data_ptr->sats & 0x1F) << 3;
-	  tx_str_buffer[3] |= (sensor_data_ptr->reset_count & 0x07);
+	  tx_str_buffer[3] |= (current_sensor_data_ptr->sats & 0x1F) << 3;
+	  tx_str_buffer[3] |= (current_sensor_data_ptr->reset_count & 0x07);
 
 	  
 	  fill_tx_buffer_with_location(4, tx_str_buffer, current_pos_ptr->latitude,current_pos_ptr->longitude,current_pos_ptr->altitude);
@@ -332,7 +332,7 @@ void init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positi
 {
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
 	subset_positions_ptr = subset_positions;
-	sensor_data_ptr = sensor_data;
+	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
 
 }
