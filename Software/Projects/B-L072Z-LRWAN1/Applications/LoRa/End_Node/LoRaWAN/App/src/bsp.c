@@ -263,7 +263,7 @@ void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position)
 /**
  * \brief Read the eeprom for a position and time and a certain index.
  * 
- * \param index
+ * \param index. index 0 is the most recent timepos stored in eeprom.
  * 
  * \return time_pos_fix_t position time fix
  */
