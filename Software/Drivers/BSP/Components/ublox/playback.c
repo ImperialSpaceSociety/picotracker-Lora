@@ -356,8 +356,9 @@ void prepare_tx_buffer(void)
 	  
 	  for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
 	  {
-		  fill_tx_buffer_with_location_and_time(4 + POSITION_BYTES_LEN + i * (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_BYTES_LEN), 
 		  time_pos_fix_t temp_pos = subset_positions[i];
+
+		  fill_tx_buffer_with_location_and_time(4 + POSITION_BYTES_LEN + i * (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_BYTES_LEN), 
 												tx_str_buffer,
 												temp_pos.latitude,
 												temp_pos.longitude,
