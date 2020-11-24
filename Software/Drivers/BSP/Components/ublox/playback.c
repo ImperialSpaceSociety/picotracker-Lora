@@ -35,6 +35,17 @@
 #define POSITION_BYTES_LEN (LONGITUDE_BYTES_LEN + LATITUDE_BYTES_LEN + ALTITUDE_BYTES_LEN)
 
 
+
+/*!
+ * \brief Returns the minimum value between a and b
+ *
+ * \param [IN] a 1st value
+ * \param [IN] b 2nd value
+ * \retval minValue Minimum value
+ */
+#define MIN( a, b ) ( ( ( a ) < ( b ) ) ? ( a ) : ( b ) )
+
+
 /* ==================================================================== */
 /* ======================== global variables ========================== */
 /* ==================================================================== */
@@ -80,15 +91,17 @@ static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
 static uint16_t tx_str_buffer_len = 0;
 
 #ifdef playback_testing
-time_pos_fix_t test_subset[MAX_SUBSET_SIZE];
-time_pos_fix_t *subset_positions_ptr = test_subset;
 sensor_t *current_sensor_data_ptr = &current_sensor_data;
 time_pos_fix_t *current_pos_ptr = &current_pos;
 #else
-time_pos_fix_t *subset_positions_ptr;
 sensor_t *current_sensor_data_ptr;
 time_pos_fix_t *current_pos_ptr;
 #endif
+
+
+
+time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
+
 
 /* ==================================================================== */
 /* ========================== private data ============================ */
@@ -114,6 +127,14 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16
 void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer,
 											uint16_t latitude, uint16_t longitude,
 											uint16_t altitude, uint32_t minutes_since_epoch );
+void fill_positions_to_send_buffer( void );
+
+// Make sure to get the function's signature right here
+
+/* Initlise pointer to retrieve eeprom time pos */
+retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr;
+
+
 
 
 
@@ -131,10 +152,10 @@ void main()
 	printf("Filling buffer\n");
 	for (int i = 0; i<current_playback_key_info.n_positions_to_send;i ++)
 	{
-		subset_positions_ptr[i].longitude = current_pos.longitude;
-		subset_positions_ptr[i].latitude = current_pos.latitude;
-		subset_positions_ptr[i].altitude = current_pos.altitude;
-		subset_positions_ptr[i].minutes_since_epoch = current_pos.minutes_since_epoch;
+		subset_positions[i].longitude = current_pos.longitude;
+		subset_positions[i].latitude = current_pos.latitude;
+		subset_positions[i].altitude = current_pos.altitude;
+		subset_positions[i].minutes_since_epoch = current_pos.minutes_since_epoch;
 
 	}
 	
@@ -153,6 +174,8 @@ void main()
 		printf("i:%d res:%f\n",i,res);
 
 	}
+
+	fill_positions_to_send_buffer();
 	
 }
 #endif
@@ -182,6 +205,45 @@ double corput(int n, int base){
     }
 
     return q;
+}
+
+
+
+/**
+ * \brief Fill buffer of random subset of positions to be sent.
+ *  TODO: find out how to select a subset without repeats
+ *  TODO: find a better solution of selecting a subset to give us the most info
+ * \param 
+ * 
+ * \return void
+ */
+void fill_positions_to_send_buffer( void )
+{
+	
+	for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
+	{
+		/* if the eeprom is not yet full, then only select the ones that are in there */
+		int upper_val = MIN(current_playback_key_info.n_positions_to_select_from,
+			                  current_playback_key_info.n_positions_in_eeprom);
+		
+		int lower_val = current_playback_key_info.n_positions_offset;
+		
+		int rand_time_pos_index = generate_random(lower_val, upper_val);
+
+		
+		time_pos_fix_t random_time_pos = retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
+		
+		#ifdef playback_testing
+		printf("Altitide: %d",random_time_pos.altitude);
+		printf("\n");
+		#endif
+		
+		
+		subset_positions[i].altitude = random_time_pos.altitude;
+		subset_positions[i].latitude = random_time_pos.latitude;
+		subset_positions[i].longitude = random_time_pos.longitude;
+		subset_positions[i].minutes_since_epoch = random_time_pos.minutes_since_epoch;
+	}
 }
 
 
@@ -330,20 +392,18 @@ uint16_t  get_tx_buffer_len()
 /**
  * \brief Intialise the pointers with pointers to actual buffer locations
  *  Initialises this module
- * 
  * \param n_positions_in_eeprom
- * \param subset_positions
  * \param sensor_data
  * \param current_pos
+ * \param retrieve_eeprom_time_pos_ptr
  * 
  * \return void
  */
-void init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions, sensor_t *sensor_data, time_pos_fix_t *current_pos )
+void init_playback(uint16_t n_positions_in_eeprom, sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr)
 {
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
-	subset_positions_ptr = subset_positions;
 	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
-
+	retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
 }
 

@@ -52,7 +52,6 @@
 /* Private variables ---------------------------------------------------------*/
 uint16_t current_EEPROM_index = 0;
 uint16_t n_playback_positions_saved = 0;
-time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
 
 /* Dummy values for testing */
 
@@ -165,40 +164,6 @@ void BSP_sensor_Read(void)
 }
 
 
-/**
- * \brief Fill buffer of random subset of positions to be sent.
- *  TODO: find out how to select a subset without repeats
- *  TODO: find a better solution of selecting a subset to give us the most info
- * \param 
- * 
- * \return void
- */
-void fill_positions_to_send_buffer( void )
-{
-	
-	playback_key_info_t current_playback_key_info = *get_playback_key_info();
-	
-
-	for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
-	{
-		/* if the eeprom is not yet full, then only select the ones that are in there */
-		int upper_val = MIN(current_playback_key_info.n_positions_to_select_from,
-			                  current_playback_key_info.n_positions_in_eeprom);
-		
-		int lower_val = current_playback_key_info.n_positions_offset;
-		
-		
-		int rand_time_pos_index = randr(lower_val, upper_val);
-		
-		time_pos_fix_t random_time_pos = retrieve_eeprom_time_pos(rand_time_pos_index);
-		
-		
-		subset_positions[i].altitude = random_time_pos.altitude;
-		subset_positions[i].latitude = random_time_pos.latitude;
-		subset_positions[i].longitude = random_time_pos.longitude;
-		subset_positions[i].minutes_since_epoch = random_time_pos.minutes_since_epoch;
-	}
-}
 
 
 
@@ -245,8 +210,7 @@ void  BSP_sensor_Init( void  )
 	
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	EepromMcuReadBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
-	init_playback(n_playback_positions_saved, subset_positions, &sensor_data, &current_position);
-
+	init_playback(n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos);
 }
 
 

@@ -55,11 +55,13 @@ typedef struct
 void prepare_tx_buffer( void );
 playback_key_info_t *get_playback_key_info( void );
 
+typedef time_pos_fix_t (*retrieve_eeprom_time_pos_ptr_T)(uint16_t time_pos_index);
 
 double corput(int n, int base);
 uint8_t * get_tx_buffer( void );
 uint16_t get_tx_buffer_len( void );
-void init_playback(uint16_t n_positions_in_eeprom, time_pos_fix_t *subset_positions, sensor_t *sensor_data, time_pos_fix_t *current_pos );
+void init_playback(uint16_t n_positions_in_eeprom, sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr);
+
 /* ==================================================================== */
 /* ======================= public functions =========================== */
 /* ==================================================================== */
