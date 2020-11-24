@@ -667,7 +667,6 @@ typedef struct
 		float meanAccuracy;
 	} svin;
 	
-	extern timeStructure time_info;
 
 	//Relative Positioning Info in NED frame specific controls
 	static struct frelPosInfoStructure
