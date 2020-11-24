@@ -55,6 +55,7 @@ static uint8_t GPS_buffer[MAX_PAYLOAD_SIZE];
 uint8_t ubx_packet_buff[MAX_PAYLOAD_SIZE] = {0};
 
 
+
 const char *statusString(sfe_ublox_status_e stat)
 {
   switch (stat)
