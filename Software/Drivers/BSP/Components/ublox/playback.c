@@ -268,7 +268,7 @@ int generate_random(int l, int r) {
 void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude )
 {
 	
-	/* current position. Use the most significant numbers. Truncate to 16 bits.*/
+	/* Send current position. Use the most significant numbers. Truncate to 16 bits.*/
 	/* latitude(16 bits) -90 to 90*/
 	tx_str_buffer[start_point + 0] = (latitude >> 0) & 0xff;
 	tx_str_buffer[start_point + 1] = (latitude >> 8) & 0xff;
@@ -297,9 +297,9 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16
  */
 void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint32_t minutes_since_epoch )
 {
-	
+	/* Fill the location info */
 	fill_tx_buffer_with_location(start_point, buffer, latitude, longitude, altitude );
-	
+	/* Send minutes since epoch */
 	tx_str_buffer[start_point + POSITION_BYTES_LEN + 0] = (minutes_since_epoch >> 0) & 0xff;
 	tx_str_buffer[start_point + POSITION_BYTES_LEN + 1] = (minutes_since_epoch >> 8) & 0xff;
 	tx_str_buffer[start_point + POSITION_BYTES_LEN + 2] = (minutes_since_epoch >> 16) & 0xff;
