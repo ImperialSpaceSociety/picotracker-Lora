@@ -77,7 +77,6 @@ sensor_t current_sensor_data =
 
 playback_key_info_t current_playback_key_info = 
 {
-	.n_positions_in_eeprom = 0,            /* Number of positions held in the EEPROM */
 	.n_positions_to_send = 12,              /* Number of positions to send down in single transmission*/
 	.n_positions_offset = 0,               /* Send positions from n_positions_offset from current position. */
 	.n_positions_to_select_from = 300      /* Define size of pool of positions to select from */
@@ -218,7 +217,7 @@ void fill_positions_to_send_buffer( void )
 	{
 		/* if the eeprom is not yet full, then only select the ones that are in there */
 		int upper_val = MIN(current_playback_key_info.n_positions_to_select_from,
-			                  current_playback_key_info.n_positions_in_eeprom);
+			                  *current_playback_key_info.n_positions_in_eeprom);
 		
 		int lower_val = current_playback_key_info.n_positions_offset;
 		
@@ -393,7 +392,7 @@ uint16_t  get_tx_buffer_len()
  * 
  * \return void
  */
-void init_playback(uint16_t n_positions_in_eeprom, sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr)
+void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr)
 {
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
 	current_sensor_data_ptr = sensor_data;
