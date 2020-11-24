@@ -266,7 +266,11 @@ void fill_positions_to_send_buffer( void )
  * \return int random number
  */
 int generate_random(int l, int r) { 
+	#ifdef playback_testing
 	int rand_num = (rand() % (r - l + 1)) + l;
+	#else
+	int rand_num = 	0;
+	#endif
 	return rand_num;
 }
 
