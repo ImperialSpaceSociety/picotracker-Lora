@@ -220,6 +220,9 @@ double corput(int n, int base){
  * \brief Fill buffer of random subset of positions to be sent.
  *  TODO: find out how to select a subset without repeats
  *  TODO: find a better solution of selecting a subset to give us the most info
+ *  This buffer is not even needed. The random selection funtion can be used
+ *  to select the data points just as the tx string is being built
+ *  redundent.
  * \param 
  * 
  * \return void
