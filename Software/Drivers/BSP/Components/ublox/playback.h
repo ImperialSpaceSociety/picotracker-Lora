@@ -34,6 +34,13 @@ extern "C"
 
 /* #define and enum statements go here */
 
+#define LONGITUDE_BYTES_LEN 2U
+#define LATITUDE_BYTES_LEN 2U
+#define ALTITUDE_BYTES_LEN 2U
+#define MINUTES_SINCE_EPOCH_BYTES_LEN 3U
+#define POSITION_BYTES_LEN (LONGITUDE_BYTES_LEN + LATITUDE_BYTES_LEN + ALTITUDE_BYTES_LEN)
+
+
 typedef struct
 {
 	uint16_t * n_positions_in_eeprom;            /* Number of positions held in the EEPROM */
