@@ -96,12 +96,19 @@ void Error_Handler(void);
 
 /* LORAWAN RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
-
+/*!
+ * User application data buffer size
+ */
+#define LORAWAN_APP_DATA_BUFF_SIZE                           242
 
 /* PLAYBACK RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 #define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM  (20*60)    // Save to eeprom every 20 minutes
 
+#define DEFAULT_N_POSITIONS_TO_SEND 12U
+#define MAX_N_POSITIONS_TO_SEND 25U
+#define DEFAULT_N_POSITIONS_OFFSET 0U
+#define DEFAULT_N_POSITIONS_TO_SELECT_FROM 300UL
 /*!
  * Defines the application data transmission duty cycle. 2 minutes, value in [ms].
  */

@@ -26,11 +26,7 @@
 /* ==================================================================== */
 
 /* #define and enum statements go here */
-#define LORAWAN_APP_DATA_BUFF_SIZE                           242U
 
-
-
-#define MAX_SUBSET_SIZE 25U
 #define CORPUT_BASE 2U
 
 
@@ -74,14 +70,14 @@ sensor_t current_sensor_data =
 
 playback_key_info_t current_playback_key_info = 
 {
-	.n_positions_to_send = 12,              /* Number of positions to send down in single transmission*/
-	.n_positions_offset = 0,               /* Send positions from n_positions_offset from current position. */
-	.n_positions_to_select_from = 300      /* Define size of pool of positions to select from */
+	.n_positions_to_send = DEFAULT_N_POSITIONS_TO_SEND,              /* Number of positions to send down in single transmission*/
+	.n_positions_offset = DEFAULT_N_POSITIONS_OFFSET,               /* Send positions from n_positions_offset from current position. */
+	.n_positions_to_select_from = DEFAULT_N_POSITIONS_TO_SELECT_FROM   /* Define size of pool of positions to select from */
 };
 
 static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
 static uint16_t tx_str_buffer_len = 0;
-time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
+time_pos_fix_t subset_positions[MAX_N_POSITIONS_TO_SEND];
 
 
 #ifdef playback_testing

@@ -60,10 +60,7 @@
  * LoRaWAN default confirm state
  */
 #define LORAWAN_DEFAULT_CONFIRM_MSG_STATE           LORAWAN_UNCONFIRMED_MSG
-/*!
- * User application data buffer size
- */
-#define LORAWAN_APP_DATA_BUFF_SIZE                           242
+
 /*!
  * User application data
  */
