@@ -132,7 +132,7 @@ void fill_positions_to_send_buffer( void );
 // Make sure to get the function's signature right here
 
 /* Initlise pointer to retrieve eeprom time pos */
-retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr;
+retrieve_eeprom_time_pos_ptr_T Retrieve_eeprom_time_pos_ptr;
 
 
 
@@ -231,7 +231,7 @@ void fill_positions_to_send_buffer( void )
 		int rand_time_pos_index = generate_random(lower_val, upper_val);
 
 		
-		time_pos_fix_t random_time_pos = retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
+		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
 		
 		#ifdef playback_testing
 		printf("Altitide: %d",random_time_pos.altitude);
@@ -404,6 +404,6 @@ void init_playback(uint16_t n_positions_in_eeprom, sensor_t *sensor_data, time_p
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
 	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
-	retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
+	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
 }
 
