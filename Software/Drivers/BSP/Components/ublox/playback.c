@@ -29,7 +29,8 @@
 #define LORAWAN_APP_DATA_BUFF_SIZE                           242U
 
 
-#define MAX_SUBSET_SIZE 100U
+
+#define MAX_SUBSET_SIZE 25U
 #define CORPUT_BASE 2U
 
 
