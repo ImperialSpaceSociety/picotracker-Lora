@@ -257,10 +257,10 @@ time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index)
 	
 	/* read Long, Lat, Altitude, minutes since epoch from EEPROM */
 	uint16_t location_to_read = PLAYBACK_EEPROM_ADDR_START + mod(current_EEPROM_index - (time_pos_index + 1) * PLAYBACK_EEPROM_PACKET_SIZE,PLAYBACK_EEPROM_SIZE);	
-	EepromMcuReadBuffer(location_to_read + 0,(void*)&time_pos_fix.altitude,2); // todo: don't use numbers here. use #define
-	EepromMcuReadBuffer(location_to_read + 2,(void*)&time_pos_fix.latitude,2);
-	EepromMcuReadBuffer(location_to_read + 4,(void*)&time_pos_fix.longitude,2);
-	EepromMcuReadBuffer(location_to_read + 6,(void*)&time_pos_fix.minutes_since_epoch,3);
+	EepromMcuReadBuffer(location_to_read + 0,(void*)&time_pos_fix.altitude, ALTITUDE_BYTES_LEN);
+	EepromMcuReadBuffer(location_to_read + 2,(void*)&time_pos_fix.latitude, LATITUDE_BYTES_LEN);
+	EepromMcuReadBuffer(location_to_read + 4,(void*)&time_pos_fix.longitude, LONGITUDE_BYTES_LEN);
+	EepromMcuReadBuffer(location_to_read + 6,(void*)&time_pos_fix.minutes_since_epoch, MINUTES_SINCE_EPOCH_BYTES_LEN);
 	
 	return time_pos_fix;
 }
