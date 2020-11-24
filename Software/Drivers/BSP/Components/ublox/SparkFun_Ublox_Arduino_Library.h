@@ -326,7 +326,6 @@ static const uint8_t UBX_SEC_UNIQID = 0x03; //Unique chip ID
 
 //The following are used to configure the TIM UBX messages (timing messages). Descriptions from UBX messages overview (ZED_F9P Interface Description Document page 36)
 static const uint8_t UBX_TIM_TM2 = 0x03;  //Time mark data
-static const uint8_t UBX_TIM_TOS = 0x12;  //Time Pulse Time and Frequency Data
 static const uint8_t UBX_TIM_TP = 0x01;   //Time Pulse Timedata
 static const uint8_t UBX_TIM_VRFY = 0x06; //Sourced Time Verification
 
