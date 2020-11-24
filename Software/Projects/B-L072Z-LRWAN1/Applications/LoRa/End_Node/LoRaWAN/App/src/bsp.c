@@ -260,7 +260,7 @@ time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index)
 	EepromMcuReadBuffer(location_to_read + 0,(void*)&time_pos_fix.altitude,2); // todo: don't use numbers here. use #define
 	EepromMcuReadBuffer(location_to_read + 2,(void*)&time_pos_fix.latitude,2);
 	EepromMcuReadBuffer(location_to_read + 4,(void*)&time_pos_fix.longitude,2);
-	EepromMcuReadBuffer(location_to_read + 6,(void*)&time_pos_fix.minutes_since_epoch,3); // todo: verify if works
+	EepromMcuReadBuffer(location_to_read + 6,(void*)&time_pos_fix.minutes_since_epoch,3);
 	
 	return time_pos_fix;
 }

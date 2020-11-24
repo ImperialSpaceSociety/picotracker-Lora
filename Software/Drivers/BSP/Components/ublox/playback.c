@@ -253,7 +253,7 @@ void fill_positions_to_send_buffer( void )
 
 
 /**
- * \brief This will generate random number in range l and r, inclusive of both(TODO: verify if this works)
+ * \brief This will generate random number in range l and r, inclusive of both
  * 
  * \param l: lower bound
  * \param r: upper bound
@@ -338,7 +338,7 @@ void prepare_tx_buffer(void)
 	  tx_str_buffer[1] = ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x03) << 6;
 	  tx_str_buffer[1] |= (current_sensor_data_ptr->temperature >> 2 & 0x3F);
 	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
-	  tx_str_buffer[2] = ((current_sensor_data_ptr->pressure/10) & 0x7F) << 1; // TODO: some minusing has to happen for pressure
+	  tx_str_buffer[2] = ((current_sensor_data_ptr->pressure/10) & 0x7F) << 1;
 	  tx_str_buffer[2] |=	(current_sensor_data_ptr->data_received & 0x01);
 	  
 	  /* byte3: Sats(5 bits) and reset count(3 bits)*/
