@@ -171,7 +171,7 @@ void main()
 	{
 		int index_c = corput_index(0, 100);
 
-		printf("i:%d index %d\n",i,index_c);
+		//printf("i:%d index %d\n",i,index_c);
 
 	}
 
