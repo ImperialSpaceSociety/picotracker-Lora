@@ -35,6 +35,7 @@
 #define POSITION_BYTES_LEN (LONGITUDE_BYTES_LEN + LATITUDE_BYTES_LEN + ALTITUDE_BYTES_LEN)
 
 #define MAX_SUBSET_SIZE 100U
+#define CORPUT_BASE 2U
 
 
 /*!
@@ -103,7 +104,7 @@ time_pos_fix_t *current_pos_ptr;
 /* Definition of private datatypes go here */
 
 
-
+typedef int (*select_low_discrepancy_T )(int low, int high);
 
 
 /* ==================================================================== */
@@ -122,10 +123,16 @@ void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffe
 											uint16_t altitude, uint32_t minutes_since_epoch );
 void fill_positions_to_send_buffer( void );
 
+
+int corput_index(int lower_val, int upper_val);
+int corput_n = 0;
+
+
 // Make sure to get the function's signature right here
 
 /* Initlise pointer to retrieve eeprom time pos */
 retrieve_eeprom_time_pos_ptr_T Retrieve_eeprom_time_pos_ptr;
+select_low_discrepancy_T select_low_discrepancy_ptr = corput_index;
 
 
 
@@ -158,17 +165,16 @@ void main()
 
 	printf("testing corput");
 	// Print out buffer for debug
+	int size = 100;
 
-	int base = 10;
-
-	for (int i = 0; i<base*10;i ++)
+	for (int i = 0; i<1000;i ++)
 	{
-		double res = corput(i,base);
-		printf("i:%d res:%f\n",i,res);
+		int index_c = corput_index(0, 100);
+
+		printf("i:%d index %d\n",i,index_c);
 
 	}
 
-	fill_positions_to_send_buffer();
 	
 }
 #endif
@@ -187,6 +193,14 @@ playback_key_info_t *get_playback_key_info( void )
 	return &current_playback_key_info;
 }
 
+// TODO: add random offset so that it does not give the same sequence everytime.
+int corput_index(int lower_val, int upper_val){
+	double q = corput(corput_n,CORPUT_BASE);
+
+	corput_n +=1;
+
+	return (int)((upper_val-lower_val) * q) + lower_val;;
+}
 
 double corput(int n, int base){
     double q=0, bk=(double)1/base;
@@ -221,7 +235,7 @@ void fill_positions_to_send_buffer( void )
 		
 		int lower_val = current_playback_key_info.n_positions_offset;
 		
-		int rand_time_pos_index = generate_random(lower_val, upper_val);
+		int rand_time_pos_index = select_low_discrepancy_ptr(lower_val, upper_val);
 
 		
 		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
