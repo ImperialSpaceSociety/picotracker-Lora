@@ -34,9 +34,6 @@ extern "C"
 
 /* #define and enum statements go here */
 
-#define MAX_SUBSET_SIZE 100U
-
-
 typedef struct
 {
 	uint16_t n_positions_in_eeprom;            /* Number of positions held in the EEPROM */

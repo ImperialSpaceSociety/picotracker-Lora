@@ -34,6 +34,7 @@
 #define MINUTES_SINCE_EPOCH_BYTES_LEN 3U
 #define POSITION_BYTES_LEN (LONGITUDE_BYTES_LEN + LATITUDE_BYTES_LEN + ALTITUDE_BYTES_LEN)
 
+#define MAX_SUBSET_SIZE 100U
 
 
 /*!
@@ -51,11 +52,6 @@
 /* ==================================================================== */
 
 /* Global variables definitions go here */
-
-
-
-
-
 
 /* Dummy values for testing */
 time_pos_fix_t current_pos = 
@@ -89,6 +85,8 @@ playback_key_info_t current_playback_key_info =
 
 static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
 static uint16_t tx_str_buffer_len = 0;
+time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
+
 
 #ifdef playback_testing
 sensor_t *current_sensor_data_ptr = &current_sensor_data;
@@ -97,10 +95,6 @@ time_pos_fix_t *current_pos_ptr = &current_pos;
 sensor_t *current_sensor_data_ptr;
 time_pos_fix_t *current_pos_ptr;
 #endif
-
-
-
-time_pos_fix_t subset_positions[MAX_SUBSET_SIZE];
 
 
 /* ==================================================================== */
