@@ -336,18 +336,18 @@ void prepare_tx_buffer(void)
 {
 	  
 	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
-	  tx_str_buffer[0] |= ((current_sensor_data_ptr->no_load_solar_voltage - 18) & 0x1F) << 3;
+	  tx_str_buffer[0] = ((current_sensor_data_ptr->no_load_solar_voltage - 18) & 0x1F) << 3;
 	  tx_str_buffer[0] |= ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x1C) >> 2;
 	  
 	  /* byte1: load voltage(remaining 2 bits) and temperature(6 bits)*/
-	  tx_str_buffer[1] |= ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x03) << 6;
+	  tx_str_buffer[1] = ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x03) << 6;
 	  tx_str_buffer[1] |= (current_sensor_data_ptr->temperature >> 2 & 0x3F);
 	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
-	  tx_str_buffer[2] |= ((current_sensor_data_ptr->pressure/10) & 0x7F) << 1; // TODO: some minusing has to happen for pressure
+	  tx_str_buffer[2] = ((current_sensor_data_ptr->pressure/10) & 0x7F) << 1; // TODO: some minusing has to happen for pressure
 	  tx_str_buffer[2] |=	(current_sensor_data_ptr->data_received & 0x01);
 	  
 	  /* byte3: Sats(5 bits) and reset count(3 bits)*/
-	  tx_str_buffer[3] |= (current_sensor_data_ptr->sats & 0x1F) << 3;
+	  tx_str_buffer[3] = (current_sensor_data_ptr->sats & 0x1F) << 3;
 	  tx_str_buffer[3] |= (current_sensor_data_ptr->reset_count & 0x07);
 
 	  
