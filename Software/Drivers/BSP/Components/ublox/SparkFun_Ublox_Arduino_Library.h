@@ -657,8 +657,6 @@ typedef struct
   // toggle putting into power save mode and continueous mode
 	bool put_in_power_save_mode(uint16_t maxWait);
 	bool put_in_continueous_mode(uint16_t maxWait);
-	
-
 
 	//Survey-in specific controls
 	static struct svinStructure
@@ -668,13 +666,6 @@ typedef struct
 		uint16_t observationTime;
 		float meanAccuracy;
 	} svin;
-	
-	//structure to hold time information
-	 typedef struct 
-	{
-		uint32_t TOW;  //  TIme of week In seconds since the start of the week
-		uint32_t week;         // Weeks sincestarting with the first full week in January 1980
-	} timeStructure;
 	
 	extern timeStructure time_info;
 
