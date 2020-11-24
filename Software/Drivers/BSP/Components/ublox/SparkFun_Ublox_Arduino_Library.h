@@ -326,7 +326,6 @@ static const uint8_t UBX_SEC_UNIQID = 0x03; //Unique chip ID
 
 //The following are used to configure the TIM UBX messages (timing messages). Descriptions from UBX messages overview (ZED_F9P Interface Description Document page 36)
 static const uint8_t UBX_TIM_TM2 = 0x03;  //Time mark data
-static const uint8_t UBX_TIM_TOS = 0x12;  //Time Pulse Time and Frequency Data
 static const uint8_t UBX_TIM_TP = 0x01;   //Time Pulse Timedata
 static const uint8_t UBX_TIM_VRFY = 0x06; //Sourced Time Verification
 
@@ -658,8 +657,6 @@ typedef struct
   // toggle putting into power save mode and continueous mode
 	bool put_in_power_save_mode(uint16_t maxWait);
 	bool put_in_continueous_mode(uint16_t maxWait);
-	
-
 
 	//Survey-in specific controls
 	static struct svinStructure
@@ -669,13 +666,6 @@ typedef struct
 		uint16_t observationTime;
 		float meanAccuracy;
 	} svin;
-	
-	//structure to hold time information
-	 typedef struct 
-	{
-		uint32_t TOW;  //  TIme of week In seconds since the start of the week
-		uint32_t week;         // Weeks sincestarting with the first full week in January 1980
-	} timeStructure;
 	
 	extern timeStructure time_info;
 
