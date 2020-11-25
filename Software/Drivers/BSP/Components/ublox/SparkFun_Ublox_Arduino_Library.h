@@ -666,7 +666,6 @@ typedef struct
 		uint16_t observationTime;
 		float meanAccuracy;
 	} svin;
-	
 
 	//Relative Positioning Info in NED frame specific controls
 	static struct frelPosInfoStructure
