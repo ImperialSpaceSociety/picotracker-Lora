@@ -83,6 +83,7 @@ time_pos_fix_t subset_positions[MAX_N_POSITIONS_TO_SEND];
 #ifdef playback_testing
 sensor_t *current_sensor_data_ptr = &current_sensor_data;
 time_pos_fix_t *current_pos_ptr = &current_pos;
+uint16_t temp_n_playback_positions_in_eeprom= 116;
 #else
 sensor_t *current_sensor_data_ptr;
 time_pos_fix_t *current_pos_ptr;
@@ -138,6 +139,7 @@ select_low_discrepancy_T select_low_discrepancy_ptr = corput_index;
 #ifdef playback_testing
 void main()
 {
+	current_playback_key_info.n_positions_in_eeprom = &temp_n_playback_positions_in_eeprom;
 	
 	// Print out buffer for debug
 	printf("Filling buffer\n");
