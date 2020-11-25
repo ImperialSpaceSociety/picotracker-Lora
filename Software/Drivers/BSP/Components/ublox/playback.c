@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include "bsp.h"
 #include "utilities.h"
- 
+#include <math.h>
 
 /* ==================================================================== */
 /* ============================ constants ============================= */
@@ -130,7 +130,8 @@ retrieve_eeprom_time_pos_ptr_T Retrieve_eeprom_time_pos_ptr;
 select_low_discrepancy_T select_low_discrepancy_ptr = corput_index;
 
 
-
+int mapping(int i,int start, int step);
+int full_cycle_LCG(int start, int stop, int step);
 
 
 /* ==================================================================== */
@@ -164,7 +165,10 @@ void main()
 
 	prepare_tx_buffer();
 
-	printf("testing corput");
+	printf("\ntesting corput");
+	printf("\n");
+	printf("\n");
+
 	// Print out buffer for debug
 	int size = 100;
 
@@ -175,6 +179,15 @@ void main()
 		//printf("i:%d index %d\n",i,index_c);
 
 	}
+	
+	printf("\n");
+	
+	srand(8);
+	int index_c = full_cycle_LCG(6,0,1);
+
+
+	
+	
 
 	
 }
@@ -261,6 +274,8 @@ void fill_positions_to_send_buffer( void )
 		printf("Timepos index: %d",rand_time_pos_index);
 		printf("\n");
 		#endif
+	 
+		#ifndef playback_testing
 
 		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
 		
@@ -271,9 +286,61 @@ void fill_positions_to_send_buffer( void )
 		subset_positions[i].latitude = random_time_pos.latitude;
 		subset_positions[i].longitude = random_time_pos.longitude;
 		subset_positions[i].minutes_since_epoch = random_time_pos.minutes_since_epoch;
+		#endif
 	}
 }
 
+
+int mapping(int i,int start, int step)
+{
+	return (i * step) + start;
+}
+
+int found = 0;
+
+
+
+/**
+ * \brief Adapted from https://stackoverflow.com/a/53551417
+ * 
+ * \param start
+ * \param stop
+ * \param step
+ * 
+ * \return int
+ */
+int full_cycle_LCG(int start, int stop, int step)
+{
+	stop = start;
+	start = 0;
+	
+	int maximum = (int)floor((stop - start) / step);
+	int value  = generate_random(0,maximum);
+	
+	
+	int offset = generate_random(0, maximum) * 2 + 1;
+	int multiplier = 4 * (int)floor(maximum/4) + 1;
+	int modulus = (int)pow(2,ceil(log2(maximum)));
+	
+	printf("offset: %d %d %d %d %d\n",maximum,value,offset,multiplier,modulus);
+
+	
+	
+	while (found < maximum)
+	{
+		// If this is a valid value, yield it in generator fashion.
+		if (value < maximum)
+		{
+			found += 1;
+			printf("result: %d\n", mapping(value,start,step));
+		}
+		// Calculate the next value in the sequence.
+		value = (value * multiplier + offset) % modulus;
+		
+	}
+
+	
+}
 
 /**
  * \brief This will generate random number in range l and r, inclusive of both
@@ -285,7 +352,6 @@ void fill_positions_to_send_buffer( void )
  */
 int generate_random(int l, int r) { 
 	#ifdef playback_testing
-	srand(10);
 	int rand_num = (rand() % (r - l + 1)) + l;
 	#else
 	int rand_num = 	randr(l,r);
@@ -440,8 +506,10 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
 	current_pos_ptr = current_pos;
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
 	
-	srand(*n_positions_in_eeprom);
+	#ifndef playback_testing
+	srand1(*n_positions_in_eeprom);
 	corput_n = randr(0,1000);
+	#endif
 }
 
 
