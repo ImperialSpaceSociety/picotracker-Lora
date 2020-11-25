@@ -439,7 +439,9 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
 	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
-	corput_n = generate_random(0,1000);
+	
+	srand(*n_positions_in_eeprom);
+	corput_n = randr(0,1000);
 }
 
 
