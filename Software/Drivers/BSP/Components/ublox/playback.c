@@ -21,6 +21,7 @@
 #include "bsp.h"
 #include "utilities.h"
 #include <math.h>
+#include <stdbool.h>
 
 /* ==================================================================== */
 /* ============================ constants ============================= */
@@ -201,7 +202,12 @@ void main()
 	init_LGC(6,0,1);
 
 
-	printf("%d ",next_LCG());
+	for (int i = 0; i<6;i ++)
+	{
+		printf("%d ",next_LCG());
+
+	}
+
 
 
 
@@ -355,20 +361,29 @@ void init_LGC(int start, int stop, int step)
  */
 int next_LCG()
 {
-	
+	bool done  = false;
+	int res;
 	while (LGC_current_params.found < LGC_current_params.maximum)
 	{
 		// If this is a valid value, yield it in generator fashion.
 		if (LGC_current_params.value < LGC_current_params.maximum)
 		{
 			LGC_current_params.found += 1;
-			printf("result: %d\n", mapping(LGC_current_params.value,LGC_current_params.start,LGC_current_params.step));
+			res = mapping(LGC_current_params.value,LGC_current_params.start,LGC_current_params.step);
+			done = true;
+			
 		}
 		// Calculate the next value in the sequence.
 		LGC_current_params.value = (LGC_current_params.value * LGC_current_params.multiplier + LGC_current_params.offset) % LGC_current_params.modulus;
-			
+		
+		if (done == true)
+		{
+			return res;
+		}
 	}
 	
+	return 0;
+
 }
 
 /**
