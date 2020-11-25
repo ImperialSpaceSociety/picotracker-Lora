@@ -27,6 +27,7 @@ extern "C"
 /* Inclusion of system and local header files goes here */
 #include <stdint.h>
 #include "bsp.h"
+#include <stdbool.h>
 
 /* ==================================================================== */
 /* ============================ constants ============================= */
@@ -48,6 +49,11 @@ typedef struct
 	uint16_t n_positions_offset;               /* Send positions from n_positions_offset from current position. */
 	uint16_t n_positions_to_select_from;       /* Define size of pool of positions to select from */
 	uint16_t n_positions_saved_since_boot;     /* Number of posiionts that have been saved since boot */
+	bool request_from_gnd;
+	bool playback_error;
+	uint16_t requested_pos_index_lower;
+	uint16_t requested_pos_index_upper;
+
 }playback_key_info_t;
 
 

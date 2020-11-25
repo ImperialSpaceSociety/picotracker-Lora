@@ -21,7 +21,6 @@
 #include "bsp.h"
 #include "utilities.h"
 #include <math.h>
-#include <stdbool.h>
 
 /* ==================================================================== */
 /* ============================ constants ============================= */
@@ -75,7 +74,11 @@ playback_key_info_t current_playback_key_info =
 	.n_positions_to_send = DEFAULT_N_POSITIONS_TO_SEND,              /* Number of positions to send down in single transmission*/
 	.n_positions_offset = DEFAULT_N_POSITIONS_OFFSET,               /* Send positions from n_positions_offset from current position. */
 	.n_positions_to_select_from = DEFAULT_N_POSITIONS_TO_SELECT_FROM,   /* Define size of pool of positions to select from */
-	.n_positions_saved_since_boot = 0   /* Define size of pool of positions to select from */
+	.n_positions_saved_since_boot = 0,   /* Define size of pool of positions to select from */
+	.request_from_gnd = false,
+	.playback_error = false,
+	.requested_pos_index_lower = 0,
+	.requested_pos_index_upper = 0
 
 };
 
@@ -131,8 +134,12 @@ void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffe
 void fill_positions_to_send_buffer( void );
 
 
+int mapping(int i,int start, int step);
+void init_LGC(int start, int stop, int step);
+int next_LCG(void);
 int corput_index(int lower_val, int upper_val);
 double corput(int n, int base);
+int LCG(int lower_val, int upper_val);
 
 
 uint16_t extractInt_from_buff(uint8_t spotToStart, uint8_t *buff);
@@ -141,12 +148,9 @@ uint8_t extractByte_from_buff(uint8_t spotToStart, uint8_t *buff);
 
 /* Initlise pointer to retrieve eeprom time pos */
 retrieve_eeprom_time_pos_ptr_T Retrieve_eeprom_time_pos_ptr;
-select_low_discrepancy_T select_low_discrepancy_ptr = corput_index;
+select_low_discrepancy_T select_low_discrepancy_ptr = LCG;
 
 
-int mapping(int i,int start, int step);
-void init_LGC(int start, int stop, int step);
-int next_LCG(void);
 
 
 /* ==================================================================== */
@@ -174,7 +178,6 @@ void main()
 	printf("\n");
 
 
-	fill_positions_to_send_buffer();
 
 	printf("\n");
 
@@ -197,12 +200,12 @@ void main()
 	
 	printf("\n");
 	
-	srand(8);
+	srand(10);
 	
-	init_LGC(6,0,1);
+	init_LGC(1,5,1);
 
 
-	for (int i = 0; i<6;i ++)
+	for (int i = 0; i<12;i ++)
 	{
 		printf("%d ",next_LCG());
 
@@ -210,6 +213,7 @@ void main()
 
 
 
+	fill_positions_to_send_buffer();
 
 	
 	
@@ -284,11 +288,24 @@ double corput(int n, int base){
 void fill_positions_to_send_buffer( void )
 {
 	
-		/* if the eeprom is not yet full, then only select the ones that are in there */
-	int upper_val = MIN(current_playback_key_info.n_positions_to_select_from,
-											*current_playback_key_info.n_positions_in_eeprom);
+	int upper_val;
+	int lower_val;
 	
-	int lower_val = current_playback_key_info.n_positions_offset;
+	if (current_playback_key_info.request_from_gnd == true)
+	{
+		upper_val = current_playback_key_info.requested_pos_index_upper;
+		lower_val = current_playback_key_info.requested_pos_index_lower;
+		current_playback_key_info.request_from_gnd = false;
+	}
+	else
+	{
+		/* if the eeprom is not yet full, then only select the ones that are in there */
+		upper_val = MIN(current_playback_key_info.n_positions_to_select_from,*current_playback_key_info.n_positions_in_eeprom);	
+		lower_val = current_playback_key_info.n_positions_offset;
+	}
+	
+	
+
 
 	for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
 	{
@@ -389,6 +406,24 @@ int next_LCG()
 	
 	return 0;
 
+}
+
+/**
+ * \brief Return a value, within the bounds of lower_val(inclusive) and upper_val(not inclusive)
+ * 
+ * \param lower_val
+ * \param upper_val
+ * 
+ * \return int
+ */
+int LCG(int lower_val, int upper_val)
+{
+	if ( (LGC_current_params.start != lower_val) ||  (LGC_current_params.stop != upper_val))
+	{
+		init_LGC(lower_val,upper_val,1);
+	}
+	
+	return next_LCG();
 }
 
 /**
@@ -559,6 +594,7 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
 	srand1(*n_positions_in_eeprom);
 	corput_n = randr(0,1000);
 	#endif
+	
 }
 
 
