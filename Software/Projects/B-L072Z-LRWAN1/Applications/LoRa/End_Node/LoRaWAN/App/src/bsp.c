@@ -64,7 +64,7 @@ time_pos_fix_t current_position =
 
 sensor_t sensor_data;
 time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
-
+playback_key_info_t *playback_key_info_ptr;
 
 
 /* Private function prototypes -----------------------------------------------*/
@@ -156,6 +156,7 @@ void BSP_sensor_Read(void)
 	if (current_position.minutes_since_epoch - most_recent.minutes_since_epoch  > HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM)
 	{
 		save_current_position_info_to_EEPROM(&current_position);
+		playback_key_info_ptr->n_positions_saved_since_boot += 1;
 	}
 	
 	
@@ -209,8 +210,10 @@ void  BSP_sensor_Init( void  )
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	EepromMcuReadBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
 	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos);
-}
+	
+	playback_key_info_ptr = get_playback_key_info_ptr();
 
+}
 
 
 /**
