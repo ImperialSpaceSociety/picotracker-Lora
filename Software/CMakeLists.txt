@@ -10,7 +10,7 @@ set(BSP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Projects/B-L072Z-LRWAN1/Applications/LoR
 
 set(MAIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/BSP/Components/ublox)
 
-set(SOURCES ${BSP_DIR}/bsp.h ${MAIN_DIR}/playback.c)
+set(SOURCES ${BSP_DIR}/bsp.h ${BSP_DIR}/main.h ${MAIN_DIR}/playback.c)
 
 
 # add the executable
