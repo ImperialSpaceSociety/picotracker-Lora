@@ -408,7 +408,15 @@ static void LORA_RxData( lora_AppData_t *AppData )
 			}
 		}
 		break;
+
 		case LORAWAN_APP_PORT:
+		break;
+
+		case LPP_APP_PORT:
+		break;
+
+		case DOWNLINK_CONFIG_PORT:
+		
 		PRINTF("Received data: ");
 		
 		for (int i = 0; i< AppData->BuffSize;i ++)
@@ -416,24 +424,13 @@ static void LORA_RxData( lora_AppData_t *AppData )
 			PRINTF("%02x",AppData->Buff[i]);
 		}
 		PRINTF("\n\n");
+		
+
+		parse_playback_instructions(AppData->Buff);
+
 
 		break;
-		case LPP_APP_PORT:
-		{
-			AppLedStateOn= (AppData->Buff[2] == 100) ?  0x01 : 0x00;
-			if ( AppLedStateOn == RESET )
-			{
-				PRINTF("LED OFF\n\r");
-				LED_Off( LED1 ) ;
-				
-			}
-			else
-			{
-				PRINTF("LED ON\n\r");
-				LED_On( LED1 ) ;
-			}
-			break;
-		}
+
 		default:
 		break;
 	}
