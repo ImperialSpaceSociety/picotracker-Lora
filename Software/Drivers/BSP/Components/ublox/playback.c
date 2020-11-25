@@ -91,6 +91,17 @@ sensor_t *current_sensor_data_ptr;
 time_pos_fix_t *current_pos_ptr;
 #endif
 
+struct LGC_params {
+	int stop;
+	int start;
+	int maximum;
+	int value;
+	int offset;
+	int step;
+	int multiplier;
+	int modulus;
+	int found;
+} LGC_current_params;
 
 /* ==================================================================== */
 /* ========================== private data ============================ */
@@ -131,7 +142,8 @@ select_low_discrepancy_T select_low_discrepancy_ptr = corput_index;
 
 
 int mapping(int i,int start, int step);
-int next_LCG(int start, int stop, int step);
+void init_LGC(int start, int stop, int step);
+int next_LCG(void);
 
 
 /* ==================================================================== */
@@ -183,7 +195,12 @@ void main()
 	printf("\n");
 	
 	srand(8);
-	int index_c = next_LCG(6,0,1);
+	
+	init_LGC(6,0,1);
+
+
+	printf("%d ",next_LCG());
+
 
 
 	
@@ -296,9 +313,34 @@ int mapping(int i,int start, int step)
 	return (i * step) + start;
 }
 
-int found = 0;
 
 
+
+
+/**
+ * \brief Initialise the LGC function
+ * 
+ * \param start
+ * \param stop
+ * \param step
+ * 
+ * \return void
+ */
+void init_LGC(int start, int stop, int step)
+{
+	LGC_current_params.found = 0;
+	LGC_current_params.stop = start;
+	LGC_current_params.start = 0;
+	LGC_current_params.step = step;
+	
+	LGC_current_params.maximum = (int)floor((LGC_current_params.stop - LGC_current_params.start) / LGC_current_params.step);
+	LGC_current_params.value  = generate_random(0,LGC_current_params.maximum);
+	
+	
+	LGC_current_params.offset = generate_random(0, LGC_current_params.maximum) * 2 + 1;
+	LGC_current_params.multiplier = 4 * (int)floor(LGC_current_params.maximum/4) + 1;
+	LGC_current_params.modulus = (int)pow(2,ceil(log2(LGC_current_params.maximum)));
+}
 
 /**
  * \brief Adapted from https://stackoverflow.com/a/53551417
@@ -309,36 +351,21 @@ int found = 0;
  * 
  * \return int
  */
-int next_LCG(int start, int stop, int step)
+int next_LCG()
 {
-	stop = start;
-	start = 0;
 	
-	int maximum = (int)floor((stop - start) / step);
-	int value  = generate_random(0,maximum);
-	
-	
-	int offset = generate_random(0, maximum) * 2 + 1;
-	int multiplier = 4 * (int)floor(maximum/4) + 1;
-	int modulus = (int)pow(2,ceil(log2(maximum)));
-	
-	printf("offset: %d %d %d %d %d\n",maximum,value,offset,multiplier,modulus);
-
-	
-	
-	while (found < maximum)
+	while (LGC_current_params.found < LGC_current_params.maximum)
 	{
 		// If this is a valid value, yield it in generator fashion.
-		if (value < maximum)
+		if (LGC_current_params.value < LGC_current_params.maximum)
 		{
-			found += 1;
-			printf("result: %d\n", mapping(value,start,step));
+			LGC_current_params.found += 1;
+			printf("result: %d\n", mapping(LGC_current_params.value,LGC_current_params.start,LGC_current_params.step));
 		}
 		// Calculate the next value in the sequence.
-		value = (value * multiplier + offset) % modulus;
-		
+		LGC_current_params.value = (LGC_current_params.value * LGC_current_params.multiplier + LGC_current_params.offset) % LGC_current_params.modulus;
+			
 	}
-
 	
 }
 
