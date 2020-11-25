@@ -18,10 +18,8 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include <string.h>
 #include <stdlib.h>
 #include "hw.h"
-#include "timeServer.h"
 #include "bsp.h"
 #include "ms5607.h"
 #include "ublox.h"
