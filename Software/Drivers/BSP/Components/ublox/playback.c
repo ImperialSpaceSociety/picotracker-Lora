@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "bsp.h"
+#include "utilities.h"
  
 
 /* ==================================================================== */
@@ -283,9 +284,10 @@ void fill_positions_to_send_buffer( void )
  */
 int generate_random(int l, int r) { 
 	#ifdef playback_testing
+	srand(10);
 	int rand_num = (rand() % (r - l + 1)) + l;
 	#else
-	int rand_num = 	0;
+	int rand_num = 	randr(l,r);
 	#endif
 	return rand_num;
 }
