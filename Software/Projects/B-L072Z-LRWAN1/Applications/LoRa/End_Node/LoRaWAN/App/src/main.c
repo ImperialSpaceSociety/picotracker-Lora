@@ -353,9 +353,9 @@ static void Send( void* context )
 
 	prepare_tx_buffer();
 	
-  AppData.Port     =  LPP_APP_PORT;	
+	AppData.Port     =  LPP_APP_PORT;
 	AppData.Buff     =  get_tx_buffer();
-  AppData.BuffSize =  get_tx_buffer_len();
+	AppData.BuffSize =  get_tx_buffer_len();
 	
 	// Print out buffer for debug
 	PRINTF("Buffer to tx:\n",AppData.BuffSize);
