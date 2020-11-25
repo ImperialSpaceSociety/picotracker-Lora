@@ -202,12 +202,10 @@ void main()
 	
 	srand(10);
 	
-	init_LGC(1,5,1);
-
 
 	for (int i = 0; i<12;i ++)
 	{
-		printf("%d ",next_LCG());
+		printf("%d ",select_low_discrepancy_ptr(1,5));
 
 	}
 
