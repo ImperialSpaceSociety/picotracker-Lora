@@ -10,7 +10,10 @@ set(BSP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Projects/B-L072Z-LRWAN1/Applications/LoR
 
 set(MAIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/BSP/Components/ublox)
 
-set(SOURCES ${BSP_DIR}/bsp.h ${BSP_DIR}/main.h ${MAIN_DIR}/playback.c)
+set(UTILS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LoRaWAN/Utilities)
+
+
+set(SOURCES ${BSP_DIR}/bsp.h ${BSP_DIR}/main.h ${MAIN_DIR}/playback.c ${UTILS_DIR}/utilities.h)
 
 
 # add the executable
@@ -19,5 +22,6 @@ add_compile_definitions(playback_testing)
 
 target_include_directories(playback_test PUBLIC ${BSP_DIR})
 target_include_directories(playback_test PUBLIC ${MAIN_DIR})
+target_include_directories(playback_test PUBLIC ${UTILS_DIR})
 
 
