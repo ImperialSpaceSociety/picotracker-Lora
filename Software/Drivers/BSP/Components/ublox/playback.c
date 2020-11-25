@@ -105,8 +105,6 @@ typedef int (*select_low_discrepancy_T )(int low, int high);
 
 /* Function prototypes for private (static) functions go here */
 
-void save_position(uint32_t minutes_since_epoch, uint16_t latitude, uint16_t longitude, uint16_t altitude);
-time_pos_fix_t *pick_subset_of_time_pos_fix(uint16_t how_far_back);
 int generate_random(int l, int r);
 void fill_subset_positions_buffer(uint16_t subset_size);
 void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude );
