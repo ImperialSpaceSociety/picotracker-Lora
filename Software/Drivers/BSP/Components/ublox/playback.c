@@ -151,9 +151,13 @@ void main()
 		subset_positions[i].minutes_since_epoch = current_pos.minutes_since_epoch;
 
 	}
-	
 	printf("\n");
-	
+
+
+	fill_positions_to_send_buffer();
+
+	printf("\n");
+
 	prepare_tx_buffer();
 
 	printf("testing corput");
