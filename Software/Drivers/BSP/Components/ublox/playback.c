@@ -255,13 +255,14 @@ void fill_positions_to_send_buffer( void )
 		
 		int rand_time_pos_index = select_low_discrepancy_ptr(lower_val, upper_val);
 
-		
-		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
-		
 		#ifdef playback_testing
 		printf("Timepos index: %d",rand_time_pos_index);
 		printf("\n");
 		#endif
+
+		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
+		
+
 		
 		
 		subset_positions[i].altitude = random_time_pos.altitude;
