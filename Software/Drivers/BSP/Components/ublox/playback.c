@@ -296,7 +296,7 @@ void fill_positions_to_send_buffer( void )
 		int rand_time_pos_index = select_low_discrepancy_ptr(lower_val, upper_val);
 
 		#ifdef playback_testing
-		printf("Timepos index: %d",rand_time_pos_index);
+		printf("\nTimepos index: %d",rand_time_pos_index);
 		printf("\n");
 		#endif
 	 
