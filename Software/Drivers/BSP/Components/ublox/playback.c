@@ -78,6 +78,7 @@ playback_key_info_t current_playback_key_info =
 static uint8_t tx_str_buffer[LORAWAN_APP_DATA_BUFF_SIZE];
 static uint16_t tx_str_buffer_len = 0;
 time_pos_fix_t subset_positions[MAX_N_POSITIONS_TO_SEND];
+int corput_n = 0;
 
 
 #ifdef playback_testing
@@ -116,7 +117,6 @@ void fill_positions_to_send_buffer( void );
 
 
 int corput_index(int lower_val, int upper_val);
-int corput_n = 0;
 double corput(int n, int base);
 
 
