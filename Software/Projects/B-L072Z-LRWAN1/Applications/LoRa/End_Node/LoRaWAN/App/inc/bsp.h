@@ -156,6 +156,7 @@ uint8_t EepromMcuWriteBuffer( uint16_t addr, uint8_t *buffer, uint16_t size );
  */
 uint8_t EepromMcuReadBuffer( uint16_t addr, uint8_t *buffer, uint16_t size );
 
+uint16_t minute_from_epoch_to_time_pos_index(uint16_t minutes_from_epoch);
 
 
 #ifdef __cplusplus

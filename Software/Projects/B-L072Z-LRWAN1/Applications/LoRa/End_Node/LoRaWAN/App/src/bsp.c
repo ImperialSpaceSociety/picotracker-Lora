@@ -215,6 +215,10 @@ void  BSP_sensor_Init( void  )
 
 }
 
+uint16_t minute_from_epoch_to_time_pos_index(uint16_t minutes_from_epoch)
+{
+	
+}
 
 /**
   * @brief Save all the position data and time to EEPROM
