@@ -64,6 +64,7 @@ typedef time_pos_fix_t (*retrieve_eeprom_time_pos_ptr_T)(uint16_t time_pos_index
 uint8_t * get_tx_buffer( void );
 uint16_t get_tx_buffer_len( void );
 void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr);
+void parse_playback_instructions(uint8_t *instructions,playback_key_info_t *current_playback_key_info);
 
 /* ==================================================================== */
 /* ======================= public functions =========================== */
