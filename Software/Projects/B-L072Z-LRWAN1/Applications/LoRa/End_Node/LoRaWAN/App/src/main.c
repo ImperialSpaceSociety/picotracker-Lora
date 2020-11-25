@@ -377,67 +377,67 @@ static void Send( void* context )
 
 static void LORA_RxData( lora_AppData_t *AppData )
 {
-  /* USER CODE BEGIN 4 */
-  PRINTF("PACKET RECEIVED ON PORT %d\n\r", AppData->Port);
+	/* USER CODE BEGIN 4 */
+	PRINTF("PACKET RECEIVED ON PORT %d\n\r", AppData->Port);
 
-  switch (AppData->Port)
-  {
-    case 3:
-    /*this port switches the class*/
-    if( AppData->BuffSize == 1 )
-    {
-      switch (  AppData->Buff[0] )
-      {
-        case 0:
-        {
-          LORA_RequestClass(CLASS_A);
-          break;
-        }
-        case 1:
-        {
-          LORA_RequestClass(CLASS_B);
-          break;
-        }
-        case 2:
-        {
-          LORA_RequestClass(CLASS_C);
-          break;
-        }
-        default:
-          break;
-      }
-    }
-    break;
-    case LORAWAN_APP_PORT:
-			PRINTF("Received data: ");
-		
-			for (int i = 0; i< AppData->BuffSize;i ++)
+	switch (AppData->Port)
+	{
+		case 3:
+		/*this port switches the class*/
+		if( AppData->BuffSize == 1 )
+		{
+			switch (  AppData->Buff[0] )
 			{
-				PRINTF("%02x",AppData->Buff[i]);
+				case 0:
+				{
+					LORA_RequestClass(CLASS_A);
+					break;
+				}
+				case 1:
+				{
+					LORA_RequestClass(CLASS_B);
+					break;
+				}
+				case 2:
+				{
+					LORA_RequestClass(CLASS_C);
+					break;
+				}
+				default:
+				break;
 			}
-			PRINTF("\n\n");
+		}
+		break;
+		case LORAWAN_APP_PORT:
+		PRINTF("Received data: ");
+		
+		for (int i = 0; i< AppData->BuffSize;i ++)
+		{
+			PRINTF("%02x",AppData->Buff[i]);
+		}
+		PRINTF("\n\n");
 
-    break;
-  case LPP_APP_PORT:
-  {
-    AppLedStateOn= (AppData->Buff[2] == 100) ?  0x01 : 0x00;
-    if ( AppLedStateOn == RESET )
-    {
-      PRINTF("LED OFF\n\r");
-      LED_Off( LED1 ) ; 
-      
-    }
-    else
-    {
-      PRINTF("LED ON\n\r");
-      LED_On( LED1 ) ; 
-    }
-    break;
-  }
-  default:
-    break;
-  }
-  /* USER CODE END 4 */
+		break;
+		case LPP_APP_PORT:
+		{
+			AppLedStateOn= (AppData->Buff[2] == 100) ?  0x01 : 0x00;
+			if ( AppLedStateOn == RESET )
+			{
+				PRINTF("LED OFF\n\r");
+				LED_Off( LED1 ) ;
+				
+			}
+			else
+			{
+				PRINTF("LED ON\n\r");
+				LED_On( LED1 ) ;
+			}
+			break;
+		}
+		default:
+		break;
+	}
+	/* USER CODE END 4 */
 }
 
 static void OnTxTimerEvent( void* context )
