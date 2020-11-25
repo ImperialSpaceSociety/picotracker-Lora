@@ -112,11 +112,7 @@ static LoRaMainCallback_t LoRaMainCallbacks = { HW_GetBatteryLevel,
                                                 LoraMacProcessNotify};
 LoraFlagStatus LoraMacProcessRequest=LORA_RESET;
 LoraFlagStatus AppProcessRequest=LORA_RESET;
-/*!
- * Specifies the state of the application LED
- */
-static uint8_t AppLedStateOn = RESET;
-                                               
+                                 
 static TimerEvent_t TxTimer;
 
 
