@@ -336,9 +336,15 @@ int mapping(int i,int start, int step)
  */
 void init_LGC(int start, int stop, int step)
 {
+	if (start >=stop)
+	{
+		start = 0;
+		stop = 1;
+	}
+	
 	LGC_current_params.found = 0;
-	LGC_current_params.stop = start;
-	LGC_current_params.start = 0;
+	LGC_current_params.stop = stop;
+	LGC_current_params.start = start;
 	LGC_current_params.step = step;
 	
 	LGC_current_params.maximum = (int)floor((LGC_current_params.stop - LGC_current_params.start) / LGC_current_params.step);
