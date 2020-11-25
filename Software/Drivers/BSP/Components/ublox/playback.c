@@ -363,12 +363,11 @@ int next_LCG()
 {
 	bool done  = false;
 	int res;
-	while (LGC_current_params.found < LGC_current_params.maximum)
+	while (1)
 	{
 		// If this is a valid value, yield it in generator fashion.
 		if (LGC_current_params.value < LGC_current_params.maximum)
 		{
-			LGC_current_params.found += 1;
 			res = mapping(LGC_current_params.value,LGC_current_params.start,LGC_current_params.step);
 			done = true;
 			
