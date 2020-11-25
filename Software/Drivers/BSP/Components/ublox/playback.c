@@ -131,7 +131,7 @@ select_low_discrepancy_T select_low_discrepancy_ptr = corput_index;
 
 
 int mapping(int i,int start, int step);
-int full_cycle_LCG(int start, int stop, int step);
+int next_LCG(int start, int stop, int step);
 
 
 /* ==================================================================== */
@@ -183,7 +183,7 @@ void main()
 	printf("\n");
 	
 	srand(8);
-	int index_c = full_cycle_LCG(6,0,1);
+	int index_c = next_LCG(6,0,1);
 
 
 	
@@ -309,7 +309,7 @@ int found = 0;
  * 
  * \return int
  */
-int full_cycle_LCG(int start, int stop, int step)
+int next_LCG(int start, int stop, int step)
 {
 	stop = start;
 	start = 0;
