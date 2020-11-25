@@ -143,7 +143,8 @@ select_low_discrepancy_T select_low_discrepancy_ptr = corput_index;
 void main()
 {
 	current_playback_key_info.n_positions_in_eeprom = &temp_n_playback_positions_in_eeprom;
-	
+	corput_n = generate_random(0,1000);
+
 	// Print out buffer for debug
 	printf("Filling buffer\n");
 	for (int i = 0; i<current_playback_key_info.n_positions_to_send;i ++)
@@ -438,6 +439,7 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
 	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
+	corput_n = generate_random(0,1000);
 }
 
 
