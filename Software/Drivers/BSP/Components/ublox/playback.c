@@ -221,13 +221,14 @@ double corput(int n, int base){
 void fill_positions_to_send_buffer( void )
 {
 	
+		/* if the eeprom is not yet full, then only select the ones that are in there */
+	int upper_val = MIN(current_playback_key_info.n_positions_to_select_from,
+											*current_playback_key_info.n_positions_in_eeprom);
+	
+	int lower_val = current_playback_key_info.n_positions_offset;
+
 	for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
 	{
-		/* if the eeprom is not yet full, then only select the ones that are in there */
-		int upper_val = MIN(current_playback_key_info.n_positions_to_select_from,
-			                  *current_playback_key_info.n_positions_in_eeprom);
-		
-		int lower_val = current_playback_key_info.n_positions_offset;
 		
 		int rand_time_pos_index = select_low_discrepancy_ptr(lower_val, upper_val);
 
