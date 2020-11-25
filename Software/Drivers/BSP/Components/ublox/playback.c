@@ -118,6 +118,7 @@ void fill_positions_to_send_buffer( void );
 
 int corput_index(int lower_val, int upper_val);
 int corput_n = 0;
+double corput(int n, int base);
 
 
 // Make sure to get the function's signature right here
