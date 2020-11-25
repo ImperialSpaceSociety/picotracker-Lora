@@ -120,7 +120,9 @@ int corput_index(int lower_val, int upper_val);
 double corput(int n, int base);
 
 
-// Make sure to get the function's signature right here
+uint16_t extractInt_from_buff(uint8_t spotToStart, uint8_t *buff);
+uint8_t extractByte_from_buff(uint8_t spotToStart, uint8_t *buff);
+
 
 /* Initlise pointer to retrieve eeprom time pos */
 retrieve_eeprom_time_pos_ptr_T Retrieve_eeprom_time_pos_ptr;
@@ -435,3 +437,36 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
 }
 
+
+/**
+ * \brief Take message from ground and parse it, to set the values in current_playback_key_info
+ * 
+ * \param instructions as a pointer
+ * 
+ * \return void
+ */
+void parse_playback_instructions(uint8_t *instructions)
+{
+	current_playback_key_info.n_positions_offset = extractInt_from_buff(0,instructions);
+	current_playback_key_info.n_positions_to_select_from = extractInt_from_buff(2,instructions);
+	int save_settings_to_eeprom_flag = extractByte_from_buff(4,instructions);
+
+}
+
+
+/* byte extraction functions taken from sparkfun ublox library */
+
+//Given a spot in the payload array, extract two bytes and build an int
+uint16_t extractInt_from_buff(uint8_t spotToStart, uint8_t *buff)
+{
+  uint16_t val = 0;
+  val |= (uint16_t)buff[spotToStart + 0] << 8 * 0;
+  val |= (uint16_t)buff[spotToStart + 1] << 8 * 1;
+  return (val);
+}
+
+//Given a spot, extract a byte from the payload
+uint8_t extractByte_from_buff(uint8_t spotToStart, uint8_t *buff)
+{
+  return (buff[spotToStart]);
+}
