@@ -57,7 +57,7 @@ typedef struct
 
 /* Definition of public (external) data types go here */
 void prepare_tx_buffer( void );
-playback_key_info_t *get_playback_key_info( void );
+playback_key_info_t *get_playback_key_info_ptr( void );
 
 typedef time_pos_fix_t (*retrieve_eeprom_time_pos_ptr_T)(uint16_t time_pos_index);
 

@@ -219,7 +219,7 @@ void main()
  * 
  * \return playback_key_info_t *
  */
-playback_key_info_t *get_playback_key_info( void )
+playback_key_info_t *get_playback_key_info_ptr( void )
 {
 	return &current_playback_key_info;
 }
