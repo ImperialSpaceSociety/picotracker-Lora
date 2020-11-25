@@ -257,7 +257,7 @@ void fill_positions_to_send_buffer( void )
 		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
 		
 		#ifdef playback_testing
-		printf("Altitide: %d",random_time_pos.altitude);
+		printf("Timepos index: %d",rand_time_pos_index);
 		printf("\n");
 		#endif
 		
