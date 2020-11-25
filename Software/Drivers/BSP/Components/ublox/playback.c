@@ -184,7 +184,14 @@ playback_key_info_t *get_playback_key_info( void )
 	return &current_playback_key_info;
 }
 
-// TODO: add random offset so that it does not give the same sequence everytime.
+/**
+ * \brief Return the next Van Der Corput value.
+ * 
+ * \param lower_val
+ * \param upper_val
+ * 
+ * \return int
+ */
 int corput_index(int lower_val, int upper_val){
 	double q = corput(corput_n,CORPUT_BASE);
 
@@ -193,6 +200,14 @@ int corput_index(int lower_val, int upper_val){
 	return (int)((upper_val-lower_val) * q) + lower_val;;
 }
 
+/**
+ * \brief Implementation of Van Der Corput low descrepency sequence
+ * 
+ * \param n    : index
+ * \param base : base
+ * 
+ * \return double
+ */
 double corput(int n, int base){
     double q=0, bk=(double)1/base;
 
