@@ -208,6 +208,7 @@ void main()
 
 	}
 
+	process_playback_instructions(3,5);
 
 
 	fill_positions_to_send_buffer();
