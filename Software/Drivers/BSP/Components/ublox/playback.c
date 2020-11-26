@@ -611,15 +611,9 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
  * 
  * \return void
  */
-void parse_playback_instructions(uint8_t *instructions)
+void process_playback_instructions(uint16_t recent_timepos_index, uint16_t older_timepos_index )
 {
-	uint16_t recent_time_min = extractInt_from_buff(0,instructions);
-	uint16_t recent_timepos_index =  minute_from_epoch_to_time_pos_index(recent_time_min);
 
-	
-	
-	uint16_t older_time_min = extractInt_from_buff(2,instructions);
-	uint16_t older_timepos_index =  minute_from_epoch_to_time_pos_index(older_time_min);
 	
 	if ((recent_timepos_index > 0) && (older_timepos_index > 0) && !(recent_timepos_index >= older_timepos_index))
 	{

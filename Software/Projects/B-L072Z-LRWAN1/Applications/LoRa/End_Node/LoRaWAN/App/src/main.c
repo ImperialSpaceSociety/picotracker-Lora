@@ -422,7 +422,7 @@ static void LORA_RxData( lora_AppData_t *AppData )
 		PRINTF("\n\n");
 		
 
-		parse_playback_instructions(AppData->Buff);
+		manage_incoming_instruction(AppData->Buff);
 
 
 		break;
