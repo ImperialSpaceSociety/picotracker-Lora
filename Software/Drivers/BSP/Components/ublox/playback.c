@@ -142,8 +142,7 @@ double corput(int n, int base);
 int LCG(int lower_val, int upper_val);
 
 
-uint16_t extractInt_from_buff(uint8_t spotToStart, uint8_t *buff);
-uint8_t extractByte_from_buff(uint8_t spotToStart, uint8_t *buff);
+
 
 
 /* Initlise pointer to retrieve eeprom time pos */
