@@ -283,7 +283,7 @@ gps_status_t get_location_fix(uint32_t timeout){
     time_t t_of_day;
 
     t.tm_year = temp_GPSyear-1900;  // Year - 1900
-    t.tm_mon = temp_GPSmonth;           // Month, where 0 = jan
+    t.tm_mon = temp_GPSmonth - 1;           // Month, where 0 = jan
     t.tm_mday = temp_GPSday;          // Day of the month
     t.tm_hour = temp_GPShour;
     t.tm_min = temp_GPSminute;
