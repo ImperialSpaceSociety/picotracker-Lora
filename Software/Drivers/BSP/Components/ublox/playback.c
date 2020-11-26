@@ -614,6 +614,7 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
 	corput_n = randr(0,1000);
 	#endif
 	
+	init_LGC(0,0,1);
 }
 
 
