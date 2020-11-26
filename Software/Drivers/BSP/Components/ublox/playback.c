@@ -298,7 +298,7 @@ void fill_positions_to_send_buffer( void )
 	else
 	{
 		/* if the eeprom is not yet full, then only select the ones that are in there */
-		upper_val = MIN(current_playback_key_info.n_positions_to_select_from,*current_playback_key_info.n_positions_in_eeprom);	
+		upper_val = MIN(current_playback_key_info.n_positions_to_select_from,*current_playback_key_info.n_positions_in_eeprom - current_playback_key_info.n_positions_saved_since_boot);	
 		lower_val = current_playback_key_info.n_positions_offset;
 	}
 	
@@ -309,6 +309,13 @@ void fill_positions_to_send_buffer( void )
 	{
 		
 		int rand_time_pos_index = select_low_discrepancy_ptr(lower_val, upper_val);
+		
+		/* Compensate for new positions added in. Ensure no repeats */
+		if (current_playback_key_info.request_from_gnd == true)
+		{
+			rand_time_pos_index += current_playback_key_info.n_positions_saved_since_boot;
+		}
+		
 
 		#ifdef playback_testing
 		printf("\nTimepos index: %d",rand_time_pos_index);
