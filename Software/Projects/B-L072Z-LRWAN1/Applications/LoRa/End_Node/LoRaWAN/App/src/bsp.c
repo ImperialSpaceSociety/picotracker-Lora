@@ -228,6 +228,14 @@ void  BSP_sensor_Init( void  )
 	
 	playback_key_info_ptr = get_playback_key_info_ptr();
 
+
+	/* test stored positoins */
+	PRINTF("Printing Stored coordinates:\n");
+	for (uint16_t i = 0; i < n_playback_positions_saved; i++)
+	{
+		time_pos_fix_t temp = retrieve_eeprom_time_pos(i);
+		PRINTF("index: %d, long: %d, lat: %d, alt: %d, ts: %d\n",i,temp.longitude, temp.altitude, temp.altitude, temp.minutes_since_epoch);
+	}
 }
 
 uint16_t minute_from_epoch_to_time_pos_index(uint32_t minutes_from_epoch)
