@@ -292,7 +292,6 @@ void fill_positions_to_send_buffer( void )
 	{
 		upper_val = current_playback_key_info.requested_pos_index_upper;
 		lower_val = current_playback_key_info.requested_pos_index_lower;
-		current_playback_key_info.request_from_gnd = false;
 	}
 	else
 	{
@@ -310,7 +309,7 @@ void fill_positions_to_send_buffer( void )
 		int rand_time_pos_index = select_low_discrepancy_ptr(lower_val, upper_val);
 		
 		/* Compensate for new positions added in. Ensure no repeats */
-		if (current_playback_key_info.request_from_gnd == true)
+		if (current_playback_key_info.request_from_gnd == false)
 		{
 			rand_time_pos_index += current_playback_key_info.n_positions_saved_since_boot;
 		}
@@ -333,6 +332,11 @@ void fill_positions_to_send_buffer( void )
 		subset_positions[i].minutes_since_epoch = random_time_pos.minutes_since_epoch;
 		#endif
 	}
+	
+	
+	/* we have serviced the request. set to false now */
+	current_playback_key_info.request_from_gnd = false;
+
 }
 
 
