@@ -215,7 +215,7 @@ void main()
 
 	printf("\ntesting extraction of long\n");
 	//uint8_t buff1[4] = {0x00,0x07,0x42,0xBF};
-	uint8_t buff1[4] = {0x01,0x00,0x00,0x00};
+	uint8_t buff1[4] = {0xbd,0x40,0x07,0x00};
 
 	uint32_t asd = extractLong_from_buff(0,buff1);
 	printf("res %d",asd);
