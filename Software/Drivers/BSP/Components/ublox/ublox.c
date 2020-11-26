@@ -91,9 +91,8 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 
 #endif
 
-gps_status_t latest_gps_status = GPS_FAILURE;
 uint16_t load_solar_voltage = 0;
-gps_info_t gps_info = {.unix_time = 1606167108 };
+gps_info_t gps_info = {.unix_time = UINT16_MAX, .latest_gps_status = GPS_FAILURE};
 
 
 /* ==================================================================== */
@@ -132,7 +131,7 @@ static gps_status_t init_for_fix(void);
 
 gps_status_t get_latest_gps_status(void)
 {
-	return latest_gps_status;
+	return gps_info.latest_gps_status;
 }
 
 /* Get solar voltage when under load from GPS */
@@ -320,7 +319,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 			
 
 			Backup_GPS();
-			latest_gps_status = GPS_SUCCESS;
+			gps_info.latest_gps_status = GPS_SUCCESS;
 			return GPS_SUCCESS;
 		}       
 		HAL_Delay(1000);
@@ -333,7 +332,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 	reinit_gps();
 
 	Backup_GPS();
-	latest_gps_status = GPS_FAILURE;
+	gps_info.latest_gps_status = GPS_FAILURE;
 	return GPS_FAILURE;
 }
 

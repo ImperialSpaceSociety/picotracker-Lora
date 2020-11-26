@@ -67,6 +67,8 @@ typedef struct{
 	uint32_t week;
 	uint32_t TOW;
 	uint32_t unix_time;
+	
+	gps_status_t latest_gps_status;
 
 } gps_info_t;
 
