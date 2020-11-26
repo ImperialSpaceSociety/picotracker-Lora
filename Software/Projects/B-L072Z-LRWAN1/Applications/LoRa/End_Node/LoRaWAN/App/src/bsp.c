@@ -155,8 +155,11 @@ void BSP_sensor_Read(void)
 	time_pos_fix_t most_recent = retrieve_eeprom_time_pos(0);
 	if (current_position.minutes_since_epoch - most_recent.minutes_since_epoch  > HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM)
 	{
-		save_current_position_info_to_EEPROM(&current_position);
-		playback_key_info_ptr->n_positions_saved_since_boot += 1;
+		if (gps_info.latest_gps_status == GPS_SUCCESS)
+		{
+			save_current_position_info_to_EEPROM(&current_position);
+			playback_key_info_ptr->n_positions_saved_since_boot += 1;
+		}
 	}
 	
 	
