@@ -168,9 +168,13 @@ void manage_incoming_instruction(uint8_t *instructions)
 	uint32_t recent_time_min = extractLong_from_buff(0,instructions);
 	uint16_t recent_timepos_index =  minute_from_epoch_to_time_pos_index(recent_time_min);
 	
+	PRINTF("Received instruction recent. time(min):%d timepos index: %d\n",recent_time_min,recent_timepos_index);
+	
 	uint32_t older_time_min = extractLong_from_buff(4,instructions);
 	uint16_t older_timepos_index =  minute_from_epoch_to_time_pos_index(older_time_min);
 	
+	PRINTF("Received instruction older. time(min):%d timepos index: %d\n",older_time_min,older_timepos_index);
+
 	process_playback_instructions(recent_timepos_index, older_timepos_index);
 	
 }
