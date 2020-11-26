@@ -611,10 +611,23 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
  */
 void parse_playback_instructions(uint8_t *instructions)
 {
-	current_playback_key_info.n_positions_offset = extractInt_from_buff(0,instructions);
-	current_playback_key_info.n_positions_to_select_from = extractInt_from_buff(2,instructions);
-	int save_settings_to_eeprom_flag = extractByte_from_buff(4,instructions);
+	uint16_t recent_time_min = extractInt_from_buff(0,instructions);
+	uint16_t recent_timepos_index =  minute_from_epoch_to_time_pos_index(recent_time_min);
 
+	
+	
+	uint16_t older_time_min = extractInt_from_buff(2,instructions);
+	uint16_t older_timepos_index =  minute_from_epoch_to_time_pos_index(older_time_min);
+	
+	if ((recent_timepos_index > 0) && (older_timepos_index > 0) && !(recent_timepos_index >= older_timepos_index))
+	{
+		current_playback_key_info.requested_pos_index_lower = recent_timepos_index;
+		current_playback_key_info.requested_pos_index_upper = older_timepos_index;
+		current_playback_key_info.request_from_gnd = true;
+	}else
+	{
+		current_playback_key_info.playback_error = true;
+	}
 }
 
 

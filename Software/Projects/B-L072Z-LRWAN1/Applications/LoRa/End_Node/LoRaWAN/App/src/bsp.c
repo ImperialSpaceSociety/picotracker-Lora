@@ -215,8 +215,20 @@ void  BSP_sensor_Init( void  )
 
 }
 
-uint16_t minute_from_epoch_to_time_pos_index(uint16_t minutes_from_epoch)
+uint16_t minute_from_epoch_to_time_pos_index(uint16_t target_minutes_from_epoch)
 {
+	uint16_t res_index = 0;
+	for (uint16_t i = 0; i < n_playback_positions_saved; i++)
+	{
+		time_pos_fix_t temp = retrieve_eeprom_time_pos(i);
+		if (temp.minutes_since_epoch < target_minutes_from_epoch)
+		{
+			return i;
+		}
+		
+	}
+	
+	return res_index;
 	
 }
 
