@@ -237,7 +237,7 @@ void  BSP_sensor_Init( void  )
 	for (uint16_t i = 0; i < n_playback_positions_saved; i++)
 	{
 		time_pos_fix_t temp = retrieve_eeprom_time_pos(i);
-		PRINTF("index: %d, long: %d, lat: %d, alt: %d, ts: %d\n",i,temp.longitude, temp.altitude, temp.altitude, temp.minutes_since_epoch);
+		PRINTF("index: %d, long: %d, lat: %d, alt: %d, ts: %d\n",i,temp.longitude, temp.latitude, temp.altitude, temp.minutes_since_epoch);
 	}
 }
 
