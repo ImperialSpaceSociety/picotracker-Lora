@@ -297,6 +297,7 @@ void fill_positions_to_send_buffer( void )
 	
 	if (current_playback_key_info.request_from_gnd == true)
 	{
+		/* if a valid request for positions were requested, then limit the range of values */
 		upper_val = current_playback_key_info.requested_pos_index_upper;
 		lower_val = current_playback_key_info.requested_pos_index_lower;
 	}
