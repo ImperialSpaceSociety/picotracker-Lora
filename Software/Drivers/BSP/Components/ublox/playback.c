@@ -213,6 +213,12 @@ void main()
 
 	fill_positions_to_send_buffer();
 
+	printf("\ntesting extraction of long\n");
+	//uint8_t buff1[4] = {0x00,0x07,0x42,0xBF};
+	uint8_t buff1[4] = {0x01,0x00,0x00,0x00};
+
+	uint32_t asd = extractLong_from_buff(0,buff1);
+	printf("res %d",asd);
 	
 	
 
@@ -648,4 +654,15 @@ uint16_t extractInt_from_buff(uint8_t spotToStart, uint8_t *buff)
 uint8_t extractByte_from_buff(uint8_t spotToStart, uint8_t *buff)
 {
   return (buff[spotToStart]);
+}
+
+//Given a spot in the payload array, extract four bytes and build a long
+uint32_t extractLong_from_buff(uint8_t spotToStart, uint8_t *buff)
+{
+	uint32_t val = 0;
+	val |= (uint32_t)buff[spotToStart + 0] << 8 * 0;
+	val |= (uint32_t)buff[spotToStart + 1] << 8 * 1;
+	val |= (uint32_t)buff[spotToStart + 2] << 8 * 2;
+	val |= (uint32_t)buff[spotToStart + 3] << 8 * 3;
+	return (val);
 }

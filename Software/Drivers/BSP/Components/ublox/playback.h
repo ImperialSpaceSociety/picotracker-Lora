@@ -74,6 +74,7 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
 void process_playback_instructions(uint16_t recent_timepos_index, uint16_t older_timepos_index );
 uint16_t extractInt_from_buff(uint8_t spotToStart, uint8_t *buff);
 uint8_t extractByte_from_buff(uint8_t spotToStart, uint8_t *buff);
+uint32_t extractLong_from_buff(uint8_t spotToStart, uint8_t *buff);
 /* ==================================================================== */
 /* ======================= public functions =========================== */
 /* ==================================================================== */
