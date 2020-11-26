@@ -318,8 +318,7 @@ void fill_positions_to_send_buffer( void )
 		
 
 		#ifdef playback_testing
-		printf("\nTimepos index: %d",rand_time_pos_index);
-		printf("\n");
+		printf("\nTimepos index: %d\n",rand_time_pos_index);
 		#endif
 	 
 		#ifndef playback_testing
