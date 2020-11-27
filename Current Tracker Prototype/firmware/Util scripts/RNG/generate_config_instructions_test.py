@@ -9,6 +9,12 @@ class Test_Scorer(unittest.TestCase):
         res = gen_instruction(519506,519524)
         self.assertEqual("64ed070052ed0700",res)
 
+    def test_gen_instruction_error_wrong_size(self):
+        self.assertRaises(ValueError, gen_instruction, 5,4)
+
+    def test_gen_instruction_error_equal(self):
+        self.assertRaises(ValueError, gen_instruction, 4,4)
+
     def test_convert_datatime_to_special_epoch_min(self):
         date_time_str = '2020-11-26 19:30:57.084'
         date_time_older = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
