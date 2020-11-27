@@ -65,7 +65,9 @@ sensor_t current_sensor_data =
 	.pressure = 400,              /* 130 - 1030 (min 128 values, 10mbar per increment)(7 bits) */
 	.data_received = 1,           /* 0 or 1. indicates that message was received(1 bit) */
 	.sats = 12,                   /* 0 - 32. Number of sats. (4 bits) */
-	.reset_count = 7              /* 0-7. Number of resets in (3 bits) */
+	.reset_count = 7,              /* 0-7. Number of resets in (3 bits) */
+	.days_of_playback = 23         /* 0-64. Number of days of playback available (6 bits) */
+
 };
 
 
@@ -540,9 +542,10 @@ void prepare_tx_buffer(void)
 	  tx_str_buffer[0] = ((current_sensor_data_ptr->no_load_solar_voltage - 18) & 0x1F) << 3;
 	  tx_str_buffer[0] |= ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x1C) >> 2;
 	  
-	  /* byte1: load voltage(remaining 2 bits) and 6 bits unused */
+	  /* byte1: load voltage(remaining 2 bits) and days of playback available (6 bits) */
 	  tx_str_buffer[1] = ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x03) << 6;
-	 
+	  tx_str_buffer[1] |= (current_sensor_data_ptr->days_of_playback & 0x3F);
+
 	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
 	  tx_str_buffer[2] = ((current_sensor_data_ptr->pressure/10) & 0x7F) << 1;
 	  tx_str_buffer[2] |=	(current_playback_key_info.playback_error & 0x01);

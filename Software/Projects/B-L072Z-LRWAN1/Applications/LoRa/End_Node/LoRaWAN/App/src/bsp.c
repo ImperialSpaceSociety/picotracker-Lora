@@ -46,6 +46,7 @@
 #define FAIL                                        0
 #endif
 
+#define MINUTES_IN_DAY  1440UL
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint16_t current_EEPROM_index = 0;
@@ -63,7 +64,6 @@ time_pos_fix_t current_position =
 
 
 sensor_t sensor_data;
-time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
 playback_key_info_t *playback_key_info_ptr;
 
 
@@ -72,6 +72,9 @@ void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position);
 void fill_positions_to_send_buffer( void );
 uint32_t unix_time_to_minutes_since_epoch(uint32_t unix_time);
 int mod(int a, int b);
+void print_stored_coordinates( void );
+time_pos_fix_t get_oldest_pos_time( void );
+time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -134,18 +137,23 @@ void BSP_sensor_Read(void)
 
 	
 	
-	sensor_data.humidity    = 34; // hard coded dummy value
-	sensor_data.temperature = (int8_t)TEMPERATURE_Value;
-	sensor_data.pressure    = (uint16_t)PRESSURE_Value;
-	sensor_data.no_load_solar_voltage = (uint8_t)(no_load_solar_voltage/100);
-	sensor_data.load_solar_voltage = (uint8_t)(load_solar_voltage/100);
-	sensor_data.sats = (uint8_t)gps_info.GPSsats;
+
 
 
 	current_position.altitude  = (gps_info.GPSaltitude >> 8) & 0xffff;
 	current_position.latitude  = (gps_info.GPS_UBX_latitude >> 16) & 0xffff;
 	current_position.longitude = (gps_info.GPS_UBX_longitude >> 16) & 0xffff;
 	current_position.minutes_since_epoch = unix_time_to_minutes_since_epoch(gps_info.unix_time)&0x00ffffff;
+	
+	sensor_data.humidity    = 34; // hard coded dummy value
+	sensor_data.temperature = (int8_t)TEMPERATURE_Value;
+	sensor_data.pressure    = (uint16_t)PRESSURE_Value;
+	sensor_data.no_load_solar_voltage = (uint8_t)(no_load_solar_voltage/100);
+	sensor_data.load_solar_voltage = (uint8_t)(load_solar_voltage/100);
+	sensor_data.sats = (uint8_t)gps_info.GPSsats;
+	
+	time_pos_fix_t oldest = get_oldest_pos_time();
+	sensor_data.days_of_playback = (current_position.minutes_since_epoch - oldest.minutes_since_epoch)/MINUTES_IN_DAY;
 
 
 	/* fill up the buffer to send down */
@@ -231,7 +239,19 @@ void  BSP_sensor_Init( void  )
 	
 	playback_key_info_ptr = get_playback_key_info_ptr();
 
+	print_stored_coordinates();
 
+
+}
+
+/**
+ * \brief Print out all the stored coordinates
+ * 
+ * 
+ * \return void
+ */
+void print_stored_coordinates()
+{
 	/* test stored positoins */
 	PRINTF("Printing Stored coordinates:\n");
 	for (uint16_t i = 0; i < n_playback_positions_saved; i++)
@@ -239,6 +259,27 @@ void  BSP_sensor_Init( void  )
 		time_pos_fix_t temp = retrieve_eeprom_time_pos(i);
 		PRINTF("index: %d, long: %d, lat: %d, alt: %d, ts: %d\n",i,temp.longitude, temp.latitude, temp.altitude, temp.minutes_since_epoch);
 	}
+}
+
+
+/**
+ * \brief get postime oldest datapoint
+ * 
+ * 
+ * \return time_pos_fix_t
+ */
+time_pos_fix_t get_oldest_pos_time()
+{
+	/* test stored positoins */
+	PRINTF("Getting oldest position:\n");
+	
+	uint16_t index = (n_playback_positions_saved == 0)? 0 : n_playback_positions_saved - 1;
+	
+	time_pos_fix_t temp = retrieve_eeprom_time_pos(index);
+	
+	PRINTF("oldest postime fix: %d, long: %d, lat: %d, alt: %d, ts: %d\n",temp.longitude, temp.latitude, temp.altitude, temp.minutes_since_epoch);
+	
+	return temp;
 }
 
 uint16_t minute_from_epoch_to_time_pos_index(uint32_t minutes_from_epoch)

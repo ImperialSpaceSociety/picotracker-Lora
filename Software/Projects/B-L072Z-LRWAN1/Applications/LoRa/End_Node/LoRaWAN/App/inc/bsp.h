@@ -57,7 +57,7 @@ typedef struct{
   uint8_t sats;                 /* satellites in fix */
   uint16_t reset_count;          /* Count number of resets */
   uint8_t data_received;
-  /**more may be added*/
+  uint8_t days_of_playback;     /* How many days of playback we have */
 } sensor_t;
 
 typedef struct
