@@ -277,7 +277,7 @@ time_pos_fix_t get_oldest_pos_time()
 	
 	time_pos_fix_t temp = retrieve_eeprom_time_pos(index);
 	
-	PRINTF("oldest postime fix: %d, long: %d, lat: %d, alt: %d, ts: %d\n",temp.longitude, temp.latitude, temp.altitude, temp.minutes_since_epoch);
+	PRINTF("oldest postime :: pos_time index: %d, long: %d, lat: %d, alt: %d, ts: %d\n",index,temp.longitude, temp.latitude, temp.altitude, temp.minutes_since_epoch);
 	
 	return temp;
 }
