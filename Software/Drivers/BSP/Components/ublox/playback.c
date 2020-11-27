@@ -418,19 +418,27 @@ void init_LGC(int start, int stop, int step)
  */
 int next_LCG()
 {
-
-	/* If this is a valid value, yield it */
-	while (LGC_current_params.value >= LGC_current_params.maximum)
+	bool done  = false;
+	int res;
+	while (1)
 	{
+		// If this is a valid value, yield it in generator fashion.
+		if (LGC_current_params.value < LGC_current_params.maximum)
+		{
+			res = mapping(LGC_current_params.value,LGC_current_params.start,LGC_current_params.step);
+			done = true;
+			
+		}
 		// Calculate the next value in the sequence.
 		LGC_current_params.value = (LGC_current_params.value * LGC_current_params.multiplier + LGC_current_params.offset) % LGC_current_params.modulus;
+		
+		if (done == true)
+		{
+			return res;
+		}
 	}
 	
-	/* increment the value for the next reading */
-	LGC_current_params.value = (LGC_current_params.value * LGC_current_params.multiplier + LGC_current_params.offset) % LGC_current_params.modulus;
-
-	
-	return mapping(LGC_current_params.value,LGC_current_params.start,LGC_current_params.step);
+	return 0;
 
 }
 
