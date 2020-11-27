@@ -30,10 +30,10 @@ def convert_special_epoch_min_to_datetime(ts_min:int)->str:
     return datetime.utcfromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S')
 
 if __name__ == "__main__":
-    date_time_str = '2020-11-26 23:53:01'
+    date_time_str = '2020-11-27 11:30:01'
     date_time_older = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
 
-    date_time_str = '2020-11-26 23:56:01'
+    date_time_str = '2020-11-27 11:55:01'
     date_time_newer = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
 
 
