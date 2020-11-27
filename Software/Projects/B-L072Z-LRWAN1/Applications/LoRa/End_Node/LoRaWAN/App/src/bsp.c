@@ -145,7 +145,6 @@ void BSP_sensor_Read(void)
 	current_position.longitude = (gps_info.GPS_UBX_longitude >> 16) & 0xffff;
 	current_position.minutes_since_epoch = unix_time_to_minutes_since_epoch(gps_info.unix_time)&0x00ffffff;
 	
-	sensor_data.humidity    = 34; // hard coded dummy value
 	sensor_data.temperature = (int8_t)TEMPERATURE_Value;
 	sensor_data.pressure    = (uint16_t)PRESSURE_Value;
 	sensor_data.no_load_solar_voltage = (uint8_t)(no_load_solar_voltage/100);
