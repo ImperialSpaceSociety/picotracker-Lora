@@ -66,7 +66,7 @@ sensor_t current_sensor_data =
 	.data_received = 1,           /* 0 or 1. indicates that message was received(1 bit) */
 	.sats = 12,                   /* 0 - 32. Number of sats. (4 bits) */
 	.reset_count = 7,              /* 0-7. Number of resets in (3 bits) */
-	.days_of_playback = 23         /* 0-64. Number of days of playback available (6 bits) */
+	.days_of_playback = 63         /* 0-64. Number of days of playback available (6 bits) */
 
 };
 
