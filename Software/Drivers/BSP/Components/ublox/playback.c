@@ -192,23 +192,39 @@ void main()
 	for (int i = 0; i<1000;i ++)
 	{
 		int index_c = corput_index(0, 100);
-
-		//printf("i:%d index %d\n",i,index_c);
-
 	}
 	
 	printf("\n");
 	
 	srand(10);
 	
+	init_LGC(0,0,1);
 
 	for (int i = 0; i<12;i ++)
 	{
-		printf("%d ",select_low_discrepancy_ptr(1,5));
+		printf("%d ",select_low_discrepancy_ptr(1,10));
 
 	}
 
+	printf("\n");
+
 	process_playback_instructions(3,5);
+	
+	for (int i = 0; i<12;i ++)
+	{
+		printf("%d ",select_low_discrepancy_ptr(1,3));
+
+	}
+	printf("\n");
+	
+	
+		
+	for (int i = 0; i<12;i ++)
+	{
+		printf("%d ",select_low_discrepancy_ptr(1,10));
+
+	}
+	printf("\n");
 
 
 	fill_positions_to_send_buffer();
