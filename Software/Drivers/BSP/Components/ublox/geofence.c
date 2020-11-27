@@ -391,7 +391,7 @@ static float EU863870_EUROPE_F[76] = {
 
 /* Function prototypes for private (static) functions go here */
 
-static int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, float longitude); // todo what is this??
+static int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, float longitude);
 static Polygon_t get_polygon(float latitude, float longitude);
 static void set_current_loramac_region(Polygon_t current_poly);
 
@@ -438,7 +438,6 @@ int32_t pointInPolygonF(int32_t polyCorners, float* polygon, float latitude, flo
 
 /*
 	Changes GEOFENCE_LoRA_frequency and tx_permission global variables based on the input coordinates.
-	TODO: documentation must be updated for LoRa frequencies
 	FREQUENCIES:
 						EU863870    = 0x01,
 						AU915928    = 0x02,

@@ -39,23 +39,35 @@ Maintainer: Miguel Luis and Gregory Cristian
  extern "C" {
 #endif
 /* Includes ------------------------------------------------------------------*/
-#include "hw.h"
+#include <stdint.h>
+#include "main.h"
+
 
 /* Exported types ------------------------------------------------------------*/
 
 typedef struct{
-  double pressure;    /* in mbar */  
-  double temperature; /* in °C   */
-  double humidity;    /* in %    */
-  float latitude;
-  float longitude ;
-  uint32_t  altitudeGps;       /* in m */
-	uint16_t no_load_solar_voltage;
-	uint16_t load_solar_voltage;
-  /**more may be added*/
+  uint16_t pressure;    /* in mbar */  
+  int8_t temperature; /* in °C   */
+  int8_t humidity;    /* in %    */
+  uint16_t latitude;
+  uint16_t longitude ;
+  uint16_t altitudeGps;       /* in m */
+  uint8_t no_load_solar_voltage;
+  uint8_t load_solar_voltage;
+  uint8_t sats;                 /* satellites in fix */
+  uint16_t reset_count;          /* Count number of resets */
+  uint8_t data_received;
+  uint8_t days_of_playback;     /* How many days of playback we have */
 } sensor_t;
 
+typedef struct
+{
+  uint32_t minutes_since_epoch; // minutes since Epoch
+  uint16_t latitude;        // Latitude
+  uint16_t longitude;       // Longitude
+  uint16_t altitude;     // Altitude
 
+}time_pos_fix_t;
 
 
 
@@ -65,14 +77,34 @@ typedef struct{
 
 
 // EEPROM related defines
-#define EEPROM_ADDR_START                       0x08080000       /* Start @ of STM32 internal EEPROM area */
 
-#define FRAME_COUNTER_EEPROM_ID                    (1)
-#define FRAME_COUNTER_EEPROM_OFFSET                (0)
-#define FRAME_COUNTER_EEPROM_LEN                   (8)
-#define FRAME_COUNTER_EEPROM_ADDRESS               (uint32_t)(EEPROM_ADDR_START + FRAME_COUNTER_EEPROM_OFFSET)
 
-   
+#define FRAME_COUNTER_EEPROM_ADDRESS               (0)
+#define FRAME_COUNTER_EEPROM_LEN                   (4)
+
+#define LORAMAC_REGION_EEPROM_ADDR                 (4)
+#define LORAMAC_REGION_EEPROM_LEN                  (4)
+
+
+#define RESET_COUNTER_ADDR                         (8)
+#define RESET_COUNTER_LEN                          (2)
+
+
+#define CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR      (10)
+#define CURRENT_PLAYBACK_INDEX_IN_EEPROM_LEN       (2)
+
+#define N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR  (12)
+#define N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_LEN   (2)
+
+#define PLAYBACK_EEPROM_ADDR_START                 (14)
+#define PLAYBACK_EEPROM_PACKET_SIZE                (9)
+#define MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM     (650)
+#define PLAYBACK_EEPROM_SIZE                       (MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM * PLAYBACK_EEPROM_PACKET_SIZE)
+
+/* WARNING! Ensure this value is less than DATA_EEPROM_BANK2_END. Or else, it will overflow EEPROM */
+#define NVM_GPS_EEPROM_ADDR_END                    (NVM_GPS_EEPROM_ADDR_START - 1 + PLAYBACK_EEPROM_SIZE)
+																												
+
 
 /* Exported constants --------------------------------------------------------*/
 /* External variables --------------------------------------------------------*/
@@ -92,7 +124,7 @@ void  BSP_sensor_Init( void  );
  * @note none
  * @retval sensor_data
  */
-void BSP_sensor_Read( sensor_t *sensor_data);
+void BSP_sensor_Read( void );
 
 
 
@@ -102,14 +134,6 @@ void BSP_sensor_Read( sensor_t *sensor_data);
   * @retval uint16_t The battery voltage value in mV
   */
 uint16_t BSP_GetSolarLevel16( void );
-
-
-void WriteInternalEepromBuffer(uint32_t dest_addr, uint32_t data);
-uint8_t EepromLoraKeysValidation(void);
-void LoadLoraKeys( void );
-void LoadFrameCounter( uint32_t* fcnt );
-uint8_t EepromFrameCounterValidation(void);
-
 
 
 /*!
@@ -132,6 +156,8 @@ uint8_t EepromMcuWriteBuffer( uint16_t addr, uint8_t *buffer, uint16_t size );
  */
 uint8_t EepromMcuReadBuffer( uint16_t addr, uint8_t *buffer, uint16_t size );
 
+uint16_t minute_from_epoch_to_time_pos_index(uint32_t minutes_from_epoch);
+void manage_incoming_instruction(uint8_t *instructions);
 
 
 #ifdef __cplusplus

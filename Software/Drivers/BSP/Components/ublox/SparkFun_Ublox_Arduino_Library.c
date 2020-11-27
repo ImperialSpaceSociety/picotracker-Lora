@@ -40,10 +40,7 @@
 #if 1
 
 #include "SparkFun_Ublox_Arduino_Library.h"
-#include "stm32l0xx_hal.h"
 
-#include <hw_i2c.h>
-#include <stdio.h>
 #include "hw.h" // for PRINTF
 #include <i2c_middleware.h>
 

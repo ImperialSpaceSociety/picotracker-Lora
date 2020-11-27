@@ -28,7 +28,6 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -76,10 +75,10 @@ void Error_Handler(void);
 
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor, Radio, GPS or LED
-#define SENSOR_ENABLED   1         /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
-#define GPS_ENABLED      1         /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
-#define RADIO_ENABLED    1         /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
-#define USE_LED          1         /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
+#define SENSOR_ENABLED                1    /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
+#define GPS_ENABLED                   1    /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
+#define RADIO_ENABLED                 1    /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_LED                       1    /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
 #define USE_NVM_STORED_LORAWAN_REGION 1    /* Use LoRaWAN region stored in EEPROm. Allowed values: 0 disabled , 1(default) enabled */
 
 /* GPS RELATED DEFINES */
@@ -97,12 +96,24 @@ void Error_Handler(void);
 
 /* LORAWAN RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
+/*!
+ * User application data buffer size
+ */
+#define LORAWAN_APP_DATA_BUFF_SIZE                           242
+#define DOWNLINK_CONFIG_PORT                         18
 
+/* PLAYBACK RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
+#define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM  20U    // Save to eeprom every 20 minutes
+#define DEFAULT_N_POSITIONS_TO_SEND 12U
+#define MAX_N_POSITIONS_TO_SEND 25U
+#define DEFAULT_N_POSITIONS_OFFSET 0U
+#define DEFAULT_N_POSITIONS_TO_SELECT_FROM 500UL
 /*!
  * Defines the application data transmission duty cycle. 2 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           20000
+#define APP_TX_DUTYCYCLE                           40000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static

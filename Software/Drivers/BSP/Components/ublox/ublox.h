@@ -41,6 +41,37 @@ typedef enum
 } gps_status_t;
 
 
+typedef struct{
+	float GPS_UBX_latitude_Float;  // YY.YYYYYYY, in +/- DEGREES, 
+	float GPS_UBX_longitude_Float;  // XXX.XXXXXXX, in +/- DEGREES,
+	int32_t GPSaltitude;
+	uint8_t GPSsats;
+
+	int32_t GPS_UBX_latitude;	// YYYYYYYYY, +/-
+	int32_t GPS_UBX_longitude;	// XXXXXXXXXX, +/-
+					
+
+	uint8_t GPShour;
+	uint8_t GPSminute;
+	uint8_t GPSsecond;
+	uint8_t GPSday;
+	uint8_t GPSmonth;
+	uint16_t GPSyear;
+
+	uint8_t GPSfix_type;
+	uint8_t GPSfix_OK;
+	uint8_t GPSvalidity;
+
+	uint8_t GPSnavigation;
+	
+	uint32_t week;
+	uint32_t TOW;
+	uint32_t unix_time;
+	
+	gps_status_t latest_gps_status;
+
+} gps_info_t;
+
 /* ==================================================================== */
 /* ========================== public data ============================= */
 /* ==================================================================== */
@@ -48,11 +79,7 @@ typedef enum
 /* Definition of public (external) data types go here */
 
 
-extern float GPS_UBX_latitude_Float;							// YY.YYYYYYY, in +/- DEGREES (?), also used as output of Coords_DEGtoDEC()
-extern float GPS_UBX_longitude_Float;							// XXX.XXXXXXX, in +/- DEGREES (?), also used as output of Coords_DEGtoDEC()
-
-extern int32_t GPSaltitude;										// for both UBX and NMEA, in +/- meters (m)
-extern uint8_t GPSsats;											// for both UBX and NMEA
+extern gps_info_t gps_info;
 
 /* ==================================================================== */
 /* ======================= public functions =========================== */
