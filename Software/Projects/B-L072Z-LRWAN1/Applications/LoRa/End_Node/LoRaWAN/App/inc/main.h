@@ -108,7 +108,7 @@ void Error_Handler(void);
 #define DEFAULT_N_POSITIONS_TO_SEND 12U
 #define MAX_N_POSITIONS_TO_SEND 25U
 #define DEFAULT_N_POSITIONS_OFFSET 0U
-#define DEFAULT_N_POSITIONS_TO_SELECT_FROM 300UL
+#define DEFAULT_N_POSITIONS_TO_SELECT_FROM 500UL
 /*!
  * Defines the application data transmission duty cycle. 2 minutes, value in [ms].
  */
