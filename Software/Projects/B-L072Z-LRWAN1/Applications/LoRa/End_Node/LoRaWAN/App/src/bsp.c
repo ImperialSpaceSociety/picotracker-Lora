@@ -152,7 +152,7 @@ void BSP_sensor_Read(void)
 	sensor_data.sats = (uint8_t)gps_info.GPSsats;
 	
 	time_pos_fix_t oldest = get_oldest_pos_time();
-	sensor_data.days_of_playback = (current_position.minutes_since_epoch - oldest.minutes_since_epoch)/MINUTES_IN_DAY;
+	sensor_data.days_of_playback = (uint8_t)((current_position.minutes_since_epoch - oldest.minutes_since_epoch)/MINUTES_IN_DAY);
 
 
 	/* fill up the buffer to send down */
