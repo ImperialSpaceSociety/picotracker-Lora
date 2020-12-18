@@ -1,3 +1,8 @@
+# This program generates the byte instructions to send to the tracker to poll specific
+# time ranges
+# By Medad Newman, Imperial College Space Society
+# 18/12/2020
+
 import struct
 import time
 from datetime import datetime
@@ -30,10 +35,11 @@ def convert_special_epoch_min_to_datetime(ts_min:int)->str:
     return datetime.utcfromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S')
 
 if __name__ == "__main__":
-    date_time_str = '2020-11-27 11:30:01'
+
+    date_time_str = '2020-12-15 19:30:01'
     date_time_older = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
 
-    date_time_str = '2020-11-27 11:55:01'
+    date_time_str = '2020-12-16 11:55:01'
     date_time_newer = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S')
 
 
@@ -42,11 +48,3 @@ if __name__ == "__main__":
 
     print(convert_special_epoch_min_to_datetime(476586))
     print(convert_special_epoch_min_to_datetime(476584))
-    print(convert_special_epoch_min_to_datetime(476582))
-    print(convert_special_epoch_min_to_datetime(476580))
-    print(convert_special_epoch_min_to_datetime(476578))
-    print(convert_special_epoch_min_to_datetime(476576))
-    print(convert_special_epoch_min_to_datetime(476574))
-    print(convert_special_epoch_min_to_datetime(476572))
-    print(convert_special_epoch_min_to_datetime(476570))
-    print(convert_special_epoch_min_to_datetime(476568))
