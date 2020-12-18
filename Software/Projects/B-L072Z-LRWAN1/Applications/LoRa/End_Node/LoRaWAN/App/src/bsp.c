@@ -281,6 +281,13 @@ time_pos_fix_t get_oldest_pos_time()
 	return temp;
 }
 
+/**
+ * \brief look through eeprom to find the time/pos entry closest
+ * to the required time.
+ * 
+ * 
+ * \return index of time pos
+ */
 uint16_t minute_from_epoch_to_time_pos_index(uint32_t minutes_from_epoch)
 {
 	uint16_t res_index = 0;
