@@ -8,10 +8,10 @@
 # that the tracker is resetting a lot.
 # ---------------------------------------
 
+import json
 import re
 from pathlib import Path
-import json
-from datetime import datetime
+
 import matplotlib.pyplot as plt
 import pandas as pd
 
