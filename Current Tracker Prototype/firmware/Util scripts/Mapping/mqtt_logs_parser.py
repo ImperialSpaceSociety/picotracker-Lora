@@ -15,7 +15,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 
-line_selector = "\[(Sun|Mon|Tues|Wed|Thurs|Fri|Sat), (\d{2}) (Jan|Feb|Mar|Apr|May|June|July|Aug|Sep|Oct|Nov|Dec) (\d{4}) ([0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])\] INFO b'(.*)'"
+line_selector = "\[(Sun|Mon|Tues|Wed|Thu|Fri|Sat), (\d{2}) (Jan|Feb|Mar|Apr|May|June|July|Aug|Sep|Oct|Nov|Dec) (\d{4}) ([0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])\] INFO b'(.*)'"
 
 filename = "mqtt_log_data-1.txt"
 
