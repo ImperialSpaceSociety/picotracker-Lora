@@ -163,8 +163,12 @@ void BSP_sensor_Read(void)
 
 	if (gps_info.latest_gps_status == GPS_SUCCESS)
 	{
+		/* Save position to eeprom, overwriting the latest position with every fix. */
 		save_current_position_info_to_EEPROM(&current_position);
 		
+		/* After the time between saving(HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM) has elapsed, then
+		 * increment the counter such that it can save to the next location
+		 */
 		if (current_position.minutes_since_epoch - most_recent.minutes_since_epoch  > HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM)
 		{
 			playback_key_info_ptr->n_positions_saved_since_boot += 1;
