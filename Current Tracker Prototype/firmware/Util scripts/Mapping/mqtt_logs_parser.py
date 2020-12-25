@@ -46,5 +46,6 @@ diffs = df["datetime"].diff().dt.total_seconds()
 plt.scatter(x=df, y=diffs, c=colour_selection)
 plt.xlabel("datetime")
 plt.ylabel("time gap from previous transmission(seconds)")
-plt.title("Elapsed time between previous and current transmission plotted against time. Red is an empty frame, blue is a data frame")
+plt.title(
+    "Elapsed time between previous and current transmission plotted against time. Red is an empty frame, blue is a data frame")
 plt.show()
