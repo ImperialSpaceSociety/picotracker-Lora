@@ -525,6 +525,16 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
       mibReq.Param.AdrEnable = LoRaParamInit->AdrEnable;
       LoRaMacMibSetRequestConfirm( &mibReq );
 
+			
+			mibReq.Type = MIB_CHANNELS_DEFAULT_DATARATE;
+			mibReq.Param.ChannelsDefaultDatarate = LoRaParamInit->TxDatarate;
+			LoRaMacMibSetRequestConfirm( &mibReq );
+			
+			mibReq.Type = MIB_CHANNELS_DATARATE;
+			mibReq.Param.ChannelsDatarate = LoRaParamInit->TxDatarate;
+			LoRaMacMibSetRequestConfirm( &mibReq );
+
+			
       mibReq.Type = MIB_PUBLIC_NETWORK;
       mibReq.Param.EnablePublicNetwork = LoRaParamInit->EnablePublicNetwork;
       LoRaMacMibSetRequestConfirm( &mibReq );
