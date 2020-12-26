@@ -630,7 +630,6 @@ void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
 	
 	#ifndef playback_testing
-	srand1(*n_positions_in_eeprom);
 	corput_n = randr(0,1000);
 	#endif
 	
