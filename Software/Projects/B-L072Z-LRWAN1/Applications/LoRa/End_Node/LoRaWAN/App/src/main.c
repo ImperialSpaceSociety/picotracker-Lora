@@ -214,6 +214,8 @@ int main( void )
 
 		/* Configure the Lora Stack*/
 		LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
+		
+		PRINTF("RANDTEST:%d\n",	randr(1,100));
 
 		/* Send a join request */
 		#if RADIO_ENABLED
