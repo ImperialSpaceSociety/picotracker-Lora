@@ -7,7 +7,7 @@ This Pico balloon tracker is a new version to be designed by Imperial College Sp
  implentation objective is to fly a small ballon around the world and to track it using the Things Network and HabHub.
 
 ## Major components
-As of now, 19/10/19, we have settled on the following components to go on the tracker solution
+We have settled on the following components to go on the tracker solution. 
 
 ### Tracker
 
@@ -15,9 +15,7 @@ As of now, 19/10/19, we have settled on the following components to go on the tr
 * Ublox Max M8Q GPS module
 * MS8607 Pressure temp humidity sensor
 * Solar Power Management
-* Peripheral Power Control to minimise power consumption
 * Possible small Energy storage by battery or super capacitor
-* Reset Manager to ensure no corruption in case of brown outs
 The moto: KEEP IT SIMPLE
 
 ### TTN2HabHub Bridge
