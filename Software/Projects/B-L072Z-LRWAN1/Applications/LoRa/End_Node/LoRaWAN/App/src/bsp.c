@@ -244,18 +244,19 @@ void  BSP_sensor_Init( void  )
 	PRINTF("SELFTEST: Initialisng ms5607\n\r");
 	#if SENSOR_ENABLED
   /* Initialize sensors */	
-		ms5607_Init();
+	ms5607_Init();
+	
 	HAL_IWDG_Refresh(&hiwdg);
 
 	#endif
 	
-	 #if GPS_ENABLED
-	 PRINTF("SELFTEST: Initialising GPS\n\r");
+	#if GPS_ENABLED
+	PRINTF("SELFTEST: Initialising GPS\n\r");
 
-	 //GPS SETUP
-	 setup_GPS();
+	//GPS SETUP
+	setup_GPS();
 	 	
-		HAL_IWDG_Refresh(&hiwdg);
+	HAL_IWDG_Refresh(&hiwdg);
 
 	#endif
 	
