@@ -30,11 +30,6 @@
 #include "main.h"
 #include "playback.h"
 
-#include "stm32l0xx_hal_flash.h"
-#include "stm32l0xx_hal_flash_ex.h"
-#include "stm32l0xx_hal.h"
-#include "stm32l0xx_hal_pwr.h"
-#include "stm32l0xx.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
