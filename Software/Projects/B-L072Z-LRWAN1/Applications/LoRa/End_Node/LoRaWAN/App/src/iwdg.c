@@ -43,6 +43,23 @@ void MX_IWDG_Init(void)
 
 /* USER CODE BEGIN 1 */
 
+/* IWDG init function */
+void MX_IWDG_DeInit(void)
+{
+	/* Reset time is:
+	 * Tout = Prescaler * Reload / 32000
+	 * In this case, comes to 32.76 seconds
+	 */
+  hiwdg.Instance = IWDG;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
+  hiwdg.Init.Reload = 4095;
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+}
+
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
