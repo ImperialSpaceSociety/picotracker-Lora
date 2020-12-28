@@ -52,14 +52,19 @@ The moto: KEEP IT SIMPLE
 
 
 # Design Files
-The PCBs are designed with Kicad and the latest designs can be found in the [hardware folder](Current%20Tracker%20Prototype/hardware/Kicad/). We have two designs, the V1.2a and the V1.2b. V1.2a is a fully solar powered tracker with no power storage. The solar cells are directly wired to VCC and GND to power all components. V1.2b has a 50mAh lipo on board for power storage. The MPPT IC on board, the SPV1040, extracts maximum current from the cells to charge the battery.
+The PCBs are designed with Kicad and the latest designs can be found in the [hardware folder](Current%20Tracker%20Prototype/hardware/Kicad/). We have two designs, the a and the b variant. a variant is a fully solar powered tracker with no power storage. The solar cells are directly wired to VCC and GND to power all components. b variant has a 50mAh lipo on board for power storage. The MPPT IC on board, the SPV1040, extracts maximum current from the cells to charge the battery.
 
+As of 29/12/2020, the latest flight proven design is V1.3a. The b variant has not been flown yet.
 
 # Software
 We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free of charge for the STM32L0 series of microcontrollers. You will be able to download Keil from [here](https://www2.keil.com/stmicroelectronics-stm32/mdk). Make sure you activate it so that you can compile files greater than 30kb of flash.
 
 The software on the latest tracker can be found in the [Software folder](Software). You need to navigate to ``Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/`` and you can open the KEIL project by clicking ``Lora.uvprojx``
 
+Once you open Keil, it should look like this. Ensure that the 1.3a_variant of the code is selected(highlighted in picture): ![image](https://user-images.githubusercontent.com/26815217/103182972-58b61b80-48a7-11eb-9189-2644d05e65e5.png)
+
+
+# Software overview
 The picotracker state machine is as follows: 
 It gets a GPS fix every 2 minutes and transmits it to ground
 
