@@ -347,12 +347,8 @@ void fill_positions_to_send_buffer( void )
 		#endif
 	 
 		#ifndef playback_testing
-
 		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
-		
-
-		
-		
+				
 		subset_positions[i].altitude = random_time_pos.altitude;
 		subset_positions[i].latitude = random_time_pos.latitude;
 		subset_positions[i].longitude = random_time_pos.longitude;
