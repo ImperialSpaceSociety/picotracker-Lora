@@ -294,6 +294,13 @@ time_pos_fix_t get_oldest_pos_time()
 	/* test stored positoins */
 	PRINTF("Getting oldest position:\n");
 	
+	/* The index starts from 0. If 1 position is saved, it will have an index of 0.
+	 * Generalising, if there are n positions, the nth position index will be n-1.
+	 * The problem is, if there are 0 poitions saved, the index calculated will be -1.
+	 * This will break the retrieve_eeprom_time_pos() because it reads only positive numbers.
+	 * So if thats the case, then force the index to be 0.
+	 * TODO: make it return a null value when n_playback_positions_saved == 0
+	 */
 	uint16_t index = (n_playback_positions_saved == 0)? 0 : n_playback_positions_saved - 1;
 	
 	time_pos_fix_t temp = retrieve_eeprom_time_pos(index);
