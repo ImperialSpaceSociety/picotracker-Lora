@@ -434,7 +434,8 @@ void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position)
  */
 time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index)
 {
-	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	time_pos_fix_t time_pos_fix;
 	
 	/* read Long, Lat, Altitude, minutes since epoch from EEPROM */
@@ -444,6 +445,8 @@ time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index)
 	EepromMcuReadBuffer(location_to_read + 4,(void*)&time_pos_fix.longitude, LONGITUDE_BYTES_LEN);
 	EepromMcuReadBuffer(location_to_read + 6,(void*)&time_pos_fix.minutes_since_epoch, MINUTES_SINCE_EPOCH_BYTES_LEN);
 	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	return time_pos_fix;
 }
 
