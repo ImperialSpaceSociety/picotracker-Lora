@@ -95,6 +95,9 @@ static void OnTxTimerEvent( void* context );
 /* tx timer callback function*/
 static void LoraMacProcessNotify( void );
 
+/* calculate datarate depending on region */
+int8_t datarate_calculator(LoRaMacRegion_t LoRaMacRegion);
+
 /* Private variables ---------------------------------------------------------*/
 /* load Main call backs structure*/
 static LoRaMainCallback_t LoRaMainCallbacks = { HW_GetBatteryLevel,
@@ -112,12 +115,7 @@ LoraFlagStatus AppProcessRequest=LORA_RESET;
 static TimerEvent_t TxTimer;
 
 
-/* !
- *Initialises the Lora Parameters
- */
-static  LoRaParam_t LoRaParamInit= {LORAWAN_ADR_STATE,
-                                    LORAWAN_DEFAULT_DATA_RATE,  
-                                    LORAWAN_PUBLIC_NETWORK};	
+	
 																		
 
 
@@ -223,7 +221,12 @@ int main( void )
 
 
 	while( 1 ){
-
+		
+		/* select data rate depending on region of the world. */
+		int8_t dr =  datarate_calculator(current_loramac_region);
+		
+		LoRaParam_t LoRaParamInit = {LORAWAN_ADR_STATE, dr, LORAWAN_PUBLIC_NETWORK};
+		
 		/* Configure the Lora Stack*/
 		LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
 		
@@ -551,5 +554,23 @@ void set_brownout_level( void )
 	}
 }
 
+
+int8_t datarate_calculator(LoRaMacRegion_t LoRaMacRegion)
+{
+	int8_t dr = 0;
+	
+	switch (LoRaMacRegion)
+	{
+		case LORAMAC_REGION_EU868:
+		dr =  DR_5;
+		break;
+		
+		default:
+		dr = DR_4;
+		break;
+	}
+	
+	return dr;
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
