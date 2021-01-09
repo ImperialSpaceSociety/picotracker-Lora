@@ -47,6 +47,7 @@
 #endif
 
 #define MINUTES_IN_DAY  1440UL
+#define MINUTES_AGO_TO_SELECT_FROM (MINUTES_IN_DAY * PLAYBACK_DAYS)
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint16_t current_EEPROM_index = 0;
@@ -246,8 +247,12 @@ void  BSP_sensor_Init( void  )
 	 * then calculate the index in eeprom of this timepos index.
 	 */
 	time_pos_fix_t most_recent_timepos_record = retrieve_eeprom_time_pos(0);
-	uint16_t earliest_time_to_send = most_recent_timepos_record.minutes_since_epoch - MINUTES_IN_DAY * PLAYBACK_DAYS;
-	uint16_t earliest_timepos_index = get_time_pos_index_older_than(earliest_time_to_send);
+	uint16_t earliest_time_to_send = most_recent_timepos_record.minutes_since_epoch - MINUTES_AGO_TO_SELECT_FROM;
+	
+	/* if there is not timepos index older than the calculated earliest time to send, then select from all the 
+	 * n_playback_positions_saved
+	 */
+	uint16_t earliest_timepos_index = MAX(get_time_pos_index_older_than(earliest_time_to_send), n_playback_positions_saved);
 		
 	/* Initialise playback */
 	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos, earliest_timepos_index);
@@ -303,7 +308,7 @@ time_pos_fix_t get_oldest_pos_time()
  * the given minute_from_epoch
  * 
  * 
- * \return index of time pos
+ * \return index of time pos. If there is no time/pos older in eeprom, then return 0
  */
 uint16_t get_time_pos_index_older_than(uint32_t minutes_from_epoch)
 {
