@@ -437,9 +437,6 @@ int next_LCG()
 			return res;
 		}
 	}
-	
-	return 0;
-
 }
 
 /**
