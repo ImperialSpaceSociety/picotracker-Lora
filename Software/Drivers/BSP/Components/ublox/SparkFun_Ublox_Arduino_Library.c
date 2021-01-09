@@ -40,10 +40,7 @@
 #if 1
 
 #include "SparkFun_Ublox_Arduino_Library.h"
-#include "stm32l0xx_hal.h"
 
-#include <hw_i2c.h>
-#include <stdio.h>
 #include "hw.h" // for PRINTF
 #include <i2c_middleware.h>
 
@@ -52,7 +49,7 @@
 
 
 static uint8_t GPS_buffer[MAX_PAYLOAD_SIZE];
-uint8_t ubx_packet_buff[200] = {0};
+uint8_t ubx_packet_buff[MAX_PAYLOAD_SIZE] = {0};
 
 
 
@@ -255,8 +252,7 @@ bool checkUbloxI2C(ubxPacket *incomingUBX, uint8_t requestedClass, uint8_t reque
 		{
 			return (false);  //Sensor did not ACK
 		}
-		
-		for(uint8_t i = 0; i < bytesAvailable ; i++)
+		for(int i = 0; i < bytesAvailable ; i++)
 		{
 			uint8_t incoming = ubx_packet_buff[i];
 			process(incoming, incomingUBX, requestedClass, requestedID); //Process this valid character
@@ -723,6 +719,8 @@ void processUBXpacket(ubxPacket *msg)
       gpsHour = extractByte(8);
       gpsMinute = extractByte(9);
       gpsSecond = extractByte(10);
+			gpsDateValid = extractByte(11) & 0x01;
+      gpsTimeValid = (extractByte(11) & 0x02) >> 1;
       gpsNanosecond = extractLong(16); //Includes milliseconds
 
       fixType = extractByte(20 - startingSpot);
@@ -745,6 +743,8 @@ void processUBXpacket(ubxPacket *msg)
       moduleQueried.gpsHour = true;
       moduleQueried.gpsMinute = true;
       moduleQueried.gpsSecond = true;
+			moduleQueried.gpsDateValid = true;
+      moduleQueried.gpsTimeValid = true;
       moduleQueried.gpsNanosecond = true;
 
       moduleQueried.all = true;
@@ -2700,6 +2700,25 @@ uint32_t getPositionAccuracy(uint16_t maxWait)
   return (tempAccuracy);
 }
 
+//Get the current date validity
+bool getDateValid(uint16_t maxWait)
+{
+  if (moduleQueried.gpsDateValid == false)
+    getPVT(maxWait);
+  moduleQueried.gpsDateValid = false; //Since we are about to give this to user, mark this data as stale
+  return (gpsDateValid);
+}
+
+//Get the current time validity
+bool getTimeValid(uint16_t maxWait)
+{
+  if (moduleQueried.gpsTimeValid == false)
+    getPVT(maxWait);
+  moduleQueried.gpsTimeValid = false; //Since we are about to give this to user, mark this data as stale
+  return (gpsTimeValid);
+}
+
+
 //Get the current latitude in degrees
 //Returns a long representing the number of degrees *10^-7
 int32_t getLatitude(uint16_t maxWait)
@@ -2915,6 +2934,8 @@ void flushPVT()
   moduleQueried.gpsHour = false;
   moduleQueried.gpsMinute = false;
   moduleQueried.gpsSecond = false;
+	moduleQueried.gpsDateValid = false;
+  moduleQueried.gpsTimeValid = false;
   moduleQueried.gpsNanosecond = false;
 
   moduleQueried.all = false;

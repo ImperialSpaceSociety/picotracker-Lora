@@ -121,9 +121,9 @@ void HW_Init( void )
 
 		for(uint8_t i = 0; i < 5; i++)
 		{
-			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+			BSP_LED_On(LED1);
 			HAL_Delay(50);
-			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+			BSP_LED_Off(LED1);
 			HAL_Delay(50);
 		}
 
@@ -132,16 +132,7 @@ void HW_Init( void )
 		GPS_INT_GPIO_Init();
 		
 	
-		#if defined( VARIANT_1V1B )  || defined ( VARIANT_1V2B )
-		/* enable power to the sensors */
-		SENSOR_EN_GPIO_Init();
-		
-		#endif
-		
-		#if defined( VARIANT_1V2A)
-		/* enable power to the GPS with mosfet */
-		GPS_EN_GPIO_Init();
-		#endif 
+
 		
 		PRINTF("SELFTEST: Now initing sensors\n\r");
     BSP_sensor_Init( );

@@ -28,7 +28,6 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -65,12 +64,6 @@ void Error_Handler(void);
 #define GPS_INT_Pin GPIO_PIN_13
 #define GPS_INT_GPIO_Port GPIOB
 
-#define LED_Pin GPIO_PIN_2
-#define LED_GPIO_Port GPIOA
-
-#define BUTTON_Pin GPIO_PIN_3
-#define BUTTON_GPIO_Port GPIOA
-
 #define SENSOR_EN_PIN GPIO_PIN_7
 #define SENSOR_EN_GPIO_Port GPIOB
 
@@ -82,16 +75,19 @@ void Error_Handler(void);
 
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor, Radio, GPS or LED
-#define SENSOR_ENABLED   1         /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
-#define GPS_ENABLED      1         /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
-#define RADIO_ENABLED    1         /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
-#define USE_LED          1         /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
-
+#define SENSOR_ENABLED                1    /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
+#define GPS_ENABLED                   1    /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
+#define RADIO_ENABLED                 1    /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_LED                       1    /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_NVM_STORED_LORAWAN_REGION 1    /* Use LoRaWAN region stored in EEPROm. Allowed values: 0 disabled , 1(default) enabled. If not using EEPROM location,
+																						* use EU868
+																						*/
 
 /* GPS RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 
-#define GPS_LOCATION_FIX_TIMEOUT          12000
+
+#define GPS_LOCATION_FIX_TIMEOUT          180000
 #define GPS_WAKEUP_TIMEOUT                1000
 
 
@@ -103,12 +99,24 @@ void Error_Handler(void);
 
 /* LORAWAN RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
-
 /*!
- * Defines the application data transmission duty cycle. 5 minutes, value in [ms].
+ * User application data buffer size
+ */
+#define LORAWAN_APP_DATA_BUFF_SIZE                           242
+#define DOWNLINK_CONFIG_PORT                         18
+
+/* PLAYBACK RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
+#define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM  20U    // Save to eeprom every 20 minutes
+#define DEFAULT_N_POSITIONS_TO_SEND 12U
+#define MAX_N_POSITIONS_TO_SEND 25U
+#define DEFAULT_N_POSITIONS_OFFSET 0U
+#define DEFAULT_N_POSITIONS_TO_SELECT_FROM 400UL
+/*!
+ * Defines the application data transmission duty cycle. 2 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           10000
+#define APP_TX_DUTYCYCLE                           40000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
@@ -131,7 +139,8 @@ void Error_Handler(void);
 //#define ICSPACE17
 //#define ICSPACE18
 //#define ICSPACE19
-#define ICSPACE20
+//#define ICSPACE20
+#define ICSPACE21
 
 
 /* USER CODE END Private defines */

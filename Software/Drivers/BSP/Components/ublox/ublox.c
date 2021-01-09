@@ -17,13 +17,14 @@
 
 /* Inclusion of system and local header files goes here */
 
-#include <stdlib.h>
 #include "ublox.h"
+#include <stdlib.h>
 #include <stdio.h>
 #include "stm32l0xx_hal.h"
 #include "main.h"
-#include <string.h>
 #include "hw.h"
+#include "bsp.h"
+#include <time.h>
 
 #include "SparkFun_Ublox_Arduino_Library.h"
 
@@ -90,31 +91,8 @@ const unsigned short dummy_coord_n = sizeof(dummy_coords_array) / (sizeof(float)
 
 #endif
 
-gps_status_t latest_gps_status = GPS_FAILURE;
-
-float GPS_UBX_latitude_Float							      = 0;  // YY.YYYYYYY, in +/- DEGREES, 
-float GPS_UBX_longitude_Float							      = 0;  // XXX.XXXXXXX, in +/- DEGREES,
-int32_t GPSaltitude												      = 0;
-uint8_t GPSsats													      	= 0;
-
-static int32_t GPS_UBX_latitude                 = 0;	// YYYYYYYYY, +/-
-static int32_t GPS_UBX_longitude                = 0;	// XXXXXXXXXX, +/-
-				
-
-static uint8_t GPShour													= 0;
-static uint8_t GPSminute												= 0;
-static uint8_t GPSsecond												= 0;
-static uint8_t GPSday														= 0;
-static uint8_t GPSmonth													= 0;
-static uint16_t GPSyear													= 0;
-
-static uint8_t GPSfix_type											= 0;
-static uint8_t GPSfix_OK												= 0;
-static uint8_t GPSvalidity											= 0;
-
-static uint8_t GPSnavigation										= 0;
-
-
+uint16_t load_solar_voltage = 0;
+gps_info_t gps_info = {.unix_time = UINT16_MAX, .latest_gps_status = GPS_FAILURE};
 
 
 /* ==================================================================== */
@@ -153,9 +131,14 @@ static gps_status_t init_for_fix(void);
 
 gps_status_t get_latest_gps_status(void)
 {
-	return latest_gps_status;
+	return gps_info.latest_gps_status;
 }
 
+/* Get solar voltage when under load from GPS */
+uint16_t get_load_solar_voltage()
+{
+	return load_solar_voltage;
+}
 
 /* 
  * GPS backup. 
@@ -270,6 +253,9 @@ gps_status_t get_location_fix(uint32_t timeout){
 		uint8_t temp_GPShour = getHour(defaultMaxWait);
 		uint8_t	temp_GPSminute = getMinute(defaultMaxWait);
 		uint8_t	temp_GPSsecond = getSecond(defaultMaxWait);
+		uint8_t temp_GPSmillisecond = getMillisecond(defaultMaxWait);
+		uint8_t	temp_GPSnanosecond = getNanosecond(defaultMaxWait);
+
 		uint16_t temp_GPSyear =  getYear(defaultMaxWait);
 		uint8_t temp_GPSmonth = getMonth(defaultMaxWait);
 		uint8_t temp_GPSday = getDay(defaultMaxWait);
@@ -290,32 +276,50 @@ gps_status_t get_location_fix(uint32_t timeout){
 		
 		PRINTF(" Sats:%d ",temp_GPSsats);
 		PRINTF(" GPSfix_OK:%d ",temp_GPSfix_OK);	
-		PRINTF(" GPS time: %02d/%02d/%04d, %02d:%02d:%02d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond);
+		PRINTF(" GPS time: %02d/%02d/%04d, %02d:%02d:%02d.%04d ",temp_GPSday, temp_GPSmonth, temp_GPSyear,temp_GPShour, temp_GPSminute, temp_GPSsecond,temp_GPSmillisecond);
 		PRINTF(" GPS Search time: %.3f seconds \r\n", current_time_F);
+		
+    struct tm t;
+    time_t t_of_day;
 
+    t.tm_year = temp_GPSyear-1900;  // Year - 1900
+    t.tm_mon = temp_GPSmonth - 1;           // Month, where 0 = jan
+    t.tm_mday = temp_GPSday;          // Day of the month
+    t.tm_hour = temp_GPShour;
+    t.tm_min = temp_GPSminute;
+    t.tm_sec = temp_GPSsecond;
+    t.tm_isdst = 0;        // Is DST on? 1 = yes, 0 = no, -1 = unknown
+    t_of_day = mktime(&t);
+
+    PRINTF("seconds since the Epoch: %ld\n", (uint32_t) t_of_day);
+		
+		load_solar_voltage = BSP_GetSolarLevel16();
 
 		
 		if(temp_GPSfix_type == 3 && temp_GPSsats >= SATS && temp_GPSfix_OK == 1)           // check if we have a good fix
 		{ 
 			display_fix_found();
 	
-			GPSyear =  temp_GPSyear;
-			GPSmonth = temp_GPSmonth;
-			GPSday = temp_GPSday;
-			GPShour = temp_GPShour;
-			GPSminute = temp_GPSminute;
-			GPSsecond = temp_GPSsecond;
-			GPSsats = temp_GPSsats;
-			GPSfix_type = temp_GPSfix_type;
-			GPSfix_OK = temp_GPSfix_OK;
-			GPS_UBX_latitude =  getLatitude(defaultMaxWait);
-			GPS_UBX_longitude = getLongitude(defaultMaxWait);
-			GPS_UBX_latitude_Float = (float)GPS_UBX_latitude/10000000;
-			GPS_UBX_longitude_Float = (float)GPS_UBX_longitude/10000000;
-			GPSaltitude = getAltitude(defaultMaxWait)/1000;
+			gps_info.GPSyear =  temp_GPSyear;
+			gps_info.GPSmonth = temp_GPSmonth;
+			gps_info.GPSday = temp_GPSday;
+			gps_info.GPShour = temp_GPShour;
+			gps_info.GPSminute = temp_GPSminute;
+			gps_info.GPSsecond = temp_GPSsecond;
+			gps_info.GPSsats = temp_GPSsats;
+			gps_info.GPSfix_type = temp_GPSfix_type;
+			gps_info.GPSfix_OK = temp_GPSfix_OK;
+			gps_info.GPS_UBX_latitude =  getLatitude(defaultMaxWait);
+			gps_info.GPS_UBX_longitude = getLongitude(defaultMaxWait);
+			gps_info.GPS_UBX_latitude_Float = (float)gps_info.GPS_UBX_latitude/10000000;
+			gps_info.GPS_UBX_longitude_Float = (float)gps_info.GPS_UBX_longitude/10000000;
+			gps_info.GPSaltitude = getAltitude(defaultMaxWait);
+			gps_info.unix_time = (uint32_t) t_of_day;
+					
+			
 
 			Backup_GPS();
-			latest_gps_status = GPS_SUCCESS;
+			gps_info.latest_gps_status = GPS_SUCCESS;
 			return GPS_SUCCESS;
 		}       
 		HAL_Delay(1000);
@@ -328,7 +332,7 @@ gps_status_t get_location_fix(uint32_t timeout){
 	reinit_gps();
 
 	Backup_GPS();
-	latest_gps_status = GPS_FAILURE;
+	gps_info.latest_gps_status = GPS_FAILURE;
 	return GPS_FAILURE;
 }
 
@@ -391,7 +395,7 @@ static gps_status_t init_for_fix()
 	}
 	else
 	{
-		PRINTF("dynamic model setting error %d\n");
+		PRINTF("dynamic model setting error\n");
 	}
 	
 	return GPS_SUCCESS;	
@@ -406,6 +410,16 @@ static gps_status_t reinit_gps()
 	//HAL_Delay(GPS_WAKEUP_TIMEOUT);                                                  // wait for GPS module to be ready
 
 	 
+	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
+	{
+		PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
+		reinit_i2c(&hi2c1);
+	}
+	else
+	{
+		PRINTF("set setI2COutput carried out successfully!\n");
+	}
+	
 	if (setI2COutput(COM_TYPE_UBX,defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
 	{
 		PRINTF("***!!! Warning: setI2COutput failed !!!***\n");
@@ -453,9 +467,9 @@ static gps_status_t reinit_gps()
 static gps_status_t display_still_searching()
 {
 	// Indicator led to indicate that still searching
-	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+	BSP_LED_On(LED1);
 	HAL_Delay(100);
-	HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+	BSP_LED_Off(LED1);
 	
 	return GPS_SUCCESS;
 
@@ -467,13 +481,15 @@ static gps_status_t display_fix_found()
 {
 	for(uint8_t i = 0; i < 20; i++)
 	{
-		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+		BSP_LED_On(LED1);
 		HAL_Delay(50);
-		HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+		BSP_LED_Off(LED1);
 		HAL_Delay(50);
 	}
 	
 	return GPS_SUCCESS;
 }
+
+
 
 

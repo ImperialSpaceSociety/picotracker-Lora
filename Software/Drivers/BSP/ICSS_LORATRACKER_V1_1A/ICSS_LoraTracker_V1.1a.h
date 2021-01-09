@@ -99,7 +99,12 @@ typedef enum
   */
 #define LEDn                               1
 
+#ifdef VARIANT_1V3A
+#define LED1_PIN                           GPIO_PIN_4
+#else
 #define LED1_PIN                           GPIO_PIN_2
+#endif
+
 #define LED1_GPIO_PORT                     GPIOA
 #define LED1_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOA_CLK_ENABLE()  
 #define LED1_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOA_CLK_DISABLE()

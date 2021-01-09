@@ -45,8 +45,8 @@
  */
 lora_setting_status_t lora_settings_status = CORRECT; 
 
-LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_EU868;  // Loramac region EU
-Polygon_t curr_poly_region = EU863870_EUROPE_polygon; // London is in this polygon
+LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_EU868;  // Loramac region AS923
+Polygon_t curr_poly_region = AS923925_INDONESIA_polygon; // Indonesia is in this polygon
 
 tx_permission_t tx_permission = TX_OK;
 
@@ -69,7 +69,7 @@ static float EU863870_AFRICA_F[36] = {
 65.22884,-3.14600,
 67.28233,20.93704,
 43.97169,29.64856,
-36.57472,35.55413,
+36.57473,35.55413,
 33.89509,31.80673,
 32.61551,32.08202,
 12.86095,34.05438,
@@ -83,7 +83,7 @@ static float EU863870_AFRICA_F[36] = {
 static float EU863870_PHILIPPINES_F[14] = { 
 119.35326,19.47621,
 115.48607,9.96808,
-118.25462,7.10011,
+118.25463,7.10011,
 123.39623,4.03883,
 132.14134,5.00261,
 127.35130,19.55905,
@@ -100,9 +100,9 @@ static float US902928_NAMERICA_F[32] = {
 -70.88094,-17.08505,
 -67.49103,-22.91785,
 -57.68823,-19.31401,
--68.90764,4.40695,
+-68.90763,4.40695,
 -51.18327,5.64711,
--43.90450,53.55910,
+-43.90451,53.55910,
 -71.84486,72.12693,
 -73.66926,78.90700,
 -51.52817,84.26362,
@@ -115,20 +115,20 @@ static float AS923925_BRUNEI_F[12] = {
 114.06400,4.89831,
 114.52543,3.95084,
 115.46751,4.26588,
-115.18186,5.06795,
+115.18186,5.06796,
 114.73417,5.25396,
 114.06400,4.89831,
 
 };
 
 static float AS923925_TAIWAN_F[14] = { 
-111.72826,21.97293,
+112.43139,21.52394,
 115.44164,19.27934,
 122.73656,20.74515,
 123.20570,26.19993,
 121.80764,26.38139,
-115.41967,23.93538,
-111.72826,21.97293,
+116.62817,22.88688,
+112.43139,21.52394,
 
 };
 
@@ -144,20 +144,21 @@ static float AS923925_INDONESIA_F[28] = {
 112.49518,1.39063,
 108.40480,-0.48386,
 104.45524,-0.25706,
-98.09623,4.87675,
+98.09623,4.87674,
 94.88327,7.30090,
 92.01692,5.86666,
 
 };
 
-static float AS923925_THAILAND_F[22] = { 
+static float AS923925_THAILAND_F[24] = { 
 95.86952,12.49757,
 97.08270,7.02099,
 100.15887,6.43181,
 106.24529,5.29523,
 112.57342,9.93283,
 110.90612,16.62593,
-106.24529,23.34903,
+107.67732,20.91948,
+105.21258,23.02586,
 101.60622,22.81417,
 97.24373,19.18170,
 95.75481,15.85441,
@@ -180,14 +181,14 @@ static float US902928_ARGENTINA_F[20] = {
 };
 
 static float AU915928_BRAZIL_F[16] = { 
--68.90764,4.40695,
+-68.90763,4.40695,
 -57.68823,-19.31401,
 -57.19000,-30.69796,
 -52.26812,-32.34613,
 -32.69593,-31.84013,
 -26.84638,-1.51932,
 -51.18327,5.64711,
--68.90764,4.40695,
+-68.90763,4.40695,
 
 };
 
@@ -203,7 +204,7 @@ static float AU915928_CHILE_F[16] = {
 
 };
 
-static float CN779787_CHINA_F[36] = { 
+static float CN779787_CHINA_F[40] = { 
 82.29205,48.54875,
 67.87798,37.82644,
 82.86334,29.67296,
@@ -211,9 +212,11 @@ static float CN779787_CHINA_F[36] = {
 96.70611,29.04099,
 108.65923,20.43133,
 110.80828,20.99835,
-116.20393,24.16117,
+116.86311,23.15488,
 121.31548,26.23843,
-122.37017,36.70735,
+121.84283,36.31884,
+123.86964,39.73139,
+129.92800,43.13565,
 136.08111,45.18528,
 133.33570,48.85359,
 120.61236,54.65108,
@@ -226,36 +229,42 @@ static float CN779787_CHINA_F[36] = {
 };
 
 static float IN865867_INDIA_F[16] = { 
-72.96580,34.26699,
-66.72556,23.19668,
+74.81150,34.52082,
+67.28233,20.93704,
 75.16306,4.16647,
 82.85421,2.39383,
 85.70994,6.96542,
 90.36814,21.24408,
 87.89547,26.80085,
-72.96580,34.26699,
+74.81150,34.52082,
 
 };
 
-static float AS920923_JAPAN_F[16] = { 
-139.68654,45.95900,
-139.33497,45.52965,
-133.77174,38.66725,
-127.49247,32.03204,
-131.95216,27.30372,
-144.78419,33.95272,
-150.49708,45.34464,
-139.68654,45.95900,
+static float AS920923_JAPAN_F[22] = { 
+141.98268,50.05733,
+138.86120,46.78277,
+135.11622,43.28542,
+132.01787,41.73885,
+131.63668,38.20620,
+129.48488,35.15270,
+126.28398,32.57064,
+136.03908,22.60415,
+150.10157,33.80679,
+156.36378,43.60448,
+141.98268,50.05733,
 
 };
 
-static float KR920923_SKOREA_F[12] = { 
-122.94546,36.60046,
+static float KR920923_SKOREA_F[18] = { 
+122.94545,36.60046,
 122.59912,32.47361,
-127.43020,32.04833,
-131.57778,36.55510,
-130.19876,40.76658,
-122.94546,36.60046,
+126.13382,32.60534,
+129.46840,35.18414,
+131.42570,38.21762,
+131.67979,41.62004,
+127.96554,39.81694,
+128.33108,38.53374,
+122.94545,36.60046,
 
 };
 
@@ -269,7 +278,7 @@ static float AS920923_MALAYSIASG_F[30] = {
 114.97679,2.25276,
 119.32738,4.70897,
 116.95433,7.63591,
-115.18186,5.06795,
+115.18186,5.06796,
 115.46751,4.26588,
 114.52543,3.95084,
 114.06400,4.89831,
@@ -283,7 +292,7 @@ static float AU915928_AUSTRALIA_F[26] = {
 131.06762,-51.28254,
 145.93096,-55.22234,
 169.37107,-54.07644,
-179.46983,-48.46908,
+179.46983,-48.46907,
 179.63306,-38.42140,
 171.92924,-16.91222,
 148.12775,-14.43550,
@@ -301,7 +310,7 @@ static float RU864870_RUSSIA_F[50] = {
 31.56924,63.02777,
 27.95082,59.36052,
 28.45041,56.30347,
-32.09601,53.03805,
+32.09602,53.03805,
 38.44658,50.46738,
 40.82452,48.92639,
 35.67013,45.21170,
@@ -316,10 +325,10 @@ static float RU864870_RUSSIA_F[50] = {
 76.84853,51.31352,
 88.21380,48.68017,
 99.53778,51.41911,
-114.90962,49.99259,
+114.90963,49.99259,
 120.64929,54.65274,
 154.20179,44.98566,
-173.75796,69.91542,
+173.75796,69.91541,
 114.00630,77.20060,
 
 };
@@ -338,8 +347,8 @@ static float EU863870_EUROPE_F[76] = {
 33.93480,31.83469,
 36.55469,35.56712,
 44.19108,29.54567,
-67.41226,21.01873,
-73.93022,35.37353,
+67.41226,21.01872,
+74.81150,34.52082,
 67.73073,38.13921,
 81.77174,48.33576,
 84.33079,49.20482,
@@ -354,7 +363,7 @@ static float EU863870_EUROPE_F[76] = {
 39.85040,43.02380,
 35.60168,45.18883,
 41.00384,48.89668,
-38.18940,50.86833,
+38.18940,50.86832,
 31.85052,53.07085,
 28.40434,56.34850,
 27.98583,59.48825,
@@ -382,7 +391,7 @@ static float EU863870_EUROPE_F[76] = {
 
 /* Function prototypes for private (static) functions go here */
 
-static int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, float longitude); // todo what is this??
+static int32_t pointInPolygonF(int32_t polyCorners, float * polygon, float latitude, float longitude);
 static Polygon_t get_polygon(float latitude, float longitude);
 static void set_current_loramac_region(Polygon_t current_poly);
 
@@ -429,7 +438,6 @@ int32_t pointInPolygonF(int32_t polyCorners, float* polygon, float latitude, flo
 
 /*
 	Changes GEOFENCE_LoRA_frequency and tx_permission global variables based on the input coordinates.
-	TODO: documentation must be updated for LoRa frequencies
 	FREQUENCIES:
 						EU863870    = 0x01,
 						AU915928    = 0x02,
@@ -478,7 +486,7 @@ static Polygon_t get_polygon(float latitude, float longitude)
 				return AS923925_INDONESIA_polygon;
 		}
 
-		else if(pointInPolygonF(11, AS923925_THAILAND_F, latitude, longitude) == 1)
+		else if(pointInPolygonF(12, AS923925_THAILAND_F, latitude, longitude) == 1)
 		{
 				return AS923925_THAILAND_polygon;
 		}
@@ -498,7 +506,7 @@ static Polygon_t get_polygon(float latitude, float longitude)
 				return AU915928_CHILE_polygon;
 		}
 
-		else if(pointInPolygonF(18, CN779787_CHINA_F, latitude, longitude) == 1)
+		else if(pointInPolygonF(20, CN779787_CHINA_F, latitude, longitude) == 1)
 		{
 				return CN779787_CHINA_polygon;
 		}
@@ -508,12 +516,12 @@ static Polygon_t get_polygon(float latitude, float longitude)
 				return IN865867_INDIA_polygon;
 		}
 
-		else if(pointInPolygonF(8, AS920923_JAPAN_F, latitude, longitude) == 1)
+		else if(pointInPolygonF(11, AS920923_JAPAN_F, latitude, longitude) == 1)
 		{
 				return AS920923_JAPAN_polygon;
 		}
 
-		else if(pointInPolygonF(6, KR920923_SKOREA_F, latitude, longitude) == 1)
+		else if(pointInPolygonF(9, KR920923_SKOREA_F, latitude, longitude) == 1)
 		{
 				return KR920923_SKOREA_polygon;
 		}
@@ -630,8 +638,8 @@ static void set_current_loramac_region(Polygon_t current_poly)
 
 void update_geofence_position(float latitude, float longitude)
 {		
-		/* store the current geofence region to compare later */
-		Polygon_t prev_poly_region = curr_poly_region;
+		/* store the current loramac region to compare later */
+		LoRaMacRegion_t prev_loramac_region =  current_loramac_region;
 	
 		/* get our current polygon */
 	  curr_poly_region = get_polygon(latitude, longitude);
@@ -642,6 +650,6 @@ void update_geofence_position(float latitude, float longitude)
 		set_current_loramac_region(curr_poly_region);
 
 		/* now check if we have moved into a different geofence region */
-		lora_settings_status = (prev_poly_region != curr_poly_region)? INCORRECT : CORRECT;
+		lora_settings_status = (current_loramac_region != prev_loramac_region)? INCORRECT : CORRECT;
 }
 

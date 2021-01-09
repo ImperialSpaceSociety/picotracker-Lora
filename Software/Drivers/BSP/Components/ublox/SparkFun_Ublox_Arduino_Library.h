@@ -429,8 +429,8 @@ typedef enum
 } dynModel; 
 #ifndef MAX_PAYLOAD_SIZE
 
-#define MAX_PAYLOAD_SIZE 256 //We need ~220 bytes for getProtocolVersion on most ublox modules
-//#define MAX_PAYLOAD_SIZE 768 //Worst case: UBX_CFG_VALSET packet with 64 keyIDs each with 64 bit values
+//#define MAX_PAYLOAD_SIZE 256 //We need ~220 bytes for getProtocolVersion on most ublox modules
+#define MAX_PAYLOAD_SIZE 768 //Worst case: UBX_CFG_VALSET packet with 64 keyIDs each with 64 bit values
 
 #endif
 
@@ -474,7 +474,7 @@ typedef struct
 // If you know you are only going to be using I2C / Qwiic communication, you can
 // safely reduce defaultMaxWait to 250.
 #ifndef defaultMaxWait // Let's allow the user to define their own value if they want to
-#define defaultMaxWait 250
+#define defaultMaxWait 1000
 #endif
 
 	//By default use the default I2C address, and use Wire port
@@ -557,6 +557,8 @@ typedef struct
 	uint16_t getMillisecond(uint16_t maxWait );
 	int32_t getNanosecond(uint16_t maxWait );
 	uint32_t getTimeOfWeek(uint16_t maxWait );
+	bool getDateValid(uint16_t maxWait);
+	bool getTimeValid(uint16_t maxWait);
 
 	int32_t getHighResLatitude(uint16_t maxWait );
 	int8_t getHighResLatitudeHp(uint16_t maxWait );
@@ -704,6 +706,8 @@ typedef struct
 	static uint8_t gpsSecond;
 	static uint16_t gpsMillisecond;
 	static int32_t gpsNanosecond;
+	static bool gpsDateValid;
+	static bool gpsTimeValid;
 
 	static int32_t latitude;		 //Degrees * 10^-7 (more accurate than floats)
 	static int32_t longitude;		 //Degrees * 10^-7 (more accurate than floats)
@@ -887,6 +891,8 @@ typedef struct
 		uint32_t gpsHour : 1;
 		uint32_t gpsMinute : 1;
 		uint32_t gpsSecond : 1;
+		uint32_t gpsDateValid : 1;
+		uint32_t gpsTimeValid : 1;
 		uint32_t gpsNanosecond : 1;
 
 		uint32_t all : 1;

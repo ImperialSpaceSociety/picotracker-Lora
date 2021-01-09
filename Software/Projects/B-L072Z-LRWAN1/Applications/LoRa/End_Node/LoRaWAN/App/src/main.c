@@ -29,6 +29,7 @@
 #include "geofence.h"
 #include "main.h"
 #include "reset_debug.h"
+#include "playback.h"
 
 #include "stm32l0xx_hal_flash.h"
 #include "stm32l0xx_hal_flash_ex.h"
@@ -41,24 +42,9 @@
 /* Private define ------------------------------------------------------------*/
 
 //#define LOW_POWER_DISABLE
-/*!
- * CAYENNE_LPP is myDevices Application server.
- */
-#define CAYENNE_LPP
-#define LPP_DATATYPE_DIGITAL_INPUT  0x0
-#define LPP_DATATYPE_DIGITAL_OUTPUT 0x1
-#define LPP_DATATYPE_ANALOG_INPUT   0x2
-#define LPP_DATATYPE_HUMIDITY       0x68
-#define LPP_DATATYPE_TEMPERATURE    0x67
-#define LPP_DATATYPE_BAROMETER      0x73
-#define LPP_DATATYPE_GPSLOCATION    0x88
-#define LPP_DATATYPE_ACCELEROMETER  0x71
-#define LPP_DATATYPE_GPSTIME        0x85
-#define LPP_APP_PORT 99
 
-
-#define LORAMAC_REGION_EEPROM_ADDR 15
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
+#define LPP_APP_PORT 99
 
 
 
@@ -75,10 +61,7 @@
  * LoRaWAN default confirm state
  */
 #define LORAWAN_DEFAULT_CONFIRM_MSG_STATE           LORAWAN_UNCONFIRMED_MSG
-/*!
- * User application data buffer size
- */
-#define LORAWAN_APP_DATA_BUFF_SIZE                           64
+
 /*!
  * User application data
  */
@@ -130,11 +113,7 @@ static LoRaMainCallback_t LoRaMainCallbacks = { HW_GetBatteryLevel,
                                                 LoraMacProcessNotify};
 LoraFlagStatus LoraMacProcessRequest=LORA_RESET;
 LoraFlagStatus AppProcessRequest=LORA_RESET;
-/*!
- * Specifies the state of the application LED
- */
-static uint8_t AppLedStateOn = RESET;
-                                               
+                                 
 static TimerEvent_t TxTimer;
 
 
@@ -149,16 +128,8 @@ static  LoRaParam_t LoRaParamInit= {LORAWAN_ADR_STATE,
 
 
 
-uint8_t GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
-
-// Set up brown out reset voltage above the level of the GPS
+// Set up brown out reset voltage as low as possible
 void set_brownout_level( void );
-
-// Configure the Power Voltage Detector (PVD)
-void PVD_Config( void );
-// PCD config type def
-PWR_PVDTypeDef sConfigPVD;
-
 
 
 /* Private functions ---------------------------------------------------------*/
@@ -219,7 +190,7 @@ int main( void )
 	if (get_latest_gps_status() == GPS_SUCCESS)
 	{
 		/* Find out which region of world we are in and update region parm*/
-		update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+		update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
 		
 		/* Save current polygon to eeprom only if gps fix was valid */
 		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
@@ -227,7 +198,9 @@ int main( void )
 	{
 		/* read the eeprom value instead */
 		// TODO: must ensure that eeprom is not filled with garbage. i.e. when the eeprom has never been programed
+		#if USE_NVM_STORED_LORAWAN_REGION
 		EepromMcuReadBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
+		#endif
 	}
 
 	#endif
@@ -245,6 +218,8 @@ int main( void )
 
 		/* Configure the Lora Stack*/
 		LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
+		
+		PRINTF("RANDTEST:%d\n",	randr(1,100));
 
 		/* Send a join request */
 		#if RADIO_ENABLED
@@ -328,16 +303,6 @@ static void LORA_HasJoined( void )
 
 static void Send( void* context )
 {
-  uint16_t cayenne_pressure = 0;
-  int16_t cayenne_temperature = 0;
-  //uint16_t cayenne_humidity = 0;
-  sensor_t sensor_data;
-  int32_t cayenne_latitude = 0;
-	int32_t cayenne_longitude = 0;
-	int32_t cayenne_altitudeGps = 0;
-  uint16_t cayenne_battery_voltage;
-	uint8_t cayenne_GPS_sats;
-
 
   /* now join if not yet joined. */	
 	#if RADIO_ENABLED
@@ -354,8 +319,9 @@ static void Send( void* context )
 	TimerStop( &TxTimer);
 
 
+	
 	/* reading sensors and GPS */
-  BSP_sensor_Read( &sensor_data );
+  BSP_sensor_Read( );
 	
 	/* Restart tx interval timer */
 	TimerStart( &TxTimer);
@@ -364,7 +330,7 @@ static void Send( void* context )
 	if (get_latest_gps_status() == GPS_SUCCESS)
 	{
 		/* Find out which region of world we are in and update region parm*/
-		update_geofence_position(GPS_UBX_latitude_Float, GPS_UBX_longitude_Float);
+		update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
 
 		/* Save current polygon to eeprom only if gps fix was valid */
 		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
@@ -384,86 +350,25 @@ static void Send( void* context )
 		return;
 	}
 	
-	
-	
 
 	
-	/* Evaluate battery level */
-  uint8_t cchannel=0;
 
-  cayenne_temperature = ( int16_t )( sensor_data.temperature * 10 );     /* in °C * 10 */
-  cayenne_pressure    = ( uint16_t )( sensor_data.pressure * 100 / 10 );  /* in hPa / 10 */
-  //cayenne_humidity    = ( uint16_t )( sensor_data.humidity * 2 );        /* in %*2     */
-  cayenne_battery_voltage = ( uint16_t )(sensor_data.battery_level16 / 10);    /* Battery level expressed in hundreds of mV */
+	prepare_tx_buffer();
+	
+	AppData.Port     =  LPP_APP_PORT;
+	AppData.Buff     =  get_tx_buffer();
+	AppData.BuffSize =  get_tx_buffer_len();
+	
+	// Print out buffer for debug
+	PRINTF("Buffer to tx:\n",AppData.BuffSize);
+	
+	for (int i = 0; i< AppData.BuffSize;i ++)
+	{
+		PRINTF("%02x",AppData.Buff[i]);
+	}
+	PRINTF("\n");
+	PRINTF("tx_str_buffer_len: %d\n\n",AppData.BuffSize);
 
-	cayenne_altitudeGps = ( int32_t )( sensor_data.altitudeGps * 100 );
-	cayenne_latitude = ( int32_t )( sensor_data.latitude * 10000 );
-	cayenne_longitude = ( int32_t )( sensor_data.longitude * 10000 );
-	cayenne_GPS_sats = ( uint8_t ) GPSsats;
-	
-	
-
-	
-	uint32_t i = 0;
-  
-  AppData.Port = LPP_APP_PORT;
-  
-  AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_BAROMETER;
-  AppData.Buff[i++] = ( cayenne_pressure >> 8 ) & 0xFF;
-  AppData.Buff[i++] = cayenne_pressure & 0xFF;
-  AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_TEMPERATURE; 
-  AppData.Buff[i++] = ( cayenne_temperature >> 8 ) & 0xFF;
-  AppData.Buff[i++] = cayenne_temperature & 0xFF;
-	
-	// TO be uncommented if humidity value is recorded
-//  AppData.Buff[i++] = cchannel++;
-//  AppData.Buff[i++] = LPP_DATATYPE_HUMIDITY;
-//  AppData.Buff[i++] = cayenne_humidity & 0xFF;
-
-  /* The maximum payload size does not allow to send more data for lowest DRs.
-	 * Problem solved by setting the min data rates for the two regions(AU915 and US915) greater
-	 * than DR3
-	 */
-
-	/* Using cayenne reference 
-	 * https://github.com/MicrochipTech/Location-Tracking-using-SAMR34-and-UBLOX-GPS-Module/blob/master/src/CayenneLPP/lpp.c  
-	 */
-	AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_GPSLOCATION;
-  AppData.Buff[i++] = cayenne_latitude >> 16;
-  AppData.Buff[i++] = cayenne_latitude >> 8;
-  AppData.Buff[i++] = cayenne_latitude;
-	
-  AppData.Buff[i++] = cayenne_longitude >> 16;
-  AppData.Buff[i++] = cayenne_longitude >> 8;
-  AppData.Buff[i++] = cayenne_longitude;
-	
-	
-  AppData.Buff[i++] = ( cayenne_altitudeGps >> 16 ) & 0xFF; 
-  AppData.Buff[i++] = ( cayenne_altitudeGps >> 8 ) & 0xFF;
-  AppData.Buff[i++] = cayenne_altitudeGps & 0xFF;
-		
-		
-	AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_ANALOG_INPUT;
-  AppData.Buff[i++] = ( cayenne_battery_voltage >> 8 ) & 0xFF;
-  AppData.Buff[i++] = cayenne_battery_voltage & 0xFF;
-  
-  AppData.Buff[i++] = cchannel++;
-  AppData.Buff[i++] = LPP_DATATYPE_DIGITAL_OUTPUT; 
-  AppData.Buff[i++] = cayenne_GPS_sats;
-    
-
-
-  AppData.BuffSize = i;
-	
-	/* Based on the code on the STRKT01 tracker, the max bytes we can send
-	 * is 30 bytes. It has to be at a datarate above DR_3. By default, the
-	 * picotracker transmits at DR_4. The packet size is 26 bytes in the
-	 * picotracker.
-	 */
 	
 	#if RADIO_ENABLED
 	LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
@@ -474,73 +379,64 @@ static void Send( void* context )
 
 static void LORA_RxData( lora_AppData_t *AppData )
 {
-  /* USER CODE BEGIN 4 */
-  PRINTF("PACKET RECEIVED ON PORT %d\n\r", AppData->Port);
+	/* USER CODE BEGIN 4 */
+	PRINTF("PACKET RECEIVED ON PORT %d\n\r", AppData->Port);
 
-  switch (AppData->Port)
-  {
-    case 3:
-    /*this port switches the class*/
-    if( AppData->BuffSize == 1 )
-    {
-      switch (  AppData->Buff[0] )
-      {
-        case 0:
-        {
-          LORA_RequestClass(CLASS_A);
-          break;
-        }
-        case 1:
-        {
-          LORA_RequestClass(CLASS_B);
-          break;
-        }
-        case 2:
-        {
-          LORA_RequestClass(CLASS_C);
-          break;
-        }
-        default:
-          break;
-      }
-    }
-    break;
-    case LORAWAN_APP_PORT:
-    if( AppData->BuffSize == 1 )
-    {
-      AppLedStateOn = AppData->Buff[0] & 0x01;
-      if ( AppLedStateOn == RESET )
-      {
-        PRINTF("LED OFF\n\r");
-        LED_Off( LED1 ) ; 
-      }
-      else
-      {
-        PRINTF("LED ON\n\r");
-        LED_On( LED1 ) ; 
-      }
-    }
-    break;
-  case LPP_APP_PORT:
-  {
-    AppLedStateOn= (AppData->Buff[2] == 100) ?  0x01 : 0x00;
-    if ( AppLedStateOn == RESET )
-    {
-      PRINTF("LED OFF\n\r");
-      LED_Off( LED1 ) ; 
-      
-    }
-    else
-    {
-      PRINTF("LED ON\n\r");
-      LED_On( LED1 ) ; 
-    }
-    break;
-  }
-  default:
-    break;
-  }
-  /* USER CODE END 4 */
+	switch (AppData->Port)
+	{
+		case 3:
+		/*this port switches the class*/
+		if( AppData->BuffSize == 1 )
+		{
+			switch (  AppData->Buff[0] )
+			{
+				case 0:
+				{
+					LORA_RequestClass(CLASS_A);
+					break;
+				}
+				case 1:
+				{
+					LORA_RequestClass(CLASS_B);
+					break;
+				}
+				case 2:
+				{
+					LORA_RequestClass(CLASS_C);
+					break;
+				}
+				default:
+				break;
+			}
+		}
+		break;
+
+		case LORAWAN_APP_PORT:
+		break;
+
+		case LPP_APP_PORT:
+		break;
+
+		case DOWNLINK_CONFIG_PORT:
+		
+		PRINTF("Received data: ");
+		
+		for (int i = 0; i< AppData->BuffSize;i ++)
+		{
+			PRINTF("%02x",AppData->Buff[i]);
+		}
+		PRINTF("\n\n");
+		
+
+		manage_incoming_instruction(AppData->Buff);
+
+
+		break;
+
+		default:
+		break;
+	}
+	/* USER CODE END 4 */
 }
 
 static void OnTxTimerEvent( void* context )
@@ -619,43 +515,5 @@ void set_brownout_level( void )
 	}
 }
 
-/**
-  * @brief  Configures the PVD resources.
-  * @param  None
-  * @retval None
-  */
-static void PVD_Config(void)
-{
-  /*##-1- Enable Power Clock #################################################*/
-  __HAL_RCC_PWR_CLK_ENABLE();
-
-  /*##-2- Configure the NVIC for PVD #########################################*/
-  HAL_NVIC_SetPriority(PVD_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(PVD_IRQn);
-
-  /* Configure the PVD Level to 5 and generate an interrupt on rising and falling
-     edges(PVD detection level set to 2.9V) */
-  sConfigPVD.PVDLevel = PWR_PVDLEVEL_5;  
-  sConfigPVD.Mode = PWR_PVD_MODE_NORMAL;
-  HAL_PWR_ConfigPVD(&sConfigPVD);
-
-  /* Enable the PVD Output */
-  HAL_PWR_EnablePVD();
-}
-
-
-
-/**
-  * @brief  PWR PVD interrupt callback
-  * @param  None
-  * @retval None
-  */
-void HAL_PWR_PVDCallback(void)
-{
-  /* Toggle LED1 */
-  BSP_LED_Toggle(LED1);
-//	GPS_VOLTAGE_NOT_ABOVE_THRESHOLD = 1;
-	
-}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
