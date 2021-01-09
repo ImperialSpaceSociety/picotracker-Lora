@@ -525,8 +525,6 @@ void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffe
 	/* Send minutes since epoch */
 	tx_str_buffer[start_point + POSITION_BYTES_LEN + 0] = (minutes_since_epoch >> 0) & 0xff;
 	tx_str_buffer[start_point + POSITION_BYTES_LEN + 1] = (minutes_since_epoch >> 8) & 0xff;
-	tx_str_buffer[start_point + POSITION_BYTES_LEN + 2] = (minutes_since_epoch >> 16) & 0xff;
-
 }
 
 /**
@@ -563,18 +561,21 @@ void prepare_tx_buffer(void)
 	  for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
 	  {
 		  time_pos_fix_t temp_pos = subset_positions[i];
+		  
+			/* calculate time delta between current time and the past time. Up to 2 bytes in length. ~45 days */
+		  uint16_t delta_time = (uint16_t)(current_pos_ptr->minutes_since_epoch - temp_pos.minutes_since_epoch);
 
-		  fill_tx_buffer_with_location_and_time(5 + POSITION_BYTES_LEN + i * (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_BYTES_LEN), 
+		  fill_tx_buffer_with_location_and_time(5 + POSITION_BYTES_LEN + i * (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_DELTA_BYTES_LEN), 
 												tx_str_buffer,
 												temp_pos.latitude,
 												temp_pos.longitude,
 												temp_pos.altitude,
-												temp_pos.minutes_since_epoch);
+												delta_time);
 		  
 	  }
 
 
-	  tx_str_buffer_len = 5 + POSITION_BYTES_LEN + (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_BYTES_LEN) * current_playback_key_info.n_positions_to_send;
+	  tx_str_buffer_len = 5 + POSITION_BYTES_LEN + (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_DELTA_BYTES_LEN) * current_playback_key_info.n_positions_to_send;
 	  
 		#ifdef playback_testing
 	  // Print out buffer for debug
