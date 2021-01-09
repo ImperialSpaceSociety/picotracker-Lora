@@ -324,7 +324,7 @@ void fill_positions_to_send_buffer( void )
 	{
 		/* if the eeprom is not yet full, then only select the ones that are in there */
 		upper_val = MIN(current_playback_key_info.position_pool_size_to_select_from,*current_playback_key_info.n_positions_in_eeprom - current_playback_key_info.n_positions_saved_since_boot);	
-		lower_val = current_playback_key_info.n_positions_offset;
+		lower_val = 0;
 	}
 	
 	
