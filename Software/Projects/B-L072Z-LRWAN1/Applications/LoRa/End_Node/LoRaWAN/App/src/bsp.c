@@ -78,6 +78,8 @@ time_pos_fix_t get_oldest_pos_time( void );
 time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
 void increment_eeprom_index_counters( void );
 void playback_hw_init( void );
+void update_reset_counts_in_ram_nvm( void );
+
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -224,10 +226,7 @@ void  BSP_sensor_Init( void  )
 {
 	HAL_IWDG_Refresh(&hiwdg);
 
-	/* record number of resets to EEPROM, and also to send down */
-	EepromMcuReadBuffer(RESET_COUNTER_ADDR,(void*)&sensor_data.reset_count,RESET_COUNTER_LEN);
-	sensor_data.reset_count+=1;
-	EepromMcuWriteBuffer(RESET_COUNTER_ADDR,(void*)&sensor_data.reset_count,RESET_COUNTER_LEN);
+	update_reset_counts_in_ram_nvm();
 
 	HAL_IWDG_Refresh(&hiwdg);
 
@@ -266,6 +265,15 @@ void  BSP_sensor_Init( void  )
 	playback_hw_init();
 
 }
+
+void update_reset_counts_in_ram_nvm()
+{
+	/* record number of resets to EEPROM, and also to send down */
+	EepromMcuReadBuffer(RESET_COUNTER_ADDR,(void*)&sensor_data.reset_count,RESET_COUNTER_LEN);
+	sensor_data.reset_count+=1;
+	EepromMcuWriteBuffer(RESET_COUNTER_ADDR,(void*)&sensor_data.reset_count,RESET_COUNTER_LEN);
+}
+	
 /**
  * \brief Initialise the hardware aspects of playback i.e. reading from EEPROM.
  * 
