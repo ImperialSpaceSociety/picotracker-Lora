@@ -109,6 +109,7 @@ void BSP_sensor_Read(void)
 
 	#endif
 	
+	/* read solar voltage under gps and no load */
 	uint16_t no_load_solar_voltage = BSP_GetSolarLevel16();
 	uint16_t load_solar_voltage = get_load_solar_voltage();
 
