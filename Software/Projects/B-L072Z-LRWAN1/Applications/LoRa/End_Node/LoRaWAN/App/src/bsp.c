@@ -92,7 +92,7 @@ void BSP_sensor_Read(void)
 {
 	HAL_IWDG_Refresh(&hiwdg);
 
-	TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
+	PRINTF("READING SENSOR AND GPS\n\r");
 
   /* USER CODE BEGIN 5 */
 	#if SENSOR_ENABLED
