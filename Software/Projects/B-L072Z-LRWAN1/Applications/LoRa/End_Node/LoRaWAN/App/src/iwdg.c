@@ -30,7 +30,10 @@ IWDG_HandleTypeDef hiwdg;
 /* IWDG init function */
 void MX_IWDG_Init(void)
 {
-
+	/* Reset time is:
+	 * Tout = Prescaler * Reload / 32000
+	 * In this case, comes to 32.76 seconds
+	 */
   hiwdg.Instance = IWDG;
   hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
   hiwdg.Init.Reload = 4095;
@@ -46,10 +49,6 @@ void MX_IWDG_Init(void)
 /* IWDG init function */
 void MX_IWDG_DeInit(void)
 {
-	/* Reset time is:
-	 * Tout = Prescaler * Reload / 32000
-	 * In this case, comes to 32.76 seconds
-	 */
   hiwdg.Instance = IWDG;
   hiwdg.Init.Prescaler = IWDG_PRESCALER_256;
   hiwdg.Init.Reload = 4095;
