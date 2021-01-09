@@ -254,6 +254,7 @@ void  BSP_sensor_Init( void  )
 	
 	playback_key_info_ptr = get_playback_key_info_ptr();
 
+	/* print out stored time/pos data for debugging */
 	print_stored_coordinates();
 
 
