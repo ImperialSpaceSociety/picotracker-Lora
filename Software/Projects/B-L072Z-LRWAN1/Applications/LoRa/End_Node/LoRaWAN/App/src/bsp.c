@@ -83,15 +83,23 @@ time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
 
 void BSP_sensor_Read(void)
 {
+	HAL_IWDG_Refresh(&hiwdg);
+
 	TVL1(PRINTF("READING SENSOR AND GPS\n\r");)
 
   /* USER CODE BEGIN 5 */
 	#if SENSOR_ENABLED
 	MS5607_get_temp_pressure();
+	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	#endif
   
 	#if GPS_ENABLED
 	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
+	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	#endif
 	
 	uint16_t no_load_solar_voltage = BSP_GetSolarLevel16();
@@ -157,6 +165,9 @@ void BSP_sensor_Read(void)
 
 	/* fill up the buffer to send down */
 	fill_positions_to_send_buffer();
+	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	/* now save all this data to non volatile memory */
 	
 	time_pos_fix_t most_recent = retrieve_eeprom_time_pos(0);
@@ -174,6 +185,8 @@ void BSP_sensor_Read(void)
 		/* Save position to eeprom, overwriting the latest position with every fix. */
 		save_current_position_info_to_EEPROM(&current_position);
 		
+		HAL_IWDG_Refresh(&hiwdg);
+
 
 	}
 }
@@ -206,11 +219,14 @@ void manage_incoming_instruction(uint8_t *instructions)
  */
 void  BSP_sensor_Init( void  )
 {
+	HAL_IWDG_Refresh(&hiwdg);
+
 	/* record number of resets to EEPROM, and also to send down */
 	EepromMcuReadBuffer(RESET_COUNTER_ADDR,(void*)&sensor_data.reset_count,RESET_COUNTER_LEN);
 	sensor_data.reset_count+=1;
 	EepromMcuWriteBuffer(RESET_COUNTER_ADDR,(void*)&sensor_data.reset_count,RESET_COUNTER_LEN);
 
+	HAL_IWDG_Refresh(&hiwdg);
 
 	
 	#if defined( VARIANT_1V1B )  || defined ( VARIANT_1V2B )
@@ -228,23 +244,35 @@ void  BSP_sensor_Init( void  )
 	PRINTF("SELFTEST: Initialisng ms5607\n\r");
 	#if SENSOR_ENABLED
   /* Initialize sensors */	
-		ms5607_Init();
-	#endif
+	ms5607_Init();
 	
-	 #if GPS_ENABLED
-	 PRINTF("SELFTEST: Initialising GPS\n\r");
+	HAL_IWDG_Refresh(&hiwdg);
 
-	 //GPS SETUP
-	 setup_GPS();
 	#endif
 	
+	#if GPS_ENABLED
+	PRINTF("SELFTEST: Initialising GPS\n\r");
+
+	//GPS SETUP
+	setup_GPS();
+	 	
+	HAL_IWDG_Refresh(&hiwdg);
+
+	#endif
+	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	EepromMcuReadBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
 	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos);
 	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	playback_key_info_ptr = get_playback_key_info_ptr();
 
 	print_stored_coordinates();
+
+	HAL_IWDG_Refresh(&hiwdg);
 
 
 }
