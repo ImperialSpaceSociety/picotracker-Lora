@@ -97,25 +97,24 @@ void BSP_sensor_Read(void)
   /* USER CODE BEGIN 5 */
 	#if SENSOR_ENABLED
 	MS5607_get_temp_pressure();
-	
 	HAL_IWDG_Refresh(&hiwdg);
-
 	#endif
   
 	#if GPS_ENABLED
 	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
-	
 	HAL_IWDG_Refresh(&hiwdg);
-
 	#endif
 	
 	/* read solar voltage under gps and no load */
 	uint16_t no_load_solar_voltage = BSP_GetSolarLevel16();
 	uint16_t load_solar_voltage = get_load_solar_voltage();
 
+
+	/* pretty print sensor values for debugging */
 	pretty_print_sensor_values(&TEMPERATURE_Value,&PRESSURE_Value,&gps_info, &no_load_solar_voltage,&load_solar_voltage);
 
-
+	
+	/* Fill up the structs that will be used to make the packet that is sent down over radio */
 	fill_to_send_structs(&TEMPERATURE_Value,&PRESSURE_Value,&gps_info, &no_load_solar_voltage,&load_solar_voltage);
 
 
@@ -124,6 +123,7 @@ void BSP_sensor_Read(void)
 	
 	HAL_IWDG_Refresh(&hiwdg);
 	
+	/* Save GPS data to non volatile memory */
 	save_data_to_nvm();
 
 }
@@ -183,8 +183,6 @@ void save_data_to_nvm()
 		save_current_position_info_to_EEPROM(&current_position);
 		
 		HAL_IWDG_Refresh(&hiwdg);
-
-
 	}
 }
 
