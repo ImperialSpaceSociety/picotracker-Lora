@@ -138,6 +138,13 @@ void BSP_sensor_Read(void)
 
 }
 
+
+/**
+ * \brief Save GPS data to EEPROM
+ * 
+ * 
+ * \return void
+ */
 void save_data_to_nvm()
 {
 	/* now save all this data to non volatile memory */
@@ -163,6 +170,17 @@ void save_data_to_nvm()
 }
 
 
+/**
+ * \brief Pretty print sensor reading values for debugging
+ * 
+ * \param TEMPERATURE_Value
+ * \param PRESSURE_Value
+ * \param gps_info
+ * \param no_load_solar_voltage
+ * \param load_solar_voltage
+ * 
+ * \return void
+ */
 void pretty_print_sensor_values(double *TEMPERATURE_Value, double *PRESSURE_Value, gps_info_t *gps_info, uint16_t *no_load_solar_voltage, uint16_t *load_solar_voltage)
 {
 	PRINTF("================================================================\r\n");
@@ -271,6 +289,12 @@ void  BSP_sensor_Init( void  )
 
 }
 
+/**
+ * \brief Increment the reset counts in ram and non volatile memory.
+ * 
+ * 
+ * \return void
+ */
 void update_reset_counts_in_ram_nvm()
 {
 	/* record number of resets to EEPROM, and also to send down */
