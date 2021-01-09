@@ -389,7 +389,7 @@ int mod(int a, int b)
 
 /**
   * @brief Calculate minutes since epoch. Based on GPS time.
-	* Epoch is set to 1 Jan 2020 00:00:00H( unix time: 1577840461)
+	* Epoch is set to 1 Jan 2020 01:01:01H( unix time: 1577840461)
   * @param none
   * @retval none
   */
