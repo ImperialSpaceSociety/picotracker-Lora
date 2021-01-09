@@ -74,8 +74,7 @@ sensor_t current_sensor_data =
 playback_key_info_t current_playback_key_info = 
 {
 	.n_positions_to_send = DEFAULT_N_POSITIONS_TO_SEND,              /* Number of positions to send down in single transmission*/
-	.n_positions_offset = DEFAULT_N_POSITIONS_OFFSET,               /* Send positions from n_positions_offset from current position. */
-	.n_positions_to_select_from = DEFAULT_N_POSITIONS_TO_SELECT_FROM,   /* Define size of pool of positions to select from */
+	.position_pool_size_to_select_from = 0,              /* Define size of pool of positions to select from */
 	.n_positions_saved_since_boot = 0,   /* Define size of pool of positions to select from */
 	.request_from_gnd = false,
 	.playback_error = false,
@@ -163,7 +162,6 @@ select_low_discrepancy_T select_low_discrepancy_ptr = LCG;
 #ifdef playback_testing
 void main()
 {
-	current_playback_key_info.n_positions_in_eeprom = &temp_n_playback_positions_in_eeprom;
 	corput_n = generate_random(0,1000);
 
 	// Print out buffer for debug
@@ -322,9 +320,9 @@ void fill_positions_to_send_buffer( void )
 	}
 	else
 	{
-		/* if the eeprom is not yet full, then only select the ones that are in there */
-		upper_val = MIN(current_playback_key_info.n_positions_to_select_from,*current_playback_key_info.n_positions_in_eeprom - current_playback_key_info.n_positions_saved_since_boot);	
-		lower_val = current_playback_key_info.n_positions_offset;
+		/* Randomly select from positions in the last 10 days */
+		upper_val = current_playback_key_info.position_pool_size_to_select_from;	
+		lower_val = 0;
 	}
 	
 	
@@ -347,12 +345,8 @@ void fill_positions_to_send_buffer( void )
 		#endif
 	 
 		#ifndef playback_testing
-
 		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
-		
-
-		
-		
+				
 		subset_positions[i].altitude = random_time_pos.altitude;
 		subset_positions[i].latitude = random_time_pos.latitude;
 		subset_positions[i].longitude = random_time_pos.longitude;
@@ -437,9 +431,6 @@ int next_LCG()
 			return res;
 		}
 	}
-	
-	return 0;
-
 }
 
 /**
@@ -616,24 +607,22 @@ uint16_t  get_tx_buffer_len()
 /**
  * \brief Intialise the pointers with pointers to actual buffer locations
  *  Initialises this module
- * \param n_positions_in_eeprom
  * \param sensor_data
  * \param current_pos
  * \param retrieve_eeprom_time_pos_ptr
  * 
  * \return void
  */
-void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr)
+void init_playback(sensor_t *sensor_data, time_pos_fix_t *current_pos ,
+									retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr,
+									uint16_t n_positions_to_select_from)
 {
-	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
+	current_playback_key_info.position_pool_size_to_select_from = n_positions_to_select_from;
+
 	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
-	
-	#ifndef playback_testing
-	corput_n = randr(0,1000);
-	#endif
-	
+		
 	init_LGC(0,0,1);
 }
 

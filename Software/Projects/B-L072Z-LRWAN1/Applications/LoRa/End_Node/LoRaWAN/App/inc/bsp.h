@@ -156,7 +156,7 @@ uint8_t EepromMcuWriteBuffer( uint16_t addr, uint8_t *buffer, uint16_t size );
  */
 uint8_t EepromMcuReadBuffer( uint16_t addr, uint8_t *buffer, uint16_t size );
 
-uint16_t minute_from_epoch_to_time_pos_index(uint32_t minutes_from_epoch);
+uint16_t get_time_pos_index_older_than(uint32_t minutes_from_epoch);
 void manage_incoming_instruction(uint8_t *instructions);
 
 

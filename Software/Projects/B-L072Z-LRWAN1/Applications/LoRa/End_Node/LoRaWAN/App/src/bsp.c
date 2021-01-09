@@ -47,6 +47,7 @@
 #endif
 
 #define MINUTES_IN_DAY  1440UL
+#define MINUTES_AGO_TO_SELECT_FROM (MINUTES_IN_DAY * PLAYBACK_DAYS)
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint16_t current_EEPROM_index = 0;
@@ -195,12 +196,12 @@ void BSP_sensor_Read(void)
 void manage_incoming_instruction(uint8_t *instructions)
 {
 	uint32_t recent_time_min = extractLong_from_buff(0,instructions);
-	uint16_t recent_timepos_index =  minute_from_epoch_to_time_pos_index(recent_time_min);
+	uint16_t recent_timepos_index =  get_time_pos_index_older_than(recent_time_min);
 	
 	PRINTF("Received instruction recent. time(min):%d timepos index: %d\n",recent_time_min,recent_timepos_index);
 	
 	uint32_t older_time_min = extractLong_from_buff(4,instructions);
-	uint16_t older_timepos_index =  minute_from_epoch_to_time_pos_index(older_time_min);
+	uint16_t older_timepos_index =  get_time_pos_index_older_than(older_time_min);
 	
 	PRINTF("Received instruction older. time(min):%d timepos index: %d\n",older_time_min,older_timepos_index);
 
@@ -264,12 +265,37 @@ void  BSP_sensor_Init( void  )
 
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	EepromMcuReadBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
-	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos);
+	
+	/* We want to send positions from the last n days, defined by PLAYBACK_DAYS. Therefore, we need to calculate how 
+	 * many saved eeprom position/times we should select from. We take the most recent timepos, then calculate back n days
+	 * then calculate the index in eeprom of this timepos index.
+	 */
+	time_pos_fix_t most_recent_timepos_record = retrieve_eeprom_time_pos(0);
+	uint16_t earliest_time_to_send = most_recent_timepos_record.minutes_since_epoch - MINUTES_AGO_TO_SELECT_FROM;
+	
+	/* if there is not timepos index older than the calculated earliest time to send, then select from all the 
+	 * n_playback_positions_saved
+	 */
+	uint16_t earliest_timepos_index;
+	uint16_t older_index = get_time_pos_index_older_than(earliest_time_to_send);
+	
+	if (older_index == 0)
+	{
+		earliest_timepos_index = n_playback_positions_saved;
+	}
+	else
+	{
+		earliest_timepos_index = older_index;
+	}
+		
+	/* Initialise playback */
+	init_playback(&sensor_data, &current_position, &retrieve_eeprom_time_pos,earliest_timepos_index);
 	
 	HAL_IWDG_Refresh(&hiwdg);
 
 	playback_key_info_ptr = get_playback_key_info_ptr();
 
+	/* print out stored time/pos data for debugging */
 	print_stored_coordinates();
 
 	HAL_IWDG_Refresh(&hiwdg);
@@ -306,6 +332,13 @@ time_pos_fix_t get_oldest_pos_time()
 	/* test stored positoins */
 	PRINTF("Getting oldest position:\n");
 	
+	/* The index starts from 0. If 1 position is saved, it will have an index of 0.
+	 * Generalising, if there are n positions, the nth position index will be n-1.
+	 * The problem is, if there are 0 poitions saved, the index calculated will be -1.
+	 * This will break the retrieve_eeprom_time_pos() because it reads only positive numbers.
+	 * So if thats the case, then force the index to be 0.
+	 * TODO: make it return a null value when n_playback_positions_saved == 0
+	 */
 	uint16_t index = (n_playback_positions_saved == 0)? 0 : n_playback_positions_saved - 1;
 	
 	time_pos_fix_t temp = retrieve_eeprom_time_pos(index);
@@ -316,13 +349,13 @@ time_pos_fix_t get_oldest_pos_time()
 }
 
 /**
- * \brief look through eeprom to find the time/pos entry closest
- * to the required time.
+ * \brief look through eeprom to find the time/pos entry older than 
+ * the given minute_from_epoch
  * 
  * 
- * \return index of time pos
+ * \return index of time pos. If there is no time/pos older in eeprom, then return 0
  */
-uint16_t minute_from_epoch_to_time_pos_index(uint32_t minutes_from_epoch)
+uint16_t get_time_pos_index_older_than(uint32_t minutes_from_epoch)
 {
 	uint16_t res_index = 0;
 	for (uint16_t i = 0; i < n_playback_positions_saved; i++)
@@ -407,7 +440,7 @@ int mod(int a, int b)
 
 /**
   * @brief Calculate minutes since epoch. Based on GPS time.
-	* Epoch is set to 1 Jan 2020 00:00:00H( unix time: 1577840461)
+	* Epoch is set to 1 Jan 2020 01:01:01H( unix time: 1577840461)
   * @param none
   * @retval none
   */

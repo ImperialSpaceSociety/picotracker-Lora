@@ -45,10 +45,8 @@ extern "C"
 
 typedef struct
 {
-	uint16_t * n_positions_in_eeprom;            /* Number of positions held in the EEPROM */
 	uint16_t n_positions_to_send;              /* Number of positions to send down in single transmission*/
-	uint16_t n_positions_offset;               /* Send positions from n_positions_offset from current position. */
-	uint16_t n_positions_to_select_from;       /* Define size of pool of positions to select from */
+	uint16_t position_pool_size_to_select_from;       /* Define size of pool of positions to select from */
 	uint16_t n_positions_saved_since_boot;     /* Number of posiionts that have been saved since boot */
 	bool request_from_gnd;
 	bool playback_error;
@@ -71,7 +69,7 @@ typedef time_pos_fix_t (*retrieve_eeprom_time_pos_ptr_T)(uint16_t time_pos_index
 
 uint8_t * get_tx_buffer( void );
 uint16_t get_tx_buffer_len( void );
-void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr);
+void init_playback(sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr,uint16_t n_positions_to_select_from);
 void process_playback_instructions(uint16_t recent_timepos_index, uint16_t older_timepos_index );
 uint16_t extractInt_from_buff(uint8_t spotToStart, uint8_t *buff);
 uint8_t extractByte_from_buff(uint8_t spotToStart, uint8_t *buff);
