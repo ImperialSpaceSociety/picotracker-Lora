@@ -46,7 +46,6 @@ typedef struct
 {
 	uint16_t * n_positions_in_eeprom;            /* Number of positions held in the EEPROM */
 	uint16_t n_positions_to_send;              /* Number of positions to send down in single transmission*/
-	uint16_t n_positions_offset;               /* Send positions from n_positions_offset from current position. */
 	uint16_t position_pool_size_to_select_from;       /* Define size of pool of positions to select from */
 	uint16_t n_positions_saved_since_boot;     /* Number of posiionts that have been saved since boot */
 	bool request_from_gnd;
