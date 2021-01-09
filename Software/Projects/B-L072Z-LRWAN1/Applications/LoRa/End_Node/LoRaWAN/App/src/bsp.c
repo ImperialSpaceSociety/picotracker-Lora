@@ -252,7 +252,17 @@ void  BSP_sensor_Init( void  )
 	/* if there is not timepos index older than the calculated earliest time to send, then select from all the 
 	 * n_playback_positions_saved
 	 */
-	uint16_t earliest_timepos_index = MAX(get_time_pos_index_older_than(earliest_time_to_send), n_playback_positions_saved);
+	uint16_t earliest_timepos_index;
+	uint16_t older_index = get_time_pos_index_older_than(earliest_time_to_send);
+	
+	if (older_index == 0)
+	{
+		earliest_timepos_index = n_playback_positions_saved;
+	}
+	else
+	{
+		earliest_timepos_index = older_index;
+	}
 		
 	/* Initialise playback */
 	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos, earliest_timepos_index);
