@@ -162,7 +162,6 @@ select_low_discrepancy_T select_low_discrepancy_ptr = LCG;
 #ifdef playback_testing
 void main()
 {
-	current_playback_key_info.n_positions_in_eeprom = &temp_n_playback_positions_in_eeprom;
 	corput_n = generate_random(0,1000);
 
 	// Print out buffer for debug
