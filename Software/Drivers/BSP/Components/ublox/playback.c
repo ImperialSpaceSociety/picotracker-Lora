@@ -612,19 +612,16 @@ uint16_t  get_tx_buffer_len()
 /**
  * \brief Intialise the pointers with pointers to actual buffer locations
  *  Initialises this module
- * \param n_positions_in_eeprom
  * \param sensor_data
  * \param current_pos
  * \param retrieve_eeprom_time_pos_ptr
  * 
  * \return void
  */
-void init_playback(uint16_t *n_positions_in_eeprom, 
-									sensor_t *sensor_data, time_pos_fix_t *current_pos ,
+void init_playback(sensor_t *sensor_data, time_pos_fix_t *current_pos ,
 									retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr,
 									uint16_t n_positions_to_select_from)
 {
-	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
 	current_playback_key_info.position_pool_size_to_select_from = n_positions_to_select_from;
 
 	current_sensor_data_ptr = sensor_data;

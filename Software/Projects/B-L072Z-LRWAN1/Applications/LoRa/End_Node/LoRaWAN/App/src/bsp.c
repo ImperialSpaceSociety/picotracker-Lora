@@ -265,7 +265,7 @@ void  BSP_sensor_Init( void  )
 	}
 		
 	/* Initialise playback */
-	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos, earliest_timepos_index);
+	init_playback(&sensor_data, &current_position, &retrieve_eeprom_time_pos,earliest_timepos_index);
 	
 	playback_key_info_ptr = get_playback_key_info_ptr();
 
