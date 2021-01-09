@@ -634,6 +634,11 @@
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
             </File>
             <File>
+              <FileName>reset_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A\reset_debug.c</FilePath>
+            </File>
+            <File>
               <FileName>playback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
@@ -1458,6 +1463,11 @@
               <FileName>i2c_middleware.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>reset_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A\reset_debug.c</FilePath>
             </File>
             <File>
               <FileName>playback.c</FileName>
@@ -2286,6 +2296,11 @@
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
             </File>
             <File>
+              <FileName>reset_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A\reset_debug.c</FilePath>
+            </File>
+            <File>
               <FileName>playback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
@@ -3110,6 +3125,11 @@
               <FileName>i2c_middleware.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LoRaWAN\App\src\i2c_middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>reset_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\ICSS_LORATRACKER_V1_1A\reset_debug.c</FilePath>
             </File>
             <File>
               <FileName>playback.c</FileName>

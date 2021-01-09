@@ -28,6 +28,7 @@
 #include "ublox.h"
 #include "geofence.h"
 #include "main.h"
+#include "reset_debug.h"
 #include "playback.h"
 
 
@@ -135,13 +136,16 @@ void set_brownout_level( void );
   */
 int main( void )
 {
-		
+	reset_cause_t reset_cause = reset_cause_get();
+
 	/* STM32 HAL library initialization*/
 	HAL_Init();
+
 	
 	/* Configure the system clock*/
 	SystemClock_Config();
 	
+
 	/* Configure the debug mode*/
 	DBG_Init();
 
@@ -152,7 +156,7 @@ int main( void )
 	
 	/* Initialise serial debug interface */
 	TraceInit( );
-
+	PRINTF("The system reset cause is \"%s\"\n", reset_cause_get_name(reset_cause));
 	
 	PRINTF("\r\n\r\n");
 	PRINTF("************************************ \r\n");
