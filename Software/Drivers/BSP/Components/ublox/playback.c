@@ -322,7 +322,7 @@ void fill_positions_to_send_buffer( void )
 	}
 	else
 	{
-		/* if the eeprom is not yet full, then only select the ones that are in there */
+		/* Randomly select from positions in the last 10 days */
 		upper_val = current_playback_key_info.position_pool_size_to_select_from;	
 		lower_val = 0;
 	}
