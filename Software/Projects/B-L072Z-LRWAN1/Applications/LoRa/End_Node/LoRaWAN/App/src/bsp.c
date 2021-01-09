@@ -174,13 +174,19 @@ void save_data_to_nvm()
 		/* After the time between saving(HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM) has elapsed, then
 		 * increment the counter such that it can save to the next location
 		 */
-		if (current_position.minutes_since_epoch - most_recent.minutes_since_epoch  > HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM)
+		if ((current_position.minutes_since_epoch - most_recent.minutes_since_epoch  > HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM) && (n_playback_positions_saved != 0))
 		{
 		    increment_eeprom_index_counters();
 		}
 		
 		/* Save position to eeprom, overwriting the latest position with every fix. */
 		save_current_position_info_to_EEPROM(&current_position);
+		
+		
+		if (n_playback_positions_saved == 0)
+		{
+			 increment_eeprom_index_counters();
+		}
 		
 		HAL_IWDG_Refresh(&hiwdg);
 	}
