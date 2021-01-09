@@ -79,6 +79,7 @@ time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
 void increment_eeprom_index_counters( void );
 void playback_hw_init( void );
 void update_reset_counts_in_ram_nvm( void );
+void pretty_print_sensor_values(double *TEMPERATURE_Value, double *PRESSURE_Value, gps_info_t *gps_info, uint16_t *no_load_solar_voltage, uint16_t *load_solar_voltage);
 
 
 /* Exported functions ---------------------------------------------------------*/
@@ -110,47 +111,7 @@ void BSP_sensor_Read(void)
 	uint16_t no_load_solar_voltage = BSP_GetSolarLevel16();
 	uint16_t load_solar_voltage = get_load_solar_voltage();
 
-
-	
-	PRINTF("================================================================\r\n");
-	PRINTF("SENSOR AND GPS VALUES");
-	PRINTF("\r\n"); 
-	PRINTF("================================================================\r\n");
-
-	PRINTF("Temperature degrees C: "); 
-	PRINTF("%lf", TEMPERATURE_Value); 
-	PRINTF("\r\n"); 
-	PRINTF("Pressure mBar: "); 
-	PRINTF("%lf", PRESSURE_Value); 
-	PRINTF("\r\n");
-	PRINTF("Longitude: "); 
-	PRINTF("%lf ", gps_info.GPS_UBX_longitude_Float); 
-	PRINTF("Latitude: "); 
-	PRINTF("%lf ", gps_info.GPS_UBX_latitude_Float); 
-	PRINTF("altitude: "); 
-	PRINTF("%ld", gps_info.GPSaltitude/1000	); 
-	PRINTF("\r\n");
-	PRINTF("GPS time: "); 
-	PRINTF("%ld", gps_info.unix_time	); 
-	PRINTF("\r\n");
-	PRINTF("Solar voltage no load: "); 
-	PRINTF("%ld", no_load_solar_voltage	); 
-	PRINTF("\r\n");
-	PRINTF("Solar voltage with GPS load: "); 
-	PRINTF("%ld", load_solar_voltage); 
-	PRINTF("\r\n");
-	PRINTF("Reset Count: "); 
-	PRINTF("%ld", sensor_data.reset_count); 
-	PRINTF("\r\n");
-	PRINTF("Data received from ground: "); 
-	PRINTF("%ld", sensor_data.data_received); 
-	PRINTF("\r\n");
-	PRINTF("================================================================\r\n");
-
-
-	
-	
-
+	pretty_print_sensor_values(&TEMPERATURE_Value,&PRESSURE_Value,&gps_info, &no_load_solar_voltage,&load_solar_voltage);
 
 
 	current_position.altitude  = (gps_info.GPSaltitude >> 8) & 0xffff;
@@ -194,6 +155,45 @@ void BSP_sensor_Read(void)
 
 
 	}
+}
+
+
+void pretty_print_sensor_values(double *TEMPERATURE_Value, double *PRESSURE_Value, gps_info_t *gps_info, uint16_t *no_load_solar_voltage, uint16_t *load_solar_voltage)
+{
+	PRINTF("================================================================\r\n");
+	PRINTF("SENSOR AND GPS VALUES");
+	PRINTF("\r\n");
+	PRINTF("================================================================\r\n");
+
+	PRINTF("Temperature degrees C: ");
+	PRINTF("%lf", TEMPERATURE_Value);
+	PRINTF("\r\n");
+	PRINTF("Pressure mBar: ");
+	PRINTF("%lf", PRESSURE_Value);
+	PRINTF("\r\n");
+	PRINTF("Longitude: ");
+	PRINTF("%lf ", gps_info->GPS_UBX_longitude_Float);
+	PRINTF("Latitude: ");
+	PRINTF("%lf ", gps_info->GPS_UBX_latitude_Float);
+	PRINTF("altitude: ");
+	PRINTF("%ld", gps_info->GPSaltitude/1000	);
+	PRINTF("\r\n");
+	PRINTF("GPS time: ");
+	PRINTF("%ld", gps_info->unix_time	);
+	PRINTF("\r\n");
+	PRINTF("Solar voltage no load: ");
+	PRINTF("%ld", no_load_solar_voltage	);
+	PRINTF("\r\n");
+	PRINTF("Solar voltage with GPS load: ");
+	PRINTF("%ld", load_solar_voltage);
+	PRINTF("\r\n");
+	PRINTF("Reset Count: ");
+	PRINTF("%ld", sensor_data.reset_count);
+	PRINTF("\r\n");
+	PRINTF("Data received from ground: ");
+	PRINTF("%ld", sensor_data.data_received);
+	PRINTF("\r\n");
+	PRINTF("================================================================\r\n");
 }
 
 
