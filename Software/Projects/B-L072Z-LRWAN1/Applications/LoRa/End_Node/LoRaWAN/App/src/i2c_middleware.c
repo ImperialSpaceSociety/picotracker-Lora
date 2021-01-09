@@ -158,6 +158,7 @@ void I2C_pins_GPIO_OUTPUT_init(){
  */
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
+	HAL_IWDG_Refresh(&hiwdg);
 	
 	//////////////////////////////////////////////////////////////
 	/* COMPLETELY USELESS FROM HERE */
@@ -263,6 +264,7 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 		PRINTF("unknown init i2c error\n");	
 	}
 	
-	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	return I2C_SUCCSS;
 }
