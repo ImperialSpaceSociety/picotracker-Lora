@@ -80,7 +80,7 @@ void increment_eeprom_index_counters( void );
 void playback_hw_init( void );
 void update_reset_counts_in_ram_nvm( void );
 void pretty_print_sensor_values(double *TEMPERATURE_Value, double *PRESSURE_Value, gps_info_t *gps_info, uint16_t *no_load_solar_voltage, uint16_t *load_solar_voltage);
-
+void save_data_to_nvm(void);
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -133,9 +133,14 @@ void BSP_sensor_Read(void)
 	fill_positions_to_send_buffer();
 	
 	HAL_IWDG_Refresh(&hiwdg);
-
-	/* now save all this data to non volatile memory */
 	
+	save_data_to_nvm();
+
+}
+
+void save_data_to_nvm()
+{
+	/* now save all this data to non volatile memory */
 	time_pos_fix_t most_recent = retrieve_eeprom_time_pos(0);
 
 	if (gps_info.latest_gps_status == GPS_SUCCESS)
