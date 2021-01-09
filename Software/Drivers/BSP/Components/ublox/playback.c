@@ -627,11 +627,7 @@ void init_playback(sensor_t *sensor_data, time_pos_fix_t *current_pos ,
 	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
-	
-	#ifndef playback_testing
-	corput_n = randr(0,1000);
-	#endif
-	
+		
 	init_LGC(0,0,1);
 }
 
