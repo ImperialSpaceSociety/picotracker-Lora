@@ -77,6 +77,7 @@ void print_stored_coordinates( void );
 time_pos_fix_t get_oldest_pos_time( void );
 time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
 void increment_eeprom_index_counters( void );
+void playback_hw_init( void );
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -262,6 +263,16 @@ void  BSP_sensor_Init( void  )
 
 	#endif
 	
+	playback_hw_init();
+
+}
+/**
+ * \brief Initialise the hardware aspects of playback i.e. reading from EEPROM.
+ * 
+ * 
+ * \return void
+ */
+void playback_hw_init(){
 	HAL_IWDG_Refresh(&hiwdg);
 
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
