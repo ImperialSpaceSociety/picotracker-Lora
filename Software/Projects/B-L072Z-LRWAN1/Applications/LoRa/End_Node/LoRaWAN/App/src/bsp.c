@@ -81,6 +81,7 @@ void playback_hw_init( void );
 void update_reset_counts_in_ram_nvm( void );
 void pretty_print_sensor_values(double *TEMPERATURE_Value, double *PRESSURE_Value, gps_info_t *gps_info, uint16_t *no_load_solar_voltage, uint16_t *load_solar_voltage);
 void save_data_to_nvm(void);
+void fill_to_send_structs(double *TEMPERATURE_Value, double *PRESSURE_Value, gps_info_t *gps_info, uint16_t *no_load_solar_voltage, uint16_t *load_solar_voltage);
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -114,19 +115,7 @@ void BSP_sensor_Read(void)
 	pretty_print_sensor_values(&TEMPERATURE_Value,&PRESSURE_Value,&gps_info, &no_load_solar_voltage,&load_solar_voltage);
 
 
-	current_position.altitude  = (gps_info.GPSaltitude >> 8) & 0xffff;
-	current_position.latitude  = (gps_info.GPS_UBX_latitude >> 16) & 0xffff;
-	current_position.longitude = (gps_info.GPS_UBX_longitude >> 16) & 0xffff;
-	current_position.minutes_since_epoch = unix_time_to_minutes_since_epoch(gps_info.unix_time)&0x00ffffff;
-	
-	sensor_data.temperature = (int8_t)TEMPERATURE_Value;
-	sensor_data.pressure    = (uint16_t)PRESSURE_Value;
-	sensor_data.no_load_solar_voltage = (uint8_t)(no_load_solar_voltage/100);
-	sensor_data.load_solar_voltage = (uint8_t)(load_solar_voltage/100);
-	sensor_data.sats = (uint8_t)gps_info.GPSsats;
-	
-	time_pos_fix_t oldest = get_oldest_pos_time();
-	sensor_data.days_of_playback = (uint8_t)((current_position.minutes_since_epoch - oldest.minutes_since_epoch)/MINUTES_IN_DAY);
+	fill_to_send_structs(&TEMPERATURE_Value,&PRESSURE_Value,&gps_info, &no_load_solar_voltage,&load_solar_voltage);
 
 
 	/* fill up the buffer to send down */
@@ -136,6 +125,35 @@ void BSP_sensor_Read(void)
 	
 	save_data_to_nvm();
 
+}
+
+/**
+ * \brief Fill the structs that will be used for generating the packet that will be sent down over
+ * the radio 
+ * \param TEMPERATURE_Value
+ * \param PRESSURE_Value
+ * \param gps_info
+ * \param no_load_solar_voltage
+ * \param load_solar_voltage
+ * 
+ * \return void
+ */
+void fill_to_send_structs(double *TEMPERATURE_Value, double *PRESSURE_Value, gps_info_t *gps_info, uint16_t *no_load_solar_voltage, uint16_t *load_solar_voltage)
+{
+	current_position.altitude  = (gps_info->GPSaltitude >> 8) & 0xffff;
+	current_position.latitude  = (gps_info->GPS_UBX_latitude >> 16) & 0xffff;
+	current_position.longitude = (gps_info->GPS_UBX_longitude >> 16) & 0xffff;
+	current_position.minutes_since_epoch = unix_time_to_minutes_since_epoch(gps_info->unix_time) & 0x00ffffff;
+		
+	sensor_data.temperature = (int8_t)*TEMPERATURE_Value;
+	sensor_data.pressure    = (uint16_t)*PRESSURE_Value;
+	sensor_data.no_load_solar_voltage = (uint8_t)(*no_load_solar_voltage/100);
+	sensor_data.load_solar_voltage = (uint8_t)(*load_solar_voltage/100);
+	sensor_data.sats = (uint8_t)gps_info->GPSsats;
+		
+	/* calculate days of playback available */
+	time_pos_fix_t oldest = get_oldest_pos_time();
+	sensor_data.days_of_playback = (uint8_t)((current_position.minutes_since_epoch - oldest.minutes_since_epoch)/MINUTES_IN_DAY);
 }
 
 
