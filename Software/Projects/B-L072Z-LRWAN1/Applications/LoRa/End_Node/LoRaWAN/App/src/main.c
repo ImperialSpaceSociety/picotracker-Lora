@@ -156,7 +156,7 @@ int main( void )
 	
 	/* Initialise serial debug interface */
 	TraceInit( );
-	PRINTF("The system reset cause is \"%s\"\n", reset_cause_get_name(reset_cause));
+	PRINTF("\n\nThe system reset cause is \"%s\"\n", reset_cause_get_name(reset_cause));
 	
 	PRINTF("\r\n\r\n");
 	PRINTF("************************************ \r\n");
