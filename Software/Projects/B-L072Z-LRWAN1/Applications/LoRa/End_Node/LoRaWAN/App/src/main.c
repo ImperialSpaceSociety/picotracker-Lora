@@ -31,17 +31,12 @@
 #include "reset_debug.h"
 #include "playback.h"
 
-#include "stm32l0xx_hal_flash.h"
-#include "stm32l0xx_hal_flash_ex.h"
-#include "stm32l0xx_hal.h"
-#include "stm32l0xx_hal_pwr.h"
-#include "stm32l0xx.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
-//#define LOW_POWER_DISABLE
+#define LOW_POWER_DISABLE
 
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 #define LPP_APP_PORT 99
@@ -100,6 +95,9 @@ static void OnTxTimerEvent( void* context );
 /* tx timer callback function*/
 static void LoraMacProcessNotify( void );
 
+/* calculate datarate depending on region */
+int8_t datarate_calculator(LoRaMacRegion_t LoRaMacRegion);
+
 /* Private variables ---------------------------------------------------------*/
 /* load Main call backs structure*/
 static LoRaMainCallback_t LoRaMainCallbacks = { HW_GetBatteryLevel,
@@ -117,12 +115,7 @@ LoraFlagStatus AppProcessRequest=LORA_RESET;
 static TimerEvent_t TxTimer;
 
 
-/* !
- *Initialises the Lora Parameters
- */
-static  LoRaParam_t LoRaParamInit= {LORAWAN_ADR_STATE,
-                                    LORAWAN_DEFAULT_DATA_RATE,  
-                                    LORAWAN_PUBLIC_NETWORK};	
+	
 																		
 
 
@@ -161,7 +154,7 @@ int main( void )
 	
 	/* Initialise serial debug interface */
 	TraceInit( );
-	PRINTF("The system reset cause is \"%s\"\n", reset_cause_get_name(reset_cause));
+	PRINTF("\n\nThe system reset cause is \"%s\"\n", reset_cause_get_name(reset_cause));
 	
 	PRINTF("\r\n\r\n");
 	PRINTF("************************************ \r\n");
@@ -175,9 +168,12 @@ int main( void )
 	/* Configure the hardware*/
 	HW_Init();
 	
+	HAL_IWDG_Refresh(&hiwdg);
+	
 	/*Disbale Stand-by mode*/
 	LPM_SetOffMode(LPM_APPLI_Id , LPM_Disable );
 
+  HAL_IWDG_Refresh(&hiwdg);
 
 	#if GPS_ENABLED
 	/* GET intial location fix to set LORA region 
@@ -187,13 +183,20 @@ int main( void )
 	PRINTF("SELFTEST: Attempting to get a GPS fix\n\r");
 	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
 
+	HAL_IWDG_Refresh(&hiwdg);
+
 	if (get_latest_gps_status() == GPS_SUCCESS)
 	{
 		/* Find out which region of world we are in and update region parm*/
 		update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
 		
+		HAL_IWDG_Refresh(&hiwdg);
+
 		/* Save current polygon to eeprom only if gps fix was valid */
 		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
+		
+		HAL_IWDG_Refresh(&hiwdg);
+
 	}else
 	{
 		/* read the eeprom value instead */
@@ -201,6 +204,9 @@ int main( void )
 		#if USE_NVM_STORED_LORAWAN_REGION
 		EepromMcuReadBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
 		#endif
+		
+		HAL_IWDG_Refresh(&hiwdg);
+
 	}
 
 	#endif
@@ -215,18 +221,29 @@ int main( void )
 
 
 	while( 1 ){
-
+		
+		/* select data rate depending on region of the world. */
+		int8_t dr =  datarate_calculator(current_loramac_region);
+		
+		LoRaParam_t LoRaParamInit = {LORAWAN_ADR_STATE, dr, LORAWAN_PUBLIC_NETWORK};
+		
 		/* Configure the Lora Stack*/
 		LORA_Init( &LoRaMainCallbacks, &LoRaParamInit); // sets up LoRa settings depending on the location we are in.
 		
+		HAL_IWDG_Refresh(&hiwdg);
+
 		PRINTF("RANDTEST:%d\n",	randr(1,100));
 
 		/* Send a join request */
 		#if RADIO_ENABLED
 		LORA_Join();
 		
+		HAL_IWDG_Refresh(&hiwdg);
+
 		/* Init and start the tx interval timer */
 		LoraStartTx( TX_ON_TIMER) ;
+
+		HAL_IWDG_Refresh(&hiwdg);
 
 		#endif
 
@@ -234,7 +251,9 @@ int main( void )
 	  /* Keep transmiting data packets every period defined by APP_TX_DUTYCYCLE */
 		while( 1 )
 		{
-					
+			
+			HAL_IWDG_Refresh(&hiwdg);
+		
 			if (AppProcessRequest==LORA_SET)
 			{
 				/*reset notification flag*/
@@ -303,6 +322,7 @@ static void LORA_HasJoined( void )
 
 static void Send( void* context )
 {
+	HAL_IWDG_Refresh(&hiwdg);
 
   /* now join if not yet joined. */	
 	#if RADIO_ENABLED
@@ -310,6 +330,9 @@ static void Send( void* context )
   {
     /* Go ahead and join */
     LORA_Join();
+		
+		HAL_IWDG_Refresh(&hiwdg);
+
     return;
   }
 	#endif
@@ -318,11 +341,14 @@ static void Send( void* context )
 	// TODO: this timerstop MUST be removed.
 	TimerStop( &TxTimer);
 
+	HAL_IWDG_Refresh(&hiwdg);
 
 	
 	/* reading sensors and GPS */
   BSP_sensor_Read( );
 	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	/* Restart tx interval timer */
 	TimerStart( &TxTimer);
 
@@ -334,11 +360,17 @@ static void Send( void* context )
 
 		/* Save current polygon to eeprom only if gps fix was valid */
 		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR,(void*)&current_loramac_region,sizeof(LoRaMacRegion_t));
+		
+		HAL_IWDG_Refresh(&hiwdg);
+
 	}
 	
 	/* reinit everything if it enters another LoRaWAN region. */
 	if (lora_settings_status == INCORRECT ){
 		PRINTF("LoRa Regional settings incorrect. Data send terminated\n\r");
+		
+		HAL_IWDG_Refresh(&hiwdg);
+
 		return;
 	}
 	
@@ -347,6 +379,9 @@ static void Send( void* context )
    */
 	if (tx_permission == TX_NOT_OK){
 		TVL1(PRINTF("Entered NO tx region. Data send terminated\n\r");)
+		
+		HAL_IWDG_Refresh(&hiwdg);
+
 		return;
 	}
 	
@@ -355,6 +390,8 @@ static void Send( void* context )
 
 	prepare_tx_buffer();
 	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	AppData.Port     =  LPP_APP_PORT;
 	AppData.Buff     =  get_tx_buffer();
 	AppData.BuffSize =  get_tx_buffer_len();
@@ -374,6 +411,8 @@ static void Send( void* context )
 	LORA_send( &AppData, LORAWAN_DEFAULT_CONFIRM_MSG_STATE);
 	#endif
   
+	HAL_IWDG_Refresh(&hiwdg);
+
 }
 
 
@@ -515,5 +554,23 @@ void set_brownout_level( void )
 	}
 }
 
+
+int8_t datarate_calculator(LoRaMacRegion_t LoRaMacRegion)
+{
+	int8_t dr = 0;
+	
+	switch (LoRaMacRegion)
+	{
+		case LORAMAC_REGION_EU868:
+		dr =  DR_5;
+		break;
+		
+		default:
+		dr = DR_4;
+		break;
+	}
+	
+	return dr;
+}
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

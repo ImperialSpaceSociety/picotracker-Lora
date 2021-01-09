@@ -50,6 +50,7 @@ extern "C" {
 #include "util_console.h"
 #include "debug.h"
 #include "hw_i2c.h"
+#include "iwdg.h"
 
 #ifdef __cplusplus
 }

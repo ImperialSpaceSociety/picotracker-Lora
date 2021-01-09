@@ -553,6 +553,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32l0xx_hal_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -637,6 +642,11 @@
               <FileName>playback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1374,6 +1384,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32l0xx_hal_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1458,6 +1473,11 @@
               <FileName>playback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2195,6 +2215,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32l0xx_hal_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2279,6 +2304,11 @@
               <FileName>playback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3016,6 +3046,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32l0xx_hal_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3100,6 +3135,11 @@
               <FileName>playback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3837,6 +3877,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32l0xx_hal_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3916,6 +3961,11 @@
               <FileName>playback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4653,6 +4703,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_flash_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32l0xx_hal_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4732,6 +4787,11 @@
               <FileName>playback.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\playback.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LoRaWAN\App\src\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
