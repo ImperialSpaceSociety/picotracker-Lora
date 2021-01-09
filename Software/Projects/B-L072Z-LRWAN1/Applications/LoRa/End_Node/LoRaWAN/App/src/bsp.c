@@ -76,6 +76,7 @@ int mod(int a, int b);
 void print_stored_coordinates( void );
 time_pos_fix_t get_oldest_pos_time( void );
 time_pos_fix_t retrieve_eeprom_time_pos(uint16_t time_pos_index);
+void increment_eeprom_index_counters( void );
 
 /* Exported functions ---------------------------------------------------------*/
 
@@ -180,7 +181,7 @@ void BSP_sensor_Read(void)
 		 */
 		if (current_position.minutes_since_epoch - most_recent.minutes_since_epoch  > HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM)
 		{
-			playback_key_info_ptr->n_positions_saved_since_boot += 1;
+		    increment_eeprom_index_counters();
 		}
 		
 		/* Save position to eeprom, overwriting the latest position with every fix. */
@@ -373,30 +374,35 @@ uint16_t get_time_pos_index_older_than(uint32_t minutes_from_epoch)
 }
 
 /**
+ * \brief Update counters in ram and EEPROM for index in EEPROM where to write
+ * and how many positions we have saved so far. 
+ * 
+ * \return void
+ */
+void increment_eeprom_index_counters()
+{
+	/* Now update the index in EEPROM */
+	current_EEPROM_index = mod(current_EEPROM_index + PLAYBACK_EEPROM_PACKET_SIZE, PLAYBACK_EEPROM_SIZE);
+	n_playback_positions_saved = MIN(n_playback_positions_saved + 1,MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM);
+	playback_key_info_ptr->n_positions_saved_since_boot += 1;
+	
+	EepromMcuWriteBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
+	EepromMcuWriteBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
+}
+
+/**
   * @brief Save all the position data and time to EEPROM
   * @param none
   * @retval none
   */
 void save_current_position_info_to_EEPROM(time_pos_fix_t *currrent_position)
 {
-	
 	/* save Long, Lat, Altitude, minutes since epoch to EEPROM */
-	
 	uint16_t location_to_write = PLAYBACK_EEPROM_ADDR_START + current_EEPROM_index;
 	EepromMcuWriteBuffer(location_to_write + 0,(void*)&current_position.altitude,ALTITUDE_BYTES_LEN);
 	EepromMcuWriteBuffer(location_to_write + 2,(void*)&current_position.latitude,LATITUDE_BYTES_LEN);
 	EepromMcuWriteBuffer(location_to_write + 4,(void*)&current_position.longitude,LONGITUDE_BYTES_LEN);
-	EepromMcuWriteBuffer(location_to_write + 6,(void*)&current_position.minutes_since_epoch,MINUTES_SINCE_EPOCH_BYTES_LEN);
-
-	
-	/* Now update the index in EEPROM */
-	current_EEPROM_index = mod(current_EEPROM_index + PLAYBACK_EEPROM_PACKET_SIZE, PLAYBACK_EEPROM_SIZE);
-	n_playback_positions_saved= MIN(n_playback_positions_saved + 1,MAX_PLAYBACK_POSITIONS_SAVED_IN_EEPROM);
-	
-	EepromMcuWriteBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
-	EepromMcuWriteBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
-
-	
+	EepromMcuWriteBuffer(location_to_write + 6,(void*)&current_position.minutes_since_epoch,MINUTES_SINCE_EPOCH_BYTES_LEN);	
 }
 
 
