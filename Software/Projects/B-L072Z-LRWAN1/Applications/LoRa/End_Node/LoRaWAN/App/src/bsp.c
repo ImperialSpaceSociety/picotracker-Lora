@@ -240,7 +240,17 @@ void  BSP_sensor_Init( void  )
 	
 	EepromMcuReadBuffer(CURRENT_PLAYBACK_INDEX_IN_EEPROM_ADDR,(void*)&current_EEPROM_index,sizeof(current_EEPROM_index));
 	EepromMcuReadBuffer(N_PLAYBACK_POSITIONS_SAVED_IN_EEPROM_ADDR,(void*)&n_playback_positions_saved,sizeof(current_EEPROM_index));
-	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos);
+	
+	/* We want to send positions from the last n days, defined by PLAYBACK_DAYS. Therefore, we need to calculate how 
+	 * many saved eeprom position/times we should select from. We take the most recent timepos, then calculate back n days
+	 * then calculate the index in eeprom of this timepos index.
+	 */
+	time_pos_fix_t most_recent_timepos_record = retrieve_eeprom_time_pos(0);
+	uint16_t earliest_time_to_send = most_recent_timepos_record.minutes_since_epoch - MINUTES_IN_DAY * PLAYBACK_DAYS;
+	uint16_t earliest_timepos_index = minute_from_epoch_to_time_pos_index(earliest_time_to_send);
+		
+	/* Initialise playback */
+	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos, earliest_timepos_index);
 	
 	playback_key_info_ptr = get_playback_key_info_ptr();
 

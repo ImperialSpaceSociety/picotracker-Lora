@@ -619,9 +619,14 @@ uint16_t  get_tx_buffer_len()
  * 
  * \return void
  */
-void init_playback(uint16_t *n_positions_in_eeprom, sensor_t *sensor_data, time_pos_fix_t *current_pos , retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr)
+void init_playback(uint16_t *n_positions_in_eeprom, 
+									sensor_t *sensor_data, time_pos_fix_t *current_pos ,
+									retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr,
+									uint16_t n_positions_to_select_from)
 {
 	current_playback_key_info.n_positions_in_eeprom = n_positions_in_eeprom;
+	current_playback_key_info.n_positions_to_select_from = n_positions_to_select_from;
+
 	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
