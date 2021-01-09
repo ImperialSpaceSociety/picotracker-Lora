@@ -182,12 +182,12 @@ void BSP_sensor_Read(void)
 void manage_incoming_instruction(uint8_t *instructions)
 {
 	uint32_t recent_time_min = extractLong_from_buff(0,instructions);
-	uint16_t recent_timepos_index =  minute_from_epoch_to_time_pos_index(recent_time_min);
+	uint16_t recent_timepos_index =  get_time_pos_index_older_than(recent_time_min);
 	
 	PRINTF("Received instruction recent. time(min):%d timepos index: %d\n",recent_time_min,recent_timepos_index);
 	
 	uint32_t older_time_min = extractLong_from_buff(4,instructions);
-	uint16_t older_timepos_index =  minute_from_epoch_to_time_pos_index(older_time_min);
+	uint16_t older_timepos_index =  get_time_pos_index_older_than(older_time_min);
 	
 	PRINTF("Received instruction older. time(min):%d timepos index: %d\n",older_time_min,older_timepos_index);
 
@@ -247,7 +247,7 @@ void  BSP_sensor_Init( void  )
 	 */
 	time_pos_fix_t most_recent_timepos_record = retrieve_eeprom_time_pos(0);
 	uint16_t earliest_time_to_send = most_recent_timepos_record.minutes_since_epoch - MINUTES_IN_DAY * PLAYBACK_DAYS;
-	uint16_t earliest_timepos_index = minute_from_epoch_to_time_pos_index(earliest_time_to_send);
+	uint16_t earliest_timepos_index = get_time_pos_index_older_than(earliest_time_to_send);
 		
 	/* Initialise playback */
 	init_playback(&n_playback_positions_saved, &sensor_data, &current_position,&retrieve_eeprom_time_pos, earliest_timepos_index);
@@ -299,13 +299,13 @@ time_pos_fix_t get_oldest_pos_time()
 }
 
 /**
- * \brief look through eeprom to find the time/pos entry closest
- * to the required time.
+ * \brief look through eeprom to find the time/pos entry older than 
+ * the given minute_from_epoch
  * 
  * 
  * \return index of time pos
  */
-uint16_t minute_from_epoch_to_time_pos_index(uint32_t minutes_from_epoch)
+uint16_t get_time_pos_index_older_than(uint32_t minutes_from_epoch)
 {
 	uint16_t res_index = 0;
 	for (uint16_t i = 0; i < n_playback_positions_saved; i++)
