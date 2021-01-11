@@ -112,6 +112,11 @@ void Error_Handler(void);
 #define DEFAULT_N_POSITIONS_OFFSET 0U
 #define PLAYBACK_DAYS 10U
 
+/* WATCHDOG RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
+#define USE_WATCHDOG               1    /* Use watchdog. Allowed values: 0 disabled , 1(default) enabled */
+
+
 /*!
  * Defines the application data transmission duty cycle. 2 minutes, value in [ms].
  */
