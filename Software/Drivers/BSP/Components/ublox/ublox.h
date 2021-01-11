@@ -36,8 +36,8 @@ extern "C"
 
 typedef enum
 {
-	GPS_SUCCESS = 0,
-	GPS_FAILURE
+	GPS_FAILURE = 0,
+	GPS_SUCCESS
 } gps_status_t;
 
 
