@@ -103,7 +103,10 @@ void HW_Init( void )
     /* Set the Vector Table base location at 0x3000 */
     NVIC_SetVectorTable( NVIC_VectTab_FLASH, 0x3000 );
 #endif
+		
+#if (USE_WATCHDOG)
     MX_IWDG_Init();
+#endif
 		
     HW_AdcInit( );
 
