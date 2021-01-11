@@ -244,6 +244,9 @@ gps_status_t get_location_fix(uint32_t timeout){
 	init_for_fix();
 	
 	HAL_IWDG_Refresh(&hiwdg);
+	
+	/* Set all the GPS info values to zeros */
+	memset(&gps_info, 0, sizeof(gps_info_t));
 
 	/* poll UBX-NAV-PVT until the module has fix */	
 	uint32_t startTime = HAL_GetTick();
