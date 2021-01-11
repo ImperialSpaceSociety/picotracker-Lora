@@ -154,7 +154,9 @@ void fill_to_send_structs(double *TEMPERATURE_Value, double *PRESSURE_Value, gps
 		
 	/* calculate days of playback available */
 	time_pos_fix_t oldest = get_oldest_pos_time();
-	sensor_data.days_of_playback = (uint8_t)((current_position.minutes_since_epoch - oldest.minutes_since_epoch)/MINUTES_IN_DAY);
+	time_pos_fix_t most_recent_timepos_record = retrieve_eeprom_time_pos(0);
+
+	sensor_data.days_of_playback = (uint8_t)((most_recent_timepos_record.minutes_since_epoch - oldest.minutes_since_epoch)/MINUTES_IN_DAY);
 }
 
 
