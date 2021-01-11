@@ -353,6 +353,8 @@ void playback_hw_init(){
 	uint16_t earliest_timepos_index;
 	uint16_t older_index = get_time_pos_index_older_than(earliest_time_to_send);
 	
+	
+	
 	if (older_index == 0)
 	{
 		earliest_timepos_index = n_playback_positions_saved;
@@ -362,6 +364,9 @@ void playback_hw_init(){
 		earliest_timepos_index = older_index;
 	}
 		
+	PRINTF("earliest_timepos_index: %d\n",earliest_timepos_index);
+	PRINTF("older_index: %d\n",older_index);
+
 	/* Initialise playback */
 	init_playback(&sensor_data, &current_position, &retrieve_eeprom_time_pos,earliest_timepos_index);
 	
