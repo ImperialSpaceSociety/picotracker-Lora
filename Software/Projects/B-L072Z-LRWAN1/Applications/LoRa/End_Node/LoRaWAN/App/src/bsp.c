@@ -343,7 +343,7 @@ void playback_hw_init(){
 	 * then calculate the index in eeprom of this timepos index.
 	 */
 	time_pos_fix_t most_recent_timepos_record = retrieve_eeprom_time_pos(0);
-	uint16_t earliest_time_to_send = most_recent_timepos_record.minutes_since_epoch - MINUTES_AGO_TO_SELECT_FROM;
+	uint32_t earliest_time_to_send = most_recent_timepos_record.minutes_since_epoch - MINUTES_AGO_TO_SELECT_FROM;
 	
 	/* if there is not timepos index older than the calculated earliest time to send, then select from all the 
 	 * n_playback_positions_saved
