@@ -76,7 +76,7 @@ void Error_Handler(void);
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor, Radio, GPS or LED
 #define SENSOR_ENABLED                1    /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
-#define GPS_ENABLED                   1    /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
+#define GPS_ENABLED                   0    /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
 #define RADIO_ENABLED                 1    /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
 #define USE_LED                       1    /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
 #define USE_NVM_STORED_LORAWAN_REGION 1    /* Use LoRaWAN region stored in EEPROm. Allowed values: 0 disabled , 1(default) enabled. If not using EEPROM location,
@@ -106,7 +106,7 @@ void Error_Handler(void);
 
 /* PLAYBACK RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
-#define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM  20U    // Save to eeprom every 20 minutes
+#define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM  2U    // Save to eeprom every 20 minutes
 #define DEFAULT_N_POSITIONS_TO_SEND 13U
 #define MAX_N_POSITIONS_TO_SEND 25U
 #define DEFAULT_N_POSITIONS_OFFSET 0U
