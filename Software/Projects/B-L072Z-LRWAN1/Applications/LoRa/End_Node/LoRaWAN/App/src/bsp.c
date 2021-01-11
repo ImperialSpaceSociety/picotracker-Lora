@@ -413,7 +413,7 @@ time_pos_fix_t get_oldest_pos_time()
 	 * So if thats the case, then force the index to be 0.
 	 * TODO: make it return a null value when n_playback_positions_saved == 0
 	 */
-	uint16_t index = (n_playback_positions_saved == 0)? 0 : n_playback_positions_saved - 1;
+	uint16_t index = (n_playback_positions_saved == 0) ? 0 : n_playback_positions_saved - 1;
 	
 	time_pos_fix_t temp = retrieve_eeprom_time_pos(index);
 	
