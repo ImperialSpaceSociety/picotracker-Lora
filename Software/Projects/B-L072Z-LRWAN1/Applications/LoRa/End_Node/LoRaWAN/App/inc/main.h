@@ -110,7 +110,7 @@ void Error_Handler(void);
 #define DEFAULT_N_POSITIONS_TO_SEND 13U             /* Number of past positions to send in each transmission */
 #define MAX_N_POSITIONS_TO_SEND 25U
 #define DEFAULT_N_POSITIONS_OFFSET 0U
-#define PLAYBACK_DAYS 10U                           /* How many days ago to send playback positions(default) */
+#define PLAYBACK_DAYS 15U                           /* How many days ago to send playback positions(default) */
 
 /* WATCHDOG RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
