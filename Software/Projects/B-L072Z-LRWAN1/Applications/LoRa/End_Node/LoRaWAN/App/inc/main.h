@@ -106,11 +106,11 @@ void Error_Handler(void);
 
 /* PLAYBACK RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
-#define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM  20U    // Save to eeprom every 20 minutes
-#define DEFAULT_N_POSITIONS_TO_SEND 13U
+#define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM  20U    /* Save to eeprom every 20 minutes */
+#define DEFAULT_N_POSITIONS_TO_SEND 13U             /* Number of past positions to send in each transmission */
 #define MAX_N_POSITIONS_TO_SEND 25U
 #define DEFAULT_N_POSITIONS_OFFSET 0U
-#define PLAYBACK_DAYS 10U
+#define PLAYBACK_DAYS 10U                           /* How many days ago to send playback positions(default) */
 
 /* WATCHDOG RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
