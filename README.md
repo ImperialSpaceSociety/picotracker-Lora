@@ -24,6 +24,7 @@ The moto: KEEP IT SIMPLE
 * Store Tracker data and meta data showing gateway information
 * Forward tracking data to HabHub
 * Possibly send data back to tracker
+The bridge can be found in a seperate repo: [link](https://github.com/ImperialSpaceSociety/ttnhabbridge)
 
 ### Launch Gateway
 
@@ -47,10 +48,12 @@ The moto: KEEP IT SIMPLE
 * ICSPACE18: Was lost after launch
 * ICSPACE19: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/03/launch-of-icspace19/)
 * ICSPACE20 & 21: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/10/icspace21-flight-to-japan-and-icspace20/)
+* ICSPACE22: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/12/first-unconfirmed-circumnavigation-of-the-earth-by-ic-space-society-balloon-icspace22/)
+* ICSPACE23: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/12/icspace23-launch/)
 
 
 # Design Files
-The PCBs are designed with Kicad and the latest designs can be found in the [hardware folder](Current%20Tracker%20Prototype/hardware/Kicad/). We have two designs, the a and the b variant. a variant is a fully solar powered tracker with no power storage. The solar cells are directly wired to VCC and GND to power all components. b variant has a 50mAh lipo on board for power storage. The MPPT IC on board, the SPV1040, extracts maximum current from the cells to charge the battery.
+The PCBs are designed with Kicad and the latest designs can be found in the [hardware folder](hardware/Kicad/). We have two designs, the a and the b variant. a variant is a fully solar powered tracker with no power storage. The solar cells are directly wired to VCC and GND to power all components. b variant has a 50mAh lipo on board for power storage. The MPPT IC on board, the SPV1040, extracts maximum current from the cells to charge the battery.
 
 As of 29/12/2020, the latest flight proven design is V1.3a. The b variant has not been flown yet.
 
