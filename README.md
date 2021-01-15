@@ -4,7 +4,7 @@
 ## Objectives
 This Pico balloon tracker is a new version to be designed by Imperial College Space Society. It is intended to offer an easy to build and low cost entry for people who want to launch small Helium filled balloons with a small tracking payload while using the Things Network LoRaWAN Network to receive the telemetry data from the balloon.
 
- implentation objective is to fly a small ballon around the world and to track it using the Things Network and HabHub.
+ implentation objective is to fly a small balloon around the world and to track it using the Things Network and HabHub.
 
 ## Major components
 We have settled on the following components to go on the tracker solution. 
