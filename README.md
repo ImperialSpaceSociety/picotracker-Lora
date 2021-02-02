@@ -62,10 +62,10 @@ The schematic of v1.3a is here:
 
 Assembled tracker:
 ![image](https://www.union.ic.ac.uk/guilds/icseds/wp-content/uploads/2020/02/image-1.png)
-PCB top layer: 
+PCB top layer(v1.3a): 
 ![image](https://user-images.githubusercontent.com/26815217/106533861-cc70c700-64ea-11eb-835c-9b979e27da77.png)
 
-PCB bottome layer:
+PCB bottom layer(v1.3a):
 ![image](https://user-images.githubusercontent.com/26815217/106533954-f6c28480-64ea-11eb-96bf-7d412425363a.png)
 
 # Software
