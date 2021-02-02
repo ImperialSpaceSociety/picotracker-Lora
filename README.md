@@ -52,6 +52,8 @@ The bridge can be found in a seperate repo: [link](https://github.com/ImperialSp
 * ICSPACE23: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/12/icspace23-launch/)
 
 
+Past flight paths may be viewed on the [map](https://charts.mongodb.com/charts-project-0-wlibw/public/dashboards/487e7641-c649-4822-abc5-f70eb2e155c7).
+
 # Design Files
 The PCBs are designed with Kicad and the latest designs can be found in the [hardware folder](hardware/Kicad/). We have two designs, the a and the b variant. a variant is a fully solar powered tracker with no power storage. The solar cells are directly wired to VCC and GND to power all components. b variant has a 50mAh lipo on board for power storage. The MPPT IC on board, the SPV1040, extracts maximum current from the cells to charge the battery.
 
