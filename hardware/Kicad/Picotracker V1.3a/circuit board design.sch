@@ -1296,10 +1296,10 @@ F 3 "~" H 8600 4850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:TestPoint TP?
+L Connector:TestPoint TP10
 U 1 1 6019818B
 P 15100 8050
-F 0 "TP?" H 15158 8168 50  0000 L CNN
+F 0 "TP10" H 15158 8168 50  0000 L CNN
 F 1 "TestPoint" H 15150 8100 50  0000 L CNN
 F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 15300 8050 50  0001 C CNN
 F 3 "~" H 15300 8050 50  0001 C CNN
