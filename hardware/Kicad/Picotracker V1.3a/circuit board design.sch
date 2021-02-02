@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:circuit board design-cache
 EELAYER 29 0
 EELAYER END
 $Descr A3 16535 11693
@@ -404,9 +403,7 @@ Wire Wire Line
 Wire Wire Line
 	14050 8200 14050 8350
 Wire Wire Line
-	14650 7800 15500 7800
-Text Label 15500 7800 2    50   ~ 0
-GPS_TIMEPULSE
+	14650 7800 15100 7800
 Wire Wire Line
 	7150 3800 7800 3800
 Text Label 7800 3800 2    50   ~ 0
@@ -436,23 +433,12 @@ F 3 "https://www.u-blox.com/sites/default/files/MAX-M8-FW3_DataSheet_%28UBX-1503
 	1    0    0    -1  
 $EndComp
 $Comp
-L circuit-board-design-rescue:Antenna-Device AE1
-U 1 1 5DE442FF
-P 8600 4850
-F 0 "AE1" H 8680 4839 50  0000 L CNN
-F 1 "Lora Antenna" H 8680 4748 50  0000 L CNN
-F 2 "pico_tracker:SolderWirePad_1x01_Drill0.8mm_square" H 8600 4850 50  0001 C CNN
-F 3 "~" H 8600 4850 50  0001 C CNN
-	1    8600 4850
-	1    0    0    -1  
-$EndComp
-$Comp
 L flight-computer:GPS_Antenna AE2
 U 1 1 5DDA946B
 P 15300 7150
 F 0 "AE2" H 15380 7139 50  0000 L CNN
 F 1 "GPS Antenna" H 15380 7048 50  0000 L CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 15300 7150 50  0001 C CNN
+F 2 "pico_tracker:custom_antenna_pad" H 15300 7150 50  0001 C CNN
 F 3 "~" H 15300 7150 50  0001 C CNN
 	1    15300 7150
 	1    0    0    -1  
@@ -1298,4 +1284,33 @@ F 3 "~" H 12050 7200 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	8600 5350 8600 5950
+$Comp
+L flight-computer:GPS_Antenna AE1
+U 1 1 6018FBE3
+P 8600 4850
+F 0 "AE1" H 8680 4839 50  0000 L CNN
+F 1 "GPS Antenna" H 8680 4748 50  0000 L CNN
+F 2 "pico_tracker:custom_antenna_pad" H 8600 4850 50  0001 C CNN
+F 3 "~" H 8600 4850 50  0001 C CNN
+	1    8600 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:TestPoint TP?
+U 1 1 6019818B
+P 15100 8050
+F 0 "TP?" H 15158 8168 50  0000 L CNN
+F 1 "TestPoint" H 15150 8100 50  0000 L CNN
+F 2 "TestPoint:TestPoint_Pad_D1.0mm" H 15300 8050 50  0001 C CNN
+F 3 "~" H 15300 8050 50  0001 C CNN
+	1    15100 8050
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	15100 8050 15100 7800
+Text Label 15750 7800 2    50   ~ 0
+GPS_TIMEPULSE
+Wire Wire Line
+	15100 7800 15750 7800
+Connection ~ 15100 7800
 $EndSCHEMATC
