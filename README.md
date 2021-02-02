@@ -57,6 +57,17 @@ The PCBs are designed with Kicad and the latest designs can be found in the [har
 
 As of 29/12/2020, the latest flight proven design is V1.3a. The b variant has not been flown yet.
 
+The schematic of v1.3a is here:
+![image](https://user-images.githubusercontent.com/26815217/106533760-9f241900-64ea-11eb-973e-2e89387200ad.png)
+
+Assembled tracker:
+![image](https://www.union.ic.ac.uk/guilds/icseds/wp-content/uploads/2020/02/image-1.png)
+PCB top layer: 
+![image](https://user-images.githubusercontent.com/26815217/106533861-cc70c700-64ea-11eb-835c-9b979e27da77.png)
+
+PCB bottome layer:
+![image](https://user-images.githubusercontent.com/26815217/106533954-f6c28480-64ea-11eb-96bf-7d412425363a.png)
+
 # Software
 We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free of charge for the STM32L0 series of microcontrollers. You will be able to download Keil from [here](https://www2.keil.com/stmicroelectronics-stm32/mdk). Make sure you activate it so that you can compile files greater than 30kb of flash.
 
