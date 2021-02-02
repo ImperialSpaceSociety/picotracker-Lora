@@ -31,7 +31,7 @@ for i in lines:
     day, date, month, year, hour, minute, second, data = i
     d = json.loads(data)
     try:
-        if d["dev_id"] == "icspace22" and not "is_retry" in d:
+        if d["dev_id"] == "icspace24" and not "is_retry" in d:
             timestamps.append(d["metadata"]["time"][:-4])
             colour_selection.append("blue" if d["payload_raw"] else "red")
     except KeyError:
@@ -43,9 +43,22 @@ diffs = df["datetime"].diff().dt.total_seconds()
 
 # diffs = diffs[diffs[""] > 0]
 
-plt.scatter(x=df, y=diffs, c=colour_selection)
-plt.xlabel("datetime")
-plt.ylabel("time gap from previous transmission(seconds)")
-plt.title(
-    "Elapsed time between previous and current transmission plotted against time. Red is an empty frame, blue is a data frame")
-plt.show()
+# plt.scatter(x=df, y=diffs, c=colour_selection)
+# plt.xlabel("datetime")
+# plt.ylabel("time gap from previous transmission(seconds)")
+# plt.title(
+#     "Elapsed time between previous and current transmission plotted against time. Red is an empty frame, blue is a data frame")
+# plt.show()
+
+
+# x and y given as array_like objects
+import plotly.express as px
+fig = px.scatter(x=df["datetime"],
+                 y=diffs,
+                 color=colour_selection,
+                 labels={'x':'Time stamp', 'y':'Time since previous transmission(seconds)'},
+                 title="Elapsed time between previous and current transmission plotted against time",
+                 range_x=['2021-01-22','2021-01-23'])
+
+#fig.update_layout(yaxis_range=[0,2000])
+fig.show()
