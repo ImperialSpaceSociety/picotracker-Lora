@@ -260,7 +260,7 @@
     (path /5DC84013)
     (clearance 0.2)
     (attr smd)
-    (fp_text reference U3 (at -7.6 -4 90) (layer F.SilkS)
+    (fp_text reference U3 (at -7.6 -4 90) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text value CMWX1ZZABZ-078 (at 0 7.2 180) (layer F.Fab)
