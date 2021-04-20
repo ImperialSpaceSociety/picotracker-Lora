@@ -140,13 +140,11 @@ gps_status_t Backup_GPS()
 	{
 		PRINTF("put_in_power_save_mode carried out successfully!\n");
 	}
-	//HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low
 	return GPS_SUCCESS;
 }
 
 /* 
  * sets up gps by putting in airbourne mode, setting to use GPS satellites only, turning off NMEA
- * Needs TO BE REFACTORED TO TIME OUT OR EXIT IF NO MESSAGED IS ReCEIVED BACK!
  */
 gps_status_t setup_GPS()
 {
