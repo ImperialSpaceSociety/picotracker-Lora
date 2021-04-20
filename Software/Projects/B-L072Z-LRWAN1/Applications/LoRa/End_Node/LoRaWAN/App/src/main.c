@@ -36,12 +36,12 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 
-#define LOW_POWER_DISABLE
+//#define LOW_POWER_DISABLE
 
 // IMPT define switches in main.h to use or not use the GPS, sensor and radio and app duty cycle
 #define LPP_APP_PORT 99
 
-
+#define WATCHDOG_PAT_INTERVAL 10000 // milliseconds
 
 /*!
  * LoRaWAN application port
@@ -98,6 +98,11 @@ static void LoraMacProcessNotify( void );
 /* calculate datarate depending on region */
 int8_t datarate_calculator(LoRaMacRegion_t LoRaMacRegion);
 
+
+/* Watchdog pat functions */
+static void OnWatchdogPatEvent( void* context );
+void watchdog_pat_timer_init( void );
+
 /* Private variables ---------------------------------------------------------*/
 /* load Main call backs structure*/
 static LoRaMainCallback_t LoRaMainCallbacks = { HW_GetBatteryLevel,
@@ -111,8 +116,10 @@ static LoRaMainCallback_t LoRaMainCallbacks = { HW_GetBatteryLevel,
                                                 LoraMacProcessNotify};
 LoraFlagStatus LoraMacProcessRequest=LORA_RESET;
 LoraFlagStatus AppProcessRequest=LORA_RESET;
+LoraFlagStatus WatchdogPatRequest=LORA_RESET;
                                  
 static TimerEvent_t TxTimer;
+static TimerEvent_t WatchdogPatTimer;
 
 
 	
@@ -252,7 +259,6 @@ int main( void )
 		while( 1 )
 		{
 			
-			HAL_IWDG_Refresh(&hiwdg);
 		
 			if (AppProcessRequest==LORA_SET)
 			{
@@ -281,12 +287,19 @@ int main( void )
 				LoRaMacProcess( );
 			}
 			
+			if (WatchdogPatRequest==LORA_SET)
+			{
+				/*Pat the watchdog*/
+				WatchdogPatRequest=LORA_RESET;
+				HAL_IWDG_Refresh(&hiwdg);
+			}
+			
 			/*If a flag is set at this point, mcu must not enter low power and must loop*/
 			DISABLE_IRQ( );
 			
 			/* if an interrupt has occurred after DISABLE_IRQ, it is kept pending 
 			 * and cortex will not enter low power anyway  */
-			if ((LoraMacProcessRequest!=LORA_SET) && (AppProcessRequest!=LORA_SET))
+			if ((LoraMacProcessRequest!=LORA_SET) && (AppProcessRequest!=LORA_SET) && (WatchdogPatRequest!=LORA_SET))
 			{
 #ifndef LOW_POWER_DISABLE
 			LPM_EnterLowPower( );
@@ -478,6 +491,22 @@ static void LORA_RxData( lora_AppData_t *AppData )
 	/* USER CODE END 4 */
 }
 
+
+
+static void OnWatchdogPatEvent( void* context )
+{
+  TimerStart( &WatchdogPatTimer);
+  WatchdogPatRequest=LORA_SET;
+}
+
+void watchdog_pat_timer_init()
+{
+	/* send everytime timer elapses */
+	TimerInit( &WatchdogPatTimer, OnWatchdogPatEvent );
+	TimerSetValue( &WatchdogPatTimer,  WATCHDOG_PAT_INTERVAL); 
+	OnWatchdogPatEvent( NULL );
+}
+
 static void OnTxTimerEvent( void* context )
 {
   /* Wait for next tx slot. 
@@ -554,7 +583,9 @@ void set_brownout_level( void )
 	}
 }
 
-
+/**
+* Use datarate of DR_5 over the EU but DR_4 over rest of the world
+*/
 int8_t datarate_calculator(LoRaMacRegion_t LoRaMacRegion)
 {
 	int8_t dr = 0;
