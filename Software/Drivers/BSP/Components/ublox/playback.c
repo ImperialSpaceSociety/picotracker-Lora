@@ -5,9 +5,7 @@
  *
  * Manages the playback of coordinates over time.
  *
- */ 
-
-
+ */
 
 /* ==================================================================== */
 /* ========================== include files =========================== */
@@ -30,7 +28,6 @@
 
 #define CORPUT_BASE 2U
 
-
 /*!
  * \brief Returns the minimum value between a and b
  *
@@ -38,8 +35,7 @@
  * \param [IN] b 2nd value
  * \retval minValue Minimum value
  */
-#define MIN( a, b ) ( ( ( a ) < ( b ) ) ? ( a ) : ( b ) )
-
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
 
 /* ==================================================================== */
 /* ======================== global variables ========================== */
@@ -48,38 +44,36 @@
 /* Global variables definitions go here */
 
 /* Dummy values for testing */
-time_pos_fix_t current_pos = 
-{
-	.minutes_since_epoch = 0x0007342E,  /*472110 minutes */
-	.latitude = 0x17CA                  /*399121314 == 399121314*/,
-	.longitude = 0xD312                 /*3541187191 == -753780105 */,
-	.altitude = 0x00F2                  /*0x0000F221 >>2 */
+time_pos_fix_t current_pos =
+	{
+		.minutes_since_epoch = 0x0007342E, /*472110 minutes */
+		.latitude = 0x17CA /*399121314 == 399121314*/,
+		.longitude = 0xD312 /*3541187191 == -753780105 */,
+		.altitude = 0x00F2 /*0x0000F221 >>2 */
 };
 
-
-sensor_t current_sensor_data = 
-{
-	.no_load_solar_voltage = 33,  /* 18 - 43 (min 25 values)(5 bits) */
-	.load_solar_voltage = 43,     /* 18 - 43 (min 25 values)(5 bits) */
-	.temperature = -23,           /* -64 to 64 in increments of 2 degrees celcius (min 40 values)(6 bits) */
-	.pressure = 400,              /* 130 - 1030 (min 128 values, 10mbar per increment)(7 bits) */
-	.data_received = 1,           /* 0 or 1. indicates that message was received(1 bit) */
-	.sats = 12,                   /* 0 - 32. Number of sats. (4 bits) */
-	.reset_count = 7,              /* 0-7. Number of resets in (3 bits) */
-	.days_of_playback = 63         /* 0-64. Number of days of playback available (6 bits) */
+sensor_t current_sensor_data =
+	{
+		.no_load_solar_voltage = 33, /* 18 - 43 (min 25 values)(5 bits) */
+		.load_solar_voltage = 43,	 /* 18 - 43 (min 25 values)(5 bits) */
+		.temperature = -23,			 /* -64 to 64 in increments of 2 degrees celcius (min 40 values)(6 bits) */
+		.pressure = 400,			 /* 130 - 1030 (min 128 values, 10mbar per increment)(7 bits) */
+		.data_received = 1,			 /* 0 or 1. indicates that message was received(1 bit) */
+		.sats = 12,					 /* 0 - 32. Number of sats. (4 bits) */
+		.reset_count = 7,			 /* 0-7. Number of resets in (3 bits) */
+		.days_of_playback = 63		 /* 0-64. Number of days of playback available (6 bits) */
 
 };
 
-
-playback_key_info_t current_playback_key_info = 
-{
-	.n_positions_to_send = DEFAULT_N_POSITIONS_TO_SEND,              /* Number of positions to send down in single transmission*/
-	.position_pool_size_to_select_from = 0,              /* Define size of pool of positions to select from */
-	.n_positions_saved_since_boot = 0,   /* Define size of pool of positions to select from */
-	.request_from_gnd = false,
-	.playback_error = false,
-	.requested_pos_index_lower = 0,
-	.requested_pos_index_upper = 0
+playback_key_info_t current_playback_key_info =
+	{
+		.n_positions_to_send = DEFAULT_N_POSITIONS_TO_SEND, /* Number of positions to send down in single transmission*/
+		.position_pool_size_to_select_from = 0,				/* Define size of pool of positions to select from */
+		.n_positions_saved_since_boot = 0,					/* Define size of pool of positions to select from */
+		.request_from_gnd = false,
+		.playback_error = false,
+		.requested_pos_index_lower = 0,
+		.requested_pos_index_upper = 0
 
 };
 
@@ -88,17 +82,17 @@ static uint16_t tx_str_buffer_len = 0;
 time_pos_fix_t subset_positions[MAX_N_POSITIONS_TO_SEND];
 int corput_n = 0;
 
-
 #ifdef playback_testing
 sensor_t *current_sensor_data_ptr = &current_sensor_data;
 time_pos_fix_t *current_pos_ptr = &current_pos;
-uint16_t temp_n_playback_positions_in_eeprom= 116;
+uint16_t temp_n_playback_positions_in_eeprom = 116;
 #else
 sensor_t *current_sensor_data_ptr;
 time_pos_fix_t *current_pos_ptr;
 #endif
 
-struct LGC_params {
+struct LGC_params
+{
 	int stop;
 	int start;
 	int maximum;
@@ -116,9 +110,7 @@ struct LGC_params {
 
 /* Definition of private datatypes go here */
 
-
-typedef int (*select_low_discrepancy_T )(int low, int high);
-
+typedef int (*select_low_discrepancy_T)(int low, int high);
 
 /* ==================================================================== */
 /* ====================== private functions =========================== */
@@ -128,30 +120,22 @@ typedef int (*select_low_discrepancy_T )(int low, int high);
 
 int generate_random(int l, int r);
 void fill_subset_positions_buffer(uint16_t subset_size);
-void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude );
-void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer,
-											uint16_t latitude, uint16_t longitude,
-											uint16_t altitude, uint32_t minutes_since_epoch );
-void fill_positions_to_send_buffer( void );
+void fill_tx_buffer_with_location(uint16_t start_point, uint8_t *buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude);
+void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t *buffer,
+										   uint16_t latitude, uint16_t longitude,
+										   uint16_t altitude, uint32_t minutes_since_epoch);
+void fill_positions_to_send_buffer(void);
 
-
-int mapping(int i,int start, int step);
+int mapping(int i, int start, int step);
 void init_LGC(int start, int stop, int step);
 int next_LCG(void);
 int corput_index(int lower_val, int upper_val);
 double corput(int n, int base);
 int LCG(int lower_val, int upper_val);
 
-
-
-
-
 /* Initlise pointer to retrieve eeprom time pos */
 retrieve_eeprom_time_pos_ptr_T Retrieve_eeprom_time_pos_ptr;
 select_low_discrepancy_T select_low_discrepancy_ptr = LCG;
-
-
-
 
 /* ==================================================================== */
 /* ===================== All functions by section ===================== */
@@ -162,21 +146,18 @@ select_low_discrepancy_T select_low_discrepancy_ptr = LCG;
 #ifdef playback_testing
 void main()
 {
-	corput_n = generate_random(0,1000);
+	corput_n = generate_random(0, 1000);
 
 	// Print out buffer for debug
 	printf("Filling buffer\n");
-	for (int i = 0; i<current_playback_key_info.n_positions_to_send;i ++)
+	for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
 	{
 		subset_positions[i].longitude = current_pos.longitude;
 		subset_positions[i].latitude = current_pos.latitude;
 		subset_positions[i].altitude = current_pos.altitude;
 		subset_positions[i].minutes_since_epoch = current_pos.minutes_since_epoch;
-
 	}
 	printf("\n");
-
-
 
 	printf("\n");
 
@@ -189,61 +170,48 @@ void main()
 	// Print out buffer for debug
 	int size = 100;
 
-	for (int i = 0; i<1000;i ++)
+	for (int i = 0; i < 1000; i++)
 	{
 		int index_c = corput_index(0, 100);
 	}
-	
+
 	printf("\n");
-	
+
 	srand(10);
-	
-	init_LGC(0,0,1);
 
-	for (int i = 0; i<12;i ++)
+	init_LGC(0, 0, 1);
+
+	for (int i = 0; i < 12; i++)
 	{
-		printf("%d ",select_low_discrepancy_ptr(1,10));
-
+		printf("%d ", select_low_discrepancy_ptr(1, 10));
 	}
 
 	printf("\n");
 
-	process_playback_instructions(3,5);
-	
-	for (int i = 0; i<12;i ++)
-	{
-		printf("%d ",select_low_discrepancy_ptr(1,3));
+	process_playback_instructions(3, 5);
 
-	}
-	printf("\n");
-	
-	
-		
-	for (int i = 0; i<12;i ++)
+	for (int i = 0; i < 12; i++)
 	{
-		printf("%d ",select_low_discrepancy_ptr(1,10));
-
+		printf("%d ", select_low_discrepancy_ptr(1, 3));
 	}
 	printf("\n");
 
+	for (int i = 0; i < 12; i++)
+	{
+		printf("%d ", select_low_discrepancy_ptr(1, 10));
+	}
+	printf("\n");
 
 	fill_positions_to_send_buffer();
 
 	printf("\ntesting extraction of long\n");
 
+	uint8_t buff1[4] = {0xbd, 0x40, 0x07, 0x00};
 
-	uint8_t buff1[4] = {0xbd,0x40,0x07,0x00};
-
-	uint32_t asd = extractLong_from_buff(0,buff1);
-	printf("res %d",asd);
-	
-	
-
-	
+	uint32_t asd = extractLong_from_buff(0, buff1);
+	printf("res %d", asd);
 }
 #endif
-
-
 
 /**
  * \brief Return pointer to current_playback_key_info
@@ -252,7 +220,7 @@ void main()
  * 
  * \return playback_key_info_t *
  */
-playback_key_info_t *get_playback_key_info_ptr( void )
+playback_key_info_t *get_playback_key_info_ptr(void)
 {
 	return &current_playback_key_info;
 }
@@ -265,12 +233,14 @@ playback_key_info_t *get_playback_key_info_ptr( void )
  * 
  * \return int
  */
-int corput_index(int lower_val, int upper_val){
-	double q = corput(corput_n,CORPUT_BASE);
+int corput_index(int lower_val, int upper_val)
+{
+	double q = corput(corput_n, CORPUT_BASE);
 
-	corput_n +=1;
+	corput_n += 1;
 
-	return (int)((upper_val-lower_val) * q) + lower_val;;
+	return (int)((upper_val - lower_val) * q) + lower_val;
+	;
 }
 
 /**
@@ -281,19 +251,19 @@ int corput_index(int lower_val, int upper_val){
  * 
  * \return double
  */
-double corput(int n, int base){
-    double q=0, bk=(double)1/base;
+double corput(int n, int base)
+{
+	double q = 0, bk = (double)1 / base;
 
-    while (n > 0) {
-      q += (n % base)*bk;
-      n /= base;
-      bk /= base;
-    }
+	while (n > 0)
+	{
+		q += (n % base) * bk;
+		n /= base;
+		bk /= base;
+	}
 
-    return q;
+	return q;
 }
-
-
 
 /**
  * \brief Fill buffer of random subset of positions to be sent.
@@ -306,12 +276,12 @@ double corput(int n, int base){
  * 
  * \return void
  */
-void fill_positions_to_send_buffer( void )
+void fill_positions_to_send_buffer(void)
 {
-	
+
 	int upper_val;
 	int lower_val;
-	
+
 	if (current_playback_key_info.request_from_gnd == true)
 	{
 		/* if a valid request for positions were requested, then limit the range of values */
@@ -321,54 +291,43 @@ void fill_positions_to_send_buffer( void )
 	else
 	{
 		/* Randomly select from positions in the last 10 days */
-		upper_val = current_playback_key_info.position_pool_size_to_select_from;	
+		upper_val = current_playback_key_info.position_pool_size_to_select_from;
 		lower_val = 0;
 	}
-	
-	
-
 
 	for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
 	{
-		
+
 		int rand_time_pos_index = select_low_discrepancy_ptr(lower_val, upper_val);
-		
+
 		/* Compensate for new positions added in. Ensure no repeats */
 		if (current_playback_key_info.request_from_gnd == false)
 		{
 			rand_time_pos_index += current_playback_key_info.n_positions_saved_since_boot;
 		}
-		
 
-		#ifdef playback_testing
-		printf("\nTimepos index: %d\n",rand_time_pos_index);
-		#endif
-	 
-		#ifndef playback_testing
+#ifdef playback_testing
+		printf("\nTimepos index: %d\n", rand_time_pos_index);
+#endif
+
+#ifndef playback_testing
 		time_pos_fix_t random_time_pos = Retrieve_eeprom_time_pos_ptr(rand_time_pos_index);
-				
+
 		subset_positions[i].altitude = random_time_pos.altitude;
 		subset_positions[i].latitude = random_time_pos.latitude;
 		subset_positions[i].longitude = random_time_pos.longitude;
 		subset_positions[i].minutes_since_epoch = random_time_pos.minutes_since_epoch;
-		#endif
+#endif
 	}
-	
-	
+
 	/* we have serviced the request. set to false now */
 	current_playback_key_info.request_from_gnd = false;
-
 }
 
-
-int mapping(int i,int start, int step)
+int mapping(int i, int start, int step)
 {
 	return (i * step) + start;
 }
-
-
-
-
 
 /**
  * \brief Initialise the LGC function
@@ -381,24 +340,23 @@ int mapping(int i,int start, int step)
  */
 void init_LGC(int start, int stop, int step)
 {
-	if (start >=stop)
+	if (start >= stop)
 	{
 		start = 0;
 		stop = 1;
 	}
-	
+
 	LGC_current_params.found = 0;
 	LGC_current_params.stop = stop;
 	LGC_current_params.start = start;
 	LGC_current_params.step = step;
-	
+
 	LGC_current_params.maximum = (int)floor((LGC_current_params.stop - LGC_current_params.start) / LGC_current_params.step);
-	LGC_current_params.value  = generate_random(0,LGC_current_params.maximum);
-	
-	
+	LGC_current_params.value = generate_random(0, LGC_current_params.maximum);
+
 	LGC_current_params.offset = generate_random(0, LGC_current_params.maximum) * 2 + 1;
-	LGC_current_params.multiplier = 4 * (int)floor(LGC_current_params.maximum/4) + 1;
-	LGC_current_params.modulus = (int)pow(2,ceil(log2(LGC_current_params.maximum)));
+	LGC_current_params.multiplier = 4 * (int)floor(LGC_current_params.maximum / 4) + 1;
+	LGC_current_params.modulus = (int)pow(2, ceil(log2(LGC_current_params.maximum)));
 }
 
 /**
@@ -412,20 +370,19 @@ void init_LGC(int start, int stop, int step)
  */
 int next_LCG()
 {
-	bool done  = false;
+	bool done = false;
 	int res;
 	while (1)
 	{
 		// If this is a valid value, yield it in generator fashion.
 		if (LGC_current_params.value < LGC_current_params.maximum)
 		{
-			res = mapping(LGC_current_params.value,LGC_current_params.start,LGC_current_params.step);
+			res = mapping(LGC_current_params.value, LGC_current_params.start, LGC_current_params.step);
 			done = true;
-			
 		}
 		// Calculate the next value in the sequence.
 		LGC_current_params.value = (LGC_current_params.value * LGC_current_params.multiplier + LGC_current_params.offset) % LGC_current_params.modulus;
-		
+
 		if (done == true)
 		{
 			return res;
@@ -443,11 +400,11 @@ int next_LCG()
  */
 int LCG(int lower_val, int upper_val)
 {
-	if ( (LGC_current_params.start != lower_val) ||  (LGC_current_params.stop != upper_val))
+	if ((LGC_current_params.start != lower_val) || (LGC_current_params.stop != upper_val))
 	{
-		init_LGC(lower_val,upper_val,1);
+		init_LGC(lower_val, upper_val, 1);
 	}
-	
+
 	return next_LCG();
 }
 
@@ -459,12 +416,13 @@ int LCG(int lower_val, int upper_val)
  * 
  * \return int random number
  */
-int generate_random(int l, int r) { 
-	#ifdef playback_testing
+int generate_random(int l, int r)
+{
+#ifdef playback_testing
 	int rand_num = (rand() % (r - l + 1)) + l;
-	#else
-	int rand_num = 	randr(l,r);
-	#endif
+#else
+	int rand_num = randr(l, r);
+#endif
 	return rand_num;
 }
 
@@ -479,9 +437,9 @@ int generate_random(int l, int r) {
  * 
  * \return void
  */
-void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude )
+void fill_tx_buffer_with_location(uint16_t start_point, uint8_t *buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude)
 {
-	
+
 	/* Send current position. Use the most significant numbers. Truncate to 16 bits.*/
 	/* latitude(16 bits) -90 to 90*/
 	tx_str_buffer[start_point + 0] = (latitude >> 0) & 0xff;
@@ -492,10 +450,7 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16
 	/* altitude(16 bits) */
 	tx_str_buffer[start_point + 4] = (altitude >> 0) & 0xff;
 	tx_str_buffer[start_point + 5] = (altitude >> 8) & 0xff;
-		  
-	
 }
-
 
 /**
  * \brief  Fill the tx buffer with location and time information
@@ -509,10 +464,10 @@ void fill_tx_buffer_with_location(uint16_t start_point, uint8_t * buffer, uint16
  * 
  * \return void
  */
-void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint32_t minutes_since_epoch )
+void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t *buffer, uint16_t latitude, uint16_t longitude, uint16_t altitude, uint32_t minutes_since_epoch)
 {
 	/* Fill the location info */
-	fill_tx_buffer_with_location(start_point, buffer, latitude, longitude, altitude );
+	fill_tx_buffer_with_location(start_point, buffer, latitude, longitude, altitude);
 	/* Send minutes since epoch */
 	tx_str_buffer[start_point + POSITION_BYTES_LEN + 0] = (minutes_since_epoch >> 0) & 0xff;
 	tx_str_buffer[start_point + POSITION_BYTES_LEN + 1] = (minutes_since_epoch >> 8) & 0xff;
@@ -526,61 +481,57 @@ void fill_tx_buffer_with_location_and_time(uint16_t start_point, uint8_t * buffe
  */
 void prepare_tx_buffer(void)
 {
-	  
-	  /* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
-	  tx_str_buffer[0] = ((current_sensor_data_ptr->no_load_solar_voltage - 18) & 0x1F) << 3;
-	  tx_str_buffer[0] |= ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x1C) >> 2;
-	  
-	  /* byte1: load voltage(remaining 2 bits) and days of playback available (6 bits) */
-	  tx_str_buffer[1] = ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x03) << 6;
-	  tx_str_buffer[1] |= (current_sensor_data_ptr->days_of_playback & 0x3F);
 
-	  /* byte2: pressure(7 bits) and data received flag(1 bit)*/
-	  tx_str_buffer[2] = ((current_sensor_data_ptr->pressure/10) & 0x7F) << 1;
-	  tx_str_buffer[2] |=	(current_playback_key_info.playback_error & 0x01);
-	  
-	  /* byte3: Sats(5 bits) and reset count(3 bits)*/
-	  tx_str_buffer[3] = (current_sensor_data_ptr->sats & 0x1F) << 3;
-	  tx_str_buffer[3] |= (current_sensor_data_ptr->reset_count & 0x07);
+	/* byte 0: no load voltage(5 bits) and load voltage(3 bits) */
+	tx_str_buffer[0] = ((current_sensor_data_ptr->no_load_solar_voltage - 18) & 0x1F) << 3;
+	tx_str_buffer[0] |= ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x1C) >> 2;
 
-	  /* byte4: Temperature (8 bits)*/
-	  tx_str_buffer[4] = (uint8_t)(current_sensor_data_ptr->temperature);
+	/* byte1: load voltage(remaining 2 bits) and days of playback available (6 bits) */
+	tx_str_buffer[1] = ((current_sensor_data_ptr->load_solar_voltage - 18) & 0x03) << 6;
+	tx_str_buffer[1] |= (current_sensor_data_ptr->days_of_playback & 0x3F);
 
-	  fill_tx_buffer_with_location(5, tx_str_buffer, current_pos_ptr->latitude,current_pos_ptr->longitude,current_pos_ptr->altitude);
+	/* byte2: pressure(7 bits) and data received flag(1 bit)*/
+	tx_str_buffer[2] = ((current_sensor_data_ptr->pressure / 10) & 0x7F) << 1;
+	tx_str_buffer[2] |= (current_playback_key_info.playback_error & 0x01);
 
-	  
-	  for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
-	  {
-		  time_pos_fix_t temp_pos = subset_positions[i];
-		  
-			/* calculate time delta between current time and the past time. Up to 2 bytes in length. ~45 days */
-		  uint16_t delta_time = (uint16_t)(current_pos_ptr->minutes_since_epoch - temp_pos.minutes_since_epoch);
+	/* byte3: Sats(5 bits) and reset count(3 bits)*/
+	tx_str_buffer[3] = (current_sensor_data_ptr->sats & 0x1F) << 3;
+	tx_str_buffer[3] |= (current_sensor_data_ptr->reset_count & 0x07);
 
-		  fill_tx_buffer_with_location_and_time(5 + POSITION_BYTES_LEN + i * (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_DELTA_BYTES_LEN), 
-												tx_str_buffer,
-												temp_pos.latitude,
-												temp_pos.longitude,
-												temp_pos.altitude,
-												delta_time);
-		  
-	  }
+	/* byte4: Temperature (8 bits)*/
+	tx_str_buffer[4] = (uint8_t)(current_sensor_data_ptr->temperature);
 
+	fill_tx_buffer_with_location(5, tx_str_buffer, current_pos_ptr->latitude, current_pos_ptr->longitude, current_pos_ptr->altitude);
 
-	  tx_str_buffer_len = 5 + POSITION_BYTES_LEN + (POSITION_BYTES_LEN+MINUTES_SINCE_EPOCH_DELTA_BYTES_LEN) * current_playback_key_info.n_positions_to_send;
-	  
-		#ifdef playback_testing
-	  // Print out buffer for debug
-	  for (int i = 0; i<tx_str_buffer_len;i ++)
-	  {
-		  printf("%02x",tx_str_buffer[i]);
-	  }
-		printf("\n");
-		printf("tx_str_buffer_len: %d",tx_str_buffer_len);
-	  #endif
-	  
-	  current_playback_key_info.playback_error = false;
+	for (int i = 0; i < current_playback_key_info.n_positions_to_send; i++)
+	{
+		time_pos_fix_t temp_pos = subset_positions[i];
+
+		/* calculate time delta between current time and the past time. Up to 2 bytes in length. ~45 days */
+		uint16_t delta_time = (uint16_t)(current_pos_ptr->minutes_since_epoch - temp_pos.minutes_since_epoch);
+
+		fill_tx_buffer_with_location_and_time(5 + POSITION_BYTES_LEN + i * (POSITION_BYTES_LEN + MINUTES_SINCE_EPOCH_DELTA_BYTES_LEN),
+											  tx_str_buffer,
+											  temp_pos.latitude,
+											  temp_pos.longitude,
+											  temp_pos.altitude,
+											  delta_time);
+	}
+
+	tx_str_buffer_len = 5 + POSITION_BYTES_LEN + (POSITION_BYTES_LEN + MINUTES_SINCE_EPOCH_DELTA_BYTES_LEN) * current_playback_key_info.n_positions_to_send;
+
+#ifdef playback_testing
+	// Print out buffer for debug
+	for (int i = 0; i < tx_str_buffer_len; i++)
+	{
+		printf("%02x", tx_str_buffer[i]);
+	}
+	printf("\n");
+	printf("tx_str_buffer_len: %d", tx_str_buffer_len);
+#endif
+
+	current_playback_key_info.playback_error = false;
 }
-
 
 /**
  * \brief  return pointer to tx_str_buffer
@@ -599,7 +550,7 @@ uint8_t *get_tx_buffer()
  * 
  * \return uint16_t
  */
-uint16_t  get_tx_buffer_len()
+uint16_t get_tx_buffer_len()
 {
 	return tx_str_buffer_len;
 }
@@ -613,19 +564,18 @@ uint16_t  get_tx_buffer_len()
  * 
  * \return void
  */
-void init_playback(sensor_t *sensor_data, time_pos_fix_t *current_pos ,
-									retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr,
-									uint16_t n_positions_to_select_from)
+void init_playback(sensor_t *sensor_data, time_pos_fix_t *current_pos,
+				   retrieve_eeprom_time_pos_ptr_T retrieve_eeprom_time_pos_ptr,
+				   uint16_t n_positions_to_select_from)
 {
 	current_playback_key_info.position_pool_size_to_select_from = n_positions_to_select_from;
 
 	current_sensor_data_ptr = sensor_data;
 	current_pos_ptr = current_pos;
 	Retrieve_eeprom_time_pos_ptr = retrieve_eeprom_time_pos_ptr;
-		
-	init_LGC(0,0,1);
-}
 
+	init_LGC(0, 0, 1);
+}
 
 /**
  * \brief Take message from ground and parse it, to set the values in current_playback_key_info
@@ -634,37 +584,36 @@ void init_playback(sensor_t *sensor_data, time_pos_fix_t *current_pos ,
  * 
  * \return void
  */
-void process_playback_instructions(uint16_t recent_timepos_index, uint16_t older_timepos_index )
+void process_playback_instructions(uint16_t recent_timepos_index, uint16_t older_timepos_index)
 {
 
-	
 	if ((recent_timepos_index > 0) && (older_timepos_index > 0) && !(recent_timepos_index >= older_timepos_index))
 	{
 		current_playback_key_info.requested_pos_index_lower = recent_timepos_index;
 		current_playback_key_info.requested_pos_index_upper = older_timepos_index;
 		current_playback_key_info.request_from_gnd = true;
-	}else
+	}
+	else
 	{
 		current_playback_key_info.playback_error = true;
 	}
 }
-
 
 /* byte extraction functions taken from sparkfun ublox library */
 
 //Given a spot in the payload array, extract two bytes and build an int
 uint16_t extractInt_from_buff(uint8_t spotToStart, uint8_t *buff)
 {
-  uint16_t val = 0;
-  val |= (uint16_t)buff[spotToStart + 0] << 8 * 0;
-  val |= (uint16_t)buff[spotToStart + 1] << 8 * 1;
-  return (val);
+	uint16_t val = 0;
+	val |= (uint16_t)buff[spotToStart + 0] << 8 * 0;
+	val |= (uint16_t)buff[spotToStart + 1] << 8 * 1;
+	return (val);
 }
 
 //Given a spot, extract a byte from the payload
 uint8_t extractByte_from_buff(uint8_t spotToStart, uint8_t *buff)
 {
-  return (buff[spotToStart]);
+	return (buff[spotToStart]);
 }
 
 //Given a spot in the payload array, extract four bytes and build a long
