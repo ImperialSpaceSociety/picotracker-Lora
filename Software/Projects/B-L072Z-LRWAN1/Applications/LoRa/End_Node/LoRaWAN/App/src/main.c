@@ -391,7 +391,7 @@ static void Send(void *context)
 	AppData.BuffSize = get_tx_buffer_len();
 
 	// Print out buffer for debug
-	PRINTF("Buffer to tx:\n", AppData.BuffSize);
+	PRINTF("Buffer to tx:\n");
 
 	for (int i = 0; i < AppData.BuffSize; i++)
 	{
