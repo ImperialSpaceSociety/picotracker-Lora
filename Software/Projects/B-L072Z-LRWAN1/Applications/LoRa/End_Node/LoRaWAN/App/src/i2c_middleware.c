@@ -127,6 +127,7 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef *hi2c)
 		PRINTF("HAL_OK deinit\n");
 		break;
 
+	/* you can have any number of case statements */
 	default:
 		PRINTF("unknown deinit i2c error\n");
 	}
@@ -146,6 +147,7 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef *hi2c)
 		PRINTF("HAL_OK init\n");
 		break;
 
+	/* you can have any number of case statements */
 	default:
 		PRINTF("unknown init i2c error\n");
 	}
