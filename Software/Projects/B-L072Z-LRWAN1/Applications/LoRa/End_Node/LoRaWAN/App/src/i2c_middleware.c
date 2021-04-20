@@ -124,34 +124,8 @@ I2C_MIDDLEWARE_STATUS_t I2C_receive_mem(I2C_HandleTypeDef* hi2c, uint16_t DevAdd
 		}
 	
 	return I2C_FAIL;
-}	
-
-void I2C_pins_GPIO_INPUT_init(){
-	
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-	/* Configure SDA,SCL pin as input */
-	GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_8;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	
 }
 
-void I2C_pins_GPIO_OUTPUT_init(){
-
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /*Configure GPIO pin : PB9 | PB8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-}	
-	
 /* rapidly toggle the i2c lines to get it unstuck
  * Workaround to solve this mysterious problem where the sda line
  * appears to get stuck low.
