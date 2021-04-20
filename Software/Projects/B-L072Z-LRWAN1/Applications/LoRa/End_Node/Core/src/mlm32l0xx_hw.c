@@ -352,15 +352,11 @@ int32_t HW_GetTemperatureLevel_int( void )
   
   temperatureDegreeC = COMPUTE_TEMPERATURE( measuredLevel, batteryLevelmV);
 
-#if 1
-  {
-    int16_t temperatureDegreeC_Int= (temperatureDegreeC)>>8;
-    uint16_t temperatureDegreeC_Frac= ((temperatureDegreeC-(temperatureDegreeC_Int<<8))*100)>>8;  
-    PRINTF("temp= %d, %d,%d\n\r", temperatureDegreeC, temperatureDegreeC_Int, temperatureDegreeC_Frac);
-  }
-#endif
-  
-  return (temperatureDegreeC)>>8;
+  int16_t temperatureDegreeC_Int = (temperatureDegreeC) >> 8;
+  uint16_t temperatureDegreeC_Frac = ((temperatureDegreeC - (temperatureDegreeC_Int << 8)) * 100) >> 8;
+  PRINTF("temperature= %d,%d degrees C\n\r", temperatureDegreeC_Int, temperatureDegreeC_Frac);
+
+  return temperatureDegreeC_Int;
 }
 
 uint16_t HW_GetTemperatureLevel( void ) 
