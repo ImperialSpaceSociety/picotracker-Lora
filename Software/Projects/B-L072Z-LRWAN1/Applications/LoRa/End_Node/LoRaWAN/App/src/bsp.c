@@ -89,7 +89,7 @@ void BSP_sensor_Read(void)
 	MS5607_get_temp_pressure();
 	HAL_IWDG_Refresh(&hiwdg);
 #else
-	TEMPERATURE_Value = HW_GetTemperatureLevel();
+	TEMPERATURE_Value = (double)HW_GetTemperatureLevel_int();
 #endif
 
 #if GPS_ENABLED
