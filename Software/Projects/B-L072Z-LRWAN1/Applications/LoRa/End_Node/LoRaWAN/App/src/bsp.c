@@ -215,10 +215,10 @@ void pretty_print_sensor_values(double *TEMPERATURE_Value, double *PRESSURE_Valu
 	PRINTF("%ld", gps_info->unix_time);
 	PRINTF("\r\n");
 	PRINTF("Solar voltage no load: ");
-	PRINTF("%ld", no_load_solar_voltage);
+	PRINTF("%ld", *no_load_solar_voltage);
 	PRINTF("\r\n");
 	PRINTF("Solar voltage with GPS load: ");
-	PRINTF("%ld", load_solar_voltage);
+	PRINTF("%ld", *load_solar_voltage);
 	PRINTF("\r\n");
 	PRINTF("Reset Count: ");
 	PRINTF("%ld", sensor_data.reset_count);
