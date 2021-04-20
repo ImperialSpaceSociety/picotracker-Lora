@@ -332,7 +332,7 @@ int32_t HW_GetTemperatureLevel_int( void )
 {
   uint16_t measuredLevel =0; 
   uint32_t batteryLevelmV;
-  uint16_t temperatureDegreeC;
+  int16_t temperatureDegreeC;
 
   measuredLevel = HW_AdcReadChannel( ADC_CHANNEL_VREFINT ); 
 
@@ -354,7 +354,7 @@ int32_t HW_GetTemperatureLevel_int( void )
 
 #if 1
   {
-    uint16_t temperatureDegreeC_Int= (temperatureDegreeC)>>8;
+    int16_t temperatureDegreeC_Int= (temperatureDegreeC)>>8;
     uint16_t temperatureDegreeC_Frac= ((temperatureDegreeC-(temperatureDegreeC_Int<<8))*100)>>8;  
     PRINTF("temp= %d, %d,%d\n\r", temperatureDegreeC, temperatureDegreeC_Int, temperatureDegreeC_Frac);
   }
