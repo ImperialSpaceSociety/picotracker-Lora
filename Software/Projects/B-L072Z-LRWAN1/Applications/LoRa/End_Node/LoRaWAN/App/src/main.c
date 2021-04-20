@@ -343,6 +343,8 @@ static void Send(void *context)
 	{
 		BSP_sensor_Read();
 
+		HAL_IWDG_Refresh(&hiwdg);
+
 		if (get_latest_gps_status() == GPS_SUCCESS)
 		{
 			/* Find out which region of world we are in and update region parm*/
@@ -354,8 +356,6 @@ static void Send(void *context)
 			HAL_IWDG_Refresh(&hiwdg);
 		}
 	}
-
-	HAL_IWDG_Refresh(&hiwdg);
 
 	/* Restart tx interval timer */
 	TimerStart(&TxTimer);
