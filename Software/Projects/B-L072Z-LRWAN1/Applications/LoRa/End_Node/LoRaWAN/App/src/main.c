@@ -239,6 +239,8 @@ int main(void)
 
 #endif
 
+		watchdog_pat_timer_init();
+
 		/* Keep transmiting data packets every period defined by APP_TX_DUTYCYCLE */
 		while (1)
 		{
