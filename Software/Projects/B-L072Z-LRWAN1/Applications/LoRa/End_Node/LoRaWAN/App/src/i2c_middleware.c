@@ -21,6 +21,7 @@
 #include <i2c_middleware.h>
 #include "hw_i2c.h"
 #include "hw.h" // for PRINTF
+#include "main.h"
 
 
 /* ==================================================================== */
@@ -157,7 +158,7 @@ void I2C_pins_GPIO_OUTPUT_init(){
  */
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
-
+  
 	PRINTF("I2C ERROR!");	
 
 	/* Re-Initiaize the I2C comunication bus */	
@@ -199,6 +200,7 @@ I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 		PRINTF("unknown init i2c error\n");	
 	}
 	
-	
+	HAL_IWDG_Refresh(&hiwdg);
+
 	return I2C_SUCCSS;
 }

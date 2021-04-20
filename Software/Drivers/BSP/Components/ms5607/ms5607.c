@@ -17,9 +17,7 @@
 
 /* Inclusion of system and local header files goes here */
 
-#include <stdio.h>
 #include <math.h>
-#include "stm32l0xx_hal.h"
 #include "ms5607.h"
 #include "main.h"
 #include "hw.h"

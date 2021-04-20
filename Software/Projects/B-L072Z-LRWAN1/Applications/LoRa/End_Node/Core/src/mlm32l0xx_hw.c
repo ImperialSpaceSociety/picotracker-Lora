@@ -103,7 +103,11 @@ void HW_Init( void )
     /* Set the Vector Table base location at 0x3000 */
     NVIC_SetVectorTable( NVIC_VectTab_FLASH, 0x3000 );
 #endif
-
+		
+#if (USE_WATCHDOG)
+    MX_IWDG_Init();
+#endif
+		
     HW_AdcInit( );
 
     Radio.IoInit( );
@@ -121,9 +125,9 @@ void HW_Init( void )
 
 		for(uint8_t i = 0; i < 5; i++)
 		{
-			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_SET);
+			BSP_LED_On(LED1);
 			HAL_Delay(50);
-			HAL_GPIO_WritePin(GPIOA, LED_Pin, GPIO_PIN_RESET);
+			BSP_LED_Off(LED1);
 			HAL_Delay(50);
 		}
 
@@ -132,16 +136,7 @@ void HW_Init( void )
 		GPS_INT_GPIO_Init();
 		
 	
-		#if defined( VARIANT_1V1B )  || defined ( VARIANT_1V2B )
-		/* enable power to the sensors */
-		SENSOR_EN_GPIO_Init();
-		
-		#endif
-		
-		#if defined( VARIANT_1V2A)
-		/* enable power to the GPS with mosfet */
-		GPS_EN_GPIO_Init();
-		#endif 
+
 		
 		PRINTF("SELFTEST: Now initing sensors\n\r");
     BSP_sensor_Init( );
@@ -330,6 +325,42 @@ void HW_GetUniqueId( uint8_t *id )
     id[2] = ( ( *( uint32_t* )ID2 ) ) >> 16;
     id[1] = ( ( *( uint32_t* )ID2 ) ) >> 8;
     id[0] = ( ( *( uint32_t* )ID2 ) );
+}
+
+
+int32_t HW_GetTemperatureLevel_int( void ) 
+{
+  uint16_t measuredLevel =0; 
+  uint32_t batteryLevelmV;
+  uint16_t temperatureDegreeC;
+
+  measuredLevel = HW_AdcReadChannel( ADC_CHANNEL_VREFINT ); 
+
+  if (measuredLevel ==0)
+  {
+    batteryLevelmV =0;
+  }
+  else
+  {
+    batteryLevelmV= (( (uint32_t) VDDA_VREFINT_CAL * (*VREFINT_CAL ) )/ measuredLevel);
+  }
+#if 0  
+  PRINTF("VDDA= %d\n\r", batteryLevelmV);
+#endif
+  
+  measuredLevel = HW_AdcReadChannel( ADC_CHANNEL_TEMPSENSOR ); 
+  
+  temperatureDegreeC = COMPUTE_TEMPERATURE( measuredLevel, batteryLevelmV);
+
+#if 1
+  {
+    uint16_t temperatureDegreeC_Int= (temperatureDegreeC)>>8;
+    uint16_t temperatureDegreeC_Frac= ((temperatureDegreeC-(temperatureDegreeC_Int<<8))*100)>>8;  
+    PRINTF("temp= %d, %d,%d\n\r", temperatureDegreeC, temperatureDegreeC_Int, temperatureDegreeC_Frac);
+  }
+#endif
+  
+  return (temperatureDegreeC)>>8;
 }
 
 uint16_t HW_GetTemperatureLevel( void ) 

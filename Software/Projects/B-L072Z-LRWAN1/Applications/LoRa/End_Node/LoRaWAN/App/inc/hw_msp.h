@@ -90,6 +90,9 @@ do {                                                    \
  * \retval value  temperature in degreeCelcius( q7.8 )
  */
 uint16_t HW_GetTemperatureLevel( void );
+	
+int32_t HW_GetTemperatureLevel_int( void );
+
 /*!
  * \brief Get the current battery level
  *

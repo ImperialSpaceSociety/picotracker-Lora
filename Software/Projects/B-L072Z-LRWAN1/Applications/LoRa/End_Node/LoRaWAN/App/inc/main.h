@@ -24,52 +24,45 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-/* Includes ------------------------------------------------------------------*/
-#include "stm32l0xx_hal.h"
+  /* Includes ------------------------------------------------------------------*/
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
+  /* Private includes ----------------------------------------------------------*/
+  /* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
+  /* USER CODE END Includes */
 
-/* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
+  /* Exported types ------------------------------------------------------------*/
+  /* USER CODE BEGIN ET */
 
-/* USER CODE END ET */
+  /* USER CODE END ET */
 
-/* Exported constants --------------------------------------------------------*/
-/* USER CODE BEGIN EC */
+  /* Exported constants --------------------------------------------------------*/
+  /* USER CODE BEGIN EC */
 
-/* USER CODE END EC */
+  /* USER CODE END EC */
 
-/* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
+  /* Exported macro ------------------------------------------------------------*/
+  /* USER CODE BEGIN EM */
 
-/* USER CODE END EM */
+  /* USER CODE END EM */
 
-/* Exported functions prototypes ---------------------------------------------*/
-void Error_Handler(void);
+  /* Exported functions prototypes ---------------------------------------------*/
+  void Error_Handler(void);
 
-/* USER CODE BEGIN EFP */
+  /* USER CODE BEGIN EFP */
 
-/* USER CODE END EFP */
+  /* USER CODE END EFP */
 
-/* Private defines -----------------------------------------------------------*/
-
+  /* Private defines -----------------------------------------------------------*/
 
 #define GPS_PPS_Pin GPIO_PIN_14
 #define GPS_PPS_GPIO_Port GPIOB
 #define GPS_INT_Pin GPIO_PIN_13
 #define GPS_INT_GPIO_Port GPIOB
-
-#define LED_Pin GPIO_PIN_2
-#define LED_GPIO_Port GPIOA
-
-#define BUTTON_Pin GPIO_PIN_3
-#define BUTTON_GPIO_Port GPIOA
 
 #define SENSOR_EN_PIN GPIO_PIN_7
 #define SENSOR_EN_GPIO_Port GPIOB
@@ -79,51 +72,59 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
-
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor, Radio, GPS or LED
-#define SENSOR_ENABLED   1         /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
-#define GPS_ENABLED      1         /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
-#define RADIO_ENABLED    1         /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
-#define USE_LED          1         /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
+#define SENSOR_ENABLED 1                /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
+#define GPS_ENABLED 1                   /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
+#define RADIO_ENABLED 1                 /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_LED 1                       /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_NVM_STORED_LORAWAN_REGION 1 /* Use LoRaWAN region stored in EEPROm. Allowed values: 0 disabled , 1(default) enabled. If not using EEPROM location, \
+                                         * use EU868                                                                                                           \
+                                         */
 
+  /* GPS RELATED DEFINES */
+  /* ----------------------------------------------------------------------------------- */
 
-/* GPS RELATED DEFINES */
-/* ----------------------------------------------------------------------------------- */
-
-#define GPS_LOCATION_FIX_TIMEOUT          180000
-#define GPS_WAKEUP_TIMEOUT                1000
-
+#define GPS_LOCATION_FIX_TIMEOUT 180000
+#define GPS_WAKEUP_TIMEOUT 1000
 
 /* GEOFENCE RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
 /* For geofence testing */
 //#define DUMMY_GPS_COORDS        /* Bypass the GPS chip to return dummy GPS values . Allowed values: 0(default) disabled , 1 enabled */
 
-
 /* LORAWAN RELATED DEFINES */
 /* ----------------------------------------------------------------------------------- */
-
 /*!
+ * User application data buffer size
+ */
+#define LORAWAN_APP_DATA_BUFF_SIZE 242
+#define DOWNLINK_CONFIG_PORT 18
+
+/* PLAYBACK RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
+#define HOW_OFTEN_TO_SAVE_POS_TIM_TO_EEPROM 20U /* Save to eeprom every 20 minutes */
+#define DEFAULT_N_POSITIONS_TO_SEND 13U         /* Number of past positions to send in each transmission */
+#define MAX_N_POSITIONS_TO_SEND 25U
+#define DEFAULT_N_POSITIONS_OFFSET 0U
+#define PLAYBACK_DAYS 15U /* How many days ago to send playback positions(default) */
+
+/* WATCHDOG RELATED DEFINES */
+/* ----------------------------------------------------------------------------------- */
+#define USE_WATCHDOG 1 /* Use watchdog. Allowed values: 0 disabled , 1(default) enabled */
+
+  /*!
  * Defines the application data transmission duty cycle. 2 minutes, value in [ms].
  */
 
-#define APP_TX_DUTYCYCLE                           120000
+#define APP_TX_DUTYCYCLE 40000
 /*!
  * LoRaWAN Adaptive Data Rate
  * @note Please note that when ADR is enabled the end-device should be static
  */
 #define LORAWAN_ADR_STATE LORAWAN_ADR_OFF
-/*!
- * LoRaWAN Default data Rate Data Rate
- * @note Please note that LORAWAN_DEFAULT_DATA_RATE is used only when ADR is disabled 
- */
-#define LORAWAN_DEFAULT_DATA_RATE DR_4
 
-
-
-#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM           1   /* Storing frame counter in EEPROM. Allowed values: 0 disabled , 1 (default) enabled */
-
+#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM 1 /* Storing frame counter in EEPROM. Allowed values: 0 disabled , 1 (default) enabled */
 
 /* CALL SIGN */
 
@@ -134,8 +135,7 @@ void Error_Handler(void);
 //#define ICSPACE20
 #define ICSPACE21
 
-
-/* USER CODE END Private defines */
+  /* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }
