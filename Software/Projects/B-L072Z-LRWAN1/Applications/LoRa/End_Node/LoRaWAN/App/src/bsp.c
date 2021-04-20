@@ -88,6 +88,8 @@ void BSP_sensor_Read(void)
 #if SENSOR_ENABLED
 	MS5607_get_temp_pressure();
 	HAL_IWDG_Refresh(&hiwdg);
+#else
+	TEMPERATURE_Value = HW_GetTemperatureLevel();
 #endif
 
 #if GPS_ENABLED
@@ -197,10 +199,10 @@ void pretty_print_sensor_values(double *TEMPERATURE_Value, double *PRESSURE_Valu
 	PRINTF("================================================================\r\n");
 
 	PRINTF("Temperature degrees C: ");
-	PRINTF("%lf", TEMPERATURE_Value);
+	PRINTF("%lf", *TEMPERATURE_Value);
 	PRINTF("\r\n");
 	PRINTF("Pressure mBar: ");
-	PRINTF("%lf", PRESSURE_Value);
+	PRINTF("%lf", *PRESSURE_Value);
 	PRINTF("\r\n");
 	PRINTF("Longitude: ");
 	PRINTF("%lf ", gps_info->GPS_UBX_longitude_Float);
