@@ -148,7 +148,6 @@ gps_status_t Backup_GPS()
  */
 gps_status_t setup_GPS()
 {
-	HAL_Delay(GPS_WAKEUP_TIMEOUT);
 
 	// wake up gps in case it is in Lower Power mode
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET); // pull GPS extint0 pin high to wake gps
