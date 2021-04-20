@@ -554,7 +554,9 @@ void set_brownout_level( void )
 	}
 }
 
-
+/**
+* Use datarate of DR_5 over the EU but DR_4 over rest of the world
+*/
 int8_t datarate_calculator(LoRaMacRegion_t LoRaMacRegion)
 {
 	int8_t dr = 0;
