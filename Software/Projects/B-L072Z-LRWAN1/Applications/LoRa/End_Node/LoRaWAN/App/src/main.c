@@ -474,7 +474,7 @@ static void OnTxTimerEvent(void *context)
 	 * An interrupt service routine
 	 * The timer, &TxTimer, calls this function after the elapsed time of length defined
 	 * by APP_TX_DUTYCYCLE. Then this function tells the tracker that it is safe to transmit
-   * now by setting AppProcessRequest.
+	 * now by setting AppProcessRequest.
 	 * This function also restarts the timer so that it can get called again after
 	 * the elapsed period.
 	 */
