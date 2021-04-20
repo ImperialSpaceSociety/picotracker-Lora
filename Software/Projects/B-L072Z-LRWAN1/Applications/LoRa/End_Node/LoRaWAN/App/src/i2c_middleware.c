@@ -132,6 +132,8 @@ I2C_MIDDLEWARE_STATUS_t I2C_receive_mem(I2C_HandleTypeDef* hi2c, uint16_t DevAdd
  */
 I2C_MIDDLEWARE_STATUS_t reinit_i2c(I2C_HandleTypeDef* hi2c)
 {
+	HAL_IWDG_Refresh(&hiwdg);
+	
 	PRINTF("I2C ERROR!");	
 
 	/* Re-Initiaize the I2C comunication bus */	
