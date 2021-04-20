@@ -140,21 +140,17 @@ gps_status_t Backup_GPS()
 	{
 		PRINTF("put_in_power_save_mode carried out successfully!\n");
 	}
-	//HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_RESET);    // force GPS backup mode by pulling GPS extint pin low
 	return GPS_SUCCESS;
 }
 
 /* 
  * sets up gps by putting in airbourne mode, setting to use GPS satellites only, turning off NMEA
- * Needs TO BE REFACTORED TO TIME OUT OR EXIT IF NO MESSAGED IS ReCEIVED BACK!
  */
 gps_status_t setup_GPS()
 {
 
 	// wake up gps in case it is in Lower Power mode
 	HAL_GPIO_WritePin(GPS_INT_GPIO_Port, GPS_INT_Pin, GPIO_PIN_SET); // pull GPS extint0 pin high to wake gps
-	factoryReset();
-	HAL_Delay(GPS_WAKEUP_TIMEOUT); // Wait for things to be setup
 
 	/* Set the I2C port to output UBX only (turn off NMEA noise) */
 	if (setI2COutput(COM_TYPE_UBX, defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
@@ -404,12 +400,6 @@ static gps_status_t init_for_fix()
 
 static gps_status_t reinit_gps()
 {
-	HAL_IWDG_Refresh(&hiwdg);
-
-	// configure gps module again
-	factoryReset();
-	HAL_Delay(GPS_WAKEUP_TIMEOUT); // wait for GPS module to be ready
-
 	HAL_IWDG_Refresh(&hiwdg);
 
 	if (setI2COutput(COM_TYPE_UBX, defaultMaxWait) == false) //Set the I2C port to output UBX only (turn off NMEA noise)
