@@ -327,7 +327,11 @@ void HW_GetUniqueId( uint8_t *id )
     id[0] = ( ( *( uint32_t* )ID2 ) );
 }
 
-
+/**
+ * @brief Return temperature in degrees C
+ * 
+ * @return int32_t Temperature degrees C
+ */
 int32_t HW_GetTemperatureLevel_int( void ) 
 {
   uint16_t measuredLevel =0; 
