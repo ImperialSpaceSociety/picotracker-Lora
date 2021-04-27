@@ -340,11 +340,14 @@ static void Send(void *context)
 	if (first_fix == true)
 	{
 		first_fix = false;
+		/* don't read the GPS again */
+		BSP_sensor_Read(false, true);
 	}
 	else
 	{
-		BSP_sensor_Read();
-
+		/* Read both gps and sensor */
+		BSP_sensor_Read(true, true);
+		
 		HAL_IWDG_Refresh(&hiwdg);
 
 		if (get_latest_gps_status() == GPS_SUCCESS)
