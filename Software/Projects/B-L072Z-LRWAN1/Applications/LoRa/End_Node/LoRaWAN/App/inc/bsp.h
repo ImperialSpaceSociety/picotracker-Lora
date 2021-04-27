@@ -41,13 +41,14 @@ Maintainer: Miguel Luis and Gregory Cristian
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
 #include "main.h"
+#include <stdbool.h>
 
 
 /* Exported types ------------------------------------------------------------*/
 
 typedef struct{
   uint16_t pressure;    /* in mbar */  
-  int8_t temperature; /* in °C   */
+  int8_t temperature; /* in ï¿½C   */
   int8_t humidity;    /* in %    */
   uint16_t latitude;
   uint16_t longitude ;
@@ -118,13 +119,13 @@ typedef struct
  */
 void  BSP_sensor_Init( void  );
 
-/**
- * @brief  sensor  read. 
- *
- * @note none
- * @retval sensor_data
+ /**
+ * @brief 
+ * 
+ * @param read_gps set true to read gps
+ * @param read_environmental_sensor set true to read sensor
  */
-void BSP_sensor_Read( void );
+void BSP_sensor_Read(bool read_gps, bool read_environmental_sensor);
 
 
 
