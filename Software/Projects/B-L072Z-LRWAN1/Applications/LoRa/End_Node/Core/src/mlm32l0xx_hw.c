@@ -327,6 +327,42 @@ void HW_GetUniqueId( uint8_t *id )
     id[0] = ( ( *( uint32_t* )ID2 ) );
 }
 
+/**
+ * @brief Return temperature in degrees C
+ * 
+ * @return int32_t Temperature degrees C
+ */
+int32_t HW_GetTemperatureLevel_int( void ) 
+{
+  uint16_t measuredLevel =0; 
+  uint32_t batteryLevelmV;
+  int16_t temperatureDegreeC;
+
+  measuredLevel = HW_AdcReadChannel( ADC_CHANNEL_VREFINT ); 
+
+  if (measuredLevel ==0)
+  {
+    batteryLevelmV =0;
+  }
+  else
+  {
+    batteryLevelmV= (( (uint32_t) VDDA_VREFINT_CAL * (*VREFINT_CAL ) )/ measuredLevel);
+  }
+#if 0  
+  PRINTF("VDDA= %d\n\r", batteryLevelmV);
+#endif
+  
+  measuredLevel = HW_AdcReadChannel( ADC_CHANNEL_TEMPSENSOR ); 
+  
+  temperatureDegreeC = COMPUTE_TEMPERATURE( measuredLevel, batteryLevelmV);
+
+  int16_t temperatureDegreeC_Int = (temperatureDegreeC) >> 8;
+  uint16_t temperatureDegreeC_Frac = ((temperatureDegreeC - (temperatureDegreeC_Int << 8)) * 100) >> 8;
+  PRINTF("temperature= %d,%d degrees C\n\r", temperatureDegreeC_Int, temperatureDegreeC_Frac);
+
+  return temperatureDegreeC_Int;
+}
+
 uint16_t HW_GetTemperatureLevel( void ) 
 {
   uint16_t measuredLevel =0; 
