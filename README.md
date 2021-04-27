@@ -73,9 +73,17 @@ PCB bottom layer(v1.3a):
 # Software
 We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free of charge for the STM32L0 series of microcontrollers. You will be able to download Keil from [here](https://www2.keil.com/stmicroelectronics-stm32/mdk). Make sure you activate it so that you can compile files greater than 30kb of flash.
 
+To get the software, run:
+```bash
+git clone https://github.com/ImperialSpaceSociety/picotracker-Lora.git
+```
 The software on the latest tracker can be found in the [Software folder](Software). You need to navigate to ``Software/Projects/B-L072Z-LRWAN1/Applications/LoRa/End_Node/MDK-ARM/`` and you can open the KEIL project by clicking ``Lora.uvprojx``
 
 Once you open Keil, it should look like this. Ensure that the 1.3a_variant of the code is selected(highlighted in picture): ![image](https://user-images.githubusercontent.com/26815217/103182972-58b61b80-48a7-11eb-9189-2644d05e65e5.png)
+
+Then to upload, ensure the ST-link programmer is connected to the tracker, and hit compile and then upload or debug.
+![image](https://user-images.githubusercontent.com/26815217/116326533-962aa700-a7bc-11eb-8606-af7147ce3ca0.png)
+
 
 
 # Software overview
