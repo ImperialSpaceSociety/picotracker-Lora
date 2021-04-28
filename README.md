@@ -81,7 +81,7 @@ The software on the latest tracker can be found in the [Software folder](Softwar
 
 Once you open Keil, it should look like this. Ensure that the 1.3a_variant of the code is selected(highlighted in picture): ![image](https://user-images.githubusercontent.com/26815217/103182972-58b61b80-48a7-11eb-9189-2644d05e65e5.png)
 
-Then to upload, ensure the ST-link programmer is connected to the tracker, and hit compile and then upload or debug.
+Then to upload, ensure the ST-link programmer is connected to the tracker, and hit compile and then upload or debug. Note: Its necessary to compile before uploading, or it will not have the latest hex file to flash to the tracker.
 ![image](https://user-images.githubusercontent.com/26815217/116326533-962aa700-a7bc-11eb-8606-af7147ce3ca0.png)
 
 
