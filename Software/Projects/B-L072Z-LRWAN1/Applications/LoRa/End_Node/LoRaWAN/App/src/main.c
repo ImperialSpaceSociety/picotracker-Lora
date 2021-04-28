@@ -121,12 +121,6 @@ static TimerEvent_t WatchdogPatTimer;
 // Set up brown out reset voltage as low as possible
 void set_brownout_level(void);
 
-/**
- * @brief Flag to indicate first fix
- * 
- */
-bool first_fix = true;
-
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -337,14 +331,7 @@ static void Send(void *context)
 	HAL_IWDG_Refresh(&hiwdg);
 
 	/* reading sensors and GPS */
-	if (first_fix == true)
-	{
-		first_fix = false;
-	}
-	else
-	{
-		BSP_sensor_Read();
-	}
+	BSP_sensor_Read();
 
 	/* Restart tx interval timer */
 	TimerStart(&TxTimer);
