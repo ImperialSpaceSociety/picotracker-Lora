@@ -71,7 +71,7 @@ PCB bottom layer(v1.3a):
 ![image](https://user-images.githubusercontent.com/26815217/106533954-f6c28480-64ea-11eb-96bf-7d412425363a.png)
 
 # Software
-We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free of charge for the STM32L0 series of microcontrollers. You will be able to download Keil from [here](https://www2.keil.com/stmicroelectronics-stm32/mdk). Make sure you activate it so that you can compile files greater than 30kb of flash.
+We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free of charge for the STM32L0 series of microcontrollers. You will be able to download Keil from [here](https://www2.keil.com/stmicroelectronics-stm32/mdk). Make sure you activate the licence so that you can compile files greater than 30kb of flash. There is no cost for the licence.
 
 To get the picotracker firmware, run to clone the repo:
 ```bash
