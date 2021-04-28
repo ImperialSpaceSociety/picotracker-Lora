@@ -344,23 +344,21 @@ static void Send(void *context)
 	else
 	{
 		BSP_sensor_Read();
-
-		HAL_IWDG_Refresh(&hiwdg);
-
-		if (get_latest_gps_status() == GPS_SUCCESS)
-		{
-			/* Find out which region of world we are in and update region parm*/
-			update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
-
-			/* Save current polygon to eeprom only if gps fix was valid */
-			EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_loramac_region, sizeof(LoRaMacRegion_t));
-
-			HAL_IWDG_Refresh(&hiwdg);
-		}
 	}
 
 	/* Restart tx interval timer */
 	TimerStart(&TxTimer);
+
+	if (get_latest_gps_status() == GPS_SUCCESS)
+	{
+		/* Find out which region of world we are in and update region parm*/
+		update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
+
+		/* Save current polygon to eeprom only if gps fix was valid */
+		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_loramac_region, sizeof(LoRaMacRegion_t));
+
+		HAL_IWDG_Refresh(&hiwdg);
+	}
 
 	/* reinit everything if it enters another LoRaWAN region. */
 	if (lora_settings_status == INCORRECT)
