@@ -73,7 +73,7 @@ PCB bottom layer(v1.3a):
 # Software
 We use the KEIL IDE to program the tracker. KEIL can be downloaded and used free of charge for the STM32L0 series of microcontrollers. You will be able to download Keil from [here](https://www2.keil.com/stmicroelectronics-stm32/mdk). Make sure you activate the licence so that you can compile files greater than 30kb of flash. There is no cost for the licence.
 
-To get the picotracker firmware, run to clone the repo:
+To get the picotracker firmware, run the following to clone the repo. Useful tip: Ensure the repo is cloned to the root folder e.g. `C:\` because there have been issues with the path lengths of the files getting too long for Windows to handle. The repo has very very long paths, a legacy of the LoRaWAN firmware stack by STMicroelectronics.
 ```bash
 git clone https://github.com/ImperialSpaceSociety/picotracker-Lora.git
 ```
