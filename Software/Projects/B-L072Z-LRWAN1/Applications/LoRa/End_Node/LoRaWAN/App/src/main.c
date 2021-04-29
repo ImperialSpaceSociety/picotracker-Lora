@@ -121,12 +121,6 @@ static TimerEvent_t WatchdogPatTimer;
 // Set up brown out reset voltage as low as possible
 void set_brownout_level(void);
 
-/**
- * @brief Flag to indicate first fix
- * 
- */
-bool first_fix = true;
-
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -337,33 +331,21 @@ static void Send(void *context)
 	HAL_IWDG_Refresh(&hiwdg);
 
 	/* reading sensors and GPS */
-	if (first_fix == true)
-	{
-		first_fix = false;
-		/* don't read the GPS again */
-		BSP_sensor_Read(false, true);
-	}
-	else
-	{
-		/* Read both gps and sensor */
-		BSP_sensor_Read(true, true);
-		
-		HAL_IWDG_Refresh(&hiwdg);
-
-		if (get_latest_gps_status() == GPS_SUCCESS)
-		{
-			/* Find out which region of world we are in and update region parm*/
-			update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
-
-			/* Save current polygon to eeprom only if gps fix was valid */
-			EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_loramac_region, sizeof(LoRaMacRegion_t));
-
-			HAL_IWDG_Refresh(&hiwdg);
-		}
-	}
+	BSP_sensor_Read();
 
 	/* Restart tx interval timer */
 	TimerStart(&TxTimer);
+
+	if (get_latest_gps_status() == GPS_SUCCESS)
+	{
+		/* Find out which region of world we are in and update region parm*/
+		update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
+
+		/* Save current polygon to eeprom only if gps fix was valid */
+		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_loramac_region, sizeof(LoRaMacRegion_t));
+
+		HAL_IWDG_Refresh(&hiwdg);
+	}
 
 	/* reinit everything if it enters another LoRaWAN region. */
 	if (lora_settings_status == INCORRECT)

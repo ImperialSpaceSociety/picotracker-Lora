@@ -78,29 +78,24 @@ void fill_to_send_structs(double *TEMPERATURE_Value, double *PRESSURE_Value, gps
 
 /* Private variables ---------------------------------------------------------*/
 
-void BSP_sensor_Read(bool read_gps, bool read_environmental_sensor)
+void BSP_sensor_Read(void)
 {
 	HAL_IWDG_Refresh(&hiwdg);
 
 	PRINTF("READING SENSOR AND GPS\n\r");
 
-	if (read_environmental_sensor == true)
-	{
+	/* USER CODE BEGIN 5 */
 #if SENSOR_ENABLED
-		MS5607_get_temp_pressure();
-		HAL_IWDG_Refresh(&hiwdg);
+	MS5607_get_temp_pressure();
+	HAL_IWDG_Refresh(&hiwdg);
 #else
-		TEMPERATURE_Value = (double)HW_GetTemperatureLevel_int();
+	TEMPERATURE_Value = (double)HW_GetTemperatureLevel_int();
 #endif
-	}
 
-	if (read_gps == true)
-	{
 #if GPS_ENABLED
-		get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
-		HAL_IWDG_Refresh(&hiwdg);
+	get_location_fix(GPS_LOCATION_FIX_TIMEOUT);
+	HAL_IWDG_Refresh(&hiwdg);
 #endif
-	}
 
 	/* read solar voltage under gps and no load */
 	uint16_t no_load_solar_voltage = BSP_GetSolarLevel16();
