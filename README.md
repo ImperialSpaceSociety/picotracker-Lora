@@ -85,9 +85,14 @@ The software on the latest tracker can be found in the [Software folder](Softwar
 
 Once you open Keil, it should look like this. Ensure that the 1.3a_variant of the code is selected(highlighted in picture): ![image](https://user-images.githubusercontent.com/26815217/103182972-58b61b80-48a7-11eb-9189-2644d05e65e5.png)
 
-Then to upload, ensure the ST-link programmer is connected to the tracker, and hit compile and then upload or debug. Note: Its necessary to compile before uploading, or it will not have the latest hex file to flash to the tracker.
-![image](https://user-images.githubusercontent.com/26815217/116326533-962aa700-a7bc-11eb-8606-af7147ce3ca0.png)
+You will have to tell Keil that you are using the ST-link programmer. To do that, go to the `flash` drop down menu and select `Configure Flash Tools`. Then switch to the `debug` tab and ensure the drop down menu is set to `St-Link Debugger` as shown in the picture below. Then click the `settings` button.
+![image](https://user-images.githubusercontent.com/26815217/116629594-75dc2300-a949-11eb-9cd3-9d6b046c3bca.png)
 
+When you open up the settings menu, it should look like this: 
+![image](https://user-images.githubusercontent.com/26815217/116629664-9e641d00-a949-11eb-9dad-fd3ef9710a46.png)
+
+Now that your st-link debugger is setup, its time to compile and program. Ensure the ST-link programmer is connected to the tracker, and hit compile and then upload or debug. Note: Its necessary to compile before uploading, or it will not have the latest hex file to flash to the tracker.
+![image](https://user-images.githubusercontent.com/26815217/116326533-962aa700-a7bc-11eb-8606-af7147ce3ca0.png)
 
 
 # Software overview
