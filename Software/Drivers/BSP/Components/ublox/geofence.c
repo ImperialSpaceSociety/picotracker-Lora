@@ -620,7 +620,7 @@ static void set_current_loramac_region(Polygon_t current_poly)
 					break;
 			case RU864870_RUSSIA_polygon:
 					tx_permission = TX_OK;
-					current_loramac_region = LORAMAC_REGION_RU864;
+					current_loramac_region = LORAMAC_REGION_EU868;
 					break;
 			case EU863870_EUROPE_polygon:
 					tx_permission = TX_OK;
