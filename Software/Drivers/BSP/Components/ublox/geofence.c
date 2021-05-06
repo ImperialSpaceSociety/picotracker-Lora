@@ -19,7 +19,6 @@
 /* Inclusion of system and local header files goes here */
 
 #include "geofence.h"
-#include <stdio.h>
 #include "LoRaMac.h"
 
 /* ==================================================================== */
