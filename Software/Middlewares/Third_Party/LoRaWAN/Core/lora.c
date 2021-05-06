@@ -559,6 +559,14 @@ void LORA_Init (LoRaMainCallback_t *callbacks, LoRaParam_t* LoRaParam )
       mibReq.Param.SystemMaxRxError = 20;
       LoRaMacMibSetRequestConfirm( &mibReq );
 
+      mibReq.Type = MIB_RECEIVE_DELAY_1;
+      mibReq.Param.ReceiveDelay1 = 5000;
+      LoRaMacMibSetRequestConfirm(&mibReq);
+
+      mibReq.Type = MIB_RECEIVE_DELAY_2;
+      mibReq.Param.ReceiveDelay2 = 6000;
+      LoRaMacMibSetRequestConfirm(&mibReq);
+
       /*set Mac statein Idle*/
       LoRaMacStart( );
 }
