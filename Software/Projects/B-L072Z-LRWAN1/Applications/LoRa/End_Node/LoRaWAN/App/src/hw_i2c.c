@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "hw_i2c.h"
+#include "debug.h"
 
 /* USER CODE BEGIN 0 */
 
