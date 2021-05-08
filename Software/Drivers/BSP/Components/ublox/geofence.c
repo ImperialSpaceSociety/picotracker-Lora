@@ -40,13 +40,23 @@
  * all LoRa settings are reinitialised when the balloon enters another polygon.
  * 
  */
-lora_setting_status_t lora_settings_status = CORRECT; 
 
-LoRaMacRegion_t current_loramac_region = LORAMAC_REGION_EU868;  // Loramac region AS923
-Polygon_t curr_poly_region = AS923925_INDONESIA_polygon; // Indonesia is in this polygon
+typedef struct
+{
+	lora_setting_status_t lora_settings_status;
+	LoRaMacRegion_t current_loramac_region;
+	Polygon_t curr_poly_region;
+	tx_permission_t tx_permission;
 
-tx_permission_t tx_permission = TX_OK;
+} geofence_status_t;
 
+geofence_status_t current_geofence_status =
+	{
+		.lora_settings_status = CORRECT,
+		.current_loramac_region = LORAMAC_REGION_EU868,
+		.curr_poly_region = AS923925_INDONESIA_polygon,
+		.tx_permission = TX_OK,
+};
 
 /* These are the fence polygons. There are several 
  * polygons that have the same frequency names but have a 
