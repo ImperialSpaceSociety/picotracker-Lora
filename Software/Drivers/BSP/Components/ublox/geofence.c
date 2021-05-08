@@ -786,80 +786,80 @@ static void set_current_loramac_region(Polygon_t current_poly)
 	switch (current_poly)
 	{
 	case EU863870_AFRICA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_EU868;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_EU868;
 		break;
 	case EU863870_PHILIPPINES_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_EU868;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_EU868;
 		break;
 	case US902928_NAMERICA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_US915;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_US915;
 		break;
 	case AS923925_BRUNEI_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AS923;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AS923;
 		break;
 	case AS923925_TAIWAN_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AS923;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AS923;
 		break;
 	case AS923925_INDONESIA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AS923;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AS923;
 		break;
 	case AS923925_THAILAND_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AS923;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AS923;
 		break;
 	case US902928_ARGENTINA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_US915;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_US915;
 		break;
 	case AU915928_BRAZIL_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AU915;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AU915;
 		break;
 	case AU915928_CHILE_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AU915;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AU915;
 		break;
 	case CN779787_CHINA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_CN779;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_CN779;
 		break;
 	case IN865867_INDIA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_IN865;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_IN865;
 		break;
 	case AS920923_JAPAN_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AS923;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AS923;
 		break;
 	case KR920923_SKOREA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_KR920;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_KR920;
 		break;
 	case AS920923_MALAYSIASG_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AS923;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AS923;
 		break;
 	case AU915928_AUSTRALIA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_AU915;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_AU915;
 		break;
 	case RU864870_RUSSIA_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_EU868;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_EU868;
 		break;
 	case EU863870_EUROPE_polygon:
-		tx_permission = TX_OK;
-		current_loramac_region = LORAMAC_REGION_EU868;
+		current_geofence_status.tx_permission = TX_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_EU868;
 		break;
 	case OUTSIDE_polygon:
-		tx_permission = TX_NOT_OK;
-		current_loramac_region = LORAMAC_REGION_EU868;
+		current_geofence_status.tx_permission = TX_NOT_OK;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_EU868;
 		break;
 	}
 }
@@ -867,16 +867,16 @@ static void set_current_loramac_region(Polygon_t current_poly)
 void update_geofence_position(float latitude, float longitude)
 {
 	/* store the current loramac region to compare later */
-	LoRaMacRegion_t prev_loramac_region = current_loramac_region;
+	LoRaMacRegion_t prev_loramac_region = current_geofence_status.current_loramac_region;
 
 	/* get our current polygon */
-	curr_poly_region = get_polygon(latitude, longitude);
+	current_geofence_status.curr_poly_region = get_polygon(latitude, longitude);
 
 	/* now set the current lora region settings based on 
 	   * new or unchanged polygon we are in.
 	   */
-	set_current_loramac_region(curr_poly_region);
+	set_current_loramac_region(current_geofence_status.curr_poly_region);
 
 	/* now check if we have moved into a different geofence region */
-	lora_settings_status = (current_loramac_region != prev_loramac_region) ? INCORRECT : CORRECT;
+	current_geofence_status.lora_settings_status = (current_geofence_status.current_loramac_region != prev_loramac_region) ? INCORRECT : CORRECT;
 }

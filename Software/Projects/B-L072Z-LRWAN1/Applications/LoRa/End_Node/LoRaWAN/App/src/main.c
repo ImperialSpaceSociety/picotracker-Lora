@@ -209,7 +209,7 @@ int main(void)
 	{
 
 		/* select data rate depending on region of the world. */
-		int8_t dr = datarate_calculator(current_loramac_region);
+		int8_t dr = datarate_calculator(current_geofence_status.current_loramac_region);
 
 		LoRaParam_t LoRaParamInit = {LORAWAN_ADR_STATE, dr, LORAWAN_PUBLIC_NETWORK};
 
@@ -249,7 +249,7 @@ int main(void)
 				/* if the tracker moves into another region, break out of main loop and 
 				* reinit LoRa radio regional params
 				*/
-				if (lora_settings_status == INCORRECT)
+				if (current_geofence_status.lora_settings_status == INCORRECT)
 				{
 
 					PRINTF("Breaking out of main loop to reinit LoRa regional settings\n\r");
@@ -342,13 +342,13 @@ static void Send(void *context)
 		update_geofence_position(gps_info.GPS_UBX_latitude_Float, gps_info.GPS_UBX_longitude_Float);
 
 		/* Save current polygon to eeprom only if gps fix was valid */
-		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_loramac_region, sizeof(LoRaMacRegion_t));
+		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_geofence_status.current_loramac_region, sizeof(LoRaMacRegion_t));
 
 		HAL_IWDG_Refresh(&hiwdg);
 	}
 
 	/* reinit everything if it enters another LoRaWAN region. */
-	if (lora_settings_status == INCORRECT)
+	if (current_geofence_status.lora_settings_status == INCORRECT)
 	{
 		PRINTF("LoRa Regional settings incorrect. Data send terminated\n\r");
 
@@ -360,7 +360,7 @@ static void Send(void *context)
 	/* Don't tx when over regions where we are not supposed to tx
    * There is currenly no region defined in geofence.h that prohibits tx.
    */
-	if (tx_permission == TX_NOT_OK)
+	if (current_geofence_status.tx_permission == TX_NOT_OK)
 	{
 		TVL1(PRINTF("Entered NO tx region. Data send terminated\n\r");)
 

@@ -89,9 +89,7 @@ extern "C"
 	} geofence_status_t;
 
 	// Externally accessible variables
-	extern tx_permission_t tx_permission;
-	extern LoRaMacRegion_t current_loramac_region;
-	extern lora_setting_status_t lora_settings_status;
+	extern geofence_status_t current_geofence_status;
 
 	/* ==================================================================== */
 	/* ======================= public functions =========================== */
