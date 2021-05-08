@@ -79,6 +79,15 @@ extern "C"
 		INCORRECT
 	} lora_setting_status_t;
 
+	typedef struct
+	{
+		lora_setting_status_t lora_settings_status;
+		LoRaMacRegion_t current_loramac_region;
+		Polygon_t curr_poly_region;
+		tx_permission_t tx_permission;
+
+	} geofence_status_t;
+
 	// Externally accessible variables
 	extern tx_permission_t tx_permission;
 	extern LoRaMacRegion_t current_loramac_region;
