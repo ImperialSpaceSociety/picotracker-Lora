@@ -47,10 +47,6 @@ network_keys_t eu868_network_keys = {
 	.DevAddr = LORAWAN_DEVICE_ADDRESS,
 };
 
-network_keys_t *all_network_keys[] = {
-	&eu868_network_keys,
-};
-
 /* ==================================================================== */
 /* ====================== private functions =========================== */
 /* ==================================================================== */
@@ -66,5 +62,45 @@ network_keys_t get_network_keys(LoRaMacRegion_t Loramac_region);
 
 network_keys_t get_network_keys(LoRaMacRegion_t Loramac_region)
 {
-	return *all_network_keys[Loramac_region];
+	network_keys_t network_keys;
+
+	switch (Loramac_region)
+	{
+	case LORAMAC_REGION_AS923:
+		break;
+
+	case LORAMAC_REGION_AU915:
+		break;
+
+	case LORAMAC_REGION_CN470:
+		break;
+
+	case LORAMAC_REGION_CN779:
+		break;
+
+	case LORAMAC_REGION_EU433:
+		break;
+
+	case LORAMAC_REGION_EU868:
+		network_keys = eu868_network_keys;
+		break;
+
+	case LORAMAC_REGION_KR920:
+		break;
+
+	case LORAMAC_REGION_IN865:
+		break;
+
+	case LORAMAC_REGION_US915:
+		break;
+
+	case LORAMAC_REGION_RU864:
+		break;
+
+	default:
+		network_keys = eu868_network_keys;
+		break;
+	}
+
+	return network_keys;
 }

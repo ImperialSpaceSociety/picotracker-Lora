@@ -31,7 +31,14 @@ extern "C"
 	/* ==================================================================== */
 
 	/* #define and enum statements go here */
-
+	typedef struct
+	{
+		uint8_t FNwkSIntKey[16];
+		uint8_t SNwkSIntKey[16];
+		uint8_t NwkSEncKey[16];
+		uint8_t AppSKey[16];
+		uint32_t DevAddr;
+	} network_keys_t;
 	/* ==================================================================== */
 	/* ========================== public data ============================= */
 	/* ==================================================================== */
@@ -43,15 +50,8 @@ extern "C"
 	/* ==================================================================== */
 
 	/* Function prototypes for public (external) functions go here */
-	typedef struct
-	{
-		uint8_t FNwkSIntKey[16];
-		uint8_t SNwkSIntKey[16];
-		uint8_t NwkSEncKey[16];
-		uint8_t AppSKey[16];
-		uint32_t DevAddr;
-	} network_keys_t;
 
+	network_keys_t get_network_keys(LoRaMacRegion_t Loramac_region);
 #endif
 #ifdef __cplusplus
 }

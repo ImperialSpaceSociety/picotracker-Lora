@@ -66,11 +66,7 @@ static MlmeReqJoin_t JoinParameters;
 
 #if (OVER_THE_AIR_ACTIVATION == 0)
 
-static uint8_t FNwkSIntKey[] = LORAWAN_F_NWK_S_INT_KEY;
-static uint8_t SNwkSIntKey[] = LORAWAN_S_NWK_S_INT_KEY;
-static uint8_t NwkSEncKey[] = LORAWAN_NWK_S_ENC_KEY;
-static uint8_t AppSKey[] = LORAWAN_APP_S_KEY;
-static uint32_t DevAddr = LORAWAN_DEVICE_ADDRESS;
+
 #endif
 
 #ifdef LORAMAC_CLASSB_ENABLED
