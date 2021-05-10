@@ -99,6 +99,7 @@ extern "C"
 
 	void update_geofence_position(float latitude, float longitude);
 	void geofence_init(void);
+	Polygon_t get_polygon(float latitude, float longitude);
 
 #endif
 #ifdef __cplusplus
