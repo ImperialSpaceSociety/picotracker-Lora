@@ -23,6 +23,7 @@
 #include "lora.h"
 #include "lora-test.h"
 #include "geofence.h"
+#include "region_setting.h"
 
 /*!
  *  Select either Device_Time_req or Beacon_Time_Req following LoRaWAN version 
@@ -65,7 +66,6 @@
 static MlmeReqJoin_t JoinParameters;
 
 #if (OVER_THE_AIR_ACTIVATION == 0)
-
 
 #endif
 
@@ -571,24 +571,26 @@ void LORA_Join(void)
   mibReq.Param.NetID = LORAWAN_NETWORK_ID;
   LoRaMacMibSetRequestConfirm(&mibReq);
 
+  network_keys_t network_keys = get_network_keys(current_geofence_status.current_loramac_region);
+
   mibReq.Type = MIB_DEV_ADDR;
-  mibReq.Param.DevAddr = DevAddr;
+  mibReq.Param.DevAddr = network_keys.DevAddr;
   LoRaMacMibSetRequestConfirm(&mibReq);
 
   mibReq.Type = MIB_F_NWK_S_INT_KEY;
-  mibReq.Param.FNwkSIntKey = FNwkSIntKey;
+  mibReq.Param.FNwkSIntKey = network_keys.FNwkSIntKey;
   LoRaMacMibSetRequestConfirm(&mibReq);
 
   mibReq.Type = MIB_S_NWK_S_INT_KEY;
-  mibReq.Param.SNwkSIntKey = SNwkSIntKey;
+  mibReq.Param.SNwkSIntKey = network_keys.SNwkSIntKey;
   LoRaMacMibSetRequestConfirm(&mibReq);
 
   mibReq.Type = MIB_NWK_S_ENC_KEY;
-  mibReq.Param.NwkSEncKey = NwkSEncKey;
+  mibReq.Param.NwkSEncKey = network_keys.NwkSEncKey;
   LoRaMacMibSetRequestConfirm(&mibReq);
 
   mibReq.Type = MIB_APP_S_KEY;
-  mibReq.Param.AppSKey = AppSKey;
+  mibReq.Param.AppSKey = network_keys.AppSKey;
   LoRaMacMibSetRequestConfirm(&mibReq);
 
   mibReq.Type = MIB_NETWORK_ACTIVATION;
