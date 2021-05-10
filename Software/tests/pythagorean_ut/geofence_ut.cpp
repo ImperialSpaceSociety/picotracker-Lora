@@ -17,6 +17,10 @@ TEST_GROUP(Geofence_Polygon){
 }
 ;
 
+/**
+ * @brief Test point in polygon
+ * 
+ */
 TEST(Geofence_Polygon, UK_test)
 {
     Polygon_t poly = get_polygon(52, 0);
@@ -40,10 +44,6 @@ TEST(Geofence_Polygon, EU_network_key_test)
     CHECK_EQUAL(0xB1, eu_network_keys.AppSKey[0]);
 }
 
-/**
- * @brief Test network key validity
- * 
- */
 TEST(Geofence_Polygon, test_array_compare)
 {
 
