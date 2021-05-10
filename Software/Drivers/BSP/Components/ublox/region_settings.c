@@ -107,12 +107,15 @@ network_keys_t get_network_keys(LoRaMacRegion_t Loramac_region)
 	switch (Loramac_region)
 	{
 	case LORAMAC_REGION_AS923:
+		network_keys = AS923_network_keys;
 		break;
 
 	case LORAMAC_REGION_AU915:
+		network_keys = AU915_network_keys;
 		break;
 
 	case LORAMAC_REGION_CN779:
+		network_keys = CN779_network_keys;
 		break;
 
 	case LORAMAC_REGION_EU868:
@@ -120,9 +123,11 @@ network_keys_t get_network_keys(LoRaMacRegion_t Loramac_region)
 		break;
 
 	case LORAMAC_REGION_KR920:
+		network_keys = KR920_network_keys;
 		break;
 
 	case LORAMAC_REGION_IN865:
+		network_keys = IN865_network_keys;
 		break;
 
 	case LORAMAC_REGION_US915:
@@ -130,6 +135,7 @@ network_keys_t get_network_keys(LoRaMacRegion_t Loramac_region)
 		break;
 
 	case LORAMAC_REGION_RU864:
+		network_keys = RU864_network_keys;
 		break;
 
 	default:
