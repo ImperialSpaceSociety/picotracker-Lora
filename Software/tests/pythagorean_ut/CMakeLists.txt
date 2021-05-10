@@ -13,6 +13,7 @@ set(SOURCE_FILES
     geofence_ut.cpp
     ${PROJECT_SOURCE_DIR}/src/pythagorean.c
     ${PROJECT_SOURCE_DIR}/Drivers/BSP/Components/ublox/geofence.c
+    ${PROJECT_SOURCE_DIR}/Drivers/BSP/Components/ublox/region_settings.c
     square_root_mock.cpp)
 
 add_executable(pythagorean_ut ${SOURCE_FILES})
