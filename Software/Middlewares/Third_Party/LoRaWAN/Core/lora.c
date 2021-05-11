@@ -450,11 +450,14 @@ void LORA_Init(LoRaMainCallback_t *callbacks, LoRaParam_t *LoRaParam)
   // Choose a random device address
   DevAddr = randr(0, 0x01FFFFFF);
 #endif
+
+  network_keys_t network_keys = get_network_keys(current_geofence_status.current_loramac_region);
+
   PPRINTF("ABP\n\r");
   PPRINTF("DevEui= %02X-%02X-%02X-%02X-%02X-%02X-%02X-%02X\n\r", HEX8(DevEui));
-  PPRINTF("DevAdd=  %08X\n\r", DevAddr);
-  PPRINTF("NwkSKey= %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n\r", HEX16(NwkSEncKey));
-  PPRINTF("AppSKey= %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n\r", HEX16(AppSKey));
+  PPRINTF("DevAdd=  %08X\n\r", network_keys.DevAddr);
+  PPRINTF("NwkSKey= %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n\r", HEX16(network_keys.NwkSEncKey));
+  PPRINTF("AppSKey= %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n\r", HEX16(network_keys.AppSKey));
 #endif
   LoRaMacPrimitives.MacMcpsConfirm = McpsConfirm;
   LoRaMacPrimitives.MacMcpsIndication = McpsIndication;
