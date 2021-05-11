@@ -418,6 +418,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
             </File>
+            <File>
+              <FileName>region_settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\region_settings.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1248,6 +1253,11 @@
               <FileName>SparkFun_Ublox_Arduino_Library.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
+            </File>
+            <File>
+              <FileName>region_settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\region_settings.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2080,6 +2090,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
             </File>
+            <File>
+              <FileName>region_settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\region_settings.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2910,6 +2925,11 @@
               <FileName>SparkFun_Ublox_Arduino_Library.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
+            </File>
+            <File>
+              <FileName>region_settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\region_settings.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3742,6 +3762,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
             </File>
+            <File>
+              <FileName>region_settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\region_settings.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4572,6 +4597,11 @@
               <FileName>SparkFun_Ublox_Arduino_Library.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\SparkFun_Ublox_Arduino_Library.c</FilePath>
+            </File>
+            <File>
+              <FileName>region_settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\Drivers\BSP\Components\ublox\region_settings.c</FilePath>
             </File>
           </Files>
         </Group>
