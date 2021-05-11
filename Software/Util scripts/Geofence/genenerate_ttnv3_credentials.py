@@ -1,6 +1,10 @@
-import subprocess
-import sys
-from subprocess import PIPE
+# cmds:
+#
+# ttn-lw-cli end-devices create --application-id "icss-lora-tracker"  --device-id "testing-budgie1"  --frequency-plan-id EU_863_870 --lorawan-version 1.0.2 --lorawan-phy-version 1.0.2-b --abp --with-session --mac-settings.resets-f-cnt -c ttn-lw-cli.yml
+# ttn-lw-cli end-devices list-frequency-plans -c ttn-lw-cli.yml
+# ttn-lw-cli end-devices create --application-id "icss-lora-tracker"  --device-id "testing-budgiedsa"  --frequency-plan-id AS_920_923_TTN_AU --lorawan-version 1.0.2 --lorawan-phy-version 1.0.2-b --abp --with-session --mac-settings.resets-f-cnt -c ttn-lw-cli.yml
+# ttn-lw-cli end-devices list --application-id "icss-lora-tracker" --all  -c ttn-lw-cli.yml
+#
 
 frequency_plan_strings = ["EU_863_870"]
 device_id = "testing-budgie1"
