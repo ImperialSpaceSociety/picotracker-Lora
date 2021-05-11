@@ -58,14 +58,14 @@ network_keys_t AU915_network_keys = {
 	.DevAddr = (uint32_t)0x260B8026,
 };
 
-#define COMMON_CN779_KEYS                                                                              \
+#define COMMON_CN470_KEYS                                                                              \
 	{                                                                                                  \
 		0x63, 0xB1, 0xAA, 0xD8, 0x11, 0xF6, 0x69, 0x2A, 0x55, 0xEF, 0x4D, 0x88, 0x9B, 0xD5, 0x14, 0xCC \
 	}
-network_keys_t CN779_network_keys = {
-	.FNwkSIntKey = COMMON_CN779_KEYS,
-	.SNwkSIntKey = COMMON_CN779_KEYS,
-	.NwkSEncKey = COMMON_CN779_KEYS,
+network_keys_t CN470_network_keys = {
+	.FNwkSIntKey = COMMON_CN470_KEYS,
+	.SNwkSIntKey = COMMON_CN470_KEYS,
+	.NwkSEncKey = COMMON_CN470_KEYS,
 	.AppSKey = {0x09, 0xA0, 0x74, 0x4F, 0x22, 0x7C, 0x43, 0xD1, 0xDC, 0x2A, 0x48, 0x2E, 0xAB, 0xCE, 0x92, 0x41},
 	.DevAddr = (uint32_t)0x260B9E90,
 };
@@ -149,7 +149,7 @@ network_keys_t get_network_keys(LoRaMacRegion_t Loramac_region)
 
 	/**
 	 * @brief return network keys for each region. Don't bother with
-	 * LORAMAC_REGION_CN470 or LORAMAC_REGION_EU433 because we
+	 * LORAMAC_REGION_CN779 or LORAMAC_REGION_EU433 because we
 	 * don't use them
 	 */
 	switch (Loramac_region)
@@ -162,8 +162,8 @@ network_keys_t get_network_keys(LoRaMacRegion_t Loramac_region)
 		network_keys = AU915_network_keys;
 		break;
 
-	case LORAMAC_REGION_CN779:
-		network_keys = CN779_network_keys;
+	case LORAMAC_REGION_CN470:
+		network_keys = CN470_network_keys;
 		break;
 
 	case LORAMAC_REGION_EU868:

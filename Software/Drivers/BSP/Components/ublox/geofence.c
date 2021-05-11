@@ -827,7 +827,7 @@ static void set_current_loramac_region(Polygon_t current_poly)
 		break;
 	case CN779787_CHINA_polygon:
 		current_geofence_status.tx_permission = TX_OK;
-		current_geofence_status.current_loramac_region = LORAMAC_REGION_CN779;
+		current_geofence_status.current_loramac_region = LORAMAC_REGION_CN470;
 		break;
 	case IN865867_INDIA_polygon:
 		current_geofence_status.tx_permission = TX_OK;
