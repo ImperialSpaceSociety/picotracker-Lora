@@ -8,7 +8,7 @@
 
 frequency_plan_strings = ["EU_863_870","US_902_928_FSB_2","AU_915_928_FSB_2","AS_923","KR_920_923_TTN", "IN_865_867","RU_864_870_TTN","CN_470_510_FSB_11"]
 
-device_id = "icspace26"
+device_id = "icspace26-hab"
 
 
 def generate_commands(frequency_plan_string):
@@ -16,8 +16,8 @@ def generate_commands(frequency_plan_string):
     cmd = 'ttn-lw-cli end-devices create --application-id "icss-lora-tracker" ' \
           ' --device-id "{0}" ' \
           ' --frequency-plan-id {1}' \
-          ' --lorawan-version 1.0.2 ' \
-          '--lorawan-phy-version 1.0.2-b ' \
+          ' --lorawan-version 1.0.3 ' \
+          '--lorawan-phy-version 1.0.3-a ' \
           '--abp ' \
           '--with-session' \
           ' --mac-settings.resets-f-cnt ' \
