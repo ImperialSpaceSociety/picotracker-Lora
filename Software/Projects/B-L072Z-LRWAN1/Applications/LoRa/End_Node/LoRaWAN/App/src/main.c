@@ -184,7 +184,7 @@ int main(void)
 		HAL_IWDG_Refresh(&hiwdg);
 
 		/* Save current polygon to eeprom only if gps fix was valid */
-		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_loramac_region, sizeof(LoRaMacRegion_t));
+		EepromMcuWriteBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_geofence_status.current_loramac_region, sizeof(LoRaMacRegion_t));
 
 		HAL_IWDG_Refresh(&hiwdg);
 	}
@@ -193,7 +193,7 @@ int main(void)
 /* read the eeprom value instead */
 // TODO: must ensure that eeprom is not filled with garbage. i.e. when the eeprom has never been programed
 #if USE_NVM_STORED_LORAWAN_REGION
-		EepromMcuReadBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_loramac_region, sizeof(LoRaMacRegion_t));
+		EepromMcuReadBuffer(LORAMAC_REGION_EEPROM_ADDR, (void *)&current_geofence_status.current_loramac_region, sizeof(LoRaMacRegion_t));
 #endif
 
 		HAL_IWDG_Refresh(&hiwdg);
