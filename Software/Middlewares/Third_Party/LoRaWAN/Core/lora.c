@@ -544,6 +544,7 @@ void LORA_Init(LoRaMainCallback_t *callbacks, LoRaParam_t *LoRaParam)
   mibReq.Param.SystemMaxRxError = 20;
   LoRaMacMibSetRequestConfirm(&mibReq);
 
+#if SET_EU_RX1_DELAY_DEFAULT_5_SECOND
   if (current_geofence_status.current_loramac_region == LORAMAC_REGION_EU868)
   {
     mibReq.Type = MIB_RECEIVE_DELAY_1;
@@ -554,6 +555,7 @@ void LORA_Init(LoRaMainCallback_t *callbacks, LoRaParam_t *LoRaParam)
     mibReq.Param.ReceiveDelay2 = 6000;
     LoRaMacMibSetRequestConfirm(&mibReq);
   }
+#endif
 
   /*set Mac statein Idle*/
   LoRaMacStart();

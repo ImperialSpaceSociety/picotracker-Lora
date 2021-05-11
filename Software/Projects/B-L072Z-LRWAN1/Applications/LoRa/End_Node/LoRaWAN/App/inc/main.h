@@ -74,13 +74,15 @@ extern "C"
 
 // PRELAUNCH IMPORTANT!
 // comment out these defines to disable sensor, Radio, GPS or LED
-#define SENSOR_ENABLED 0                /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
-#define GPS_ENABLED 1                   /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
-#define RADIO_ENABLED 1                 /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
-#define USE_LED 1                       /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
-#define USE_NVM_STORED_LORAWAN_REGION 1 /* Use LoRaWAN region stored in EEPROm. Allowed values: 0 disabled , 1(default) enabled. If not using EEPROM location, \
-                                         * use EU868                                                                                                           \
-                                         */
+#define SENSOR_ENABLED 0                    /* Enable ms5607 sensor. Init the sensor as well. Allowed values: 0 disabled , 1(default) enabled */
+#define GPS_ENABLED 1                       /* Enable Ublox GPS. Init the GPS as well. Allowed values: 0 disabled , 1(default) enabled */
+#define RADIO_ENABLED 1                     /* Enable Radio. WARNING: DISABLED OPTION NOT TESTED PROPERLY. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_LED 1                           /* Enable LED blinky. Allowed values: 0 disabled , 1(default) enabled */
+#define USE_NVM_STORED_LORAWAN_REGION 1     /* Use LoRaWAN region stored in EEPROm. Allowed values: 0 disabled , 1(default) enabled. If not using EEPROM location, \
+                                             * use EU868                                                                                                           \
+                                             */
+#define SET_EU_RX1_DELAY_DEFAULT_5_SECOND 1 /* Set the EU868 RX1 delay to default of 5 seconds. Not LoRaWAN compliant, but default on TTN after it sends commands to \
+                                             switch at device setup. Allowed values: 0 disabled , 1(default) enabled */
 
   /* GPS RELATED DEFINES */
   /* ----------------------------------------------------------------------------------- */
