@@ -8,7 +8,7 @@ device_id = "testing-budgie1"
 
 def generate_commands(frequency_plan_string):
 
-    dev_id_for_plan = device_id + "-" + frequency_plan_string.replace("_","-")
+    dev_id_for_plan = device_id + "-" + frequency_plan_string.replace("_","-").lower()
     cmd = 'ttn-lw-cli end-devices create --application-id "icss-lora-tracker" ' \
           ' --device-id "{0}" ' \
           ' --frequency-plan-id {1}' \
@@ -26,7 +26,7 @@ def generate_code():
     for frequency_plan_string in frequency_plan_strings:
         cmd = generate_commands(frequency_plan_string)
         print(cmd)
-        #execute_subprocess(cmd)
+        execute_subprocess(cmd)
 
 
 if __name__ == "__main__":
