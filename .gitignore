@@ -483,3 +483,4 @@ _deps
 Software/Drivers/BSP/Components/ublox/playback_test.exe
 Software/playback_test.exe
 Software/playback_test.exe.stackdump
+Software/Util scripts/Geofence/ttn-lw-cli.exe
