@@ -8,17 +8,23 @@
 
 # NOTE: Must manually change the Device ID field on the things stack website. Very important!!
 
+
+import datetime
+
 frequency_plan_strings = ["EU_863_870",
-                          "US_902_928_FSB_2",
-                          "AU_915_928_FSB_2",
-                          "AS_923",
-                          "KR_920_923_TTN",
-                          "IN_865_867",
-                          "RU_864_870_TTN",
-                          "CN_470_510_FSB_11"
+                          # "US_902_928_FSB_2",
+                          # "AU_915_928_FSB_2",
+                          # "AS_923",
+                          # "KR_920_923_TTN",
+                          # "IN_865_867",
+                          # "RU_864_870_TTN",
+                          # "CN_470_510_FSB_11"
                           ]
 
-device_id = "test-09-06-2021"
+#device_id = "test-09-06-2021"
+
+device_id = datetime.datetime.now(datetime.timezone.utc).isoformat()
+
 
 
 def generate_commands(frequency_plan_string):
