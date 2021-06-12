@@ -9,7 +9,10 @@
 # NOTE: Must manually change the Device ID field on the things stack website. Very important!!
 
 
-import datetime
+import time
+from datetime import datetime
+import secrets
+
 
 frequency_plan_strings = ["EU_863_870",
                           # "US_902_928_FSB_2",
@@ -23,7 +26,9 @@ frequency_plan_strings = ["EU_863_870",
 
 #device_id = "test-09-06-2021"
 
-device_id = datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+device_id = datetime.today().strftime('%Y-%m-%d') + "-" +secrets.token_hex(2)
 
 
 
