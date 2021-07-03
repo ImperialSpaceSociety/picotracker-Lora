@@ -126,7 +126,7 @@ extern "C"
  */
 #define LORAWAN_ADR_STATE LORAWAN_ADR_OFF
 
-#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM 1 /* Storing frame counter in EEPROM. Allowed values: 0 disabled , 1 (default) enabled */
+#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM 0 /* Storing frame counter in EEPROM. Allowed values: 0 disabled , 1 (default) enabled */
 
 /* CALL SIGN */
 
