@@ -1553,7 +1553,7 @@ static void LoRaMacHandleIndicationEvents( void )
         LoRaMacCommandsStickyCmdsPending( &isStickyMacCommandPending );
         if( isStickyMacCommandPending == true )
         {// Setup MLME indication
-            SetMlmeScheduleUplinkIndication( );
+            //SetMlmeScheduleUplinkIndication( );
             MacCtx.MacPrimitives->MacMlmeIndication( &MacCtx.MlmeIndication );
         }
     }
@@ -2042,7 +2042,7 @@ static void ProcessMacCommands( uint8_t *payload, uint8_t macIndex, uint8_t comm
                 macCmdPayload[0] = status;
                 LoRaMacCommandsAddCmd( MOTE_MAC_RX_PARAM_SETUP_ANS, macCmdPayload, 1 );
                 // Setup indication to inform the application
-                SetMlmeScheduleUplinkIndication( );
+                //SetMlmeScheduleUplinkIndication( );
                 break;
             }
             case SRV_MAC_DEV_STATUS_REQ:
@@ -2091,7 +2091,7 @@ static void ProcessMacCommands( uint8_t *payload, uint8_t macIndex, uint8_t comm
                 MacCtx.NvmCtx->MacParams.ReceiveDelay2 = MacCtx.NvmCtx->MacParams.ReceiveDelay1 + 1000;
                 LoRaMacCommandsAddCmd( MOTE_MAC_RX_TIMING_SETUP_ANS, macCmdPayload, 0 );
                 // Setup indication to inform the application
-                SetMlmeScheduleUplinkIndication( );
+                //SetMlmeScheduleUplinkIndication( );
                 break;
             }
             case SRV_MAC_TX_PARAM_SETUP_REQ:
@@ -2147,7 +2147,7 @@ static void ProcessMacCommands( uint8_t *payload, uint8_t macIndex, uint8_t comm
                 macCmdPayload[0] = status;
                 LoRaMacCommandsAddCmd( MOTE_MAC_DL_CHANNEL_ANS, macCmdPayload, 1 );
                 // Setup indication to inform the application
-                SetMlmeScheduleUplinkIndication( );
+                //SetMlmeScheduleUplinkIndication( );
                 break;
             }
             case SRV_MAC_DEVICE_TIME_ANS:
