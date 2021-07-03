@@ -14,14 +14,14 @@ from datetime import datetime
 import secrets
 
 
-frequency_plan_strings = ["EU_863_870",
-                          # "US_902_928_FSB_2",
-                          # "AU_915_928_FSB_2",
-                          # "AS_923",
-                          # "KR_920_923_TTN",
-                          # "IN_865_867",
-                          # "RU_864_870_TTN",
-                          # "CN_470_510_FSB_11"
+frequency_plan_strings = ["EU_863_870_TTN",
+                          "US_902_928_FSB_2",
+                          "AU_915_928_FSB_2",
+                          "AS_923",
+                          "KR_920_923_TTN",
+                          "IN_865_867",
+                          "RU_864_870_TTN",
+                          "CN_470_510_FSB_11"
                           ]
 
 #device_id = "test-09-06-2021"
