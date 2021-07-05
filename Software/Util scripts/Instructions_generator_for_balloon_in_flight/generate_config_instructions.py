@@ -1,5 +1,8 @@
 # This program generates the byte instructions to send to the tracker to poll specific
 # time ranges
+# Set the two date_time_str to the time range you want to poll.
+# Send the output to downlink port 18 to get a response
+#
 # By Medad Newman, Imperial College Space Society
 # 18/12/2020
 
