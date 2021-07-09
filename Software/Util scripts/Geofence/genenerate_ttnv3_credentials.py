@@ -8,9 +8,28 @@
 
 # NOTE: Must manually change the Device ID field on the things stack website. Very important!!
 
-frequency_plan_strings = ["EU_863_870","US_902_928_FSB_2","AU_915_928_FSB_2","AS_923","KR_920_923_TTN", "IN_865_867","RU_864_870_TTN","CN_470_510_FSB_11"]
 
-device_id = "test-04-06-2021"
+import time
+from datetime import datetime
+import secrets
+
+
+frequency_plan_strings = ["EU_863_870_TTN",
+                          "US_902_928_FSB_2",
+                          "AU_915_928_FSB_2",
+                          "AS_923",
+                          "KR_920_923_TTN",
+                          "IN_865_867",
+                          "RU_864_870_TTN",
+                          "CN_470_510_FSB_11"
+                          ]
+
+#device_id = "test-09-06-2021"
+
+
+
+device_id = datetime.today().strftime('%Y-%m-%d') + "-" +secrets.token_hex(2)
+
 
 
 def generate_commands(frequency_plan_string):
@@ -27,13 +46,14 @@ def generate_commands(frequency_plan_string):
 
     return cmd
 
+
 def execute_subprocess(cmd):
     # !/usr/bin/env python3
 
     import subprocess
 
     # Define command as string and then split() into list format
-    #cmd = 'ping -c 5 google.com'
+    # cmd = 'ping -c 5 google.com'
 
     # Use shell to execute the command, store the stdout and stderr in sp variable
     sp = subprocess.Popen(cmd,
@@ -57,9 +77,8 @@ def generate_code():
     for frequency_plan_string in frequency_plan_strings:
         cmd = generate_commands(frequency_plan_string)
         print(cmd)
-        #execute_subprocess(cmd)s
+        # execute_subprocess(cmd)s
 
 
 if __name__ == "__main__":
-
     generate_code()

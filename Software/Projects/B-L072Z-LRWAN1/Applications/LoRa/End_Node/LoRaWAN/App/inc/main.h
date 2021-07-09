@@ -81,7 +81,7 @@ extern "C"
 #define USE_NVM_STORED_LORAWAN_REGION 1     /* Use LoRaWAN region stored in EEPROm. Allowed values: 0 disabled , 1(default) enabled. If not using EEPROM location, \
                                              * use EU868                                                                                                           \
                                              */
-#define SET_EU_RX1_DELAY_DEFAULT_5_SECOND 1 /* Set the EU868 RX1 delay to default of 5 seconds. Not LoRaWAN compliant, but default on TTN after it sends commands to \
+#define SET_EU_RX1_DELAY_DEFAULT_5_SECOND 0 /* Set the EU868 RX1 delay to default of 5 seconds. Not LoRaWAN compliant, but default on TTN after it sends commands to \
                                              switch at device setup. Allowed values: 0 disabled , 1(default) enabled */
 
   /* GPS RELATED DEFINES */
@@ -126,7 +126,7 @@ extern "C"
  */
 #define LORAWAN_ADR_STATE LORAWAN_ADR_OFF
 
-#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM 1 /* Storing frame counter in EEPROM. Allowed values: 0 disabled , 1 (default) enabled */
+#define SAVE_FRAME_COUNTER_IN_INTERNAL_EEPROM 0 /* Storing frame counter in EEPROM. Allowed values: 0 disabled , 1 (default) enabled */
 
 /* CALL SIGN */
 
