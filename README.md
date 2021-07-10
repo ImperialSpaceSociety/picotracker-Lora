@@ -101,6 +101,12 @@ It gets a GPS fix every 2 minutes and transmits it to ground
 
 ![image](https://user-images.githubusercontent.com/26815217/98449495-002a9380-212c-11eb-80c6-c811061492fa.png)
 
+### Edits done over the reference version by STMicroelectronics
+* Switching LoRaMAC regional settings depending on where it is
+* Reduce tx power over US915/AU915
+* Prevent sending empty frame after boot
+* Use subband of 8 channels for US915/AU915
+
 # Photos
 These are photos of ICSPACE19 before launch, during testing in the sun. It is a 1.1a variant, with no power storage.
 
