@@ -108,6 +108,7 @@ It gets a GPS fix every 2 minutes and transmits it to ground
 * Use subband of 8 channels for US915/AU915
 * Seperate credentials for each region of the world. 
 * Prevent sticky uplinks after receiving channel change requests. Actually prevent any uplinks to test channel change requests. Wait till the next scheduled uplink.
+* Different datarate for each region
 
 # Photos
 These are photos of ICSPACE19 before launch, during testing in the sun. It is a 1.1a variant, with no power storage.
