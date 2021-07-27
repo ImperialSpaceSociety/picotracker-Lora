@@ -41,7 +41,7 @@ TEST(Geofence_Polygon, EU_network_key_test)
 {
     network_keys_t eu_network_keys = get_network_keys(LORAMAC_REGION_EU868);
 
-    CHECK_EQUAL(0xB1, eu_network_keys.AppSKey[0]);
+    CHECK_EQUAL(0xD2, eu_network_keys.AppSKey[0]);
 }
 
 TEST(Geofence_Polygon, test_string_compare)
