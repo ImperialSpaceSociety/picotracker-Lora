@@ -484,3 +484,5 @@ Software/Drivers/BSP/Components/ublox/playback_test.exe
 Software/playback_test.exe
 Software/playback_test.exe.stackdump
 Software/Util scripts/Geofence/ttn-lw-cli.exe
+Software/src/cpputest_example_pythagorean
+Software/tests/pythagorean_ut/pythagorean_ut
