@@ -64,6 +64,9 @@ TEST(Geofence_Polygon, test_array_compare)
 TEST(Geofence_Polygon, test_eu_array_compare)
 {
 
+    uint8_t iar1[] = {1, 2, 3, 4, 5};
+    uint8_t iar2[] = {1, 2, 3, 4, 5};
+    uint8_t iar3[] = {1, 2, 3, 2, 5};
     CHECK_TRUE(std::equal(std::begin(iar1), std::end(iar1), std::begin(iar2)));
     CHECK_FALSE(std::equal(std::begin(iar1), std::end(iar1), std::begin(iar3)));
 }
