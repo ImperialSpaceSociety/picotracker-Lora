@@ -40,6 +40,10 @@ The bridge can be found in a seperate repo: [link](https://github.com/ImperialSp
 * Prestressed
 * Helium Filled
 
+### Tracker Firmware
+All firmware used in the trackers can be found here: https://github.com/ImperialSpaceSociety/LoRaMac-node. Its a fork of the Semtech Loramac-node reference firmware.
+Note that the code in the current repo is no longer used and is used for reference only.
+
 
 # Flights
 * ICSPACE15: [Flight report](https://www.union.ic.ac.uk/guilds/icseds/2020/01/long-range-lora-balloon-tracker-launch-from-london/)
